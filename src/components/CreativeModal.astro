@@ -1,0 +1,234 @@
+---
+export interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+---
+
+<!-- Creative Modal/Lightbox -->
+<div 
+  id={id}
+  class="creative-modal fixed inset-0 z-50 hidden bg-matrix-black/95 backdrop-blur-sm"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="modal-title"
+>
+  <!-- Modal Backdrop -->
+  <div class="absolute inset-0" id="modal-backdrop"></div>
+  
+  <!-- Modal Content -->
+  <div class="relative h-full flex items-center justify-center p-4">
+    <div class="bg-cyber-gray rounded-lg max-w-6xl max-h-[90vh] w-full overflow-hidden border border-neon-lime/30">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between p-6 border-b border-cyber-gray-light">
+        <div>
+          <h2 id="modal-title" class="text-h2 font-orbitron text-neon-lime mb-2">
+            <!-- Title will be populated by JavaScript -->
+          </h2>
+          <div class="flex flex-wrap gap-2">
+            <!-- Tools will be populated by JavaScript -->
+          </div>
+        </div>
+        
+        <!-- Close Button -->
+        <button 
+          id="modal-close"
+          class="p-2 text-cyber-gray-light hover:text-neon-lime hover:bg-cyber-gray-light/10 rounded-lg transition-colors"
+          aria-label="Close modal"
+        >
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Modal Body -->
+      <div class="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
+        <!-- Media Container -->
+        <div class="mb-6">
+          <div id="modal-media" class="relative rounded-lg overflow-hidden bg-matrix-black">
+            <!-- Media content will be populated by JavaScript -->
+          </div>
+        </div>
+        
+        <!-- Description -->
+        <div class="mb-6">
+          <h3 class="text-h3 font-orbitron text-matrix-white mb-3">Description</h3>
+          <p id="modal-description" class="text-body text-cyber-gray-light leading-relaxed">
+            <!-- Description will be populated by JavaScript -->
+          </p>
+        </div>
+        
+        <!-- Additional Info -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Tools & Process -->
+          <div>
+            <h3 class="text-h3 font-orbitron text-matrix-white mb-3">Tools & Process</h3>
+            <div id="modal-tools" class="flex flex-wrap gap-2 mb-4">
+              <!-- Tools will be populated by JavaScript -->
+            </div>
+            <div id="modal-process" class="text-body text-cyber-gray-light">
+              <!-- Process will be populated by JavaScript -->
+            </div>
+          </div>
+          
+          <!-- Metadata -->
+          <div>
+            <h3 class="text-h3 font-orbitron text-matrix-white mb-3">Details</h3>
+            <div class="space-y-2 text-body text-cyber-gray-light">
+              <div id="modal-category">
+                <!-- Category will be populated by JavaScript -->
+              </div>
+              <div id="modal-date">
+                <!-- Date will be populated by JavaScript -->
+              </div>
+              <div id="modal-dimensions">
+                <!-- Dimensions will be populated by JavaScript -->
+              </div>
+              <div id="modal-prompt">
+                <!-- Prompt will be populated by JavaScript -->
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- External Links -->
+        <div id="modal-links" class="mt-6 pt-6 border-t border-cyber-gray-light">
+          <!-- Links will be populated by JavaScript -->
+        </div>
+      </div>
+      
+      <!-- Navigation Controls -->
+      <div class="flex items-center justify-between p-6 border-t border-cyber-gray-light">
+        <button 
+          id="modal-prev"
+          class="flex items-center px-4 py-2 bg-transparent border border-neon-lime text-neon-lime 
+                 hover:bg-neon-lime hover:text-matrix-black transition-all duration-300 rounded-lg"
+          aria-label="Previous item"
+        >
+          <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          Previous
+        </button>
+        
+        <div class="text-center">
+          <span id="modal-counter" class="text-cyber-gray-light text-sm">
+            <!-- Counter will be populated by JavaScript -->
+          </span>
+        </div>
+        
+        <button 
+          id="modal-next"
+          class="flex items-center px-4 py-2 bg-transparent border border-neon-lime text-neon-lime 
+                 hover:bg-neon-lime hover:text-matrix-black transition-all duration-300 rounded-lg"
+          aria-label="Next item"
+        >
+          Next
+          <svg class="h-4 w-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Simple modal functionality without complex TypeScript
+  let currentCreativeItems: unknown[] = [];
+  let currentIndex = 0;
+
+  function initModal() {
+    const modal = document.getElementById('creative-modal');
+    if (!modal) return;
+
+    // Close handlers
+    modal.querySelector('#modal-backdrop')?.addEventListener('click', closeModal);
+    modal.querySelector('#modal-close')?.addEventListener('click', closeModal);
+    
+    // Navigation handlers
+    modal.querySelector('#modal-prev')?.addEventListener('click', previousItem);
+    modal.querySelector('#modal-next')?.addEventListener('click', nextItem);
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (!modal.classList.contains('hidden')) {
+        switch(e.key) {
+          case 'Escape': closeModal(); break;
+          case 'ArrowLeft': previousItem(); break;
+          case 'ArrowRight': nextItem(); break;
+        }
+      }
+    });
+  }
+
+  function openModal(creativeItems: unknown[], startIndex = 0) {
+    currentCreativeItems = creativeItems;
+    currentIndex = startIndex;
+    
+    const modal = document.getElementById('creative-modal');
+    if (modal) {
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      updateModalContent();
+    }
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('creative-modal');
+    if (modal) {
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+  }
+
+  function previousItem() {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateModalContent();
+    }
+  }
+
+  function nextItem() {
+    if (currentIndex < currentCreativeItems.length - 1) {
+      currentIndex++;
+      updateModalContent();
+    }
+  }
+
+  function updateModalContent() {
+    const item = currentCreativeItems[currentIndex];
+    if (!item) return;
+
+    const modal = document.getElementById('creative-modal');
+    if (!modal) return;
+
+    // Update title and description
+    const titleEl = modal.querySelector('#modal-title');
+    const descEl = modal.querySelector('#modal-description');
+    if (titleEl && item && typeof item === 'object' && 'data' in item) {
+      const itemData = item.data as { title: string; description: string };
+      titleEl.textContent = itemData.title;
+      if (descEl) descEl.textContent = itemData.description;
+    }
+
+    // Update navigation
+    const prevBtn = modal.querySelector('#modal-prev') as HTMLButtonElement;
+    const nextBtn = modal.querySelector('#modal-next') as HTMLButtonElement;
+    const counter = modal.querySelector('#modal-counter');
+    
+    if (prevBtn) prevBtn.disabled = currentIndex === 0;
+    if (nextBtn) nextBtn.disabled = currentIndex === currentCreativeItems.length - 1;
+    if (counter) counter.textContent = `${currentIndex + 1} of ${currentCreativeItems.length}`;
+  }
+
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    initModal();
+    // Make modal globally accessible
+    (window as unknown as { creativeModal?: { open: (data: unknown[], index: number) => void } }).creativeModal = { open: openModal };
+  });
+</script> 

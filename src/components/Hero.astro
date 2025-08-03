@@ -1,0 +1,267 @@
+---
+// Hero component with Matrix-inspired animations and neon glow effects
+// Features: Animated background, VP logo, smooth text animations, and interactive CTA
+---
+
+<!-- Matrix Code Rain Background -->
+<div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+  <canvas id="matrixCanvas" class="w-full h-full opacity-20"></canvas>
+</div>
+
+<!-- Animated Background Gradients -->
+<div class="absolute inset-0 bg-gradient-to-br from-background via-muted to-background" aria-hidden="true"></div>
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary)/0.08),transparent_40%)]" aria-hidden="true"></div>
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,hsl(var(--secondary)/0.06),transparent_40%)]" aria-hidden="true"></div>
+
+<!-- Floating Cyberpunk Elements - Decorative only -->
+<div class="absolute top-20 left-10 w-2 h-2 bg-primary rounded-full animate-pulse-slow opacity-60" aria-hidden="true"></div>
+<div class="absolute top-40 right-20 w-1 h-1 bg-secondary rounded-full animate-pulse-slow opacity-40" aria-hidden="true"></div>
+<div class="absolute bottom-40 left-20 w-1.5 h-1.5 bg-primary rounded-full animate-pulse-slow opacity-50" aria-hidden="true"></div>
+<div class="absolute top-1/3 right-1/4 w-1 h-1 bg-primary rounded-full animate-pulse-slow opacity-30" aria-hidden="true"></div>
+<div class="absolute bottom-1/3 left-1/3 w-0.5 h-0.5 bg-secondary rounded-full animate-pulse-slow opacity-40" aria-hidden="true"></div>
+
+<!-- Main Content Container -->
+<div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8 text-center">
+  
+  <!-- VP Logo/Portrait with Enhanced Animation -->
+  <div class="mb-8 group">
+    <div class="relative">
+      <!-- Glow Ring -->
+      <div class="absolute inset-0 w-32 h-32 mx-auto rounded-full bg-gradient-to-r from-primary via-secondary to-primary opacity-30 blur-sm animate-spin-slow" aria-hidden="true"></div>
+      
+      <!-- Main Logo -->
+      <div class="relative w-32 h-32 mx-auto bg-gradient-to-br from-background via-muted to-background border-2 border-primary rounded-full flex items-center justify-center font-orbitron font-bold text-primary text-4xl animate-glow group-hover:scale-110 transition-transform duration-300" role="img" aria-label="VP Logo">
+        VP
+      </div>
+      
+      <!-- Corner Accents -->
+      <div class="absolute -top-1 -left-1 w-3 h-3 border-l-2 border-t-2 border-primary opacity-60" aria-hidden="true"></div>
+      <div class="absolute -top-1 -right-1 w-3 h-3 border-r-2 border-t-2 border-primary opacity-60" aria-hidden="true"></div>
+      <div class="absolute -bottom-1 -left-1 w-3 h-3 border-l-2 border-b-2 border-primary opacity-60" aria-hidden="true"></div>
+      <div class="absolute -bottom-1 -right-1 w-3 h-3 border-r-2 border-b-2 border-primary opacity-60" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- Main Headline with Enhanced Typography -->
+  <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-orbitron font-bold mb-6 animate-fade-in">
+    <span class="block text-primary text-glow">Full-Stack Developer</span>
+    <span class="block text-secondary mt-2">& AI Visionary</span>
+  </h1>
+
+  <!-- Subtitle with Enhanced Styling -->
+  <p class="text-xl sm:text-2xl lg:text-3xl text-foreground/90 mb-8 max-w-3xl mx-auto font-inter leading-relaxed animate-slide-up">
+    Bridging cutting-edge technology<br />
+    with surreal creativity.
+    <br class="hidden sm:block" />
+    <span class="text-primary font-medium">QA Automation Engineer</span> by day,<br />
+    <span class="text-secondary font-medium">Creative Technologist</span> by passion.
+  </p>
+
+  <!-- CTA Buttons with Enhanced Styling -->
+  <div class="flex flex-col sm:flex-row gap-6 justify-center items-center animate-slide-up mb-16">
+    <a 
+      href="/projects" 
+      class="group relative overflow-hidden px-8 py-4 bg-cyber-blue text-white font-orbitron font-semibold tracking-wide rounded-xl border-2 border-cyber-blue transition-all duration-300 hover:bg-transparent hover:text-cyber-blue hover:shadow-cyber-blue hover:-translate-y-1"
+      aria-label="Explore my projects and portfolio"
+    >
+      <!-- Button Content -->
+      <span class="relative z-10 flex items-center gap-3">
+        <span class="text-2xl" aria-hidden="true">🚀</span>
+        <span>Explore My Work</span>
+      </span>
+    </a>
+    
+    <a 
+      href="/about" 
+      class="group relative overflow-hidden px-8 py-4 bg-transparent text-foreground font-orbitron font-semibold tracking-wide rounded-xl border-2 border-secondary transition-all duration-300 hover:bg-secondary hover:text-secondary-foreground hover:shadow-emerald hover:-translate-y-1"
+      aria-label="Learn more about my background and experience"
+    >
+      <!-- Button Content -->
+      <span class="relative z-10 flex items-center gap-3">
+        <span class="text-2xl" aria-hidden="true">👤</span>
+        <span>Learn More</span>
+      </span>
+    </a>
+  </div>
+
+  <!-- Elegant Experience & Passion Section -->
+  <section class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-4xl mx-auto animate-slide-up" aria-label="Experience and passion">
+    <div class="group text-center p-6 rounded-xl border border-primary/20 bg-black/30 backdrop-blur-sm hover:border-primary/40 hover:shadow-neon transition-all duration-300">
+      <div class="text-5xl font-orbitron font-bold text-primary mb-3 group-hover:scale-110 transition-transform duration-300">5+</div>
+      <div class="text-foreground/80 font-inter text-lg">Years of Experience</div>
+      <div class="text-muted-foreground font-inter text-sm mt-2">QA Automation & Full-Stack Development</div>
+    </div>
+    
+    <div class="group text-center p-6 rounded-xl border border-secondary/20 bg-black/30 backdrop-blur-sm hover:border-secondary/40 hover:shadow-emerald transition-all duration-300">
+      <div class="text-5xl font-orbitron font-bold text-secondary mb-3 group-hover:scale-110 transition-transform duration-300">∞</div>
+      <div class="text-foreground/80 font-inter text-lg">Passion</div>
+      <div class="text-muted-foreground font-inter text-sm mt-2">Creative Technology & AI Innovation</div>
+    </div>
+  </section>
+</div>
+
+<!-- Matrix Code Rain Animation Script -->
+<script>
+  // Matrix code rain effect
+  function initMatrixRain() {
+    const canvas = document.getElementById('matrixCanvas') as HTMLCanvasElement;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Set canvas size
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Matrix characters
+    const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}";
+    const matrixArray = matrix.split("");
+
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops: number[] = [];
+
+    // Initialize drops
+    for (let x = 0; x < columns; x++) {
+      drops[x] = 1;
+    }
+
+    // Animation function
+    function draw() {
+      if (!ctx) return;
+      
+      // Semi-transparent background for fade effect
+      ctx.fillStyle = 'rgba(10, 10, 10, 0.04)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw characters
+      ctx.fillStyle = '#39FF14';
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        // Random character
+        const text = matrixArray[Math.floor(Math.random() * matrixArray.length)];
+        
+        // Draw character
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        // Reset drop to top with random delay
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        drops[i]++;
+      }
+    }
+
+    // Start animation
+    setInterval(draw, 35);
+  }
+
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', initMatrixRain);
+</script>
+
+<!-- Enhanced CSS for additional animations -->
+<style>
+  /* Slow spin animation for logo glow ring */
+  @keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-spin-slow {
+    animation: spin-slow 8s linear infinite;
+  }
+
+  /* Enhanced glow animation */
+  @keyframes enhanced-glow {
+    0% {
+      box-shadow: 0 0 5px hsl(var(--primary) / 0.3), 0 0 10px hsl(var(--primary) / 0.2);
+    }
+    50% {
+      box-shadow: 0 0 15px hsl(var(--primary) / 0.5), 0 0 25px hsl(var(--primary) / 0.3);
+    }
+    100% {
+      box-shadow: 0 0 5px hsl(var(--primary) / 0.3), 0 0 10px hsl(var(--primary) / 0.2);
+    }
+  }
+
+  .animate-glow {
+    animation: enhanced-glow 3s ease-in-out infinite;
+  }
+
+  /* Enhanced text glow */
+  .text-glow {
+    text-shadow: 
+      0 0 10px hsl(var(--primary) / 0.5),
+      0 0 20px hsl(var(--primary) / 0.3),
+      0 0 30px hsl(var(--primary) / 0.1);
+  }
+
+  /* Smooth hover transitions for all interactive elements */
+  .group:hover .group-hover\:scale-110 {
+    transform: scale(1.1);
+  }
+
+  /* Enhanced button hover effects */
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    transform: translateY(-2px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Accessibility improvements */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-spin-slow,
+    .animate-glow,
+    .animate-pulse-slow,
+    .animate-bounce {
+      animation: none;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .text-primary {
+      color: #00ff00;
+    }
+    .text-secondary {
+      color: #00cc00;
+    }
+  }
+
+  /* Screen reader only class */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .focus\:not-sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+</style> 

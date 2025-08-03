@@ -1,0 +1,44 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+// Get all projects and sort by published date (newest first)
+const projects = await getCollection('projects');
+const sortedProjects = projects.sort((a, b) => 
+  new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime()
+);
+
+// Get featured projects only
+const featuredProjects = sortedProjects.filter(project => project.data.featured);
+---
+
+<MainLayout 
+  title="Projects - Vasileios Politeiadis" 
+  description="Explore my latest projects and case studies in full-stack development, automation, and creative technology."
+  currentPath="/projects"
+>
+  <main class="min-h-screen bg-matrix-black text-matrix-white">
+    <!-- Hero Section -->
+    <section class="relative py-20 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <h1 class="text-h1 font-orbitron text-neon-lime mb-6 animate-fade-in">
+            Projects & Case Studies
+          </h1>
+          <p class="text-body max-w-3xl mx-auto text-cyber-gray-light">
+            Exploring the intersection of technology and creativity through full-stack development, 
+            automation engineering, and AI-driven solutions.
+          </p>
+        </div>
+
+        <!-- Featured Projects Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {featuredProjects.map((project) => (
+            <ProjectCard project={project} />
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+</MainLayout> 

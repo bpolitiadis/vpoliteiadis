@@ -1,0 +1,89 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import CreativeCard from '../../components/CreativeCard.astro';
+import CreativeModal from '../../components/CreativeModal.astro';
+import { getCollection } from 'astro:content';
+
+// Get all creative pieces and sort by published date (newest first)
+const creativePieces = await getCollection('creative');
+const sortedCreative = creativePieces.sort((a, b) => 
+  new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime()
+);
+
+// Separate featured and regular creative pieces
+const featuredCreative = sortedCreative.filter(piece => piece.data.featured);
+const regularCreative = sortedCreative.filter(piece => !piece.data.featured);
+---
+
+<MainLayout 
+  title="Creative Lab - Vasileios Politeiadis" 
+  description="Explore AI-generated art, digital experiments, and creative technology projects in my Creative Lab."
+  currentPath="/creative"
+>
+  <main class="min-h-screen bg-matrix-black text-matrix-white">
+    <!-- Hero Section -->
+    <section class="relative py-20 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <h1 class="text-h1 font-orbitron text-neon-lime mb-6 animate-fade-in">
+            Creative Lab
+          </h1>
+          <p class="text-body max-w-3xl mx-auto text-cyber-gray-light mb-8">
+            Exploring the intersection of AI, art, and technology through experimental digital creations, 
+            AI-generated imagery, and creative coding projects.
+          </p>
+          
+          <!-- Instagram Link -->
+          <div class="flex justify-center mb-8">
+            <a 
+              href="https://instagram.com/arte.imaginari" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="inline-flex items-center px-6 py-3 bg-neon-lime text-matrix-black hover:bg-digital-emerald 
+                     transition-all duration-300 rounded-lg font-orbitron font-bold animate-glow"
+            >
+              <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+              Follow @arte.imaginari
+            </a>
+          </div>
+        </div>
+
+        <!-- Featured Works Section -->
+        {featuredCreative.length > 0 && (
+          <div class="mb-16">
+            <h2 class="text-neon-lime drop-shadow-neon text-2xl md:text-3xl mb-6 uppercase tracking-widest text-center">
+              Featured Works
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {featuredCreative.map((piece) => (
+                <CreativeCard creative={piece} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- All Creative Works Section -->
+        {regularCreative.length > 0 && (
+          <div>
+            {featuredCreative.length > 0 && (
+              <div class="border-b border-emerald/20 mb-10"></div>
+            )}
+            <h2 class="text-neon-lime drop-shadow-neon text-2xl md:text-3xl mb-6 uppercase tracking-widest text-center">
+              All Works
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {regularCreative.map((piece) => (
+                <CreativeCard creative={piece} />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  </main>
+
+  <!-- Creative Modal -->
+  <CreativeModal id="creative-modal" />
+</MainLayout> 

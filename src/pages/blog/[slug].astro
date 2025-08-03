@@ -1,0 +1,401 @@
+---
+import { getCollection } from 'astro:content';
+import MainLayout from '../../layouts/MainLayout.astro';
+
+// Generate static paths for all blog posts
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts
+    .filter(post => !post.data.draft)
+    .map(post => ({
+      params: { slug: post.slug },
+      props: { post },
+    }));
+}
+
+// Get the current post and related posts
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+// Get related posts based on tags and category
+const allPosts = await getCollection('blog');
+const relatedPosts = allPosts
+  .filter(p => 
+    p.slug !== post.slug && 
+    !p.data.draft &&
+    (p.data.tags.some(tag => post.data.tags.includes(tag)) || 
+     p.data.category === post.data.category)
+  )
+  .sort((a, b) => new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime())
+  .slice(0, 3);
+
+// SEO metadata
+const title = post.data.seo?.title || `${post.data.title} - Vasileios Politeiadis`;
+const description = post.data.seo?.description || post.data.description;
+const keywords = post.data.seo?.keywords || post.data.tags.join(', ');
+const publishedDate = new Date(post.data.publishedAt).toISOString();
+const modifiedDate = post.data.updatedAt ? new Date(post.data.updatedAt).toISOString() : publishedDate;
+---
+
+<MainLayout 
+  title={title}
+  description={description}
+  currentPath="/blog"
+  type="article"
+  publishedAt={publishedDate}
+  updatedAt={modifiedDate}
+  author={post.data.author}
+  image={post.data.coverImage || '/images/og-default.jpg'}
+>
+  <!-- SEO Structured Data -->
+  <script type="application/ld+json" is:inline set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.data.title,
+    "description": post.data.description,
+    "author": {
+      "@type": "Person",
+      "name": post.data.author
+    },
+    "datePublished": publishedDate,
+    "dateModified": modifiedDate,
+    "publisher": {
+      "@type": "Person",
+      "name": "Vasileios Politeiadis"
+    },
+    "keywords": keywords,
+    "image": post.data.coverImage ? `https://vpoliteiadis.com${post.data.coverImage}` : undefined
+  })} />
+
+  <!-- Hero Section -->
+  <section class="relative py-20 bg-gradient-to-br from-matrix-black via-cyber-gray to-matrix-black">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <!-- Breadcrumb -->
+        <nav class="mb-8" aria-label="Breadcrumb">
+          <ol class="flex items-center justify-center space-x-2 text-sm text-matrix-white/60">
+            <li><a href="/blog" class="hover:text-neon-lime transition-colors">Blog</a></li>
+            <li class="text-matrix-white/40">/</li>
+            <li class="text-matrix-white/80">{post.data.category}</li>
+          </ol>
+        </nav>
+
+        <!-- Article Meta -->
+        <div class="flex items-center justify-center space-x-4 text-sm text-matrix-white/60 mb-6">
+          <span>{new Date(post.data.publishedAt).toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          })}</span>
+          {post.data.readingTime && (
+            <>
+              <span>•</span>
+              <span>{post.data.readingTime}</span>
+            </>
+          )}
+          <span>•</span>
+          <span>By {post.data.author}</span>
+        </div>
+
+        <!-- Title -->
+        <h1 class="text-4xl sm:text-5xl font-orbitron font-bold text-neon-lime mb-6">
+          {post.data.title}
+        </h1>
+
+        <!-- Description -->
+        <p class="text-xl text-matrix-white/80 max-w-3xl mx-auto mb-8">
+          {post.data.description}
+        </p>
+
+        <!-- Tags -->
+        <div class="flex flex-wrap justify-center gap-2">
+          {post.data.tags.map(tag => (
+            <span class="px-3 py-1 bg-neon-lime/10 text-neon-lime text-sm rounded-full border border-neon-lime/20">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Article Content -->
+  <section class="py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Cover Image -->
+      {post.data.coverImage && (
+        <div class="mb-12">
+          <img 
+            src={post.data.coverImage} 
+            alt={`Cover image for ${post.data.title}`}
+            class="w-full h-64 md:h-96 object-cover rounded-lg shadow-2xl"
+            loading="eager"
+          >
+        </div>
+      )}
+
+      <!-- Article Body -->
+      <article class="prose prose-invert prose-lg max-w-none">
+        <div class="card">
+          <Content />
+        </div>
+      </article>
+
+      <!-- Article Footer -->
+      <div class="mt-12 pt-8 border-t border-cyber-gray/30">
+        <div class="flex items-center justify-between text-sm text-matrix-white/60">
+          <div class="flex items-center space-x-4">
+            <span>Published: {new Date(post.data.publishedAt).toLocaleDateString()}</span>
+            {post.data.updatedAt && (
+              <>
+                <span>•</span>
+                <span>Updated: {new Date(post.data.updatedAt).toLocaleDateString()}</span>
+              </>
+            )}
+          </div>
+          <div class="flex items-center space-x-4">
+            <span>Category: {post.data.category}</span>
+            <span>•</span>
+            <span>{post.data.tags.length} tags</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Share Buttons -->
+      <div class="mt-8 flex items-center justify-center space-x-4">
+        <span class="text-sm text-matrix-white/60">Share this article:</span>
+        <a 
+          href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.data.title)}&url=${encodeURIComponent(Astro.url.href)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="p-2 bg-cyber-gray/50 rounded-lg hover:bg-neon-lime/10 transition-colors"
+          aria-label="Share on Twitter"
+        >
+          <svg class="w-5 h-5 text-matrix-white/80" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+          </svg>
+        </a>
+        <a 
+          href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(Astro.url.href)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="p-2 bg-cyber-gray/50 rounded-lg hover:bg-digital-emerald/10 transition-colors"
+          aria-label="Share on LinkedIn"
+        >
+          <svg class="w-5 h-5 text-matrix-white/80" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Posts -->
+  {relatedPosts.length > 0 && (
+    <section class="py-16 bg-cyber-gray/20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-8 text-center">
+          📚 Related Articles
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {relatedPosts.map(relatedPost => (
+            <article class="card group hover:scale-[1.02] transition-transform duration-300">
+              {relatedPost.data.coverImage && (
+                <div class="mb-4">
+                  <img 
+                    src={relatedPost.data.coverImage} 
+                    alt={`Cover image for ${relatedPost.data.title}`}
+                    class="w-full h-40 object-cover rounded-lg"
+                    loading="lazy"
+                  >
+                </div>
+              )}
+              <div class="space-y-3">
+                <div class="flex items-center space-x-4 text-sm text-matrix-white/60">
+                  <span>{new Date(relatedPost.data.publishedAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>
+                  {relatedPost.data.readingTime && (
+                    <>
+                      <span>•</span>
+                      <span>{relatedPost.data.readingTime}</span>
+                    </>
+                  )}
+                </div>
+                <h3 class="text-lg font-orbitron font-bold text-neon-lime">
+                  <a href={`/blog/${relatedPost.slug}`} class="hover:text-glow transition-all duration-300">
+                    {relatedPost.data.title}
+                  </a>
+                </h3>
+                <p class="text-matrix-white/80 text-sm">
+                  {relatedPost.data.excerpt || relatedPost.data.description}
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  {relatedPost.data.tags.slice(0, 2).map(tag => (
+                    <span class="px-2 py-1 bg-neon-lime/10 text-neon-lime text-xs rounded">{tag}</span>
+                  ))}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Back to Blog -->
+  <section class="py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <a href="/blog" class="btn-primary">
+        ← Back to Blog
+      </a>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  /* Custom styles for MDX content */
+  .prose {
+    color: #E8FFE8;
+  }
+
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    color: #39FF14;
+  }
+
+  .prose h1 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .prose h2 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    margin-bottom: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .prose h3 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+  }
+
+  .prose p {
+    color: rgba(232, 255, 232, 0.9);
+    line-height: 1.625;
+    margin-bottom: 1.5rem;
+  }
+
+  .prose ul,
+  .prose ol {
+    color: rgba(232, 255, 232, 0.9);
+    margin-bottom: 1.5rem;
+  }
+
+  .prose li {
+    margin-bottom: 0.5rem;
+  }
+
+  .prose strong {
+    color: #39FF14;
+    font-weight: 600;
+  }
+
+  .prose em {
+    color: #00B86B;
+    font-style: italic;
+  }
+
+  .prose a {
+    color: #39FF14;
+    text-decoration: underline;
+    transition: all 0.3s;
+  }
+
+  .prose a:hover {
+    color: #E8FFE8;
+  }
+
+  .prose blockquote {
+    border-left: 4px solid #39FF14;
+    padding-left: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: rgba(34, 34, 34, 0.3);
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    font-style: italic;
+  }
+
+  .prose code {
+    background-color: #222222;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    color: #39FF14;
+    font-size: 0.875rem;
+  }
+
+  .prose pre {
+    background-color: #0A0A0A;
+    border: 1px solid rgba(57, 255, 20, 0.2);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    overflow-x: auto;
+  }
+
+  .prose pre code {
+    background-color: transparent;
+    padding: 0;
+    color: #E8FFE8;
+  }
+
+  .prose table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid rgba(34, 34, 34, 0.3);
+  }
+
+  .prose th,
+  .prose td {
+    border: 1px solid rgba(34, 34, 34, 0.3);
+    padding: 0.5rem 1rem;
+    text-align: left;
+  }
+
+  .prose th {
+    background-color: rgba(34, 34, 34, 0.5);
+    color: #39FF14;
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  .prose img {
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Syntax highlighting for code blocks */
+  .prose pre {
+    position: relative;
+  }
+
+  .prose pre::before {
+    content: attr(data-language);
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    font-size: 0.75rem;
+    color: rgba(232, 255, 232, 0.6);
+    background-color: rgba(34, 34, 34, 0.5);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+  }
+</style> 

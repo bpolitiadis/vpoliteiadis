@@ -1,0 +1,376 @@
+---
+import { getCollection } from 'astro:content';
+import MainLayout from '../../layouts/MainLayout.astro';
+
+// Get all published blog posts
+const allPosts = await getCollection('blog');
+const posts = allPosts
+  .filter(post => !post.data.draft)
+  .sort((a, b) => new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime());
+
+// Get unique categories and tags for filtering
+const categories = [...new Set(posts.map(post => post.data.category))];
+const allTags = posts.flatMap(post => post.data.tags);
+const tags = [...new Set(allTags)];
+
+// Get featured posts
+const featuredPosts = posts.filter(post => post.data.featured);
+const regularPosts = posts.filter(post => !post.data.featured);
+
+// SEO metadata
+const title = "Blog - Vasileios Politeiadis";
+const description = "Read insights on full-stack development, AI technology, automation, and creative applications from Vasileios Politeiadis.";
+---
+
+<MainLayout 
+  title={title}
+  description={description}
+  currentPath="/blog"
+>
+  <!-- Hero Section -->
+  <section class="relative py-20 bg-gradient-to-br from-matrix-black via-cyber-gray to-matrix-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h1 class="text-4xl sm:text-5xl font-orbitron font-bold text-neon-lime mb-6">
+          Blog
+        </h1>
+        <p class="text-xl text-matrix-white/80 max-w-3xl mx-auto">
+          Insights on technology, creativity, and the intersection of human and artificial intelligence
+        </p>
+        <div class="mt-8 flex flex-wrap justify-center gap-4">
+          <span class="text-sm text-matrix-white/60">
+            {posts.length} articles published
+          </span>
+          <span class="text-sm text-matrix-white/60">
+            {categories.length} categories
+          </span>
+          <span class="text-sm text-matrix-white/60">
+            {tags.length} topics covered
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Content -->
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Filter Controls -->
+      <div class="mb-12">
+        <div class="card">
+          <h2 class="text-xl font-orbitron font-bold text-neon-lime mb-6">
+            🔍 Filter Articles
+          </h2>
+          
+          <!-- Category Filter -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-matrix-white mb-3">Category</label>
+            <div class="flex flex-wrap gap-2">
+              <button 
+                class="filter-btn active" 
+                data-filter="category" 
+                data-value="all"
+                aria-label="Show all categories"
+              >
+                All Categories
+              </button>
+              {categories.map(category => (
+                <button 
+                  class="filter-btn" 
+                  data-filter="category" 
+                  data-value={category}
+                  aria-label={`Filter by ${category} category`}
+                >
+                  {category.charAt(0).toUpperCase() + category.slice(1)}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <!-- Tag Filter -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-matrix-white mb-3">Tags</label>
+            <div class="flex flex-wrap gap-2">
+              <button 
+                class="filter-btn active" 
+                data-filter="tag" 
+                data-value="all"
+                aria-label="Show all tags"
+              >
+                All Tags
+              </button>
+              {tags.slice(0, 10).map(tag => (
+                <button 
+                  class="filter-btn" 
+                  data-filter="tag" 
+                  data-value={tag}
+                  aria-label={`Filter by ${tag} tag`}
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <!-- Search -->
+          <div>
+            <label for="search" class="block text-sm font-medium text-matrix-white mb-3">Search</label>
+            <input 
+              type="text" 
+              id="search" 
+              placeholder="Search articles..." 
+              class="w-full px-4 py-3 bg-cyber-gray border border-neon-lime/20 rounded-lg text-matrix-white placeholder-matrix-white/50 focus:border-neon-lime/50 focus:outline-none"
+              aria-label="Search blog articles"
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured Posts -->
+      {featuredPosts.length > 0 && (
+        <div class="mb-16">
+          <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-8">
+            🌟 Featured Posts
+          </h2>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {featuredPosts.map(post => (
+              <article class="card group hover:scale-[1.02] transition-transform duration-300" data-category={post.data.category} data-tags={post.data.tags.join(',')}>
+                {post.data.coverImage && (
+                  <div class="mb-4">
+                    <img 
+                      src={post.data.coverImage} 
+                      alt={`Cover image for ${post.data.title}`}
+                      class="w-full h-48 object-cover rounded-lg"
+                      loading="lazy"
+                    >
+                  </div>
+                )}
+                <div class="space-y-4">
+                  <div class="flex items-center space-x-4 text-sm text-matrix-white/60">
+                    <span class="px-2 py-1 bg-neon-lime/10 text-neon-lime rounded">Featured</span>
+                    <span>{new Date(post.data.publishedAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</span>
+                    {post.data.readingTime && (
+                      <>
+                        <span>•</span>
+                        <span>{post.data.readingTime}</span>
+                      </>
+                    )}
+                  </div>
+                  <h3 class="text-2xl font-orbitron font-bold text-neon-lime">
+                    <a href={`/blog/${post.slug}`} class="hover:text-glow transition-all duration-300">
+                      {post.data.title}
+                    </a>
+                  </h3>
+                  <p class="text-matrix-white/80 text-lg">
+                    {post.data.excerpt || post.data.description}
+                  </p>
+                  <div class="flex flex-wrap gap-2">
+                    {post.data.tags.slice(0, 3).map(tag => (
+                      <span class="px-2 py-1 bg-neon-lime/10 text-neon-lime text-xs rounded">{tag}</span>
+                    ))}
+                  </div>
+                  <div class="pt-4">
+                    <a href={`/blog/${post.slug}`} class="btn-primary">
+                      Read More
+                    </a>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- All Posts -->
+      <div class="mb-16">
+        <h2 class="text-2xl font-orbitron font-bold text-digital-emerald mb-8">
+          📝 All Posts
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="posts-grid">
+          {regularPosts.map(post => (
+            <article class="card group hover:scale-[1.02] transition-transform duration-300" data-category={post.data.category} data-tags={post.data.tags.join(',')}>
+              {post.data.coverImage && (
+                <div class="mb-4">
+                  <img 
+                    src={post.data.coverImage} 
+                    alt={`Cover image for ${post.data.title}`}
+                    class="w-full h-40 object-cover rounded-lg"
+                    loading="lazy"
+                  >
+                </div>
+              )}
+              <div class="space-y-3">
+                <div class="flex items-center space-x-4 text-sm text-matrix-white/60">
+                  <span>{new Date(post.data.publishedAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</span>
+                  {post.data.readingTime && (
+                    <>
+                      <span>•</span>
+                      <span>{post.data.readingTime}</span>
+                    </>
+                  )}
+                </div>
+                <h3 class="text-xl font-orbitron font-bold text-neon-lime">
+                  <a href={`/blog/${post.slug}`} class="hover:text-glow transition-all duration-300">
+                    {post.data.title}
+                  </a>
+                </h3>
+                <p class="text-matrix-white/80 mb-4">
+                  {post.data.excerpt || post.data.description}
+                </p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  {post.data.tags.slice(0, 3).map(tag => (
+                    <span class="px-2 py-1 bg-neon-lime/10 text-neon-lime text-xs rounded">{tag}</span>
+                  ))}
+                </div>
+                <a href={`/blog/${post.slug}`} class="text-neon-lime hover:text-glow transition-all duration-300">
+                  Read More →
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <!-- No Results Message -->
+        <div id="no-results" class="hidden text-center py-12">
+          <div class="text-6xl mb-4">🔍</div>
+          <h3 class="text-xl font-orbitron font-bold text-matrix-white/60 mb-2">
+            No articles found
+          </h3>
+          <p class="text-matrix-white/60">
+            Try adjusting your filters or search terms
+          </p>
+        </div>
+      </div>
+
+      <!-- Newsletter Signup -->
+      <div class="card">
+        <div class="text-center">
+          <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-4">
+            📧 Stay Updated
+          </h2>
+          <p class="text-matrix-white/80 mb-6 max-w-2xl mx-auto">
+            Get notified when I publish new articles about technology, creativity, and AI. 
+            No spam, just valuable insights delivered to your inbox.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <input 
+              type="email" 
+              placeholder="Enter your email" 
+              class="flex-1 px-4 py-3 bg-cyber-gray border border-neon-lime/20 rounded-lg text-matrix-white placeholder-matrix-white/50 focus:border-neon-lime/50 focus:outline-none"
+              aria-label="Email address for newsletter subscription"
+            >
+            <button class="btn-primary whitespace-nowrap">
+              Subscribe
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .filter-btn {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    background-color: #222222;
+    border: 1px solid rgba(57, 255, 20, 0.2);
+    border-radius: 0.5rem;
+    color: #E8FFE8;
+    transition: all 0.3s;
+  }
+  
+  .filter-btn:hover {
+    border-color: rgba(57, 255, 20, 0.5);
+    background-color: rgba(57, 255, 20, 0.1);
+  }
+  
+  .filter-btn.active {
+    background-color: rgba(57, 255, 20, 0.2);
+    border-color: #39FF14;
+    color: #39FF14;
+  }
+</style>
+
+<script>
+  // Client-side filtering functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const posts = document.querySelectorAll('[data-category]');
+    const searchInput = document.getElementById('search') as HTMLInputElement;
+    const noResults = document.getElementById('no-results');
+    const postsGrid = document.getElementById('posts-grid');
+
+    const activeFilters: {
+      category: string;
+      tag: string;
+      search: string;
+    } = {
+      category: 'all',
+      tag: 'all',
+      search: ''
+    };
+
+    function filterPosts() {
+      let visibleCount = 0;
+
+      posts.forEach((post) => {
+        const category = post.getAttribute('data-category');
+        const tags = post.getAttribute('data-tags')?.split(',') || [];
+        const title = post.querySelector('h3')?.textContent?.toLowerCase() || '';
+        const description = post.querySelector('p')?.textContent?.toLowerCase() || '';
+
+        const categoryMatch = activeFilters.category === 'all' || category === activeFilters.category;
+        const tagMatch = activeFilters.tag === 'all' || tags.includes(activeFilters.tag);
+        const searchMatch = !activeFilters.search || 
+          title.includes(activeFilters.search.toLowerCase()) || 
+          description.includes(activeFilters.search.toLowerCase());
+
+        if (categoryMatch && tagMatch && searchMatch) {
+          (post as HTMLElement).style.display = 'block';
+          visibleCount++;
+        } else {
+          (post as HTMLElement).style.display = 'none';
+        }
+      });
+
+      // Show/hide no results message
+      if (visibleCount === 0) {
+        noResults?.classList.remove('hidden');
+        postsGrid?.classList.add('hidden');
+      } else {
+        noResults?.classList.add('hidden');
+        postsGrid?.classList.remove('hidden');
+      }
+    }
+
+    // Filter button click handlers
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', function(this: HTMLElement) {
+        const filterType = this.getAttribute('data-filter');
+        const filterValue = this.getAttribute('data-value');
+
+        if (filterType && filterValue) {
+          // Update active state
+          document.querySelectorAll(`[data-filter="${filterType}"]`).forEach((btn) => {
+            btn.classList.remove('active');
+          });
+          this.classList.add('active');
+
+          // Update active filters
+          if (filterType === 'category' || filterType === 'tag') {
+            (activeFilters as Record<string, string>)[filterType] = filterValue;
+          }
+          filterPosts();
+        }
+      });
+    });
+
+    // Search input handler
+    searchInput?.addEventListener('input', function(this: HTMLInputElement) {
+      activeFilters.search = this.value;
+      filterPosts();
+    });
+  });
+</script> 

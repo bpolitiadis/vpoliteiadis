@@ -1,0 +1,398 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import { getCollection } from 'astro:content';
+
+// Generate static paths for all projects
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+// Get the current project data
+const { project } = Astro.props;
+const { Content } = await project.render();
+
+// Get related projects (same tags or tech stack)
+const allProjects = await getCollection('projects');
+const relatedProjects = allProjects
+  .filter(p => p.slug !== project.slug)
+  .filter(p => 
+    p.data.tags.some(tag => project.data.tags.includes(tag)) ||
+    p.data.techStack.some(tech => project.data.techStack.includes(tech))
+  )
+  .slice(0, 3);
+---
+
+<MainLayout 
+  title={`${project.data.title} - Case Study`} 
+  description={project.data.description}
+  currentPath="/projects"
+  type="article"
+  publishedAt={new Date(project.data.publishedAt).toISOString()}
+  updatedAt={project.data.updatedAt ? new Date(project.data.updatedAt).toISOString() : undefined}
+  author="Vasileios Politeiadis"
+  image={project.data.coverImage || '/images/og-default.jpg'}
+>
+  <!-- SEO Structured Data -->
+  <script type="application/ld+json" is:inline set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": project.data.title,
+    "description": project.data.description,
+    "author": {
+      "@type": "Person",
+      "name": "Vasileios Politeiadis"
+    },
+    "datePublished": new Date(project.data.publishedAt).toISOString(),
+    "dateModified": project.data.updatedAt ? new Date(project.data.updatedAt).toISOString() : new Date(project.data.publishedAt).toISOString(),
+    "keywords": project.data.tags.join(', '),
+    "image": project.data.coverImage ? `https://vpoliteiadis.com${project.data.coverImage}` : undefined,
+    "url": `https://vpoliteiadis.com/projects/${project.slug}`,
+    "mainEntity": {
+      "@type": "SoftwareApplication",
+      "name": project.data.title,
+      "description": project.data.description,
+      "applicationCategory": "WebApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  })} />
+
+  <main class="min-h-screen bg-matrix-black text-matrix-white">
+    <!-- Hero Section -->
+    <section class="relative py-20 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <!-- Back Button -->
+        <div class="mb-8">
+          <a 
+            href="/projects" 
+            class="inline-flex items-center text-neon-lime hover:text-matrix-white transition-colors"
+          >
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Projects
+          </a>
+        </div>
+
+        <!-- Project Header -->
+        <div class="grid lg:grid-cols-2 gap-12 items-center mb-16">
+          <div>
+            <div class="flex items-center gap-4 mb-6">
+              {project.data.featured && (
+                <span class="px-3 py-1 bg-neon-lime text-matrix-black text-sm font-bold rounded-full">
+                  Featured Project
+                </span>
+              )}
+              <span class="px-3 py-1 bg-cyber-gray text-cyber-gray-light text-sm rounded-full">
+                {project.data.status}
+              </span>
+            </div>
+            
+            <h1 class="text-h1 font-orbitron text-neon-lime mb-6 animate-fade-in">
+              {project.data.title}
+            </h1>
+            
+            <p class="text-body text-cyber-gray-light mb-8">
+              {project.data.description}
+            </p>
+
+            <!-- Project Meta -->
+            <div class="grid grid-cols-2 gap-6 mb-8">
+              {project.data.client && (
+                <div>
+                  <h4 class="text-sm font-semibold text-digital-emerald mb-1">Client</h4>
+                  <p class="text-body">{project.data.client}</p>
+                </div>
+              )}
+              {project.data.duration && (
+                <div>
+                  <h4 class="text-sm font-semibold text-digital-emerald mb-1">Duration</h4>
+                  <p class="text-body">{project.data.duration}</p>
+                </div>
+              )}
+              {project.data.role && (
+                <div>
+                  <h4 class="text-sm font-semibold text-digital-emerald mb-1">Role</h4>
+                  <p class="text-body">{project.data.role}</p>
+                </div>
+              )}
+              {project.data.team && (
+                <div>
+                  <h4 class="text-sm font-semibold text-digital-emerald mb-1">Team</h4>
+                  <p class="text-body">{project.data.team.join(', ')}</p>
+                </div>
+              )}
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap gap-4">
+              {project.data.liveUrl && (
+                <a
+                  href={project.data.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center px-6 py-3 bg-neon-lime text-matrix-black font-semibold rounded-lg 
+                         hover:bg-matrix-white transition-all duration-300 animate-glow"
+                >
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                  View Live
+                </a>
+              )}
+              {project.data.githubUrl && (
+                <a
+                  href={project.data.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center px-6 py-3 border border-cyber-gray-light text-cyber-gray-light 
+                         hover:border-neon-lime hover:text-neon-lime transition-all duration-300 rounded-lg"
+                >
+                  <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
+                  View Code
+                </a>
+              )}
+            </div>
+          </div>
+
+          <!-- Project Cover -->
+          <div class="relative">
+            {project.data.coverVideo ? (
+              <video
+                class="w-full rounded-lg shadow-2xl"
+                autoplay
+                muted
+                loop
+                playsinline
+              >
+                <source src={project.data.coverVideo} type="video/mp4" />
+                <img src={project.data.coverImage} alt={project.data.title} class="w-full rounded-lg" />
+              </video>
+            ) : (
+              <img
+                src={project.data.coverImage}
+                alt={project.data.title}
+                class="w-full rounded-lg shadow-2xl"
+              />
+            )}
+          </div>
+        </div>
+
+        <!-- Tech Stack -->
+        <div class="mb-16">
+          <h2 class="text-h2 font-orbitron text-digital-emerald mb-6">Tech Stack</h2>
+          <div class="flex flex-wrap gap-3">
+            {project.data.techStack.map((tech: string) => (
+              <span class="px-4 py-2 bg-digital-emerald/20 text-digital-emerald rounded-lg border border-digital-emerald/30">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <!-- Project Tags -->
+        <div class="mb-16">
+          <h2 class="text-h2 font-orbitron text-digital-emerald mb-6">Categories</h2>
+          <div class="flex flex-wrap gap-3">
+            {project.data.tags.map((tag: string) => (
+              <span class="px-4 py-2 bg-cyber-gray-light text-matrix-black rounded-lg">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Case Study Content -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-cyber-gray">
+      <div class="max-w-4xl mx-auto">
+        <!-- MDX Content -->
+        <article class="prose prose-invert prose-lg max-w-none">
+          <Content />
+        </article>
+      </div>
+    </section>
+
+    <!-- Project Sections -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <!-- Problem & Solution -->
+        <div class="grid lg:grid-cols-2 gap-12 mb-16">
+          <div>
+            <h2 class="text-h2 font-orbitron text-neon-lime mb-6">The Problem</h2>
+            <p class="text-body text-cyber-gray-light leading-relaxed">
+              {project.data.problem}
+            </p>
+          </div>
+          <div>
+            <h2 class="text-h2 font-orbitron text-digital-emerald mb-6">The Solution</h2>
+            <p class="text-body text-cyber-gray-light leading-relaxed">
+              {project.data.solution}
+            </p>
+          </div>
+        </div>
+
+        <!-- Impact -->
+        <div class="mb-16">
+          <h2 class="text-h2 font-orbitron text-neon-lime mb-6">The Impact</h2>
+          <p class="text-body text-cyber-gray-light leading-relaxed">
+            {project.data.impact}
+          </p>
+        </div>
+
+        <!-- Challenges & Learnings -->
+        {project.data.challenges && project.data.challenges.length > 0 && (
+          <div class="grid lg:grid-cols-2 gap-12 mb-16">
+            <div>
+              <h2 class="text-h2 font-orbitron text-neon-lime mb-6">Key Challenges</h2>
+              <ul class="space-y-3">
+                {project.data.challenges.map((challenge: string) => (
+                  <li class="flex items-start">
+                    <span class="text-neon-lime mr-3 mt-1">•</span>
+                    <span class="text-body text-cyber-gray-light">{challenge}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {project.data.learnings && project.data.learnings.length > 0 && (
+              <div>
+                <h2 class="text-h2 font-orbitron text-digital-emerald mb-6">Key Learnings</h2>
+                <ul class="space-y-3">
+                  {project.data.learnings.map((learning: string) => (
+                    <li class="flex items-start">
+                      <span class="text-digital-emerald mr-3 mt-1">•</span>
+                      <span class="text-body text-cyber-gray-light">{learning}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
+
+        <!-- Project Gallery -->
+        {project.data.gallery && project.data.gallery.length > 0 && (
+          <div class="mb-16">
+            <h2 class="text-h2 font-orbitron text-neon-lime mb-6">Project Gallery</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {project.data.gallery.map((image: string) => (
+                <div class="group relative overflow-hidden rounded-lg">
+                  <img
+                    src={image}
+                    alt="Project screenshot"
+                    class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-matrix-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- Related Projects -->
+    {relatedProjects.length > 0 && (
+      <section class="py-20 px-4 sm:px-6 lg:px-8 bg-cyber-gray">
+        <div class="max-w-7xl mx-auto">
+          <h2 class="text-h2 font-orbitron text-neon-lime mb-12 text-center">Related Projects</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {relatedProjects.map((relatedProject) => (
+              <article class="group bg-matrix-black rounded-lg overflow-hidden border border-cyber-gray-light 
+                             hover:border-neon-lime transition-all duration-500 hover:scale-105">
+                <div class="relative overflow-hidden h-48">
+                  <img
+                    src={relatedProject.data.coverImage}
+                    alt={relatedProject.data.title}
+                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-matrix-black/80 to-transparent opacity-0 
+                              group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <div class="p-6">
+                  <h3 class="text-h3 font-orbitron text-neon-lime mb-2 group-hover:text-matrix-white transition-colors">
+                    {relatedProject.data.title}
+                  </h3>
+                  <p class="text-body text-cyber-gray-light mb-4 line-clamp-3">
+                    {relatedProject.data.excerpt || relatedProject.data.description}
+                  </p>
+                  <a
+                    href={`/projects/${relatedProject.slug}`}
+                    class="inline-flex items-center text-neon-lime hover:text-matrix-white transition-colors"
+                  >
+                    View Case Study
+                    <svg class="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+  </main>
+</MainLayout>
+
+<style>
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  /* Custom prose styles for MDX content */
+  .prose {
+    color: #E8FFE8;
+  }
+  
+  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+    color: #39FF14;
+    font-family: 'Orbitron', sans-serif;
+  }
+  
+  .prose a {
+    color: #39FF14;
+    text-decoration: none;
+  }
+  
+  .prose a:hover {
+    color: #E8FFE8;
+    text-decoration: underline;
+  }
+  
+  .prose strong {
+    color: #00B86B;
+  }
+  
+  .prose code {
+    background-color: #222222;
+    color: #39FF14;
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.25rem;
+  }
+  
+  .prose pre {
+    background-color: #0A0A0A;
+    border: 1px solid #222222;
+    border-radius: 0.5rem;
+  }
+  
+  .prose blockquote {
+    border-left-color: #39FF14;
+    color: #E8FFE8;
+  }
+</style> 
