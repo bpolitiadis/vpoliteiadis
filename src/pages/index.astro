@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Vasileios Politeiadis - Full-Stack Developer & AI Visionary">
+  <main class="min-h-screen">
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <!-- Background Effects -->
+      <div class="absolute inset-0 bg-gradient-to-br from-matrix-black via-cyber-gray to-matrix-black"></div>
+      <div class="absolute inset-0 opacity-20">
+        <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(57,255,20,0.1),transparent_50%)]"></div>
+      </div>
+      
+      <!-- Content -->
+      <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+        <h1 class="text-5xl md:text-7xl font-orbitron font-bold text-neon-lime text-glow mb-6">
+          Vasileios Politeiadis
+        </h1>
+        
+        <p class="text-xl md:text-2xl text-matrix-white mb-8 max-w-2xl mx-auto">
+          Full-Stack Developer & AI Visionary
+        </p>
+        
+        <p class="text-lg text-cyber-gray mb-12 max-w-3xl mx-auto leading-relaxed">
+          Bridging cutting-edge technology with surreal creativity. 
+          QA Automation Engineer by day, passionate product builder and AI artist by night.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#projects" class="btn-primary">
+            Explore Projects
+          </a>
+          <a href="#about" class="btn-secondary">
+            About Me
+          </a>
+        </div>
+      </div>
+      
+      <!-- Floating Elements -->
+      <div class="absolute top-20 left-10 w-2 h-2 bg-neon-lime rounded-full animate-pulse"></div>
+      <div class="absolute top-40 right-20 w-1 h-1 bg-digital-emerald rounded-full animate-pulse delay-1000"></div>
+      <div class="absolute bottom-40 left-20 w-1.5 h-1.5 bg-neon-lime rounded-full animate-pulse delay-2000"></div>
+    </section>
+    
+    <!-- Quick Info Cards -->
+    <section class="py-20 px-4">
+      <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+        <div class="card">
+          <h3 class="text-xl font-orbitron text-neon-lime mb-4">QA Automation</h3>
+          <p class="text-cyber-gray">Senior QA Automation Engineer specializing in Java, Selenium, and Playwright for European Commission projects.</p>
+        </div>
+        
+        <div class="card">
+          <h3 class="text-xl font-orbitron text-digital-emerald mb-4">Full-Stack Development</h3>
+          <p class="text-cyber-gray">Building modern web applications with React, Next.js, Node.js, and cutting-edge technologies.</p>
+        </div>
+        
+        <div class="card">
+          <h3 class="text-xl font-orbitron text-neon-lime mb-4">AI & Creative Tech</h3>
+          <p class="text-cyber-gray">AI-driven creative experimentation and digital art, exploring the intersection of technology and imagination.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
