@@ -137,38 +137,33 @@ const { id } = Astro.props;
 </div>
 
 <script>
-  // Simple modal functionality without complex TypeScript
-  let currentCreativeItems: unknown[] = [];
+  // Simple modal functionality (typed for Astro TS)
+  // Using TypeScript inline types for better tooling
+  type CreativeItem = { slug?: string; data?: Record<string, any> };
+  let currentCreativeItems: CreativeItem[] = [];
   let currentIndex = 0;
 
   function initModal() {
     const modal = document.getElementById('creative-modal');
     if (!modal) return;
 
-    // Close handlers
     modal.querySelector('#modal-backdrop')?.addEventListener('click', closeModal);
     modal.querySelector('#modal-close')?.addEventListener('click', closeModal);
-    
-    // Navigation handlers
     modal.querySelector('#modal-prev')?.addEventListener('click', previousItem);
     modal.querySelector('#modal-next')?.addEventListener('click', nextItem);
-    
-    // Keyboard navigation
+
     document.addEventListener('keydown', (e) => {
       if (!modal.classList.contains('hidden')) {
-        switch(e.key) {
-          case 'Escape': closeModal(); break;
-          case 'ArrowLeft': previousItem(); break;
-          case 'ArrowRight': nextItem(); break;
-        }
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowLeft') previousItem();
+        if (e.key === 'ArrowRight') nextItem();
       }
     });
   }
 
-  function openModal(creativeItems: unknown[], startIndex = 0) {
-    currentCreativeItems = creativeItems;
+  function openModal(creativeItems: CreativeItem[], startIndex = 0) {
+    currentCreativeItems = Array.isArray(creativeItems) ? creativeItems : [];
     currentIndex = startIndex;
-    
     const modal = document.getElementById('creative-modal');
     if (modal) {
       modal.classList.remove('hidden');
@@ -202,33 +197,27 @@ const { id } = Astro.props;
   function updateModalContent() {
     const item = currentCreativeItems[currentIndex];
     if (!item) return;
-
     const modal = document.getElementById('creative-modal');
     if (!modal) return;
 
-    // Update title and description
     const titleEl = modal.querySelector('#modal-title');
     const descEl = modal.querySelector('#modal-description');
-    if (titleEl && item && typeof item === 'object' && 'data' in item) {
-      const itemData = item.data as { title: string; description: string };
-      titleEl.textContent = itemData.title;
-      if (descEl) descEl.textContent = itemData.description;
+    if (titleEl && item && typeof item === 'object' && 'data' in item && item.data) {
+      const itemData = item.data as Record<string, any>;
+      titleEl.textContent = (itemData.title as string) || '';
+      if (descEl) descEl.textContent = (itemData.description as string) || '';
     }
 
-    // Update navigation
-    const prevBtn = modal.querySelector('#modal-prev') as HTMLButtonElement;
-    const nextBtn = modal.querySelector('#modal-next') as HTMLButtonElement;
+    const prevBtn = modal.querySelector('#modal-prev');
+    const nextBtn = modal.querySelector('#modal-next');
     const counter = modal.querySelector('#modal-counter');
-    
-    if (prevBtn) prevBtn.disabled = currentIndex === 0;
-    if (nextBtn) nextBtn.disabled = currentIndex === currentCreativeItems.length - 1;
+    if (prevBtn instanceof HTMLButtonElement) prevBtn.disabled = currentIndex === 0;
+    if (nextBtn instanceof HTMLButtonElement) nextBtn.disabled = currentIndex === currentCreativeItems.length - 1;
     if (counter) counter.textContent = `${currentIndex + 1} of ${currentCreativeItems.length}`;
   }
 
-  // Initialize when DOM is loaded
   document.addEventListener('DOMContentLoaded', () => {
     initModal();
-    // Make modal globally accessible
-    (window as unknown as { creativeModal?: { open: (data: unknown[], index: number) => void } }).creativeModal = { open: openModal };
+    (window as unknown as { creativeModal?: { open: (items: CreativeItem[], index?: number) => void } }).creativeModal = { open: openModal };
   });
-</script> 
+</script>

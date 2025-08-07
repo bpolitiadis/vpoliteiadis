@@ -177,39 +177,18 @@ const ogImageURL = new URL(image, Astro.site);
       </div>
     </footer>
     
-    <!-- Defer non-critical JavaScript -->
+    <!-- Theme initialization -->
     <script>
-      // Force cache refresh for development
-      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        // Clear any cached styles
-        const links = document.querySelectorAll('link[rel="stylesheet"]');
-        links.forEach(link => {
-          const linkElement = link as HTMLLinkElement;
-          if (linkElement.href.includes('localhost') || linkElement.href.includes('127.0.0.1')) {
-            linkElement.href = linkElement.href + '?v=' + Date.now();
-          }
-        });
-      }
-      
-      // Theme initialization
-      function initTheme() {
-        // Check for saved theme preference or default to dark
+      (function initTheme() {
         const savedTheme = localStorage.getItem('theme') || 'dark';
         document.documentElement.classList.toggle('dark', savedTheme === 'dark');
-        
-        // Optimize font loading
         if ('fonts' in document) {
           Promise.all([
             document.fonts.load('400 1em Inter'),
             document.fonts.load('400 1em Orbitron')
-          ]).then(() => {
-            document.documentElement.classList.add('fonts-loaded');
-          });
+          ]).then(() => document.documentElement.classList.add('fonts-loaded'));
         }
-      }
-      
-      // Initialize theme immediately
-      initTheme();
+      })();
     </script>
   </body>
 </html>

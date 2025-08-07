@@ -11,7 +11,7 @@
 - **Linting:** [ESLint](https://eslint.org) v8.57.0
 - **Formatting:** [Prettier](https://prettier.io) v3.2.5
 - **Language:** TypeScript v5.9.2
-- **Animations:** Framer Motion v11.0.8
+- **Animations:** CSS keyframes & Tailwind utilities
 
 ## 🎨 Design System
 
@@ -85,9 +85,8 @@ vpoliteiadis/
 │   │   └── creative/            # Creative portfolio pieces
 │   │       ├── cyberpunk-portrait.md
 │   │       └── neon-dreams-video.md
-│   ├── layouts/
-│   │   ├── Layout.astro         # Base layout component
-│   │   └── MainLayout.astro     # Main layout with navigation
+   │   ├── layouts/
+   │   │   └── MainLayout.astro     # Main layout with navigation & SEO
 │   ├── pages/
 │   │   ├── index.astro          # Homepage
 │   │   ├── about.astro          # About page
@@ -488,7 +487,7 @@ pnpm preview
 - **Static Generation:** All pages pre-rendered
 - **Image Optimization:** WebP format, lazy loading
 - **Code Splitting:** Automatic by Astro
-- **Minification:** CSS, JS, and HTML minified
+- **Minification:** CSS, JS, and HTML minified (Vite defaults)
 - **Caching:** Optimized cache headers
 
 ## 🔒 Security
@@ -582,4 +581,4 @@ This project is private and proprietary. All rights reserved.
 
 **Built with ❤️ and ☕ by Vasileios Politeiadis**
 
-*Last updated: December 2024*
+*Last updated: December 2024* 

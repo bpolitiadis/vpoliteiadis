@@ -20,11 +20,11 @@ const { project } = Astro.props;
 ---
 
 <article 
-  class="group relative border border-emerald/30 rounded-xl bg-[#111]/70 p-6 md:p-8 transition-all hover:border-neon hover:shadow-neon"
+  class="group relative border border-digital-emerald/30 rounded-xl bg-[#111]/70 p-6 md:p-8 transition-all hover:border-neon-lime hover:shadow-neon"
 >
   <!-- Featured Badge -->
   {project.data.featured && (
-    <div class="bg-neon text-black px-2 py-1 rounded font-bold text-xs uppercase absolute -mt-4 -ml-4">
+    <div class="bg-neon-lime text-black px-2 py-1 rounded font-bold text-xs uppercase absolute -mt-4 -ml-4">
       Featured
     </div>
   )}
@@ -68,12 +68,12 @@ const { project } = Astro.props;
     <!-- Minimal Tags Display -->
     <div class="flex flex-wrap gap-2 mb-6">
       {project.data.tags.slice(0, 3).map(tag => (
-        <span class="bg-emerald/10 border border-emerald/50 text-emerald rounded-full px-3 py-1 text-xs font-medium">
+        <span class="bg-digital-emerald/10 border border-digital-emerald/50 text-digital-emerald rounded-full px-3 py-1 text-xs font-medium">
           {tag}
         </span>
       ))}
       {project.data.tags.length > 3 && (
-        <span class="bg-emerald/10 border border-emerald/50 text-emerald rounded-full px-3 py-1 text-xs font-medium">
+        <span class="bg-digital-emerald/10 border border-digital-emerald/50 text-digital-emerald rounded-full px-3 py-1 text-xs font-medium">
           +{project.data.tags.length - 3}
         </span>
       )}
