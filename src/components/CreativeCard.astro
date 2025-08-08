@@ -48,7 +48,11 @@ const aspectClass = getAspectRatioClass(creative.data.aspectRatio);
 
   <!-- Media Container -->
   <div class={`relative overflow-hidden ${aspectClass} mb-6 rounded-xl content-visibility-auto`}>
-    <img src="/images/project-card-2-bg.png" alt="" class="absolute inset-0 w-full h-full object-cover opacity-15" width="1200" height="480" loading="lazy" decoding="async" aria-hidden="true" sizes="(max-width: 768px) 100vw, 600px" />
+    <picture>
+      <source srcset="/images/project-card-2-bg-800.avif 800w, /images/project-card-2-bg-480.avif 480w" type="image/avif" />
+      <source srcset="/images/project-card-2-bg-800.webp 800w, /images/project-card-2-bg-480.webp 480w" type="image/webp" />
+      <img src="/images/project-card-2-bg.png" alt="" class="absolute inset-0 w-full h-full object-cover opacity-15" width="1200" height="480" loading="lazy" decoding="async" aria-hidden="true" sizes="(max-width: 768px) 100vw, 600px" />
+    </picture>
     <!-- Video Cover -->
     {creative.data.coverVideo ? (
       <video

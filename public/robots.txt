@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://vpoliteiadis.com/sitemap-index.xml
+
+# Crawl-delay
+Crawl-delay: 1 

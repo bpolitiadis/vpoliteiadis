@@ -88,7 +88,10 @@ dist
 
 # Gatsby files
 .cache/
-public
+# Track `public/` so static assets (images, videos, scripts) are deployed.
+# Astro copies `public/` to the final build and it's safe to commit.
+# If you generate large temporary files inside `public/`, ignore them explicitly.
+# Example: `public/tmp/` (none used here)
 
 # Storybook build outputs
 .out
