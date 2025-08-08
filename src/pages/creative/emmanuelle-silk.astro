@@ -1,0 +1,43 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+---
+
+<MainLayout 
+  title="Emmanuelle Silk Collection" 
+  description="One of the first AI-driven fashion collections in Greece: an 8-piece silk scarf series."
+  currentPath="/creative/emmanuelle-silk"
+>
+  <section class="relative py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <a href="/creative" class="text-primary hover:underline inline-flex items-center gap-2 mb-6">
+        ← Back to Creative Lab
+      </a>
+
+      <header class="mb-8 text-center">
+        <h1 class="font-orbitron text-3xl md:text-5xl text-primary mb-4">Emmanuelle Silk</h1>
+        <p class="text-muted-foreground max-w-3xl mx-auto">
+          Among the first AI-driven fashion collections in Greece. An eight-piece silk scarf series exploring
+          generative aesthetics and material storytelling.
+        </p>
+      </header>
+
+      <div class="rounded-2xl overflow-hidden border border-border/40 bg-[rgba(10,10,10,0.6)] shadow-inner mb-10">
+        <img src="/creative/emmanuelle-silk/hero.jpg" alt="Emmanuelle Silk collection hero" class="w-full h-auto object-cover" loading="lazy" decoding="async" />
+      </div>
+
+      <h2 class="font-orbitron text-primary text-xl md:text-2xl mb-4">The Collection</h2>
+      <p class="text-matrix-white/90 mb-6">
+        This capsule explores algorithmic pattern-making, color synthesis, and iterative prompt engineering to achieve
+        luxurious, production-ready compositions for silk. Each design is curated for balance, texture, and movement.
+      </p>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-2">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <img src={`/creative/emmanuelle-silk/thumb-${i + 1}.jpg`} alt={`Silk design ${i + 1}`} class="w-full h-20 object-cover rounded" loading="lazy" decoding="async" />
+        ))}
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+

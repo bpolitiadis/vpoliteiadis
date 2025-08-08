@@ -98,7 +98,10 @@ vpoliteiadis/
 │   │   │   ├── index.astro      # Blog grid with filtering
 │   │   │   └── [slug].astro     # Dynamic blog post pages
 │   │   └── creative/
-│   │       └── index.astro      # Creative portfolio grid
+│   │       ├── index.astro           # Creative Lab page (featured projects grid)
+│   │       ├── emmanuelle-silk.astro # Emmanuelle Silk detail page
+│   │       ├── smoking-two.astro     # Smoking Two detail page
+│   │       └── arte-imaginari.astro  # Arte Imaginari detail page
 │   └── styles/
 │       └── global.css           # Global styles & Tailwind config
 ├── docs/

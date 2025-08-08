@@ -1,0 +1,61 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  /**
+   * Slug of the background image set located in `/public/images`.
+   * The component will look for:
+   *  - `/images/${bgSlug}-480.(avif|webp)`
+   *  - `/images/${bgSlug}-800.(avif|webp)`
+   *  - `/images/${bgSlug}-1200.(avif|webp)`
+   *  - `/images/${bgSlug}.png` (fallback)
+   */
+  bgSlug: string;
+  /** Optional small text below description, e.g. article count */
+  metaText?: string;
+  /** Eager-load hero image for above-the-fold pages */
+  eager?: boolean;
+}
+
+const { title, description, bgSlug, metaText, eager = false } = Astro.props;
+---
+
+<section class="relative py-20 overflow-hidden">
+  <!-- Decorative background with responsive sources -->
+  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <picture>
+      <source srcset={`/images/${bgSlug}-1200.avif 1200w, /images/${bgSlug}-800.avif 800w, /images/${bgSlug}-480.avif 480w`} type="image/avif" />
+      <source srcset={`/images/${bgSlug}-1200.webp 1200w, /images/${bgSlug}-800.webp 800w, /images/${bgSlug}-480.webp 480w`} type="image/webp" />
+      <img 
+        src={`/images/${bgSlug}.png`} 
+        alt=""
+        class="w-full h-full object-cover opacity-25"
+        width="2400" height="1400"
+        loading={eager ? 'eager' : 'lazy'}
+        decoding="async"
+        fetchpriority={eager ? 'high' : 'low'}
+        sizes="100vw"
+      />
+    </picture>
+    <div class="absolute inset-0 bg-gradient-to-br from-black/80 via-black/50 to-black/80"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h1 class="text-4xl md:text-6xl font-orbitron font-bold text-neon-lime mb-6 text-glow animate-fade-in">
+        {title}
+      </h1>
+      {description && (
+        <p class="text-base md:text-lg max-w-3xl mx-auto text-foreground/80 mb-6">
+          {description}
+        </p>
+      )}
+      {metaText && (
+        <div class="text-foreground/60 text-sm">{metaText}</div>
+      )}
+      <slot />
+    </div>
+  </div>
+</section>
+
+

@@ -1,0 +1,43 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+---
+
+<MainLayout 
+  title="Arte Imaginari – Experimental AI Lab" 
+  description="Personal experimental AI art lab: testing and pushing boundaries with new AI tools and workflows."
+  currentPath="/creative/arte-imaginari"
+>
+  <section class="relative py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <a href="/creative" class="text-primary hover:underline inline-flex items-center gap-2 mb-6">
+        ← Back to Creative Lab
+      </a>
+
+      <header class="mb-8 text-center">
+        <h1 class="font-orbitron text-3xl md:text-5xl text-primary mb-4">Arte Imaginari</h1>
+        <p class="text-muted-foreground max-w-3xl mx-auto">
+          A personal lab where I test and push boundaries with new AI tools, techniques, and aesthetics.
+        </p>
+      </header>
+
+      <div class="rounded-2xl overflow-hidden border border-border/40 bg-[rgba(10,10,10,0.6)] shadow-inner mb-10">
+        <img src="/creative/arte-imaginari/hero.jpg" alt="Arte Imaginari collage" class="w-full h-auto object-cover" loading="lazy" decoding="async" />
+      </div>
+
+      <h2 class="font-orbitron text-primary text-xl md:text-2xl mb-4">Instagram Preview</h2>
+      <div class="grid grid-cols-3 gap-2">
+        {Array.from({ length: 9 }).map((_, i) => (
+          <img src={`/creative/arte-imaginari/ig-${i + 1}.jpg`} alt={`Instagram preview ${i + 1}`} class="aspect-square w-full object-cover rounded" loading="lazy" decoding="async" />
+        ))}
+      </div>
+
+      <div class="pt-8">
+        <a href="https://instagram.com/arte.imaginari" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-6 py-3 border border-primary text-primary rounded-lg hover:bg-primary hover:text-background transition-colors duration-300">
+          Follow on Instagram
+        </a>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+

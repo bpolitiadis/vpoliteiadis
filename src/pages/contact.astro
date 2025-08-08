@@ -1,5 +1,6 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import PageHero from '../components/PageHero.astro';
 ---
 
 <MainLayout 
@@ -8,24 +9,12 @@ import MainLayout from '../layouts/MainLayout.astro';
   currentPath="/contact"
 >
   <div class="relative">
-    <!-- Page-wide decorative background -->
-    <div class="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
-      <img src="/images/contact-bg.png" alt="" class="w-full h-full object-cover opacity-25" width="2400" height="1400" loading="eager" decoding="async" fetchpriority="high" />
-      <div class="absolute inset-0 bg-gradient-to-br from-matrix-black/80 via-matrix-black/60 to-matrix-black/80"></div>
-    </div>
-  <!-- Hero Section (tightened vertical rhythm) -->
-  <section class="relative pt-10 pb-6 md:pt-14 md:pb-8 bg-gradient-to-br from-background/20 via-muted/10 to-background/20 overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-8 md:mb-10">
-        <h1 class="text-h1 font-orbitron text-neon-lime mb-6 animate-fade-in">
-          Contact
-        </h1>
-        <p class="text-body max-w-3xl mx-auto text-cyber-gray-light mb-4">
-          Let's collaborate on your next project or discuss creative opportunities
-        </p>
-      </div>
-    </div>
-  </section>
+    <PageHero
+      title="Contact"
+      description="Let's collaborate on your next project or discuss creative opportunities"
+      bgSlug="contact-bg"
+      eager={true}
+    />
 
   <!-- Contact Content -->
   <section class="pt-6 md:pt-8 pb-12 md:pb-16">

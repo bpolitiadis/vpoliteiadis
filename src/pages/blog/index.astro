@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import MainLayout from '../../layouts/MainLayout.astro';
+import PageHero from '../../components/PageHero.astro';
 
 // Get all published blog posts and sort by date
 const allPosts = await getCollection('blog');
@@ -36,36 +37,21 @@ const description =
   currentPath="/blog"
 >
   <div class="relative content-visibility-auto">
-    <!-- Decorative background -->
-    <div class="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
-      <picture>
-        <source srcset="/images/blog-bg.avif" type="image/avif" />
-        <source srcset="/images/blog-bg.webp" type="image/webp" />
-        <img src="/images/blog-bg.png" alt="" class="w-full h-full object-cover opacity-25" width="2400" height="1400" loading="lazy" decoding="async" fetchpriority="low" sizes="100vw" />
-      </picture>
-      <div class="absolute inset-0 bg-gradient-to-br from-matrix-black/85 via-matrix-black/60 to-matrix-black/85"></div>
-    </div>
-
-    <!-- Hero -->
-    <section class="relative py-20 overflow-hidden">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-10">
-          <h1 class="text-h1 font-orbitron text-neon-lime mb-6 animate-fade-in">Blog</h1>
-          <p class="text-body max-w-3xl mx-auto text-cyber-gray-light mb-8">
-            Insights on technology, creativity, and the intersection of human and artificial intelligence.
-          </p>
-          <div class="mt-6 text-matrix-white/70 text-sm">{posts.length} articles</div>
-        </div>
-
-        <!-- Search + Tags -->
-        <div class="mx-auto max-w-3xl">
+    <PageHero 
+      title="Blog"
+      description="Insights on technology, creativity, and the intersection of human and artificial intelligence."
+      metaText={`${posts.length} articles`}
+      bgSlug="blog-bg"
+    >
+      <!-- Search + Tags -->
+      <div class="mx-auto max-w-3xl mt-6">
           <div class="relative">
             <label for="search" class="sr-only">Search articles</label>
-            <input
+              <input
               id="search"
               type="search"
               placeholder="Search by title, summary or tag..."
-              class="w-full px-4 py-3 rounded-lg bg-muted border border-primary/20 text-foreground placeholder-foreground/50 focus:border-primary/50 focus:outline-none"
+                class="w-full px-4 py-3 rounded-lg bg-muted border border-neon-lime/20 text-foreground placeholder-foreground/50 focus:border-primary/50 focus:outline-none"
               aria-label="Search blog articles"
             />
             <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-matrix-white/40">
@@ -80,9 +66,8 @@ const description =
               ))}
             </div>
           )}
-        </div>
       </div>
-    </section>
+    </PageHero>
 
   <!-- Blog Content -->
   <section class="py-16">
@@ -97,7 +82,7 @@ const description =
         </h2>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="posts-grid">
           {posts.map(post => (
-            <article class="card group hover:scale-[1.015] transition-transform duration-300"
+            <article class="card group hover:scale-[1.02] transition-transform duration-300 bg-card/80 backdrop-blur-md"
               data-title={post.data.title}
               data-excerpt={post.data.excerpt || post.data.description}
               data-tags={post.data.tags.join(',')}

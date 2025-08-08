@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 import tailwind from '@astrojs/tailwind';
+import react from '@astrojs/react';
 import rehypeExternalLinks from 'rehype-external-links';
 import rehypeSanitize from 'rehype-sanitize';
 
@@ -25,6 +26,7 @@ export default defineConfig({
         rehypeSanitize,
       ],
     }),
+    react(),
     tailwind(),
   ],
   build: {

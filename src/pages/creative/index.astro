@@ -1,18 +1,63 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
-import CreativeCard from '../../components/CreativeCard.astro';
-import CreativeModal from '../../components/CreativeModal.astro';
-import { getCollection } from 'astro:content';
-
-// Get all creative pieces and sort by published date (newest first)
-const creativePieces = await getCollection('creative');
-const sortedCreative = creativePieces.sort((a, b) => 
-  new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime()
-);
-
-// Separate featured and regular creative pieces
-const featuredCreative = sortedCreative.filter(piece => piece.data.featured);
-const regularCreative = sortedCreative.filter(piece => !piece.data.featured);
+import PageHero from '../../components/PageHero.astro';
+import FeaturedProjectCard from '../../components/FeaturedProjectCard.tsx';
+// Featured projects content (links and assets live under /public/creative/*)
+const projects = [
+  {
+    slug: 'emmanuelle-silk',
+    title: 'Emmanuelle Silk',
+    role: 'AI Fashion Collection · Creative Direction & Design',
+    description:
+      'Among the first AI-driven fashion collections in Greece. An 8-piece silk scarf series exploring generative aesthetics and material storytelling.',
+    hero: '/creative/emmanuelle-silk/hero.jpg',
+    galleryThumbs: [
+      '/creative/emmanuelle-silk/thumb-1.jpg',
+      '/creative/emmanuelle-silk/thumb-2.jpg',
+      '/creative/emmanuelle-silk/thumb-3.jpg',
+      '/creative/emmanuelle-silk/thumb-4.jpg',
+      '/creative/emmanuelle-silk/thumb-5.jpg',
+      '/creative/emmanuelle-silk/thumb-6.jpg',
+      '/creative/emmanuelle-silk/thumb-7.jpg',
+      '/creative/emmanuelle-silk/thumb-8.jpg',
+    ],
+    detailUrl: '/creative/emmanuelle-silk',
+    cta: { label: 'View Collection', href: '/creative/emmanuelle-silk', external: false },
+  },
+  {
+    slug: 'smoking-two',
+    title: 'Smoking Two',
+    role: 'Art Direction · Visual Identity',
+    description:
+      'Art director for all visuals: album covers, Spotify canvases, Instagram promos, and upcoming AI-driven music videos.',
+    hero: '/creative/smoking-two/hero.jpg',
+    spotifyEmbed:
+      'https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?utm_source=generator',
+    detailUrl: '/creative/smoking-two',
+    cta: { label: 'Listen on Spotify', href: 'https://open.spotify.com/', external: true },
+  },
+  {
+    slug: 'arte-imaginari',
+    title: 'Arte Imaginari',
+    role: 'Personal Experimental AI Art Lab',
+    description:
+      'A personal lab where I test and push boundaries with new AI tools, techniques, and aesthetics.',
+    hero: '/creative/arte-imaginari/hero.jpg',
+    instagramGrid: [
+      '/creative/arte-imaginari/ig-1.jpg',
+      '/creative/arte-imaginari/ig-2.jpg',
+      '/creative/arte-imaginari/ig-3.jpg',
+      '/creative/arte-imaginari/ig-4.jpg',
+      '/creative/arte-imaginari/ig-5.jpg',
+      '/creative/arte-imaginari/ig-6.jpg',
+      '/creative/arte-imaginari/ig-7.jpg',
+      '/creative/arte-imaginari/ig-8.jpg',
+      '/creative/arte-imaginari/ig-9.jpg',
+    ],
+    detailUrl: '/creative/arte-imaginari',
+    cta: { label: 'Follow on Instagram', href: 'https://instagram.com/arte.imaginari', external: true },
+  },
+];
 ---
 
 <MainLayout 
@@ -21,72 +66,43 @@ const regularCreative = sortedCreative.filter(piece => !piece.data.featured);
   currentPath="/creative"
 >
   <section class="min-h-screen bg-matrix-black text-matrix-white">
-    <!-- Hero Section -->
-    <section class="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <div class="absolute inset-0 -z-10" aria-hidden="true">
-        <img src="/images/creative-bg.png" alt="" class="w-full h-full object-cover opacity-25" width="2400" height="1400" loading="eager" decoding="async" fetchpriority="high" />
-      </div>
+    <PageHero 
+      title="Creative Lab"
+      description="Exploring the intersection of AI, art, and technology through experimental digital creations, AI-generated imagery, and creative coding projects."
+      bgSlug="creative-bg"
+      eager={true}
+    />
+    <section class="px-4 sm:px-6 lg:px-8">
       <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-16">
-          <h1 class="text-h1 font-orbitron text-neon-lime mb-6 animate-fade-in">
-            Creative Lab
-          </h1>
-          <p class="text-body max-w-3xl mx-auto text-cyber-gray-light mb-8">
-            Exploring the intersection of AI, art, and technology through experimental digital creations, 
-            AI-generated imagery, and creative coding projects.
-          </p>
-          
-          <!-- Instagram Link -->
-          <div class="flex justify-center mb-8">
-            <a 
-              href="https://instagram.com/arte.imaginari" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              class="inline-flex items-center px-6 py-3 bg-primary text-background hover:bg-secondary 
-                     transition-all duration-300 rounded-lg font-orbitron font-bold animate-glow"
-            >
-              <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-              </svg>
-              Follow @arte.imaginari
-            </a>
+        <!-- Featured Works (3-card responsive layout) -->
+        <div class="mb-20">
+          <h2 class="text-primary drop-shadow-neon text-2xl md:text-3xl mb-8 uppercase tracking-widest text-center">
+            Featured Works
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {projects.map((p) => (
+              <FeaturedProjectCard client:load {...p} />
+            ))}
           </div>
         </div>
 
-        <!-- Featured Works Section -->
-            {featuredCreative.length > 0 && (
-          <div class="mb-16">
-            <h2 class="text-primary drop-shadow-neon text-2xl md:text-3xl mb-6 uppercase tracking-widest text-center">
-              Featured Works
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {featuredCreative.map((piece) => (
-                <CreativeCard creative={piece} />
-              ))}
-            </div>
-          </div>
-        )}
-
-        <!-- All Creative Works Section -->
-            {regularCreative.length > 0 && (
-          <div>
-            {featuredCreative.length > 0 && (
-              <div class="border-b border-secondary/20 mb-10"></div>
-            )}
-            <h2 class="text-primary drop-shadow-neon text-2xl md:text-3xl mb-6 uppercase tracking-widest text-center">
-              All Works
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {regularCreative.map((piece) => (
-                <CreativeCard creative={piece} />
-              ))}
-            </div>
-          </div>
-        )}
+        <!-- Follow CTA at bottom -->
+        <div class="pt-14 flex justify-center">
+          <a
+            href="https://instagram.com/arte.imaginari"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center px-6 py-3 bg-primary text-background hover:bg-secondary 
+                   transition-all duration-300 rounded-lg font-orbitron font-bold animate-glow focus-visible:outline 
+                   focus-visible:outline-2 focus-visible:outline-primary"
+          >
+            <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+            Follow @arte.imaginari
+          </a>
+        </div>
       </div>
     </section>
   </section>
-
-  <!-- Creative Modal -->
-  <CreativeModal id="creative-modal" />
 </MainLayout> 

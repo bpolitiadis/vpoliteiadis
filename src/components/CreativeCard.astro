@@ -37,7 +37,7 @@ const aspectClass = getAspectRatioClass(creative.data.aspectRatio);
 ---
 
 <article 
-  class="group relative border border-secondary/30 rounded-xl bg-card/70 p-6 md:p-8 transition-all hover:border-primary hover:shadow-neon cursor-pointer"
+  class="group relative border border-secondary/30 rounded-2xl bg-[rgba(10,10,10,0.6)] p-6 md:p-8 transition-all hover:border-primary hover:shadow-neon cursor-pointer shadow-inner backdrop-blur-md"
 >
   <!-- Featured Badge -->
   {creative.data.featured && (
@@ -47,7 +47,7 @@ const aspectClass = getAspectRatioClass(creative.data.aspectRatio);
   )}
 
   <!-- Media Container -->
-  <div class={`relative overflow-hidden ${aspectClass} mb-6 rounded-lg content-visibility-auto`}>
+  <div class={`relative overflow-hidden ${aspectClass} mb-6 rounded-xl content-visibility-auto`}>
     <img src="/images/project-card-2-bg.png" alt="" class="absolute inset-0 w-full h-full object-cover opacity-15" width="1200" height="480" loading="lazy" decoding="async" aria-hidden="true" sizes="(max-width: 768px) 100vw, 600px" />
     <!-- Video Cover -->
     {creative.data.coverVideo ? (
@@ -64,10 +64,10 @@ const aspectClass = getAspectRatioClass(creative.data.aspectRatio);
         <img src={creative.data.coverImage} alt={creative.data.title} class="w-full h-full object-cover" loading="lazy" decoding="async" fetchpriority="low" />
       </video>
     ) : (
-      <img
+       <img
         src={creative.data.coverImage}
         alt={creative.data.title}
-        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 will-change-transform"
         loading="lazy"
         decoding="async"
         fetchpriority="low"
@@ -77,7 +77,7 @@ const aspectClass = getAspectRatioClass(creative.data.aspectRatio);
     
     <!-- Hover Overlay with neon glow effect -->
     <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent 
-                opacity-0 group-hover:opacity-100 transition-all duration-300">
+                opacity-0 group-hover:opacity-100 transition-all duration-300 will-change-opacity">
       
       <!-- Overlay Content -->
       <div class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
