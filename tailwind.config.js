@@ -2,7 +2,10 @@ import typography from '@tailwindcss/typography';
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  content: [
+    './src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}',
+    './public/scripts/**/*.js'
+  ],
   darkMode: 'class',
   
   theme: {
@@ -10,10 +13,11 @@ export default {
       colors: {
         // Matrix-inspired color palette
         'matrix-black': '#0A0A0A',
+        // Brand primary
         'neon-lime': '#39FF14',
         'digital-emerald': '#00B86B',
         'cyber-gray': '#222222',
-        'matrix-white': '#E8FFE8',
+        'matrix-white': '#E4FFE4',
         'matrix-white-light': '#F8FFF8',
         'cyber-gray-light': '#F0F0F0',
         'neon-lime-dark': '#2ECC71',
@@ -28,14 +32,14 @@ export default {
         'dark-slate': '#1A1A1A',
         'light-slate': '#2A2A2A',
         
-        // Additional semantic colors
+        // Semantic colors (mapped to brand)
         'primary': '#39FF14',
         'secondary': '#00B86B',
         'accent': '#39FF14',
         'background': '#0A0A0A',
         'foreground': '#E8FFE8',
         'muted': '#222222',
-        'muted-foreground': '#A0A0A0',
+        'muted-foreground': '#B5B5B5',
         'border': 'rgba(57, 255, 20, 0.2)',
         'input': '#222222',
         'ring': '#39FF14',
@@ -138,6 +142,9 @@ export default {
         '100': '100',
       },
     },
+  },
+  corePlugins: {
+    container: false,
   },
   plugins: [
     typography,

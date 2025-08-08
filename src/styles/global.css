@@ -11,20 +11,20 @@
     --card-foreground: #0A0A0A;
     --popover: #F0F0F0;
     --popover-foreground: #0A0A0A;
-    --primary: #2ECC71;
+    --primary: #39FF14;
     --primary-foreground: #0A0A0A;
-    --secondary: #00994D;
+    --secondary: #00B86B;
     --secondary-foreground: #0A0A0A;
     --muted: #F0F0F0;
     --muted-foreground: #666666;
-    --accent: #2ECC71;
+    --accent: #39FF14;
     --accent-foreground: #0A0A0A;
     --destructive: #FF4444;
     --destructive-foreground: #FFFFFF;
-    --border: rgba(46, 204, 113, 0.2);
+    --border: rgba(57, 255, 20, 0.2);
     --input: #F0F0F0;
-    --ring: #2ECC71;
-    --radius: 0.5rem;
+    --ring: #39FF14;
+    --radius: 0.75rem;
   }
 
   .dark {
@@ -80,6 +80,7 @@
   *:focus-visible {
     outline: none;
     box-shadow: 0 0 0 2px hsl(var(--ring)), 0 0 0 4px hsl(var(--background));
+    outline-offset: 2px;
   }
 
   /* Hide focus indicators for mouse users but keep them for keyboard users */
@@ -92,7 +93,6 @@
   img {
     max-width: 100%;
     height: auto;
-    aspect-ratio: attr(width) / attr(height);
   }
 
   /* Optimize animations for users who prefer reduced motion */
