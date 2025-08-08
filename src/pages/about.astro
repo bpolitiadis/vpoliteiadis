@@ -1,5 +1,8 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import { Image } from 'astro:assets';
+import avatarSrc from '../assets/images/avatar.png';
+---
 ---
 
 <MainLayout 
@@ -10,7 +13,11 @@ import MainLayout from '../layouts/MainLayout.astro';
   <!-- Full-page background (fixed) -->
   <div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10">
     <div class="absolute inset-0 bg-matrix-black"></div>
-    <img src="/images/about-bg.png" alt="" class="absolute inset-0 h-full w-full object-cover opacity-[0.25] md:opacity-[0.3] mix-blend-screen" loading="eager" decoding="async"/>
+    <picture>
+      <source srcset="/images/about-bg-1200.avif 1200w, /images/about-bg-800.avif 800w, /images/about-bg-480.avif 480w" type="image/avif" />
+      <source srcset="/images/about-bg-1200.webp 1200w, /images/about-bg-800.webp 800w, /images/about-bg-480.webp 480w" type="image/webp" />
+      <img src="/images/about-bg.png" alt="" class="absolute inset-0 h-full w-full object-cover opacity-[0.25] md:opacity-[0.3] mix-blend-screen" loading="eager" decoding="async" />
+    </picture>
     <!-- Subtle center emerald glow -->
      <div class="absolute inset-0" style="background: radial-gradient(40% 40% at 50% 45%, rgba(0,184,107,0.18) 0%, rgba(0,184,107,0.06) 35%, rgba(0,184,107,0.00) 65%);"></div>
     <!-- Circuit mist overlay -->
@@ -32,7 +39,7 @@ import MainLayout from '../layouts/MainLayout.astro';
         <div class="flex flex-col items-center text-center py-16 md:py-24 lg:py-28">
           <!-- Centered circular holographic avatar -->
           <div class="avatar-orb relative mb-8 md:mb-10" role="img" aria-label="Portrait of Vasileios Politeiadis">
-            <img src="/images/avatar.png" alt="Vasileios Politeiadis avatar" class="holo-avatar block w-40 h-40 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full object-cover" loading="eager" decoding="async"/>
+            <Image src={avatarSrc} alt="Vasileios Politeiadis avatar" class="holo-avatar block w-40 h-40 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full object-cover" widths={[160,224,256]} sizes="(max-width: 768px) 160px, 224px" format="webp" loading="eager" />
           </div>
 
         </div>

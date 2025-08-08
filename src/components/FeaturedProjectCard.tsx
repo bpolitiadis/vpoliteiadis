@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
+import OptimizedImage from './OptimizedImage';
 
 type FeaturedProjectCardProps = {
   title: string;
@@ -52,12 +53,11 @@ export default function FeaturedProjectCard(props: FeaturedProjectCardProps) {
     >
       {/* Hero */}
       <div className="relative overflow-hidden rounded-t-2xl aspect-video">
-        <img
+        <OptimizedImage
           src={hero}
           alt={title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 will-change-transform"
-          loading="lazy"
-          decoding="async"
+          width={1280}
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/70 via-background/20 to-transparent" />
       </div>
@@ -71,15 +71,14 @@ export default function FeaturedProjectCard(props: FeaturedProjectCardProps) {
         {Array.isArray(galleryThumbs) && galleryThumbs.length > 0 && (
           <div className="mt-4 grid grid-cols-8 gap-1.5">
             {galleryThumbs.map((src, idx) => (
-              <img
+              <OptimizedImage
                 key={idx}
                 src={src}
                 alt={`Thumbnail ${idx + 1}`}
                 className="h-10 w-full object-cover rounded-sm"
-                loading="lazy"
-                decoding="async"
-              />)
-            )}
+                width={160}
+              />
+            ))}
           </div>
         )}
 
@@ -101,15 +100,14 @@ export default function FeaturedProjectCard(props: FeaturedProjectCardProps) {
         {Array.isArray(instagramGrid) && instagramGrid.length > 0 && (
           <div className="mt-4 grid grid-cols-3 gap-2">
             {instagramGrid.map((src, idx) => (
-              <img
+              <OptimizedImage
                 key={idx}
                 src={src}
                 alt={`Instagram preview ${idx + 1}`}
                 className="aspect-square w-full object-cover rounded"
-                loading="lazy"
-                decoding="async"
-              />)
-            )}
+                width={400}
+              />
+            ))}
           </div>
         )}
 
