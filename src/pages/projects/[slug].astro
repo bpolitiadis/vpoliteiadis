@@ -29,43 +29,17 @@ const relatedProjects = allProjects
 <MainLayout 
   title={`${project.data.title} - Case Study`} 
   description={project.data.description}
-  currentPath="/projects"
+  currentPath={`/projects/${project.slug}`}
   type="article"
   publishedAt={new Date(project.data.publishedAt).toISOString()}
   updatedAt={project.data.updatedAt ? new Date(project.data.updatedAt).toISOString() : undefined}
   author="Vasileios Politeiadis"
   image={project.data.coverImage || '/images/og-default.jpg'}
 >
-  <!-- SEO Structured Data -->
-  <script type="application/ld+json" is:inline set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    "name": project.data.title,
-    "description": project.data.description,
-    "author": {
-      "@type": "Person",
-      "name": "Vasileios Politeiadis"
-    },
-    "datePublished": new Date(project.data.publishedAt).toISOString(),
-    "dateModified": project.data.updatedAt ? new Date(project.data.updatedAt).toISOString() : new Date(project.data.publishedAt).toISOString(),
-    "keywords": project.data.tags.join(', '),
-    "image": project.data.coverImage ? `https://vpoliteiadis.com${project.data.coverImage}` : undefined,
-    "url": `https://vpoliteiadis.com/projects/${project.slug}`,
-    "mainEntity": {
-      "@type": "SoftwareApplication",
-      "name": project.data.title,
-      "description": project.data.description,
-      "applicationCategory": "WebApplication",
-      "operatingSystem": "Web Browser",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      }
-    }
-  })} />
+  <!-- SEO Structured Data (external, CSP-safe) -->
+  <script type="application/ld+json" src={`/structured/project/${project.slug}.json`}></script>
 
-  <main class="min-h-screen bg-matrix-black text-matrix-white">
+  <section class="min-h-screen bg-matrix-black text-matrix-white">
     <!-- Hero Section -->
     <section class="relative py-20 px-4 sm:px-6 lg:px-8">
       <div class="max-w-7xl mx-auto">
@@ -74,8 +48,9 @@ const relatedProjects = allProjects
           <a 
             href="/projects" 
             class="inline-flex items-center text-neon-lime hover:text-matrix-white transition-colors"
+            aria-label="Back to Projects"
           >
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
             Back to Projects
@@ -142,7 +117,7 @@ const relatedProjects = allProjects
                   class="inline-flex items-center px-6 py-3 bg-neon-lime text-matrix-black font-semibold rounded-lg 
                          hover:bg-matrix-white transition-all duration-300 animate-glow"
                 >
-                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
                   View Live
@@ -156,7 +131,7 @@ const relatedProjects = allProjects
                   class="inline-flex items-center px-6 py-3 border border-cyber-gray-light text-cyber-gray-light 
                          hover:border-neon-lime hover:text-neon-lime transition-all duration-300 rounded-lg"
                 >
-                  <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                   </svg>
                   View Code
@@ -176,13 +151,16 @@ const relatedProjects = allProjects
                 playsinline
               >
                 <source src={project.data.coverVideo} type="video/mp4" />
-                <img src={project.data.coverImage} alt={project.data.title} class="w-full rounded-lg" />
+                <img src={project.data.coverImage} alt={project.data.title} class="w-full rounded-lg" loading="eager" fetchpriority="high" decoding="async" />
               </video>
             ) : (
               <img
                 src={project.data.coverImage}
                 alt={project.data.title}
                 class="w-full rounded-lg shadow-2xl"
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
               />
             )}
           </div>
@@ -190,10 +168,10 @@ const relatedProjects = allProjects
 
         <!-- Tech Stack -->
         <div class="mb-16">
-          <h2 class="text-h2 font-orbitron text-digital-emerald mb-6">Tech Stack</h2>
+           <h2 class="text-h2 font-orbitron text-secondary mb-6">Tech Stack</h2>
           <div class="flex flex-wrap gap-3">
             {project.data.techStack.map((tech: string) => (
-              <span class="px-4 py-2 bg-digital-emerald/20 text-digital-emerald rounded-lg border border-digital-emerald/30">
+              <span class="px-4 py-2 bg-secondary/20 text-secondary rounded-lg border border-secondary/30">
                 {tech}
               </span>
             ))}
@@ -202,10 +180,10 @@ const relatedProjects = allProjects
 
         <!-- Project Tags -->
         <div class="mb-16">
-          <h2 class="text-h2 font-orbitron text-digital-emerald mb-6">Categories</h2>
+           <h2 class="text-h2 font-orbitron text-secondary mb-6">Categories</h2>
           <div class="flex flex-wrap gap-3">
             {project.data.tags.map((tag: string) => (
-              <span class="px-4 py-2 bg-cyber-gray-light text-matrix-black rounded-lg">
+              <span class="px-4 py-2 bg-muted text-foreground rounded-lg">
                 {tag}
               </span>
             ))}
@@ -286,12 +264,14 @@ const relatedProjects = allProjects
           <div class="mb-16">
             <h2 class="text-h2 font-orbitron text-neon-lime mb-6">Project Gallery</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {project.data.gallery.map((image: string) => (
+              {project.data.gallery.map((image: string, index: number) => (
                 <div class="group relative overflow-hidden rounded-lg">
                   <img
                     src={image}
-                    alt="Project screenshot"
+                    alt={`Screenshot ${index + 1} from ${project.data.title}`}
                     class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div class="absolute inset-0 bg-gradient-to-t from-matrix-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
@@ -316,6 +296,8 @@ const relatedProjects = allProjects
                     src={relatedProject.data.coverImage}
                     alt={relatedProject.data.title}
                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div class="absolute inset-0 bg-gradient-to-t from-matrix-black/80 to-transparent opacity-0 
                               group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -343,7 +325,7 @@ const relatedProjects = allProjects
         </div>
       </section>
     )}
-  </main>
+  </section>
 </MainLayout>
 
 <style>
@@ -356,43 +338,43 @@ const relatedProjects = allProjects
   
   /* Custom prose styles for MDX content */
   .prose {
-    color: #E8FFE8;
+    color: hsl(var(--foreground));
   }
   
   .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
-    color: #39FF14;
+    color: hsl(var(--primary));
     font-family: 'Orbitron', sans-serif;
   }
   
   .prose a {
-    color: #39FF14;
+    color: hsl(var(--primary));
     text-decoration: none;
   }
   
   .prose a:hover {
-    color: #E8FFE8;
+    color: hsl(var(--foreground));
     text-decoration: underline;
   }
   
   .prose strong {
-    color: #00B86B;
+    color: hsl(var(--secondary));
   }
   
   .prose code {
-    background-color: #222222;
-    color: #39FF14;
+    background-color: hsl(var(--muted));
+    color: hsl(var(--primary));
     padding: 0.125rem 0.25rem;
     border-radius: 0.25rem;
   }
   
   .prose pre {
-    background-color: #0A0A0A;
-    border: 1px solid #222222;
+    background-color: hsl(var(--background));
+    border: 1px solid hsl(var(--muted));
     border-radius: 0.5rem;
   }
   
   .prose blockquote {
-    border-left-color: #39FF14;
-    color: #E8FFE8;
+    border-left-color: hsl(var(--primary));
+    color: hsl(var(--foreground));
   }
 </style> 

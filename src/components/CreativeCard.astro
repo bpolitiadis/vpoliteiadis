@@ -37,7 +37,7 @@ const aspectClass = getAspectRatioClass(creative.data.aspectRatio);
 ---
 
 <article 
-  class="group relative border border-digital-emerald/30 rounded-xl bg-[#111]/70 p-6 md:p-8 transition-all hover:border-neon-lime hover:shadow-neon cursor-pointer"
+  class="group relative border border-secondary/30 rounded-xl bg-card/70 p-6 md:p-8 transition-all hover:border-primary hover:shadow-neon cursor-pointer"
 >
   <!-- Featured Badge -->
   {creative.data.featured && (
@@ -47,7 +47,8 @@ const aspectClass = getAspectRatioClass(creative.data.aspectRatio);
   )}
 
   <!-- Media Container -->
-  <div class={`relative overflow-hidden ${aspectClass} mb-6 rounded-lg`}>
+  <div class={`relative overflow-hidden ${aspectClass} mb-6 rounded-lg content-visibility-auto`}>
+    <img src="/images/project-card-2-bg.png" alt="" class="absolute inset-0 w-full h-full object-cover opacity-15" width="1200" height="480" loading="lazy" decoding="async" aria-hidden="true" sizes="(max-width: 768px) 100vw, 600px" />
     <!-- Video Cover -->
     {creative.data.coverVideo ? (
       <video
@@ -56,29 +57,35 @@ const aspectClass = getAspectRatioClass(creative.data.aspectRatio);
         muted
         loop
         playsinline
+        preload="metadata"
+        poster={creative.data.coverImage}
       >
         <source src={creative.data.coverVideo} type="video/mp4" />
-        <img src={creative.data.coverImage} alt={creative.data.title} class="w-full h-full object-cover" />
+        <img src={creative.data.coverImage} alt={creative.data.title} class="w-full h-full object-cover" loading="lazy" decoding="async" fetchpriority="low" />
       </video>
     ) : (
       <img
         src={creative.data.coverImage}
         alt={creative.data.title}
         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+        loading="lazy"
+        decoding="async"
+        fetchpriority="low"
+        sizes="(max-width: 768px) 100vw, 600px"
       />
     )}
     
     <!-- Hover Overlay with neon glow effect -->
-    <div class="absolute inset-0 bg-gradient-to-t from-matrix-black/90 via-matrix-black/50 to-transparent 
+    <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent 
                 opacity-0 group-hover:opacity-100 transition-all duration-300">
       
       <!-- Overlay Content -->
       <div class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-        <h3 class="text-h3 font-orbitron text-neon-lime mb-2 group-hover:text-matrix-white transition-colors">
+        <h3 class="text-h3 font-orbitron text-primary mb-2 group-hover:text-foreground transition-colors">
           {creative.data.title}
         </h3>
         
-        <p class="text-body text-matrix-white mb-4 line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <p class="text-body text-foreground mb-4 line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           {creative.data.excerpt || creative.data.description}
         </p>
 
@@ -94,7 +101,7 @@ const aspectClass = getAspectRatioClass(creative.data.aspectRatio);
               <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/>
             </svg>
           )}
-          <span class="text-xs text-cyber-gray-light uppercase tracking-wide">
+          <span class="text-xs text-muted-foreground uppercase tracking-wide">
             {creative.data.mediaType}
           </span>
         </div>
@@ -102,7 +109,7 @@ const aspectClass = getAspectRatioClass(creative.data.aspectRatio);
     </div>
 
     <!-- Category Badge -->
-    <div class="absolute top-4 right-4 px-2 py-1 bg-matrix-black/80 text-cyber-gray-light text-xs rounded">
+    <div class="absolute top-4 right-4 px-2 py-1 bg-background/80 text-muted-foreground text-xs rounded">
       {creative.data.category.replace('-', ' ')}
     </div>
 
@@ -112,10 +119,10 @@ const aspectClass = getAspectRatioClass(creative.data.aspectRatio);
         href={creative.data.instagramUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="absolute top-4 right-16 p-2 bg-matrix-black/80 text-neon-lime rounded-full 
-               hover:bg-neon-lime hover:text-matrix-black transition-all duration-300
+        class="absolute top-4 right-16 p-2 bg-background/80 text-primary rounded-full 
+               hover:bg-primary hover:text-background transition-all duration-300
                opacity-0 group-hover:opacity-100"
-        onclick="event.stopPropagation()"
+        aria-label={`Open Instagram post for ${creative.data.title} (opens in new tab)`}
       >
         <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
@@ -126,23 +133,23 @@ const aspectClass = getAspectRatioClass(creative.data.aspectRatio);
 
   <!-- Card Content -->
   <div>
-    <h3 class="text-h3 font-orbitron text-neon-lime mb-3 group-hover:text-matrix-white transition-colors">
+    <h3 class="text-h3 font-orbitron text-primary mb-3 group-hover:text-foreground transition-colors">
       {creative.data.title}
     </h3>
     
-    <p class="text-body text-cyber-gray-light mb-6 line-clamp-2">
+    <p class="text-body text-muted-foreground mb-6 line-clamp-2">
       {creative.data.excerpt || creative.data.description}
     </p>
 
     <!-- Minimal Tags Display -->
     <div class="flex flex-wrap gap-2 mb-6">
       {creative.data.tags.slice(0, 2).map(tag => (
-        <span class="bg-digital-emerald/10 border border-digital-emerald/50 text-digital-emerald rounded-full px-3 py-1 text-xs font-medium">
+        <span class="bg-secondary/10 border border-secondary/50 text-secondary rounded-full px-3 py-1 text-xs font-medium">
           {tag}
         </span>
       ))}
       {creative.data.tags.length > 2 && (
-        <span class="bg-digital-emerald/10 border border-digital-emerald/50 text-digital-emerald rounded-full px-3 py-1 text-xs font-medium">
+        <span class="bg-secondary/10 border border-secondary/50 text-secondary rounded-full px-3 py-1 text-xs font-medium">
           +{creative.data.tags.length - 2}
         </span>
       )}
@@ -150,8 +157,8 @@ const aspectClass = getAspectRatioClass(creative.data.aspectRatio);
 
     <!-- View Button -->
     <button
-      class="w-full inline-flex items-center justify-center px-4 py-2 bg-transparent border border-neon-lime text-neon-lime 
-             hover:bg-neon-lime hover:text-matrix-black transition-all duration-300 rounded-lg
+      class="w-full inline-flex items-center justify-center px-4 py-2 bg-transparent border border-primary text-primary 
+             hover:bg-primary hover:text-background transition-all duration-300 rounded-lg
              group-hover:animate-glow"
     >
       View Details

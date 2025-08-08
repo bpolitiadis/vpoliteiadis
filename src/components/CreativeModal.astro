@@ -9,22 +9,24 @@ const { id } = Astro.props;
 <!-- Creative Modal/Lightbox -->
 <div 
   id={id}
-  class="creative-modal fixed inset-0 z-50 hidden bg-matrix-black/95 backdrop-blur-sm"
+  class="creative-modal fixed inset-0 z-50 hidden bg-background/95 backdrop-blur-sm"
   role="dialog"
   aria-modal="true"
   aria-labelledby="modal-title"
+  aria-describedby="modal-description"
+  tabindex="-1"
 >
   <!-- Modal Backdrop -->
   <div class="absolute inset-0" id="modal-backdrop"></div>
   
   <!-- Modal Content -->
   <div class="relative h-full flex items-center justify-center p-4">
-    <div class="bg-cyber-gray rounded-lg max-w-6xl max-h-[90vh] w-full overflow-hidden border border-neon-lime/30">
+    <div class="bg-card rounded-lg max-w-6xl max-h-[90vh] w-full overflow-hidden border border-primary/30">
       
       <!-- Modal Header -->
-      <div class="flex items-center justify-between p-6 border-b border-cyber-gray-light">
+      <div class="flex items-center justify-between p-6 border-b border-muted">
         <div>
-          <h2 id="modal-title" class="text-h2 font-orbitron text-neon-lime mb-2">
+          <h2 id="modal-title" class="text-h2 font-orbitron text-primary mb-2">
             <!-- Title will be populated by JavaScript -->
           </h2>
           <div class="flex flex-wrap gap-2">
@@ -33,10 +35,11 @@ const { id } = Astro.props;
         </div>
         
         <!-- Close Button -->
-        <button 
+          <button 
           id="modal-close"
-          class="p-2 text-cyber-gray-light hover:text-neon-lime hover:bg-cyber-gray-light/10 rounded-lg transition-colors"
+            class="p-2 text-muted-foreground hover:text-primary hover:bg-muted/10 rounded-lg transition-colors"
           aria-label="Close modal"
+          type="button"
         >
           <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -48,15 +51,15 @@ const { id } = Astro.props;
       <div class="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
         <!-- Media Container -->
         <div class="mb-6">
-          <div id="modal-media" class="relative rounded-lg overflow-hidden bg-matrix-black">
+          <div id="modal-media" class="relative rounded-lg overflow-hidden bg-background">
             <!-- Media content will be populated by JavaScript -->
           </div>
         </div>
         
         <!-- Description -->
         <div class="mb-6">
-          <h3 class="text-h3 font-orbitron text-matrix-white mb-3">Description</h3>
-          <p id="modal-description" class="text-body text-cyber-gray-light leading-relaxed">
+          <h3 class="text-h3 font-orbitron text-foreground mb-3">Description</h3>
+          <p id="modal-description" class="text-body text-muted-foreground leading-relaxed">
             <!-- Description will be populated by JavaScript -->
           </p>
         </div>
@@ -65,19 +68,19 @@ const { id } = Astro.props;
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Tools & Process -->
           <div>
-            <h3 class="text-h3 font-orbitron text-matrix-white mb-3">Tools & Process</h3>
+            <h3 class="text-h3 font-orbitron text-foreground mb-3">Tools & Process</h3>
             <div id="modal-tools" class="flex flex-wrap gap-2 mb-4">
               <!-- Tools will be populated by JavaScript -->
             </div>
-            <div id="modal-process" class="text-body text-cyber-gray-light">
+            <div id="modal-process" class="text-body text-muted-foreground">
               <!-- Process will be populated by JavaScript -->
             </div>
           </div>
           
           <!-- Metadata -->
           <div>
-            <h3 class="text-h3 font-orbitron text-matrix-white mb-3">Details</h3>
-            <div class="space-y-2 text-body text-cyber-gray-light">
+            <h3 class="text-h3 font-orbitron text-foreground mb-3">Details</h3>
+            <div class="space-y-2 text-body text-muted-foreground">
               <div id="modal-category">
                 <!-- Category will be populated by JavaScript -->
               </div>
@@ -95,20 +98,21 @@ const { id } = Astro.props;
         </div>
         
         <!-- External Links -->
-        <div id="modal-links" class="mt-6 pt-6 border-t border-cyber-gray-light">
+        <div id="modal-links" class="mt-6 pt-6 border-t border-muted">
           <!-- Links will be populated by JavaScript -->
         </div>
       </div>
       
       <!-- Navigation Controls -->
-      <div class="flex items-center justify-between p-6 border-t border-cyber-gray-light">
+      <div class="flex items-center justify-between p-6 border-t border-muted">
         <button 
           id="modal-prev"
-          class="flex items-center px-4 py-2 bg-transparent border border-neon-lime text-neon-lime 
-                 hover:bg-neon-lime hover:text-matrix-black transition-all duration-300 rounded-lg"
+          class="flex items-center px-4 py-2 bg-transparent border border-primary text-primary 
+                 hover:bg-primary hover:text-background transition-all duration-300 rounded-lg"
           aria-label="Previous item"
+          type="button"
         >
-          <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
           </svg>
           Previous
@@ -122,12 +126,13 @@ const { id } = Astro.props;
         
         <button 
           id="modal-next"
-          class="flex items-center px-4 py-2 bg-transparent border border-neon-lime text-neon-lime 
-                 hover:bg-neon-lime hover:text-matrix-black transition-all duration-300 rounded-lg"
+          class="flex items-center px-4 py-2 bg-transparent border border-primary text-primary 
+                 hover:bg-primary hover:text-background transition-all duration-300 rounded-lg"
           aria-label="Next item"
+          type="button"
         >
           Next
-          <svg class="h-4 w-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="h-4 w-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
           </svg>
         </button>
@@ -136,88 +141,4 @@ const { id } = Astro.props;
   </div>
 </div>
 
-<script>
-  // Simple modal functionality (typed for Astro TS)
-  // Using TypeScript inline types for better tooling
-  type CreativeItem = { slug?: string; data?: Record<string, any> };
-  let currentCreativeItems: CreativeItem[] = [];
-  let currentIndex = 0;
-
-  function initModal() {
-    const modal = document.getElementById('creative-modal');
-    if (!modal) return;
-
-    modal.querySelector('#modal-backdrop')?.addEventListener('click', closeModal);
-    modal.querySelector('#modal-close')?.addEventListener('click', closeModal);
-    modal.querySelector('#modal-prev')?.addEventListener('click', previousItem);
-    modal.querySelector('#modal-next')?.addEventListener('click', nextItem);
-
-    document.addEventListener('keydown', (e) => {
-      if (!modal.classList.contains('hidden')) {
-        if (e.key === 'Escape') closeModal();
-        if (e.key === 'ArrowLeft') previousItem();
-        if (e.key === 'ArrowRight') nextItem();
-      }
-    });
-  }
-
-  function openModal(creativeItems: CreativeItem[], startIndex = 0) {
-    currentCreativeItems = Array.isArray(creativeItems) ? creativeItems : [];
-    currentIndex = startIndex;
-    const modal = document.getElementById('creative-modal');
-    if (modal) {
-      modal.classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-      updateModalContent();
-    }
-  }
-
-  function closeModal() {
-    const modal = document.getElementById('creative-modal');
-    if (modal) {
-      modal.classList.add('hidden');
-      document.body.style.overflow = '';
-    }
-  }
-
-  function previousItem() {
-    if (currentIndex > 0) {
-      currentIndex--;
-      updateModalContent();
-    }
-  }
-
-  function nextItem() {
-    if (currentIndex < currentCreativeItems.length - 1) {
-      currentIndex++;
-      updateModalContent();
-    }
-  }
-
-  function updateModalContent() {
-    const item = currentCreativeItems[currentIndex];
-    if (!item) return;
-    const modal = document.getElementById('creative-modal');
-    if (!modal) return;
-
-    const titleEl = modal.querySelector('#modal-title');
-    const descEl = modal.querySelector('#modal-description');
-    if (titleEl && item && typeof item === 'object' && 'data' in item && item.data) {
-      const itemData = item.data as Record<string, any>;
-      titleEl.textContent = (itemData.title as string) || '';
-      if (descEl) descEl.textContent = (itemData.description as string) || '';
-    }
-
-    const prevBtn = modal.querySelector('#modal-prev');
-    const nextBtn = modal.querySelector('#modal-next');
-    const counter = modal.querySelector('#modal-counter');
-    if (prevBtn instanceof HTMLButtonElement) prevBtn.disabled = currentIndex === 0;
-    if (nextBtn instanceof HTMLButtonElement) nextBtn.disabled = currentIndex === currentCreativeItems.length - 1;
-    if (counter) counter.textContent = `${currentIndex + 1} of ${currentCreativeItems.length}`;
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    initModal();
-    (window as unknown as { creativeModal?: { open: (items: CreativeItem[], index?: number) => void } }).creativeModal = { open: openModal };
-  });
-</script>
+<script src="/scripts/creative-modal.js" type="module" async></script>

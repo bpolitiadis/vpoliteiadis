@@ -7,16 +7,35 @@ import MainLayout from '../layouts/MainLayout.astro';
   description="Learn about Vasileios Politeiadis - Senior QA Automation Specialist, Full-Stack Developer, and AI Creative Technologist with expertise in European Commission projects and modern web development."
   currentPath="/about"
 >
+  <!-- Full-page background (fixed) -->
+  <div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10">
+    <div class="absolute inset-0 bg-matrix-black"></div>
+    <img src="/images/about-bg.png" alt="" class="absolute inset-0 h-full w-full object-cover opacity-[0.25] md:opacity-[0.3] mix-blend-screen" loading="eager" decoding="async"/>
+    <!-- Subtle center emerald glow -->
+     <div class="absolute inset-0" style="background: radial-gradient(40% 40% at 50% 45%, rgba(0,184,107,0.18) 0%, rgba(0,184,107,0.06) 35%, rgba(0,184,107,0.00) 65%);"></div>
+    <!-- Circuit mist overlay -->
+    <svg class="hidden md:block absolute inset-0 w-full h-full opacity-[0.08]" viewBox="0 0 1440 810" fill="none" aria-hidden="true">
+      <g stroke="#39FF14" stroke-opacity="0.2" stroke-width="1">
+        <path d="M0 90 H1440"/><path d="M0 180 H1440"/><path d="M0 270 H1440"/><path d="M0 360 H1440"/>
+        <path d="M120 0 V810"/><path d="M240 0 V810"/><path d="M360 0 V810"/><path d="M480 0 V810"/><path d="M600 0 V810"/>
+        <path d="M720 0 V810"/><path d="M840 0 V810"/><path d="M960 0 V810"/><path d="M1080 0 V810"/><path d="M1200 0 V810"/>
+      </g>
+    </svg>
+    <!-- Vignette for contrast -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-black/50"></div>
+  </div>
+
   <!-- Hero Section -->
-  <section class="relative py-20 bg-gradient-to-br from-matrix-black via-cyber-gray to-matrix-black">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h1 class="text-4xl sm:text-5xl font-orbitron font-bold text-neon-lime mb-6 text-shadow-neon">
-          About Me
-        </h1>
-        <p class="text-xl text-matrix-white/80 max-w-3xl mx-auto">
-          Senior QA Automation Specialist & Full-Stack Developer with expertise in European Commission projects and modern web technologies
-        </p>
+  <section class="relative isolate min-h-[70vh] flex items-center">
+    <div class="w-full">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col items-center text-center py-16 md:py-24 lg:py-28">
+          <!-- Centered circular holographic avatar -->
+          <div class="avatar-orb relative mb-8 md:mb-10" role="img" aria-label="Portrait of Vasileios Politeiadis">
+            <img src="/images/avatar.png" alt="Vasileios Politeiadis avatar" class="holo-avatar block w-40 h-40 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full object-cover" loading="eager" decoding="async"/>
+          </div>
+
+        </div>
       </div>
     </div>
   </section>
@@ -33,7 +52,7 @@ import MainLayout from '../layouts/MainLayout.astro';
         <p class="text-matrix-white/90 mb-6 leading-relaxed">
           I'm a <span class="text-neon-lime font-semibold">versatile technology professional</span> with expertise across three key domains:
         </p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div class="bg-cyber-gray/50 p-4 rounded-xl border border-neon-lime/30 hover:border-neon-lime/50 transition-colors shadow-neon">
             <h3 class="font-orbitron font-bold text-neon-lime mb-2 text-shadow-neon">🤖 Senior QA Automation Specialist</h3>
             <p class="text-sm text-matrix-white/80">European Commission projects with focus on quality assurance and testing automation</p>
@@ -43,7 +62,7 @@ import MainLayout from '../layouts/MainLayout.astro';
               <span class="inline-block bg-neon-lime/10 text-neon-lime px-2 py-1 rounded ml-1">Playwright</span>
             </div>
           </div>
-          <div class="bg-cyber-gray/50 p-4 rounded-xl border border-digital-emerald/30 hover:border-digital-emerald/50 transition-colors shadow-emerald">
+           <div class="bg-cyber-gray/50 p-4 rounded-xl border border-secondary/30 hover:border-secondary/50 transition-colors shadow-emerald">
             <h3 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald">💻 Full-Stack Developer</h3>
             <p class="text-sm text-matrix-white/80">Modern web applications and CMS platforms with end-to-end development expertise</p>
             <div class="mt-3 text-xs text-matrix-white/60">
@@ -52,7 +71,7 @@ import MainLayout from '../layouts/MainLayout.astro';
               <span class="inline-block bg-digital-emerald/10 text-digital-emerald px-2 py-1 rounded ml-1">Supabase</span>
             </div>
           </div>
-          <div class="bg-cyber-gray/50 p-4 rounded-xl border border-neon-lime/30 hover:border-neon-lime/50 transition-colors shadow-neon">
+           <div class="bg-cyber-gray/50 p-4 rounded-xl border border-primary/30 hover:border-primary/50 transition-colors shadow-neon">
             <h3 class="font-orbitron font-bold text-neon-lime mb-2 text-shadow-neon">🎨 Creative AI-Art Hobbyist</h3>
             <p class="text-sm text-matrix-white/80">AI-driven creative technologist and digital artist</p>
             <div class="mt-3 text-xs text-matrix-white/60">
@@ -82,12 +101,12 @@ import MainLayout from '../layouts/MainLayout.astro';
         </div>
 
         <!-- Current Role -->
-        <div class="card border border-digital-emerald/20 shadow-emerald">
-          <h2 class="text-2xl font-orbitron font-bold text-digital-emerald mb-6 text-shadow-emerald">
+         <div class="card border border-secondary/20 shadow-emerald">
+           <h2 class="text-2xl font-orbitron font-bold text-secondary mb-6 text-shadow-emerald">
             💼 Current Role
           </h2>
           <div class="space-y-4">
-            <div class="border-l-4 border-digital-emerald pl-4">
+             <div class="border-l-4 border-secondary pl-4">
               <h3 class="font-orbitron font-bold text-matrix-white">Senior QA Automation Specialist</h3>
               <p class="text-neon-lime">European Commission - DG DIGIT Directorate</p>
               <p class="text-sm text-matrix-white/70 mt-2">
@@ -99,7 +118,7 @@ import MainLayout from '../layouts/MainLayout.astro';
       </div>
 
       <!-- Skill Matrix -->
-      <div class="card mb-12 border border-neon-lime/20 shadow-neon">
+         <div class="card mb-12 border border-primary/20 shadow-neon">
         <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-6 text-shadow-neon">
           🔍 Skill Matrix
         </h2>
@@ -113,22 +132,22 @@ import MainLayout from '../layouts/MainLayout.astro';
               </tr>
             </thead>
             <tbody class="space-y-2">
-              <tr class="border-b border-cyber-gray/30">
+               <tr class="border-b border-muted/30">
                 <td class="py-3 text-matrix-white font-semibold">QA Automation</td>
                 <td class="py-3 text-matrix-white/80">Java, Selenium, Playwright, TypeScript</td>
                 <td class="py-3 text-neon-lime">🔥 Expert, Core Specialization</td>
               </tr>
-              <tr class="border-b border-cyber-gray/30">
+               <tr class="border-b border-muted/30">
                 <td class="py-3 text-matrix-white font-semibold">Full-Stack Development</td>
                 <td class="py-3 text-matrix-white/80">React, Next.js, Node.js, Prisma, Supabase, PHP</td>
                 <td class="py-3 text-digital-emerald">🚧 Advanced, Product Development</td>
               </tr>
-              <tr class="border-b border-cyber-gray/30">
+               <tr class="border-b border-muted/30">
                 <td class="py-3 text-matrix-white font-semibold">DevOps & Cloud</td>
                 <td class="py-3 text-matrix-white/80">AWS, Infrastructure Configuration</td>
                 <td class="py-3 text-neon-lime">🛠️ Intermediate, Growing Expertise</td>
               </tr>
-              <tr class="border-b border-cyber-gray/30">
+               <tr class="border-b border-muted/30">
                 <td class="py-3 text-matrix-white font-semibold">AI & Creative Tech</td>
                 <td class="py-3 text-matrix-white/80">Midjourney, Kling AI, generative AI tools</td>
                 <td class="py-3 text-neon-lime">🎨 Intermediate, Creative Hobbyist</td>
@@ -262,3 +281,39 @@ import MainLayout from '../layouts/MainLayout.astro';
     </div>
   </section>
 </MainLayout> 
+
+<style>
+  /* Holographic circular avatar with subtle rotating ring */
+  .avatar-orb {
+    --ring-size: 3px;
+    --glow-outer: rgba(57, 255, 20, 0.30);
+    --glow-inner: rgba(0, 184, 107, 0.35);
+    filter: drop-shadow(0 0 14px var(--glow-outer)) drop-shadow(0 0 26px var(--glow-inner));
+  }
+  .avatar-orb::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 9999px;
+    background: conic-gradient(from 0deg, rgba(57,255,20,0.0), rgba(57,255,20,0.35), rgba(0,184,107,0.35), rgba(57,255,20,0.0));
+    mask: radial-gradient(farthest-side, transparent calc(100% - var(--ring-size)), black calc(100% - var(--ring-size)));
+    animation: rotateRing 28s linear infinite;
+    pointer-events: none;
+  }
+  .avatar-orb::after {
+    content: '';
+    position: absolute;
+    inset: -18px;
+    border-radius: 9999px;
+    box-shadow: 0 0 60px rgba(57,255,20,0.15), 0 0 90px rgba(0,184,107,0.12);
+    pointer-events: none;
+  }
+  .holo-avatar {
+    mix-blend-mode: screen;
+    filter: grayscale(10%) saturate(0.9);
+  }
+  @keyframes rotateRing { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    .avatar-orb::before { animation: none; }
+  }
+</style>

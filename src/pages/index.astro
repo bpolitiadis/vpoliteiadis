@@ -14,7 +14,10 @@ import Hero from '../components/Hero.astro';
   </section>
 
   <!-- Featured Section -->
-  <section class="py-20 bg-muted/50">
+  <section class="py-20 bg-muted/50 relative content-visibility-auto">
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <img src="/images/bg-divider.png" alt="" class="w-full h-full object-cover opacity-10" width="2400" height="400" loading="lazy" decoding="async" fetchpriority="low" sizes="100vw" />
+    </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
         <h2 class="text-3xl sm:text-4xl font-orbitron font-bold text-primary mb-4">
@@ -25,10 +28,10 @@ import Hero from '../components/Hero.astro';
         </p>
       </div>
       
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- QA Automation -->
-        <div class="group p-6 md:p-8 rounded-xl border border-neon-lime/30 bg-black/50 backdrop-blur-sm transition-all duration-300 hover:border-neon-lime/60 hover:shadow-neon">
-          <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">🤖</div>
+          <div class="group p-6 md:p-8 rounded-xl border border-primary/30 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:border-primary/60 hover:shadow-neon motion-safe:hover:-translate-y-1 motion-safe:hover:scale-[1.01]">
+          <div class="text-4xl mb-4">🤖</div>
           <h3 class="text-xl font-orbitron font-bold text-primary mb-3 group-hover:text-shadow-neon transition-all duration-300">QA Automation</h3>
           <p class="text-foreground/80 mb-4">
             Senior automation engineer specializing in Java, Selenium, and Playwright for European Commission projects.
@@ -41,8 +44,8 @@ import Hero from '../components/Hero.astro';
         </div>
         
         <!-- Full-Stack Development -->
-        <div class="group p-6 md:p-8 rounded-xl border border-digital-emerald/30 bg-black/50 backdrop-blur-sm transition-all duration-300 hover:border-digital-emerald/60 hover:shadow-emerald">
-          <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">💻</div>
+          <div class="group p-6 md:p-8 rounded-xl border border-secondary/30 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:border-secondary/60 hover:shadow-emerald motion-safe:hover:-translate-y-1 motion-safe:hover:scale-[1.01]">
+          <div class="text-4xl mb-4">💻</div>
           <h3 class="text-xl font-orbitron font-bold text-secondary mb-3 group-hover:text-shadow-emerald transition-all duration-300">Full-Stack Development</h3>
           <p class="text-foreground/80 mb-4">
             Building modern web applications with React, Next.js, and Node.js. From ideation to deployment.
@@ -55,8 +58,8 @@ import Hero from '../components/Hero.astro';
         </div>
         
         <!-- AI & Creative -->
-        <div class="group p-6 md:p-8 rounded-xl border border-neon-lime/30 bg-black/50 backdrop-blur-sm transition-all duration-300 hover:border-neon-lime/60 hover:shadow-neon">
-          <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">🎨</div>
+          <div class="group p-6 md:p-8 rounded-xl border border-primary/30 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:border-primary/60 hover:shadow-neon motion-safe:hover:-translate-y-1 motion-safe:hover:scale-[1.01]">
+          <div class="text-4xl mb-4">🎨</div>
           <h3 class="text-xl font-orbitron font-bold text-primary mb-3 group-hover:text-shadow-neon transition-all duration-300">AI & Creative</h3>
           <p class="text-foreground/80 mb-4">
             AI-driven creative projects and digital art. Exploring the intersection of technology and imagination.

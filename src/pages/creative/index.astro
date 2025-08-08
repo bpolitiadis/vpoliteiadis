@@ -20,9 +20,12 @@ const regularCreative = sortedCreative.filter(piece => !piece.data.featured);
   description="Explore AI-generated art, digital experiments, and creative technology projects in my Creative Lab."
   currentPath="/creative"
 >
-  <main class="min-h-screen bg-matrix-black text-matrix-white">
+  <section class="min-h-screen bg-matrix-black text-matrix-white">
     <!-- Hero Section -->
-    <section class="relative py-20 px-4 sm:px-6 lg:px-8">
+    <section class="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <div class="absolute inset-0 -z-10" aria-hidden="true">
+        <img src="/images/creative-bg.png" alt="" class="w-full h-full object-cover opacity-25" width="2400" height="1400" loading="eager" decoding="async" fetchpriority="high" />
+      </div>
       <div class="max-w-7xl mx-auto">
         <div class="text-center mb-16">
           <h1 class="text-h1 font-orbitron text-neon-lime mb-6 animate-fade-in">
@@ -39,7 +42,7 @@ const regularCreative = sortedCreative.filter(piece => !piece.data.featured);
               href="https://instagram.com/arte.imaginari" 
               target="_blank" 
               rel="noopener noreferrer"
-              class="inline-flex items-center px-6 py-3 bg-neon-lime text-matrix-black hover:bg-digital-emerald 
+              class="inline-flex items-center px-6 py-3 bg-primary text-background hover:bg-secondary 
                      transition-all duration-300 rounded-lg font-orbitron font-bold animate-glow"
             >
               <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -51,9 +54,9 @@ const regularCreative = sortedCreative.filter(piece => !piece.data.featured);
         </div>
 
         <!-- Featured Works Section -->
-        {featuredCreative.length > 0 && (
+            {featuredCreative.length > 0 && (
           <div class="mb-16">
-            <h2 class="text-neon-lime drop-shadow-neon text-2xl md:text-3xl mb-6 uppercase tracking-widest text-center">
+            <h2 class="text-primary drop-shadow-neon text-2xl md:text-3xl mb-6 uppercase tracking-widest text-center">
               Featured Works
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -65,12 +68,12 @@ const regularCreative = sortedCreative.filter(piece => !piece.data.featured);
         )}
 
         <!-- All Creative Works Section -->
-        {regularCreative.length > 0 && (
+            {regularCreative.length > 0 && (
           <div>
             {featuredCreative.length > 0 && (
-              <div class="border-b border-emerald/20 mb-10"></div>
+              <div class="border-b border-secondary/20 mb-10"></div>
             )}
-            <h2 class="text-neon-lime drop-shadow-neon text-2xl md:text-3xl mb-6 uppercase tracking-widest text-center">
+            <h2 class="text-primary drop-shadow-neon text-2xl md:text-3xl mb-6 uppercase tracking-widest text-center">
               All Works
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -82,7 +85,7 @@ const regularCreative = sortedCreative.filter(piece => !piece.data.featured);
         )}
       </div>
     </section>
-  </main>
+  </section>
 
   <!-- Creative Modal -->
   <CreativeModal id="creative-modal" />

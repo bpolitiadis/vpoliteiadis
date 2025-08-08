@@ -15,7 +15,7 @@ export interface Props {
 const { 
   title, 
   description = "Full-Stack Developer & AI Visionary - Vasileios Politeiadis",
-  currentPath = '/',
+  currentPath,
   image = '/images/og-default.jpg',
   type = 'website',
   publishedAt,
@@ -23,8 +23,12 @@ const {
   author = 'Vasileios Politeiadis'
 } = Astro.props;
 
-const canonicalURL = new URL(currentPath, Astro.site);
+// Prefer actual request URL to avoid canonical mistakes; fall back to provided path
+const pathname = currentPath ?? Astro.url.pathname;
+const canonicalURL = new URL(pathname, Astro.site);
 const ogImageURL = new URL(image, Astro.site);
+
+// JSON-LD is served as first-party endpoints to respect CSP without unsafe-inline
 ---
 
 <!DOCTYPE html>
@@ -44,7 +48,8 @@ const ogImageURL = new URL(image, Astro.site);
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
-    <!-- Load Google Fonts -->
+    <!-- Load Google Fonts (CSP-safe; no inline JS) -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" />
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     
     <!-- DNS prefetch for external resources -->
@@ -65,6 +70,7 @@ const ogImageURL = new URL(image, Astro.site);
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:site" content="@vpoliteiadis" />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={ogImageURL} />
@@ -91,56 +97,13 @@ const ogImageURL = new URL(image, Astro.site);
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     
     <!-- Cache busting for development -->
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Cache-Control" content="no-store" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     
-    <!-- Structured Data -->
-    <script type="application/ld+json" is:inline set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Vasileios Politeiadis",
-      "url": "https://vpoliteiadis.com",
-      "image": "https://vpoliteiadis.com/images/profile.jpg",
-      "sameAs": [
-        "https://linkedin.com/in/vpoliteiadis",
-        "https://github.com/bpolitiadis"
-      ],
-      "jobTitle": "Full-Stack Developer & AI Visionary",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "European Commission"
-      },
-      "description": "Full-Stack Developer & AI Visionary specializing in modern web technologies, automation, and creative AI applications.",
-      "knowsAbout": [
-        "Full-Stack Development",
-        "QA Automation",
-        "AI & Creative Technology",
-        "React",
-        "Next.js",
-        "Node.js",
-        "Java",
-        "Selenium",
-        "Playwright"
-      ]
-    })} />
-    
-    <!-- Website Structured Data -->
-    <script type="application/ld+json" is:inline set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Vasileios Politeiadis",
-      "url": "https://vpoliteiadis.com",
-      "description": "Full-Stack Developer & AI Visionary portfolio",
-      "author": {
-        "@type": "Person",
-        "name": "Vasileios Politeiadis"
-      },
-      "publisher": {
-        "@type": "Person",
-        "name": "Vasileios Politeiadis"
-      }
-    })} />
+    <!-- Structured Data (external, CSP-safe) -->
+    <script type="application/ld+json" src="/structured/person.json"></script>
+    <script type="application/ld+json" src="/structured/website.json"></script>
   </head>
   <body class="min-h-screen bg-background text-foreground transition-colors duration-300 flex flex-col">
     
@@ -171,25 +134,14 @@ const ogImageURL = new URL(image, Astro.site);
           <div class="flex space-x-6 text-sm text-muted-foreground">
             <a href="/privacy" class="hover:text-primary transition-colors duration-300">Privacy</a>
             <a href="/terms" class="hover:text-primary transition-colors duration-300">Terms</a>
-            <span>&copy; 2024 All rights reserved</span>
+            <span>&copy; 2025 All rights reserved</span>
           </div>
         </div>
       </div>
     </footer>
     
-    <!-- Theme initialization -->
-    <script>
-      (function initTheme() {
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        document.documentElement.classList.toggle('dark', savedTheme === 'dark');
-        if ('fonts' in document) {
-          Promise.all([
-            document.fonts.load('400 1em Inter'),
-            document.fonts.load('400 1em Orbitron')
-          ]).then(() => document.documentElement.classList.add('fonts-loaded'));
-        }
-      })();
-    </script>
+    <!-- Theme initialization (external, CSP-safe) -->
+    <script src="/scripts/theme-init.js" defer></script>
   </body>
 </html>
 

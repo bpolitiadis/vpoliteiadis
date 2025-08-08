@@ -7,14 +7,20 @@ import MainLayout from '../layouts/MainLayout.astro';
   description="Get in touch with Vasileios Politeiadis for collaboration opportunities, project inquiries, or creative commissions."
   currentPath="/contact"
 >
-  <!-- Hero Section -->
-  <section class="relative py-20 bg-gradient-to-br from-matrix-black via-cyber-gray to-matrix-black">
+  <div class="relative">
+    <!-- Page-wide decorative background -->
+    <div class="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+      <img src="/images/contact-bg.png" alt="" class="w-full h-full object-cover opacity-25" width="2400" height="1400" loading="eager" decoding="async" fetchpriority="high" />
+      <div class="absolute inset-0 bg-gradient-to-br from-matrix-black/80 via-matrix-black/60 to-matrix-black/80"></div>
+    </div>
+  <!-- Hero Section (tightened vertical rhythm) -->
+  <section class="relative pt-10 pb-6 md:pt-14 md:pb-8 bg-gradient-to-br from-background/20 via-muted/10 to-background/20 overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h1 class="text-4xl sm:text-5xl font-orbitron font-bold text-neon-lime mb-6 drop-shadow-neon">
+      <div class="text-center mb-8 md:mb-10">
+        <h1 class="text-h1 font-orbitron text-neon-lime mb-6 animate-fade-in">
           Contact
         </h1>
-        <p class="text-xl text-neon-lime/70 max-w-3xl mx-auto">
+        <p class="text-body max-w-3xl mx-auto text-cyber-gray-light mb-4">
           Let's collaborate on your next project or discuss creative opportunities
         </p>
       </div>
@@ -22,18 +28,18 @@ import MainLayout from '../layouts/MainLayout.astro';
   </section>
 
   <!-- Contact Content -->
-  <main class="py-16">
+  <section class="pt-6 md:pt-8 pb-12 md:pb-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <!-- Contact Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 mb-10">
         
         <!-- Contact Form -->
-        <section class="border border-neon-lime/30 rounded-xl bg-black/40 p-6 md:p-8 backdrop-blur-sm" aria-labelledby="contact-form-title">
-          <h2 id="contact-form-title" class="text-2xl font-orbitron font-bold text-neon-lime mb-6 drop-shadow-neon">
+        <section class="border border-primary/30 rounded-xl bg-card/40 p-5 md:p-6 backdrop-blur-sm" aria-labelledby="contact-form-title">
+          <h2 id="contact-form-title" class="text-2xl font-orbitron font-bold text-primary mb-6 drop-shadow-neon">
             📧 Send Message
           </h2>
-          <form class="space-y-6" id="contact-form" novalidate>
+          <form class="space-y-6" id="contact-form" novalidate autocomplete="off" role="form" aria-labelledby="contact-form-title">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label for="firstName" class="block text-sm font-medium text-neon-lime/90 mb-2">
@@ -44,12 +50,16 @@ import MainLayout from '../layouts/MainLayout.astro';
                   id="firstName" 
                   name="firstName" 
                   required
-                  class="w-full px-4 py-3 bg-cyber-gray border border-neon-lime/30 rounded-lg text-matrix-white placeholder-neon-lime/40 focus:border-neon-lime focus:outline-none transition-all duration-300 focus:ring-2 focus:ring-neon-lime/20"
+                  inputmode="text"
+                  autocapitalize="words"
+                  autocomplete="given-name"
+                  maxlength="60"
+                   class="w-full px-4 py-3 bg-muted border border-primary/30 rounded-lg text-foreground placeholder-primary/40 focus:border-primary focus:outline-none transition-all duration-300 focus:ring-2 focus:ring-primary/20"
                   placeholder="Your first name"
                   aria-describedby="firstName-error"
                   aria-invalid="false"
                 >
-                <div id="firstName-error" class="hidden text-red-400 text-sm mt-1" role="alert"></div>
+                <div id="firstName-error" class="hidden text-red-400 text-sm mt-1" role="alert" aria-live="polite"></div>
               </div>
               <div>
                 <label for="lastName" class="block text-sm font-medium text-neon-lime/90 mb-2">
@@ -60,12 +70,16 @@ import MainLayout from '../layouts/MainLayout.astro';
                   id="lastName" 
                   name="lastName" 
                   required
-                  class="w-full px-4 py-3 bg-cyber-gray border border-neon-lime/30 rounded-lg text-matrix-white placeholder-neon-lime/40 focus:border-neon-lime focus:outline-none transition-all duration-300 focus:ring-2 focus:ring-neon-lime/20"
+                  inputmode="text"
+                  autocapitalize="words"
+                  autocomplete="family-name"
+                  maxlength="60"
+                   class="w-full px-4 py-3 bg-muted border border-primary/30 rounded-lg text-foreground placeholder-primary/40 focus:border-primary focus:outline-none transition-all duration-300 focus:ring-2 focus:ring-primary/20"
                   placeholder="Your last name"
                   aria-describedby="lastName-error"
                   aria-invalid="false"
                 >
-                <div id="lastName-error" class="hidden text-red-400 text-sm mt-1" role="alert"></div>
+                <div id="lastName-error" class="hidden text-red-400 text-sm mt-1" role="alert" aria-live="polite"></div>
               </div>
             </div>
             
@@ -78,12 +92,15 @@ import MainLayout from '../layouts/MainLayout.astro';
                 id="email" 
                 name="email" 
                 required
+                inputmode="email"
+                autocomplete="email"
+                maxlength="254"
                 class="w-full px-4 py-3 bg-cyber-gray border border-neon-lime/30 rounded-lg text-matrix-white placeholder-neon-lime/40 focus:border-neon-lime focus:outline-none transition-all duration-300 focus:ring-2 focus:ring-neon-lime/20"
                 placeholder="your.email@example.com"
                 aria-describedby="email-error"
                 aria-invalid="false"
               >
-              <div id="email-error" class="hidden text-red-400 text-sm mt-1" role="alert"></div>
+              <div id="email-error" class="hidden text-red-400 text-sm mt-1" role="alert" aria-live="polite"></div>
             </div>
             
             <div>
@@ -94,7 +111,8 @@ import MainLayout from '../layouts/MainLayout.astro';
                 id="subject" 
                 name="subject" 
                 required
-                class="w-full px-4 py-3 bg-cyber-gray border border-neon-lime/30 rounded-lg text-matrix-white focus:border-neon-lime focus:outline-none transition-all duration-300 focus:ring-2 focus:ring-neon-lime/20"
+                autocomplete="off"
+                 class="w-full px-4 py-3 bg-muted border border-primary/30 rounded-lg text-foreground focus:border-primary focus:outline-none transition-all duration-300 focus:ring-2 focus:ring-primary/20"
                 aria-describedby="subject-error"
                 aria-invalid="false"
               >
@@ -105,7 +123,7 @@ import MainLayout from '../layouts/MainLayout.astro';
                 <option value="consulting">Consulting Request</option>
                 <option value="other">Other</option>
               </select>
-              <div id="subject-error" class="hidden text-red-400 text-sm mt-1" role="alert"></div>
+              <div id="subject-error" class="hidden text-red-400 text-sm mt-1" role="alert" aria-live="polite"></div>
             </div>
             
             <div>
@@ -117,12 +135,14 @@ import MainLayout from '../layouts/MainLayout.astro';
                 name="message" 
                 rows="6" 
                 required
-                class="w-full px-4 py-3 bg-cyber-gray border border-neon-lime/30 rounded-lg text-matrix-white placeholder-neon-lime/40 focus:border-neon-lime focus:outline-none transition-all duration-300 resize-none focus:ring-2 focus:ring-neon-lime/20"
+                maxlength="5000"
+                autocomplete="off"
+                 class="w-full px-4 py-3 bg-muted border border-primary/30 rounded-lg text-foreground placeholder-primary/40 focus:border-primary focus:outline-none transition-all duration-300 resize-none focus:ring-2 focus:ring-primary/20"
                 placeholder="Tell me about your project or inquiry..."
                 aria-describedby="message-error"
                 aria-invalid="false"
               ></textarea>
-              <div id="message-error" class="hidden text-red-400 text-sm mt-1" role="alert"></div>
+              <div id="message-error" class="hidden text-red-400 text-sm mt-1" role="alert" aria-live="polite"></div>
             </div>
             
             <!-- Success/Error Messages -->
@@ -141,7 +161,7 @@ import MainLayout from '../layouts/MainLayout.astro';
               </div>
             </div>
             
-            <button type="submit" class="w-full text-lg py-4 relative overflow-hidden group bg-cyber-gray border border-neon-lime/40 rounded-lg text-neon-lime hover:border-neon-lime hover:shadow-neon transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-neon-lime/20">
+             <button type="submit" class="w-full text-lg py-4 relative overflow-hidden group bg-muted border border-primary/40 rounded-lg text-primary hover:border-primary hover:shadow-neon transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/20" aria-label="Send message">
               <span class="relative z-10">🚀 Send Message</span>
               <div class="absolute inset-0 bg-gradient-to-r from-neon-lime to-digital-emerald opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true"></div>
             </button>
@@ -152,8 +172,8 @@ import MainLayout from '../layouts/MainLayout.astro';
         <aside class="space-y-8" aria-label="Contact information">
           
           <!-- Professional Services -->
-          <section class="border border-digital-emerald/40 rounded-xl bg-black/40 p-6 md:p-8 backdrop-blur-sm" aria-labelledby="services-title">
-            <h2 id="services-title" class="text-2xl font-orbitron font-bold text-digital-emerald mb-6 drop-shadow-emerald">
+          <section class="border border-secondary/40 rounded-xl bg-card/40 p-5 md:p-6 backdrop-blur-sm" aria-labelledby="services-title">
+            <h2 id="services-title" class="text-2xl font-orbitron font-bold text-secondary mb-6 drop-shadow-emerald">
               💼 Services
             </h2>
             <div class="space-y-4">
@@ -190,8 +210,8 @@ import MainLayout from '../layouts/MainLayout.astro';
           </section>
 
           <!-- Contact Methods -->
-          <section class="border border-neon-lime/30 rounded-xl bg-black/40 p-6 md:p-8 backdrop-blur-sm" aria-labelledby="contact-methods-title">
-            <h2 id="contact-methods-title" class="text-2xl font-orbitron font-bold text-neon-lime mb-6 drop-shadow-neon">
+          <section class="border border-primary/30 rounded-xl bg-card/40 p-5 md:p-6 backdrop-blur-sm" aria-labelledby="contact-methods-title">
+            <h2 id="contact-methods-title" class="text-2xl font-orbitron font-bold text-primary mb-6 drop-shadow-neon">
               📞 Get In Touch
             </h2>
             <div class="space-y-4">
@@ -249,8 +269,8 @@ import MainLayout from '../layouts/MainLayout.astro';
           </section>
 
           <!-- Response Time -->
-          <section class="border border-digital-emerald/40 rounded-xl bg-black/40 p-6 md:p-8 backdrop-blur-sm" aria-labelledby="response-time-title">
-            <h2 id="response-time-title" class="text-2xl font-orbitron font-bold text-digital-emerald mb-6 drop-shadow-emerald">
+          <section class="border border-secondary/40 rounded-xl bg-card/40 p-5 md:p-6 backdrop-blur-sm" aria-labelledby="response-time-title">
+            <h2 id="response-time-title" class="text-2xl font-orbitron font-bold text-secondary mb-6 drop-shadow-emerald">
               ⏱️ Response Time
             </h2>
             <div class="space-y-3">
@@ -272,11 +292,11 @@ import MainLayout from '../layouts/MainLayout.astro';
       </div>
 
       <!-- FAQ Section -->
-      <section class="border border-neon-lime/30 rounded-xl bg-black/40 p-6 md:p-8 backdrop-blur-sm" aria-labelledby="faq-title">
-        <h2 id="faq-title" class="text-2xl font-orbitron font-bold text-neon-lime mb-8 drop-shadow-neon">
+      <section class="border border-neon-lime/30 rounded-xl bg-black/40 p-5 md:p-6 backdrop-blur-sm" aria-labelledby="faq-title">
+        <h2 id="faq-title" class="text-2xl font-orbitron font-bold text-neon-lime mb-6 drop-shadow-neon">
           ❓ Frequently Asked Questions
         </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           
           <div class="space-y-4">
             <article>
@@ -332,11 +352,12 @@ import MainLayout from '../layouts/MainLayout.astro';
         </div>
       </section>
     </div>
-  </main>
+  </section>
+    </div>
 </MainLayout>
 
 <script>
-  // Enhanced form validation with accessibility
+  // Enhanced form validation with accessibility + input sanitization
   function initContactForm() {
     const form = document.getElementById('contact-form') as HTMLFormElement;
     const formMessage = document.getElementById('form-message');
@@ -357,6 +378,15 @@ import MainLayout from '../layouts/MainLayout.astro';
     // Form submission
     form.addEventListener('submit', handleSubmit);
     
+    function sanitize(value: string) {
+      // Remove script-like patterns and trim excessive whitespace
+      return value
+        .replace(/<\/?script[^>]*>/gi, '')
+        .replace(/[\u0000-\u001F\u007F]/g, '')
+        .replace(/[\r\n\t]+/g, ' ')
+        .trim();
+    }
+
     function validateField(field: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement) {
       const errorElement = document.getElementById(`${field.id}-error`);
       let isValid = true;
@@ -378,6 +408,12 @@ import MainLayout from '../layouts/MainLayout.astro';
           isValid = false;
           errorMessage = 'Please enter a valid email address.';
         }
+      }
+
+      // Basic XSS guards: disallow angle brackets in text inputs/textarea
+      if ((field.tagName === 'INPUT' || field.tagName === 'TEXTAREA') && /[<>]/.test(field.value)) {
+        isValid = false;
+        errorMessage = 'Angle brackets are not allowed.';
       }
       
       // Show error if invalid
@@ -450,9 +486,16 @@ import MainLayout from '../layouts/MainLayout.astro';
       submitButton.disabled = true;
       
       try {
-        // Simulate form submission (replace with actual endpoint)
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
+        // Prepare sanitized payload
+        const payload: Record<string, string> = {};
+        fields.forEach((f) => {
+          const el = f as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+          payload[el.name] = sanitize(el.value || '');
+        });
+
+        // Simulate submission (replace with actual endpoint)
+        await new Promise((resolve) => setTimeout(resolve, 1200));
+
         showMessage('success', 'Message sent successfully!');
         form.reset();
         

@@ -3,35 +3,53 @@
 // Features: Animated background, VP logo, smooth text animations, and interactive CTA
 ---
 
-<!-- Matrix Code Rain Background -->
-<div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-  <canvas id="matrixCanvas" class="w-full h-full opacity-20"></canvas>
+<!-- Background decorative image (content-neutral) -->
+<div class="absolute inset-0 overflow-hidden pointer-events-none bg-gradient-to-br from-background via-muted/20 to-background" aria-hidden="true">
+  <picture>
+    <source srcset="/images/home-bg-1200.avif" type="image/avif" media="(min-width: 1200px)" />
+    <source srcset="/images/home-bg-800.avif" type="image/avif" media="(min-width: 800px)" />
+    <source srcset="/images/home-bg-480.avif" type="image/avif" />
+    <source srcset="/images/home-bg-1200.webp" type="image/webp" media="(min-width: 1200px)" />
+    <source srcset="/images/home-bg-800.webp" type="image/webp" media="(min-width: 800px)" />
+    <source srcset="/images/home-bg-480.webp" type="image/webp" />
+    <img 
+      src="/images/home-bg.png" 
+      alt=""
+      class="w-full h-full object-cover opacity-25"
+      width="2400"
+      height="1400"
+      loading="eager"
+      decoding="async"
+      fetchpriority="high"
+      sizes="100vw"
+      onerror="this.style.display='none'"
+    />
+  </picture>
 </div>
 
-<!-- Animated Background Gradients -->
-<div class="absolute inset-0 bg-gradient-to-br from-background via-muted to-background" aria-hidden="true"></div>
-<div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary)/0.08),transparent_40%)]" aria-hidden="true"></div>
-<div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,hsl(var(--secondary)/0.06),transparent_40%)]" aria-hidden="true"></div>
+<!-- Matrix Rain Canvas -->
+<canvas 
+  id="matrixCanvas" 
+  class="absolute inset-0 pointer-events-none opacity-20 z-0"
+  aria-hidden="true"
+></canvas>
 
 <!-- Main Content Container -->
 <div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8 text-center">
   
-  <!-- VP Logo/Portrait with Enhanced Animation -->
+  <!-- Avatar -->
   <div class="mb-8 group mt-16 sm:mt-20 lg:mt-24">
     <div class="relative">
-      <!-- Glow Ring -->
-      <div class="absolute inset-0 w-32 h-32 mx-auto rounded-full bg-gradient-to-r from-primary via-secondary to-primary opacity-30 blur-sm animate-spin-slow" aria-hidden="true"></div>
-      
-      <!-- Main Logo -->
-      <div class="relative w-32 h-32 mx-auto bg-gradient-to-br from-background via-muted to-background border-2 border-primary rounded-full flex items-center justify-center font-orbitron font-bold text-primary text-4xl animate-glow group-hover:scale-110 transition-transform duration-300" role="img" aria-label="VP Logo">
-        VP
-      </div>
-      
-      <!-- Corner Accents -->
-      <div class="absolute -top-1 -left-1 w-3 h-3 border-l-2 border-t-2 border-primary opacity-60" aria-hidden="true"></div>
-      <div class="absolute -top-1 -right-1 w-3 h-3 border-r-2 border-t-2 border-primary opacity-60" aria-hidden="true"></div>
-      <div class="absolute -bottom-1 -left-1 w-3 h-3 border-l-2 border-b-2 border-primary opacity-60" aria-hidden="true"></div>
-      <div class="absolute -bottom-1 -right-1 w-3 h-3 border-r-2 border-b-2 border-primary opacity-60" aria-hidden="true"></div>
+      <img 
+        src="/images/avatar.png" 
+        alt="Portrait of Vasileios Politeiadis"
+        class="relative w-32 h-32 mx-auto rounded-full border-2 border-primary shadow-neon object-cover"
+        width="128" height="128"
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+        sizes="128px"
+      />
     </div>
   </div>
 
@@ -51,7 +69,7 @@
   <div class="flex flex-col sm:flex-row gap-6 justify-center items-center animate-slide-up mb-16">
     <a 
       href="/projects" 
-      class="group relative overflow-hidden px-8 py-4 bg-cyber-blue text-white font-orbitron font-semibold tracking-wide rounded-xl border-2 border-cyber-blue transition-all duration-300 hover:bg-transparent hover:text-cyber-blue hover:shadow-cyber-blue hover:-translate-y-1"
+      class="group relative overflow-hidden px-8 py-4 bg-cyber-blue text-white font-orbitron font-semibold tracking-wide rounded-xl border-2 border-cyber-blue transition-all duration-300 hover:bg-primary hover:border-primary hover:text-black hover:shadow-neon hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-slate"
       aria-label="Explore my projects and portfolio"
     >
       <!-- Button Content -->
@@ -73,64 +91,10 @@
       </span>
     </a>
   </div>
-
-  <!-- Elegant Experience & Passion Section -->
-  <section class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-4xl mx-auto animate-slide-up" aria-label="Experience and passion">
-    <div class="group text-center p-6 rounded-xl border border-primary/20 bg-black/30 backdrop-blur-sm hover:border-primary/40 hover:shadow-neon transition-all duration-300">
-      <div class="text-5xl font-orbitron font-bold text-primary mb-3 group-hover:scale-110 transition-transform duration-300">5+</div>
-      <div class="text-foreground/80 font-inter text-lg">Years of Experience</div>
-      <div class="text-muted-foreground font-inter text-sm mt-2">QA Automation & Full-Stack Development</div>
-    </div>
-    
-    <div class="group text-center p-6 rounded-xl border border-secondary/20 bg-black/30 backdrop-blur-sm hover:border-secondary/40 hover:shadow-emerald transition-all duration-300">
-      <div class="text-5xl font-orbitron font-bold text-secondary mb-3 group-hover:scale-110 transition-transform duration-300">∞</div>
-      <div class="text-foreground/80 font-inter text-lg">Passion</div>
-      <div class="text-muted-foreground font-inter text-sm mt-2">Creative Technology & AI Innovation</div>
-    </div>
-  </section>
 </div>
 
 <!-- Matrix Code Rain Animation Script -->
-<script>
-  function initMatrixRain() {
-    const el = document.getElementById('matrixCanvas');
-    if (!(el instanceof HTMLCanvasElement)) return;
-    const canvas = el;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}".split('');
-    const fontSize = 14;
-    const columns = Math.floor(window.innerWidth / fontSize);
-    const drops: number[] = new Array(columns).fill(1);
-
-    function draw() {
-      const context = ctx as CanvasRenderingContext2D;
-      context.fillStyle = 'rgba(10, 10, 10, 0.04)';
-      context.fillRect(0, 0, canvas.width, canvas.height);
-      context.fillStyle = '#39FF14';
-      context.font = `${fontSize}px monospace`;
-
-      for (let i = 0; i < drops.length; i++) {
-        const text = matrix[Math.floor(Math.random() * matrix.length)];
-        context.fillText(text, i * fontSize, drops[i] * fontSize);
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-        drops[i]++;
-      }
-    }
-
-    setInterval(draw, 35);
-  }
-
-  document.addEventListener('DOMContentLoaded', initMatrixRain);
-</script>
+<script src="/scripts/matrix-rain.js" async></script>
 
 <!-- Keep only component-specific extras not already in global Tailwind layers -->
 <style>
