@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import avatarSrc from '../assets/images/avatar.png';
 // Hero component with Matrix-inspired animations and neon glow effects
 // Features: Animated background, VP logo, smooth text animations, and interactive CTA
 ---
@@ -40,15 +42,15 @@
   <!-- Avatar -->
   <div class="mb-8 group mt-16 sm:mt-20 lg:mt-24">
     <div class="relative">
-      <img 
-        src="/images/avatar.png" 
+      <Image 
+        src={avatarSrc}
         alt="Portrait of Vasileios Politeiadis"
         class="relative w-32 h-32 mx-auto rounded-full border-2 border-primary shadow-neon object-cover"
-        width="128" height="128"
-        loading="eager"
-        decoding="async"
-        fetchpriority="high"
+        widths={[128, 160, 192]}
         sizes="128px"
+        format="webp"
+        loading="eager"
+        fetchpriority="high"
       />
     </div>
   </div>
