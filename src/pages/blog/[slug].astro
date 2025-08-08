@@ -45,7 +45,7 @@ const modifiedDate = post.data.updatedAt ? new Date(post.data.updatedAt).toISOSt
   publishedAt={publishedDate}
   updatedAt={modifiedDate}
   author={post.data.author}
-  image={post.data.coverImage || '/images/og-default.webp'}
+  image={post.data.coverImage || '/images/vp-logo-800.webp'}
 >
   <!-- SEO Structured Data (external, CSP-safe) -->
   <script type="application/ld+json" src={`/structured/blog/${post.slug}.json`}></script>

@@ -34,7 +34,9 @@ export default defineConfig({
     assets: '_astro',
     // Inline critical stylesheets automatically
     inlineStylesheets: 'auto',
-    format: 'file'
+    // Use directory-style URLs so static hosts (like Vercel) can resolve routes
+    // e.g. /about -> /about/index.html instead of /about.html
+    format: 'directory'
   },
   vite: {
     css: {

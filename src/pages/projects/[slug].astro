@@ -34,7 +34,7 @@ const relatedProjects = allProjects
   publishedAt={new Date(project.data.publishedAt).toISOString()}
   updatedAt={project.data.updatedAt ? new Date(project.data.updatedAt).toISOString() : undefined}
   author="Vasileios Politeiadis"
-  image={project.data.coverImage || '/images/og-default.webp'}
+  image={project.data.coverImage || '/images/vp-logo-800.webp'}
 >
   <!-- SEO Structured Data (external, CSP-safe) -->
   <script type="application/ld+json" src={`/structured/project/${project.slug}.json`}></script>
