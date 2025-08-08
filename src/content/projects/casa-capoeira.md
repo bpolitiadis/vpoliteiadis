@@ -2,22 +2,28 @@
 title: 'Casa Capoeira'
 description: 'A comprehensive CMS platform for capoeira schools and academies, streamlining class management, student enrollment, and community engagement.'
 excerpt: 'Modern CMS platform revolutionizing how capoeira schools manage their operations and engage with students.'
-coverImage: '/images/projects/casa-capoeira-cover.jpg'
+coverImage: '/images/casa-capoeira-cover.png'
 coverVideo: '/videos/casa-capoeira-preview.mp4'
 tags: ['CMS', 'Education', 'Community', 'Full-Stack', 'SaaS']
 techStack:
   [
-    'Next.js',
-    'React',
-    'Node.js',
-    'Supabase',
-    'TailwindCSS',
+    'Next.js 15',
+    'React 18',
     'TypeScript',
-    'Prisma',
+    'Supabase (PostgreSQL + Storage)',
+    'Prisma ORM',
+    'NextAuth v5',
+    'TailwindCSS',
+    'ShadCN UI',
+    'Radix Primitives',
+    'Zod',
+    'Resend',
+    'Vitest',
+    'Playwright',
   ]
 featured: true
-publishedAt: '2024-01-15'
-updatedAt: '2024-03-20'
+publishedAt: '2025-08-01'
+updatedAt: '2025-08-02'
 client: 'Capoeira Community'
 duration: '6 months'
 role: 'Full-Stack Developer & Product Designer'
@@ -73,10 +79,14 @@ Casa Capoeira is a comprehensive CMS platform built specifically for capoeira ac
 
 Built with modern technologies for scalability and performance:
 
-- **Frontend**: Next.js 14 with React 18 and TypeScript
-- **Backend**: Node.js with Express and Prisma ORM
-- **Database**: PostgreSQL via Supabase
-- **Styling**: TailwindCSS with custom design system
+- **Frontend**: Next.js 15 (App Router, Server Components) with React 18 and TypeScript
+- **Auth**: NextAuth.js v5 (JWT-based sessions)
+- **Backend**: Next.js Route Handlers with Prisma ORM
+- **Database & Storage**: PostgreSQL via Supabase + Supabase Storage for media
+- **Styling**: TailwindCSS with ShadCN UI and Radix Primitives
+- **Validation**: Zod schema validation across client and server
+- **Email**: Resend with React Email templates
+- **Testing**: Vitest (unit) + Playwright (E2E)
 - **Deployment**: Vercel with automated CI/CD
 
 ## The Impact

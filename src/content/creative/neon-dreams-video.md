@@ -9,8 +9,8 @@ tools: ['Kling AI', 'Runway ML', 'After Effects', 'DaVinci Resolve']
 tags: ['video', 'experiment', 'neon', 'abstract', 'dreamlike', 'ai-generation']
 category: 'experiment'
 featured: false
-publishedAt: '2024-02-10'
-updatedAt: '2024-02-15'
+publishedAt: '2025-08-08'
+updatedAt: '2025-08-09'
 aspectRatio: '16/9'
 dimensions: '1920x1080'
 prompt: 'A dreamlike neon landscape with flowing digital particles, abstract geometric shapes floating in a dark void, soft neon glows in cyan and magenta, ethereal atmosphere, smooth camera movement, 60fps'

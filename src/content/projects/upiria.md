@@ -2,7 +2,7 @@
 title: 'Upiria'
 description: 'Front-end development and testing infrastructure for a cutting-edge startup, focusing on React applications and comprehensive test automation.'
 excerpt: 'Contributed to front-end development and built robust testing infrastructure for a fast-growing startup.'
-coverImage: '/images/projects/upiria-cover.jpg'
+coverImage: '/images/upiria-cover.png'
 tags: ['Startup', 'Frontend', 'Testing', 'React', 'Automation']
 techStack:
   [
@@ -14,8 +14,8 @@ techStack:
     'GitHub Actions',
   ]
 featured: true
-publishedAt: '2023-06-01'
-updatedAt: '2023-12-15'
+publishedAt: '2025-08-03'
+updatedAt: '2025-08-04'
 client: 'Upiria'
 duration: '8 months'
 role: 'Frontend Developer & QA Engineer'

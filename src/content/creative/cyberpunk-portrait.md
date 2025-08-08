@@ -8,8 +8,8 @@ tools: ['Midjourney', 'Photoshop', 'Topaz Gigapixel']
 tags: ['cyberpunk', 'portrait', 'neon', 'futuristic', 'digital-art']
 category: 'ai-art'
 featured: true
-publishedAt: '2024-01-15'
-updatedAt: '2024-01-20'
+publishedAt: '2025-08-10'
+updatedAt: '2025-08-10'
 dimensions: '2048x2048'
 prompt: 'A stunning cyberpunk portrait of a young woman with glowing neon blue eyes, digital circuit patterns on her skin, holographic hair, dramatic lighting with purple and cyan neon lights, highly detailed, cinematic composition, 8k resolution'
 process: 'This piece began with a Midjourney prompt exploring cyberpunk aesthetics. The initial AI generation was refined through multiple iterations, focusing on the balance between human features and digital augmentation. Post-processing in Photoshop enhanced the neon glow effects and added subtle circuit patterns. Topaz Gigapixel was used for final upscaling to ensure crisp detail in the final 2048x2048 output.'

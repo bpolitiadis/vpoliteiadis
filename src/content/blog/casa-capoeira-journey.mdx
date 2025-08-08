@@ -1,632 +1,198 @@
 ---
-title: 'Building Casa Capoeira: A Complete Product Journey'
-description: 'From ideation to deployment: the complete story of building a CMS platform for capoeira communities.'
-excerpt: 'Discover the full product lifecycle of Casa Capoeira - from initial concept to live deployment, including technical challenges, design decisions, and lessons learned.'
-coverImage: '/images/blog/casa-capoeira-cover.jpg'
-author: 'Vasileios Politeiadis'
-tags: ['Next.js', 'Supabase', 'Product', 'Full-Stack', 'CMS', 'Capoeira']
-category: 'development'
+title: "Building the Casa Capoeira Portal: A Solo Dev’s Journey Into Code, Culture, and Craft"
+description: "A solo developer’s journey building a production-ready, multilingual CMS for the global Capoeira community—balancing code, culture, and craft."
+excerpt: "How I designed and shipped a custom, multilingual CMS for Capoeira: tech choices, CMS design, i18n, media, registration, security, and the realities of building alone."
+coverImage: "/images/casa-capoeira-cover.png"
+author: "Vasileios Politeiadis"
+tags: [
+  "Next.js",
+  "React",
+  "Supabase",
+  "PostgreSQL",
+  "Prisma",
+  "NextAuth",
+  "TailwindCSS",
+  "ShadCN",
+  "Radix",
+  "Zod",
+  "Resend",
+  "Vitest",
+  "Playwright",
+  "i18n",
+  "CMS",
+  "Capoeira",
+  "Product",
+  "Solo Developer"
+]
+category: "development"
 featured: false
-publishedAt: '2024-10-15'
-readingTime: '10 min read'
+publishedAt: "2025-08-05"
+readingTime: "12 min read"
 seo:
-  title: 'Building Casa Capoeira: A Complete Product Journey - Vasileios Politeiadis'
-  description: 'Follow the complete product development journey of Casa Capoeira, a CMS platform for capoeira communities built with Next.js and Supabase.'
-  keywords:
-    [
-      'Next.js',
-      'Supabase',
-      'product development',
-      'CMS',
-      'capoeira',
-      'full-stack',
-    ]
+  title: "Building the Casa Capoeira Portal: A Solo Dev’s Journey Into Code, Culture, and Craft - Vasileios Politeiadis"
+  description: "A solo developer’s story of building a production-ready, multilingual CMS for a global Capoeira community with Next.js, Supabase, Prisma, and more."
+  keywords: [
+    "Next.js",
+    "React",
+    "Supabase",
+    "PostgreSQL",
+    "Prisma",
+    "NextAuth",
+    "TailwindCSS",
+    "ShadCN",
+    "Radix",
+    "Zod",
+    "Resend",
+    "Vitest",
+    "Playwright",
+    "i18n",
+    "CMS",
+    "Capoeira",
+    "solo developer"
+  ]
 ---
 
-# Building Casa Capoeira: A Complete Product Journey
-
-Building a product from scratch is one of the most rewarding experiences in software development. Casa Capoeira represents my journey through the complete product lifecycle - from initial ideation to live deployment. This post chronicles the technical decisions, challenges, and lessons learned along the way.
-
-## The Genesis: Identifying the Problem
-
-The idea for Casa Capoeira emerged from observing how capoeira communities manage their digital presence. Most groups rely on scattered solutions:
-
-- **Social media** for announcements
-- **WhatsApp groups** for communication
-- **Basic websites** for static information
-- **Manual processes** for event management
-
-This fragmentation creates several problems:
-
-- Information gets lost across platforms
-- Event coordination becomes chaotic
-- New members struggle to find relevant information
-- Community leaders spend excessive time on administrative tasks
-
-### The Vision
-
-Casa Capoeira would be a unified platform that:
-
-- Centralizes all community information
-- Streamlines event management
-- Facilitates member communication
-- Provides tools for community growth
-
-## Technical Architecture Decisions
-
-### Frontend: Next.js 14 with App Router
-
-```typescript
-// Example of the app structure
-app/
-├── (auth)/
-│   ├── login/
-│   └── register/
-├── (dashboard)/
-│   ├── events/
-│   ├── members/
-│   └── announcements/
-├── api/
-│   ├── auth/
-│   ├── events/
-│   └── members/
-└── globals.css
-```
-
-**Why Next.js 14?**
-
-- **Server Components**: Better performance and SEO
-- **App Router**: Simplified routing and layouts
-- **TypeScript**: Type safety throughout the application
-- **Built-in optimizations**: Image optimization, code splitting
-
-### Backend: Supabase
-
-```typescript
-// Database schema example
-interface Event {
-  id: string;
-  title: string;
-  description: string;
-  start_date: Date;
-  end_date: Date;
-  location: string;
-  max_participants?: number;
-  created_by: string;
-  community_id: string;
-  status: 'draft' | 'published' | 'cancelled';
-}
-
-interface Member {
-  id: string;
-  email: string;
-  first_name: string;
-  last_name: string;
-  belt_level: 'beginner' | 'intermediate' | 'advanced';
-  join_date: Date;
-  community_id: string;
-  profile_image?: string;
-}
-```
-
-**Why Supabase?**
-
-- **Real-time subscriptions**: Live updates for events and announcements
-- **Row Level Security**: Granular access control
-- **Built-in authentication**: User management out of the box
-- **Database functions**: Complex queries and business logic
-- **Edge functions**: Serverless API endpoints
-
-### State Management: Zustand
-
-```typescript
-// Example store for events
-interface EventStore {
-  events: Event[];
-  loading: boolean;
-  error: string | null;
-  fetchEvents: (communityId: string) => Promise<void>;
-  createEvent: (event: Omit<Event, 'id'>) => Promise<void>;
-  updateEvent: (id: string, updates: Partial<Event>) => Promise<void>;
-}
-
-const useEventStore = create<EventStore>((set, get) => ({
-  events: [],
-  loading: false,
-  error: null,
-
-  fetchEvents: async (communityId: string) => {
-    set({ loading: true, error: null });
-    try {
-      const { data, error } = await supabase
-        .from('events')
-        .select('*')
-        .eq('community_id', communityId)
-        .order('start_date', { ascending: true });
-
-      if (error) throw error;
-      set({ events: data, loading: false });
-    } catch (error) {
-      set({ error: error.message, loading: false });
-    }
-  },
-
-  // ... other methods
-}));
-```
-
-## Development Phases
-
-### Phase 1: Core Infrastructure (Weeks 1-2)
-
-**Database Design**
-
-```sql
--- Core tables
-CREATE TABLE communities (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name VARCHAR(255) NOT NULL,
-  description TEXT,
-  logo_url TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-
-CREATE TABLE members (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  email VARCHAR(255) UNIQUE NOT NULL,
-  first_name VARCHAR(100) NOT NULL,
-  last_name VARCHAR(100) NOT NULL,
-  belt_level VARCHAR(50) DEFAULT 'beginner',
-  community_id UUID REFERENCES communities(id),
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-
-CREATE TABLE events (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  title VARCHAR(255) NOT NULL,
-  description TEXT,
-  start_date TIMESTAMP WITH TIME ZONE NOT NULL,
-  end_date TIMESTAMP WITH TIME ZONE,
-  location TEXT,
-  max_participants INTEGER,
-  community_id UUID REFERENCES communities(id),
-  created_by UUID REFERENCES members(id),
-  status VARCHAR(50) DEFAULT 'draft',
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-```
-
-**Authentication Setup**
-
-```typescript
-// Supabase auth configuration
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
-
-// Auth context
-const AuthContext = createContext<{
-  user: User | null;
-  loading: boolean;
-  signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string, userData: any) => Promise<void>;
-  signOut: () => Promise<void>;
-}>({} as any);
-```
-
-### Phase 2: Core Features (Weeks 3-6)
-
-**Event Management System**
-
-```typescript
-// Event creation component
-const CreateEventForm = () => {
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    startDate: '',
-    endDate: '',
-    location: '',
-    maxParticipants: ''
-  });
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-
-    const { data, error } = await supabase
-      .from('events')
-      .insert([{
-        ...formData,
-        community_id: currentCommunity.id,
-        created_by: user.id,
-        status: 'published'
-      }])
-      .select()
-      .single();
-
-    if (error) {
-      console.error('Error creating event:', error);
-      return;
-    }
-
-    // Update store and redirect
-    useEventStore.getState().createEvent(data);
-    router.push(`/events/${data.id}`);
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Form fields */}
-    </form>
-  );
-};
-```
-
-**Real-time Updates**
-
-```typescript
-// Real-time event updates
-useEffect(() => {
-  const channel = supabase
-    .channel('events')
-    .on(
-      'postgres_changes',
-      {
-        event: '*',
-        schema: 'public',
-        table: 'events',
-        filter: `community_id=eq.${communityId}`,
-      },
-      payload => {
-        if (payload.eventType === 'INSERT') {
-          setEvents(prev => [...prev, payload.new as Event]);
-        } else if (payload.eventType === 'UPDATE') {
-          setEvents(prev =>
-            prev.map(event =>
-              event.id === payload.new.id ? (payload.new as Event) : event
-            )
-          );
-        } else if (payload.eventType === 'DELETE') {
-          setEvents(prev => prev.filter(event => event.id !== payload.old.id));
-        }
-      }
-    )
-    .subscribe();
-
-  return () => {
-    supabase.removeChannel(channel);
-  };
-}, [communityId]);
-```
-
-### Phase 3: Advanced Features (Weeks 7-10)
-
-**File Upload System**
-
-```typescript
-// Image upload component
-const ImageUpload = ({ onUpload }: { onUpload: (url: string) => void }) => {
-  const [uploading, setUploading] = useState(false);
-
-  const handleUpload = async (file: File) => {
-    setUploading(true);
-
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${Math.random()}.${fileExt}`;
-    const filePath = `uploads/${fileName}`;
-
-    const { error: uploadError } = await supabase.storage
-      .from('images')
-      .upload(filePath, file);
-
-    if (uploadError) {
-      console.error('Upload error:', uploadError);
-      return;
-    }
-
-    const { data: { publicUrl } } = supabase.storage
-      .from('images')
-      .getPublicUrl(filePath);
-
-    onUpload(publicUrl);
-    setUploading(false);
-  };
-
-  return (
-    <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
-      <input
-        type="file"
-        accept="image/*"
-        onChange={(e) => e.target.files?.[0] && handleUpload(e.target.files[0])}
-        disabled={uploading}
-      />
-      {uploading && <p>Uploading...</p>}
-    </div>
-  );
-};
-```
-
-**Search and Filtering**
-
-```typescript
-// Search functionality
-const useEventSearch = (events: Event[]) => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filters, setFilters] = useState({
-    status: 'all',
-    dateRange: 'all',
-  });
-
-  const filteredEvents = useMemo(() => {
-    return events.filter(event => {
-      const matchesSearch =
-        event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        event.description.toLowerCase().includes(searchTerm.toLowerCase());
-
-      const matchesStatus =
-        filters.status === 'all' || event.status === filters.status;
-
-      const matchesDate =
-        filters.dateRange === 'all' ||
-        (filters.dateRange === 'upcoming' &&
-          new Date(event.start_date) > new Date()) ||
-        (filters.dateRange === 'past' &&
-          new Date(event.start_date) < new Date());
-
-      return matchesSearch && matchesStatus && matchesDate;
-    });
-  }, [events, searchTerm, filters]);
-
-  return { filteredEvents, searchTerm, setSearchTerm, filters, setFilters };
-};
-```
-
-## Challenges and Solutions
-
-### Challenge 1: Real-time Data Synchronization
-
-**Problem**: Multiple users editing the same event simultaneously could cause conflicts.
-
-**Solution**: Implemented optimistic updates with conflict resolution:
-
-```typescript
-const updateEvent = async (id: string, updates: Partial<Event>) => {
-  // Optimistic update
-  const previousEvents = useEventStore.getState().events;
-  const optimisticEvents = previousEvents.map(event =>
-    event.id === id ? { ...event, ...updates } : event
-  );
-  useEventStore.setState({ events: optimisticEvents });
-
-  try {
-    const { data, error } = await supabase
-      .from('events')
-      .update(updates)
-      .eq('id', id)
-      .select()
-      .single();
-
-    if (error) throw error;
-
-    // Update with server response
-    useEventStore.setState({
-      events: previousEvents.map(event => (event.id === id ? data : event)),
-    });
-  } catch (error) {
-    // Revert on error
-    useEventStore.setState({ events: previousEvents });
-    console.error('Update failed:', error);
-  }
-};
-```
-
-### Challenge 2: Mobile Responsiveness
-
-**Problem**: Complex event management interface needed to work seamlessly on mobile devices.
-
-**Solution**: Implemented responsive design with mobile-first approach:
-
-```typescript
-// Responsive event card component
-const EventCard = ({ event }: { event: Event }) => {
-  return (
-    <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-        <div className="flex-1">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">
-            {event.title}
-          </h3>
-          <p className="text-gray-600 text-sm mb-2">
-            {formatDate(event.start_date)}
-          </p>
-          <p className="text-gray-700 text-sm line-clamp-2">
-            {event.description}
-          </p>
-        </div>
-
-        <div className="mt-4 md:mt-0 md:ml-4 flex flex-col sm:flex-row gap-2">
-          <button className="btn-primary text-sm">
-            View Details
-          </button>
-          <button className="btn-secondary text-sm">
-            RSVP
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-```
-
-### Challenge 3: Performance Optimization
-
-**Problem**: Large event lists were causing performance issues.
-
-**Solution**: Implemented virtualization and pagination:
-
-```typescript
-// Virtualized event list
-import { FixedSizeList as List } from 'react-window';
-
-const EventList = ({ events }: { events: Event[] }) => {
-  const Row = ({ index, style }: { index: number; style: CSSProperties }) => (
-    <div style={style}>
-      <EventCard event={events[index]} />
-    </div>
-  );
-
-  return (
-    <List
-      height={600}
-      itemCount={events.length}
-      itemSize={120}
-      width="100%"
-    >
-      {Row}
-    </List>
-  );
-};
-```
-
-## Deployment and DevOps
-
-### Environment Setup
-
-```yaml
-# docker-compose.yml for local development
-version: '3.8'
-services:
-  app:
-    build: .
-    ports:
-      - '3000:3000'
-    environment:
-      - DATABASE_URL=${DATABASE_URL}
-      - SUPABASE_URL=${SUPABASE_URL}
-      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
-    volumes:
-      - .:/app
-      - /app/node_modules
-```
-
-### CI/CD Pipeline
-
-```yaml
-# .github/workflows/deploy.yml
-name: Deploy to Production
-
-on:
-  push:
-    branches: [main]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run tests
-        run: npm test
-
-      - name: Build application
-        run: npm run build
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod'
-```
-
-## Key Learnings
-
-### 1. Start Simple, Iterate Fast
-
-The initial version focused on core functionality (events and members). Advanced features like file uploads and real-time notifications were added incrementally based on user feedback.
-
-### 2. Database Design is Critical
-
-Spending time on proper database schema design paid dividends. The initial structure supported all planned features without major migrations.
-
-### 3. User Experience Trumps Technical Elegance
-
-Some technically "perfect" solutions were replaced with simpler alternatives that provided better user experience. For example, real-time updates were simplified to avoid complexity.
-
-### 4. Testing is Essential
-
-Implementing comprehensive testing from the start prevented numerous bugs and made refactoring much safer.
-
-```typescript
-// Example test
-describe('Event Management', () => {
-  it('should create a new event', async () => {
-    const eventData = {
-      title: 'Test Event',
-      description: 'Test Description',
-      startDate: new Date().toISOString(),
-      location: 'Test Location',
-    };
-
-    const { data, error } = await supabase
-      .from('events')
-      .insert([eventData])
-      .select()
-      .single();
-
-    expect(error).toBeNull();
-    expect(data.title).toBe(eventData.title);
-  });
-});
-```
-
-## Current Status and Future Plans
-
-Casa Capoeira is currently in beta with a small group of capoeira communities. The feedback has been overwhelmingly positive, with users particularly appreciating:
-
-- **Centralized information management**
-- **Easy event coordination**
-- **Mobile-friendly interface**
-- **Real-time updates**
-
-### Planned Features
-
-1. **Advanced Analytics**: Community growth metrics and engagement tracking
-2. **Payment Integration**: Event registration with payment processing
-3. **Multi-language Support**: International capoeira community support
-4. **API Access**: Third-party integrations for existing tools
-
-## Conclusion
-
-Building Casa Capoeira has been an incredible learning experience. The journey from concept to live product reinforced the importance of:
-
-- **User-centered design**
-- **Iterative development**
-- **Technical simplicity**
-- **Comprehensive testing**
-- **Proper planning and architecture**
-
-The project demonstrates how modern web technologies can solve real-world problems for niche communities. The combination of Next.js, Supabase, and thoughtful UX design created a powerful platform that genuinely improves how capoeira communities operate.
-
-For developers considering building their own products, my advice is to start with a problem you understand deeply, build incrementally, and always prioritize user experience over technical perfection.
-
----
-
-_What's your experience with building products from scratch? What challenges did you face, and how did you overcome them? Share your thoughts in the comments below!_
-
-**Tags:** #Next.js #Supabase #ProductDevelopment #FullStack #CMS #Capoeira #WebDevelopment
+# Building the Casa Capoeira Portal: A Solo Dev’s Journey Into Code, Culture, and Craft
+
+When I first sat down to start the Casa Capoeira Portal, I wasn’t thinking about buzzwords like “scalable architecture” or “role-based access control.” I was thinking about Mestre Ligeirinho, our community, and the countless Capoeira events, stories, and moments that deserved a proper home on the web.
+
+But building that home — alone — meant wearing every hat imaginable:
+Product manager. Designer. Architect. Backend engineer. Frontend developer. QA tester. Sysadmin. And yes, even CMS architect.
+
+This is the story of how I built a production-ready, multilingual CMS platform for a global Capoeira community, entirely on my own — and what I learned along the way.
+
+## Why This Project Needed to Exist
+
+Capoeira is more than movement — it’s history, philosophy, music, and community. And yet, most Capoeira groups still rely on scattered Facebook posts, outdated websites, and word-of-mouth to share events and news.
+
+I wanted to create something better:
+
+- A central, multilingual hub for events, posts, and media.
+- A system that could scale from a local group to an international audience.
+- A platform that respects Capoeira’s traditions but also meets modern UX and technical standards.
+
+I knew from day one this wouldn’t just be a “website.” It would be a custom CMS, tailored for the rhythms and workflows of Capoeira.
+
+## The Technology Stack — and Why I Chose It
+
+The stack had to be modern, maintainable, and future-proof without introducing unnecessary complexity.
+
+- **Framework**: Next.js 15 (App Router) + React 18.3 (Server Components by default).
+  - **Why**: Server-first rendering for performance, SEO, and cleaner data fetching.
+- **Database & Storage**: Supabase (PostgreSQL + Storage) with Prisma ORM.
+  - **Why**: SQL reliability + Prisma’s type safety + Supabase’s storage for media.
+- **Auth**: NextAuth.js v5 (JWT-based sessions).
+  - **Why**: Flexible, secure, and well-documented for role-based control.
+- **UI**: TailwindCSS + ShadCN UI + Radix Primitives.
+  - **Why**: Consistent design system, accessibility built-in, rapid iteration.
+- **Validation**: Zod on both frontend and backend.
+  - **Why**: Single source of truth for input rules.
+- **Email**: Resend API with React Email templates.
+  - **Why**: Customizable transactional emails in multiple languages.
+- **Testing**: Vitest + Playwright for unit, API, and E2E.
+  - **Why**: Confidence in core flows (especially event registration).
+- **CMS Platform**: Custom-built admin panel at `/admin` with role-based access.
+  - **Why**: Off-the-shelf CMSs (WordPress, Strapi) couldn’t match the tailored i18n and event/media workflows we needed.
+
+This wasn’t just “the tech I like” — each choice was deliberate to balance performance, maintainability, and cultural requirements.
+
+## The CMS: Where the Magic Happens
+
+The public site might be the face of the Portal, but the real heart is the custom CMS I built for the teaching team.
+
+### Core CMS Features
+
+- **Events Manager**: Create, edit, publish/unpublish events; configure registration options; upload cover images; attach albums.
+- **Posts Manager**: Rich text editor (TipTap) with embedded media, multilingual content creation, and tags.
+- **Media Manager**: Batch uploads, drag-and-drop, cover selection, metadata editing, and event/post association.
+- **Newsletter Manager**: Subscriber database, campaign creation, analytics.
+- **User & Role Management**: Invite-only access, ADMIN/MODERATOR roles.
+
+### What Makes It Different
+
+- **Progressive Translation UI**: English content is required, other languages are optional and can be added gradually — perfect for a small admin team.
+- **Cultural Alignment**: The forms, terminology, and data structures are tailored to how Capoeira events actually work (multi-day attendance, T-shirts, meals, etc.).
+- **Role-based Safety**: The wrong person can’t accidentally wipe out all event data.
+
+I wasn’t just building a “back office” — I was crafting an instrument that mestres and moderators could actually enjoy playing.
+
+## The Hardest Challenges (and How I Solved Them)
+
+### 1. True Multilingual Architecturei18n
+
+The i18n requirements went far beyond a few translated strings.
+Every piece of content — events, posts, albums — needed:
+
+- A default (English) version.
+- Optional translations in 3 more languages.
+- Automatic fallback to the best available language.
+
+The trap: Most CMSs store translations inline, which quickly gets messy.
+
+**My solution:**
+Separate translation tables in the database (EventTranslation, PostTranslation, MediaAlbumTranslation) with unique constraints and a clean resolution function. This keeps queries fast and fallback logic consistent.
+
+### 2. Media Uploads Without Painmedia
+
+Events without photos feel incomplete. But uploading and organizing media can be a nightmare for non-technical users.
+
+The trap: Upload workflows that block content creation until every file is perfect.
+
+**My solution:**
+
+- Immediate cover image upload with preview.
+- Batch media uploads after album creation, with progress bars and error feedback.
+- Supabase Storage with strict RLS policies to keep public and private media separate.
+
+### 3. Event Registration Logic That Adaptsevents
+
+Capoeira events can be wildly different — a one-day kids’ workshop, a week-long international festival, or anything in between.
+
+The trap: Hardcoding a “one-size-fits-all” registration form.
+
+**My solution:**
+
+- Dynamic form generation based on event config.
+- Conditional Zod validation that changes per event.
+- Built-in constraints like one registration per email per event.
+
+### 4. Building Alone Means Owning Everything
+
+Every bug, every deployment, every database migration — it’s all on me.
+
+This meant:
+
+- Writing tests before features for critical flows.
+- Keeping strict commit discipline (small, meaningful commits with clear messages).
+- Automating backups so I could sleep at night.
+- Documenting every decision in `/docs/` so future contributors (or future me) wouldn’t be lost.
+
+## Security and Ops: My Invisible Work
+
+Users never see it, but a lot of my time went into:
+
+- Middleware that protects admin routes and enforces rolesauth.
+- Rate-limiting public forms to prevent spam.
+- Structured logging with context for every requestoperations.
+- Blue-green deployment so updates happen without downtime.
+- Daily database backups + weekly media backups with encryption.
+
+## Reflections as a Solo Developer
+
+Building this was both exhilarating and exhausting.
+There were nights where I stared at Prisma migration errors for hours. Days spent debugging why a Supabase storage policy wasn’t behaving. And the endless balancing act between what’s perfect and what ships.
+
+But when I saw the first public user register for an event in Greek, get their confirmation email in Portuguese, and browse an event gallery in German — it hit me:
+This wasn’t just a website. It was a living, breathing digital roda.
+
+## Final Thoughts
+
+The Casa Capoeira Portal is now live, fast, secure, multilingual, and easy to use — for both our community and the small admin team that keeps it running.
+
+As a solo developer, this project taught me how to:
+
+- Balance cultural authenticity with technical excellence.
+- Build a custom CMS that fits a niche better than any off-the-shelf option.
+- Manage scope, performance, and security without a safety net.
+
+And most importantly — that building software for a community you love is the most rewarding work there is.
