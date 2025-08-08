@@ -198,8 +198,8 @@ coverVideo: "/videos/project-preview.mp4" # Optional
 tags: ["Tag1", "Tag2", "Tag3"]
 techStack: ["Tech1", "Tech2", "Tech3"]
 featured: true # Set to true for featured projects
-publishedAt: "2024-01-01"
-updatedAt: "2024-01-01" # Optional
+  publishedAt: "2025-08-01"
+  updatedAt: "2025-08-02" # Optional
 client: "Client Name" # Optional
 duration: "6 months" # Optional
 role: "Full-Stack Developer" # Optional
@@ -241,8 +241,8 @@ author: "Vasileios Politeiadis"
 tags: ["Tag1", "Tag2", "Tag3"]
 category: "technology" # technology, ai, development, automation, creative, career, tutorial
 featured: false # Set to true for featured posts
-publishedAt: "2024-01-01"
-updatedAt: "2024-01-01" # Optional
+  publishedAt: "2025-08-03"
+  updatedAt: "2025-08-04" # Optional
 readingTime: "5 min read" # Optional
 draft: false # Set to true for draft posts
 seo:
@@ -280,8 +280,8 @@ tools: ["Midjourney", "Kling AI"] # AI tools used
 tags: ["Tag1", "Tag2", "Tag3"]
 category: "ai-art" # ai-art, digital-art, experiment, commission
 featured: false # Set to true for featured pieces
-publishedAt: "2024-01-01"
-updatedAt: "2024-01-01" # Optional
+  publishedAt: "2025-08-05"
+  updatedAt: "2025-08-06" # Optional
 client: "Client Name" # Optional for commissioned work
 instagramUrl: "https://instagram.com/post" # Optional
 aspectRatio: "16/9" # Optional for responsive layout
@@ -581,4 +581,4 @@ This project is private and proprietary. All rights reserved.
 
 **Built with ❤️ and ☕ by Vasileios Politeiadis**
 
-*Last updated: December 2024* 
+*Last updated: December 2025* 
