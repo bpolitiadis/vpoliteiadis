@@ -36,7 +36,8 @@ export default {
         'neon-cyan': '#00FFFF',
         'neon-purple': '#8A2BE2',
         'neon-pink': '#FF1493',
-        'cyber-blue': '#0066CC',
+        // Refined blue to better harmonize with neon greens
+        'cyber-blue': '#00AEEF',
         'matrix-gold': '#FFD700',
         'dark-slate': '#1A1A1A',
         'light-slate': '#2A2A2A',
@@ -118,8 +119,8 @@ export default {
         'pink-lg': '0 0 40px rgba(255, 20, 147, 0.4)',
         'gold': '0 0 20px rgba(255, 215, 0, 0.3)',
         'gold-lg': '0 0 40px rgba(255, 215, 0, 0.4)',
-        'cyber-blue': '0 0 20px rgba(0, 102, 204, 0.3)',
-        'cyber-blue-lg': '0 0 40px rgba(0, 102, 204, 0.4)',
+        'cyber-blue': '0 0 20px rgba(0, 174, 239, 0.3)',
+        'cyber-blue-lg': '0 0 40px rgba(0, 174, 239, 0.4)',
       },
       textShadow: {
         'neon': '0 0 10px rgba(57, 255, 20, 0.5)',

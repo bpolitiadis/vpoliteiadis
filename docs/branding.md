@@ -28,6 +28,7 @@ A dual-persona brand—**Full-Stack Developer + Automation Engineer** and **Visi
 - **Digital Emerald:** `#00B86B` → Secondary buttons, accents
 - **Cyber Gray:** `#222222` → Containers, dividers
 - **Matrix White:** `#E8FFE8` → Light text
+- **Cyber Blue (refined):** `#00AEEF` → Primary CTA fill, links on dark backgrounds
 
 ### **Gradients**
 
@@ -81,7 +82,7 @@ A dual-persona brand—**Full-Stack Developer + Automation Engineer** and **Visi
 
 ### **Buttons**
 
-- **Primary:** Neon Lime border, transparent fill → On hover → glowing filled button.
+- **Primary:** Neon Lime border with optional `Cyber Blue (#00AEEF)` fill. Hover: shifts to Neon Lime fill with glow.
 - **Secondary:** Digital Emerald border, subtle glow.
 
 ### **Cards & Sections**
