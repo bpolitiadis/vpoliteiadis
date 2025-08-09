@@ -21,12 +21,12 @@ import VercelImage from './VercelImage.astro';
 ---
 
 <article 
-  class="group relative border border-secondary/30 rounded-xl bg-card/70 p-6 md:p-8 transition-all hover:border-primary hover:shadow-neon"
+  class="group relative border border-secondary/30 rounded-xl bg-card/70 p-5 md:p-6 transition-all hover:border-primary hover:shadow-neon"
 >
   
 
   <!-- Project Cover -->
-  <div class="relative overflow-hidden h-48 mb-6 rounded-lg content-visibility-auto">
+  <div class="relative overflow-hidden h-40 md:h-44 mb-5 rounded-lg content-visibility-auto">
     <picture>
       <source srcset="/images/project-card-1-bg-800.avif 800w, /images/project-card-1-bg-480.avif 480w" type="image/avif" />
       <source srcset="/images/project-card-1-bg-800.webp 800w, /images/project-card-1-bg-480.webp 480w" type="image/webp" />
@@ -64,16 +64,16 @@ import VercelImage from './VercelImage.astro';
 
   <!-- Project Content -->
   <div>
-    <h3 class="text-h3 font-orbitron text-primary mb-3 group-hover:text-foreground transition-colors">
+    <h3 class="text-h3 font-orbitron text-primary mb-2 group-hover:text-foreground transition-colors">
       {project.data.title}
     </h3>
     
-    <p class="text-body text-muted-foreground mb-6 line-clamp-3">
+    <p class="text-body text-muted-foreground mb-4 line-clamp-3">
       {project.data.excerpt || project.data.description}
     </p>
 
     <!-- Minimal Tags Display -->
-    <div class="flex flex-wrap gap-2 mb-6">
+    <div class="flex flex-wrap gap-2 mb-4">
       {project.data.tags.slice(0, 3).map(tag => (
         <span class="bg-secondary/10 border border-secondary/50 text-secondary rounded-full px-3 py-1 text-xs font-medium">
           {tag}

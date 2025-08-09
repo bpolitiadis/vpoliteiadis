@@ -1,5 +1,3 @@
-import { motion } from 'framer-motion';
-import { ExternalLink } from 'lucide-react';
 import OptimizedImage from './OptimizedImage';
 
 type FeaturedProjectCardProps = {
@@ -33,32 +31,15 @@ export default function FeaturedProjectCard(props: FeaturedProjectCardProps) {
     logoSrc,
   } = props;
 
-  const openDetail = () => {
-    window.location.assign(detailUrl);
-  };
-
   return (
-    <motion.article
-      onClick={openDetail}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          openDetail();
-        }
-      }}
+    <article
       aria-label={`Open ${title} details`}
       className="relative rounded-2xl border border-border/40 bg-[rgba(10,10,10,0.6)] shadow-inner
-                 backdrop-blur-md transition-all duration-300 hover:border-primary hover:shadow-neon
+                 backdrop-blur-md transition-transform duration-300 hover:border-primary hover:shadow-neon hover:scale-[1.02]
                  cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
-      // Avoid SSR rendering cards at opacity:0 if hydration is delayed
-      initial={false}
-      whileHover={{ scale: 1.02 }}
-      transition={{ type: 'spring', stiffness: 140, damping: 18 }}
     >
       {/* Hero */}
-      <div className="relative overflow-hidden rounded-t-2xl aspect-video bg-dark-slate/60">
+      <a href={detailUrl} className="relative overflow-hidden rounded-t-2xl aspect-video bg-dark-slate/60 block">
         <OptimizedImage
           src={hero}
           alt={title}
@@ -78,11 +59,15 @@ export default function FeaturedProjectCard(props: FeaturedProjectCardProps) {
           />
         )}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/70 via-background/20 to-transparent" />
-      </div>
+      </a>
 
       {/* Body */}
       <div className="p-6 md:p-7">
-        <h3 className="font-orbitron text-primary text-xl md:text-2xl mb-2">{title}</h3>
+        <h3 className="font-orbitron text-primary text-xl md:text-2xl mb-2">
+          <a href={detailUrl} className="hover:underline">
+            {title}
+          </a>
+        </h3>
         <p className="text-matrix-white text-sm md:text-base opacity-90 mb-3">{role}</p>
         <p className="text-matrix-white/90 text-sm leading-relaxed line-clamp-3 mb-5">{description}</p>
 
@@ -151,11 +136,24 @@ export default function FeaturedProjectCard(props: FeaturedProjectCardProps) {
             aria-label={cta.label}
           >
             {cta.label}
-            <ExternalLink className="h-4 w-4" />
+            <svg
+              className="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+              <path d="M15 3h6v6" />
+              <path d="M10 14 21 3" />
+            </svg>
           </a>
         </div>
       </div>
-    </motion.article>
+    </article>
   );
 }
 

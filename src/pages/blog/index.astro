@@ -91,16 +91,26 @@ const description =
             >
               {post.data.coverImage && (
                  <div class="mb-4">
-                   <img 
-                    src={post.data.coverImage} 
-                    alt={`Cover image for ${post.data.title}`}
-                    class="w-full h-40 object-cover rounded-lg"
-                    loading="lazy"
-                    decoding="async"
-                    sizes="(max-width: 768px) 100vw, 400px"
-                  >
-                </div>
-              )}
+                   {(() => {
+                     const cover = post.data.coverImage;
+                     const base = cover.replace(/\.(avif|webp|jpe?g|png)$/i, '');
+                     return (
+                       <picture>
+                         <source srcset={`${base}-1200.avif 1200w, ${base}-800.avif 800w, ${base}-480.avif 480w`} type="image/avif" />
+                         <source srcset={`${base}-1200.webp 1200w, ${base}-800.webp 800w, ${base}-480.webp 480w`} type="image/webp" />
+                         <img 
+                           src={cover}
+                           alt={`Cover image for ${post.data.title}`}
+                           class="w-full h-40 object-cover rounded-lg"
+                           loading="lazy"
+                           decoding="async"
+                           sizes="(max-width: 768px) 100vw, 400px"
+                         />
+                       </picture>
+                     );
+                   })()}
+                 </div>
+               )}
               <div class="space-y-3">
                 <div class="flex items-center space-x-4 text-sm text-matrix-white/80">
                   <span>{new Date(post.data.publishedAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</span>
