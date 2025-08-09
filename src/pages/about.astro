@@ -3,7 +3,6 @@ import MainLayout from '../layouts/MainLayout.astro';
 import { Image } from 'astro:assets';
 import avatarSrc from '../assets/images/avatar.png';
 ---
----
 
 <MainLayout 
   title="About - Vasileios Politeiadis"
@@ -11,7 +10,7 @@ import avatarSrc from '../assets/images/avatar.png';
   currentPath="/about"
 >
   <!-- Full-page background (fixed) -->
-  <div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10">
+  <div aria-hidden="true" class="pointer-events-none fixed inset-0 z-0">
     <div class="absolute inset-0 bg-matrix-black"></div>
     <picture>
       <source srcset="/images/about-bg-1200.avif 1200w, /images/about-bg-800.avif 800w, /images/about-bg-480.avif 480w" type="image/avif" />
@@ -33,7 +32,7 @@ import avatarSrc from '../assets/images/avatar.png';
   </div>
 
   <!-- Hero Section -->
-  <section class="relative isolate min-h-[70vh] flex items-center">
+  <section class="relative isolate z-10 min-h-[70vh] flex items-center">
     <div class="w-full">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col items-center text-center py-16 md:py-24 lg:py-28">
@@ -48,7 +47,7 @@ import avatarSrc from '../assets/images/avatar.png';
   </section>
 
   <!-- Main Content -->
-  <section class="py-16">
+  <section class="relative z-10 py-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <!-- Professional Identity -->

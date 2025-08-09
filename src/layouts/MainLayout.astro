@@ -99,10 +99,14 @@ const ogImageURL = new URL(image, Astro.site);
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     
-    <!-- Cache busting for development -->
-    <meta http-equiv="Cache-Control" content="no-store" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
+    <!-- Cache headers only in development to avoid interfering with prod caching -->
+    {(import.meta.env?.DEV) && (
+      <>
+        <meta http-equiv="Cache-Control" content="no-store" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+      </>
+    )}
     
     <!-- Structured Data (external, CSP-safe) -->
     <script type="application/ld+json" src="/structured/person.json"></script>
