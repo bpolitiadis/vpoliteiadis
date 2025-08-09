@@ -1,5 +1,20 @@
 ---
 import Navbar from '../components/Navbar.astro';
+import { Image } from 'astro:assets';
+// Optional: map page background slugs to imported assets so Astro optimizes them
+import aboutBg from '../assets/images/about-bg.png';
+import blogBg from '../assets/images/blog-bg.png';
+import projectsBg from '../assets/images/projects-bg.png';
+import creativeBg from '../assets/images/creative-bg.png';
+import contactBg from '../assets/images/contact-bg.png';
+
+const backgroundMap: Record<string, any> = {
+  'about-bg': aboutBg,
+  'blog-bg': blogBg,
+  'projects-bg': projectsBg,
+  'creative-bg': creativeBg,
+  'contact-bg': contactBg,
+};
 
 export interface Props {
   title: string;
@@ -10,6 +25,14 @@ export interface Props {
   publishedAt?: string;
   updatedAt?: string;
   author?: string;
+  /** Optional background image slug from `/public/images` to cover the whole page */
+  bgSlug?: string;
+  /** Eager-load background image for above-the-fold heavy pages */
+  bgEager?: boolean;
+  /** Optional utility classes to control background image opacity (e.g., 'opacity-60 md:opacity-80') */
+  bgOpacityClass?: string;
+  /** Optional utility classes to control the gradient overlay strength */
+  bgOverlayClass?: string;
 }
 
 const { 
@@ -21,7 +44,11 @@ const {
   type = 'website',
   publishedAt,
   updatedAt,
-  author = 'Vasileios Politeiadis'
+  author = 'Vasileios Politeiadis',
+  bgSlug,
+  bgEager = false,
+  bgOpacityClass = 'opacity-40 md:opacity-50',
+  bgOverlayClass = 'from-black/30 via-black/15 to-black/35'
 } = Astro.props;
 
 // Prefer actual request URL to avoid canonical mistakes; fall back to provided path
@@ -113,22 +140,59 @@ const ogImageURL = new URL(image, Astro.site);
     <script type="application/ld+json" src="/structured/website.json"></script>
   </head>
   <body class="min-h-screen bg-background text-foreground transition-colors duration-300 flex flex-col">
+    {(() => {
+      if (!bgSlug) return null;
+      const optimized = backgroundMap[bgSlug];
+      return (
+        <div class="pointer-events-none fixed inset-0 z-0" aria-hidden="true">
+          {optimized ? (
+            <Image
+              src={optimized}
+              alt=""
+              widths={[480, 800, 1200, 1600, 2400]}
+              sizes="100vw"
+              format="webp"
+              loading={bgEager ? 'eager' : 'lazy'}
+              class={`w-full h-full object-cover ${bgOpacityClass}`}
+              fetchpriority={bgEager ? 'high' : 'auto'}
+            />
+          ) : (
+            <picture>
+              <source srcset={`/images/${bgSlug}-1200.avif 1200w, /images/${bgSlug}-800.avif 800w, /images/${bgSlug}-480.avif 480w`} type="image/avif" />
+              <source srcset={`/images/${bgSlug}-1200.webp 1200w, /images/${bgSlug}-800.webp 800w, /images/${bgSlug}-480.webp 480w`} type="image/webp" />
+              <img 
+                src={`/images/${bgSlug}.png`}
+                alt=""
+                class={`w-full h-full object-cover ${bgOpacityClass}`}
+                width="2400" height="1400"
+                loading={bgEager ? 'eager' : 'lazy'}
+                decoding="async"
+                fetchpriority={bgEager ? 'high' : 'low'}
+                sizes="100vw"
+              />
+            </picture>
+          )}
+          <div class={`absolute inset-0 bg-gradient-to-b ${bgOverlayClass}`}></div>
+        </div>
+      );
+    })()}
     
     <!-- Skip to main content link for accessibility -->
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded-md z-50">
       Skip to main content
     </a>
     
-    <!-- Navbar -->
-    <Navbar currentPath={currentPath} />
-    
-    <!-- Main Content -->
-    <main id="main-content" class="flex-1">
-      <slot />
-    </main>
-    
-    <!-- Footer -->
-    <footer class="bg-muted border-t border-border mt-auto">
+    <div class="relative z-10">
+      <!-- Navbar -->
+      <Navbar currentPath={currentPath} />
+      
+      <!-- Main Content -->
+      <main id="main-content" class="flex-1">
+        <slot />
+      </main>
+      
+      <!-- Footer -->
+      <footer class="bg-muted border-t border-border mt-auto">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div class="flex items-center space-x-2">
@@ -145,7 +209,8 @@ const ogImageURL = new URL(image, Astro.site);
           </div>
         </div>
       </div>
-    </footer>
+      </footer>
+    </div>
     
     <!-- Theme initialization (external, CSP-safe) -->
     <script src="/scripts/theme-init.js" defer></script>

@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && pnpm optimize:images && astro build",
+    "build": "astro check && node scripts/optimize-images.mjs && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint . --ext .js,.ts,.astro",
@@ -12,6 +12,15 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "optimize:images": "node scripts/optimize-images.mjs"
+  },
+  "engines": {
+    "node": ">=20.10.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.12.0",
+  "volta": {
+    "node": "20.10.0",
+    "pnpm": "9.12.0"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

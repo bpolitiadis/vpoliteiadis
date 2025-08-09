@@ -6,6 +6,15 @@ export default {
     './src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}',
     './public/scripts/**/*.js'
   ],
+  // Ensure dynamic classes passed via props are never purged
+  safelist: [
+    // Opacity levels we use for page backgrounds
+    'opacity-40','opacity-50','opacity-60','opacity-70','opacity-80',
+    // Gradient overlay strengths used for backgrounds
+    'from-black/20','from-black/30','via-black/10','via-black/15','to-black/25','to-black/35',
+    // Attachment helper if enabled later
+    'bg-fixed','bg-local','bg-scroll'
+  ],
   darkMode: 'class',
   
   theme: {

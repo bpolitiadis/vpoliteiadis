@@ -3,14 +3,12 @@ export interface Props {
   title: string;
   description?: string;
   /**
-   * Slug of the background image set located in `/public/images`.
-   * The component will look for:
-   *  - `/images/${bgSlug}-480.(avif|webp)`
-   *  - `/images/${bgSlug}-800.(avif|webp)`
-   *  - `/images/${bgSlug}-1200.(avif|webp)`
-   *  - `/images/${bgSlug}.png` (fallback)
+   * Optional slug of the background image set located in `/public/images`.
+   * When omitted, the component renders without its own background, allowing
+   * the page-wide background from `MainLayout` to show through.
+   * If provided, it will look for responsive variants as before.
    */
-  bgSlug: string;
+  bgSlug?: string;
   /** Optional small text below description, e.g. article count */
   metaText?: string;
   /** Eager-load hero image for above-the-fold pages */
@@ -21,24 +19,25 @@ const { title, description, bgSlug, metaText, eager = false } = Astro.props;
 ---
 
 <section class="relative py-20 overflow-hidden">
-  <!-- Decorative background with responsive sources -->
-  <div class="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
-    <picture>
-      <source srcset={`/images/${bgSlug}-1200.avif 1200w, /images/${bgSlug}-800.avif 800w, /images/${bgSlug}-480.avif 480w`} type="image/avif" />
-      <source srcset={`/images/${bgSlug}-1200.webp 1200w, /images/${bgSlug}-800.webp 800w, /images/${bgSlug}-480.webp 480w`} type="image/webp" />
-      <img 
-        src={`/images/${bgSlug}.png`} 
-        alt=""
-        class="w-full h-full object-cover opacity-25"
-        width="2400" height="1400"
-        loading={eager ? 'eager' : 'lazy'}
-        decoding="async"
-        fetchpriority={eager ? 'high' : 'low'}
-        sizes="100vw"
-      />
-    </picture>
-    <div class="absolute inset-0 bg-gradient-to-br from-black/80 via-black/50 to-black/80"></div>
-  </div>
+  {bgSlug && (
+    <div class="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+      <picture>
+        <source srcset={`/images/${bgSlug}-1200.avif 1200w, /images/${bgSlug}-800.avif 800w, /images/${bgSlug}-480.avif 480w`} type="image/avif" />
+        <source srcset={`/images/${bgSlug}-1200.webp 1200w, /images/${bgSlug}-800.webp 800w, /images/${bgSlug}-480.webp 480w`} type="image/webp" />
+        <img 
+          src={`/images/${bgSlug}.png`} 
+          alt=""
+          class="w-full h-full object-cover opacity-40 md:opacity-50"
+          width="2400" height="1400"
+          loading={eager ? 'eager' : 'lazy'}
+          decoding="async"
+          fetchpriority={eager ? 'high' : 'low'}
+          sizes="100vw"
+        />
+      </picture>
+      <div class="absolute inset-0 bg-gradient-to-br from-black/40 via-black/25 to-black/40"></div>
+    </div>
+  )}
 
   <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center">

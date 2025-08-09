@@ -10,6 +10,7 @@ import rehypeSanitize from 'rehype-sanitize';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://vpoliteiadis.com',
+  output: 'static',
   integrations: [
     sitemap({
       changefreq: 'weekly',
@@ -39,6 +40,9 @@ export default defineConfig({
     format: 'directory'
   },
   vite: {
+    server: {
+      fs: { strict: true }
+    },
     css: {
       // Ensure CSS is minimized and deduped
       devSourcemap: false,

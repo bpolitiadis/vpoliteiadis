@@ -8,28 +8,12 @@ import avatarSrc from '../assets/images/avatar.png';
   title="About - Vasileios Politeiadis"
   description="Learn about Vasileios Politeiadis - Senior QA Automation Specialist, Full-Stack Developer, and AI Creative Technologist with expertise in European Commission projects and modern web development."
   currentPath="/about"
+  bgSlug="about-bg"
+  bgEager={true}
+  bgOpacityClass="opacity-70 md:opacity-80"
+  bgOverlayClass="from-black/20 via-black/10 to-black/25"
 >
-  <!-- Full-page background (fixed) -->
-  <div aria-hidden="true" class="pointer-events-none fixed inset-0 z-0">
-    <div class="absolute inset-0 bg-matrix-black"></div>
-    <picture>
-      <source srcset="/images/about-bg-1200.avif 1200w, /images/about-bg-800.avif 800w, /images/about-bg-480.avif 480w" type="image/avif" />
-      <source srcset="/images/about-bg-1200.webp 1200w, /images/about-bg-800.webp 800w, /images/about-bg-480.webp 480w" type="image/webp" />
-      <img src="/images/about-bg.png" alt="" class="absolute inset-0 h-full w-full object-cover opacity-[0.25] md:opacity-[0.3] mix-blend-screen" loading="eager" decoding="async" />
-    </picture>
-    <!-- Subtle center emerald glow -->
-     <div class="absolute inset-0" style="background: radial-gradient(40% 40% at 50% 45%, rgba(0,184,107,0.18) 0%, rgba(0,184,107,0.06) 35%, rgba(0,184,107,0.00) 65%);"></div>
-    <!-- Circuit mist overlay -->
-    <svg class="hidden md:block absolute inset-0 w-full h-full opacity-[0.08]" viewBox="0 0 1440 810" fill="none" aria-hidden="true">
-      <g stroke="#39FF14" stroke-opacity="0.2" stroke-width="1">
-        <path d="M0 90 H1440"/><path d="M0 180 H1440"/><path d="M0 270 H1440"/><path d="M0 360 H1440"/>
-        <path d="M120 0 V810"/><path d="M240 0 V810"/><path d="M360 0 V810"/><path d="M480 0 V810"/><path d="M600 0 V810"/>
-        <path d="M720 0 V810"/><path d="M840 0 V810"/><path d="M960 0 V810"/><path d="M1080 0 V810"/><path d="M1200 0 V810"/>
-      </g>
-    </svg>
-    <!-- Vignette for contrast -->
-    <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-black/50"></div>
-  </div>
+  
 
   <!-- Hero Section -->
   <section class="relative isolate z-10 min-h-[70vh] flex items-center">
