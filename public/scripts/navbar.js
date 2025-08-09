@@ -7,6 +7,14 @@ function initMobileMenu() {
     var isExpanded = mobileMenu && mobileMenu.classList.contains('hidden') === false;
     mobileMenu && mobileMenu.classList.toggle('hidden');
     mobileMenuButton && mobileMenuButton.setAttribute('aria-expanded', (!isExpanded).toString());
+    // Lock scroll when menu is open (mobile UX best practice)
+    if (document && document.body) {
+      if (!isExpanded) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    }
   });
 
   var mobileLinks = mobileMenu && mobileMenu.querySelectorAll('a');
@@ -14,6 +22,7 @@ function initMobileMenu() {
     link.addEventListener('click', function () {
       mobileMenu && mobileMenu.classList.add('hidden');
       mobileMenuButton && mobileMenuButton.setAttribute('aria-expanded', 'false');
+      if (document && document.body) document.body.style.overflow = '';
     });
   });
 
@@ -22,6 +31,7 @@ function initMobileMenu() {
       mobileMenu.classList.add('hidden');
       mobileMenuButton && mobileMenuButton.setAttribute('aria-expanded', 'false');
       mobileMenuButton && mobileMenuButton.focus();
+      if (document && document.body) document.body.style.overflow = '';
     }
   });
 }
