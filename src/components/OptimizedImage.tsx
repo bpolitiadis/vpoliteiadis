@@ -21,13 +21,19 @@ export function OptimizedImage(props: OptimizedImageProps) {
     return `${String(site).replace(/\/$/, '')}${maybeRelative}`;
   };
 
+  // If the source is a local static asset (/_astro/* or /images/*), skip optimizer to avoid 404s
+  const isAbsolute = /^https?:\/\//.test(src);
+  const isLocalStatic = src.startsWith('/_astro') || src.startsWith('/images/');
+
+  const buildOptimized = (s: string) => `/_vercel/image?url=${encodeURIComponent(toAbsolute(s))}&w=${width}&q=${quality}`;
+
   const optimizedSrc =
     typeof window === 'undefined'
       ? process.env.NODE_ENV === 'production'
-        ? `/_vercel/image?url=${encodeURIComponent(toAbsolute(src))}&w=${width}&q=${quality}`
+        ? (isAbsolute && !isLocalStatic ? buildOptimized(src) : src)
         : src
       : import.meta.env.MODE === 'production'
-        ? `/_vercel/image?url=${encodeURIComponent(toAbsolute(src))}&w=${width}&q=${quality}`
+        ? (isAbsolute && !isLocalStatic ? buildOptimized(src) : src)
         : src;
 
   return (

@@ -26,10 +26,16 @@ const {
 // Build an absolute source URL in production so Vercel's optimizer can always fetch it
 let optimizedURL = src;
 if (import.meta.env.MODE === 'production') {
-  // Astro.site is defined in astro.config.mjs (e.g., https://vpoliteiadis.com)
-  const site = typeof Astro !== 'undefined' && Astro.site ? String(Astro.site) : '';
-  const absoluteSrc = src.startsWith('http') ? src : `${site.replace(/\/$/, '')}${src}`;
-  optimizedURL = `/_vercel/image?url=${encodeURIComponent(absoluteSrc)}&w=${width}&q=${quality}`;
+  const isAbsolute = /^https?:\/\//.test(src);
+  const isSameOriginPath = src.startsWith('/') || src.startsWith('_astro');
+  // For local static assets (/_astro/* or /images/*), avoid optimizer to prevent 404s
+  if (!isSameOriginPath && isAbsolute) {
+    const site = typeof Astro !== 'undefined' && Astro.site ? String(Astro.site) : '';
+    const absoluteSrc = src.startsWith('http') ? src : `${site.replace(/\/$/, '')}${src}`;
+    optimizedURL = `/_vercel/image?url=${encodeURIComponent(absoluteSrc)}&w=${width}&q=${quality}`;
+  } else {
+    optimizedURL = src;
+  }
 }
 ---
 <img src={optimizedURL} alt={alt} class={className} sizes={sizes} loading={loading} decoding={decoding} fetchpriority={fetchpriority} />
