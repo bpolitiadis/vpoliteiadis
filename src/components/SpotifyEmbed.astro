@@ -1,0 +1,45 @@
+---
+interface Props {
+  /** Full Spotify embed URL. Alternatively provide `type` and `id`. */
+  src?: string;
+  /** Entity type for computed embed URL */
+  type?: 'track' | 'album' | 'playlist' | 'artist';
+  /** Spotify ID for the selected type */
+  id?: string;
+  /** Iframe height in px. 80 for compact; ~152 or 352 for larger */
+  height?: number;
+  /** Accessible title for the iframe */
+  title?: string;
+  /** Spotify theme query param */
+  theme?: 'dark' | 'light';
+}
+
+const {
+  src,
+  type,
+  id,
+  height = 152,
+  title = 'Spotify player',
+  theme = 'dark',
+} = Astro.props as Props;
+
+const themeParam = theme === 'light' ? '1' : '0';
+const computedSrc = src ?? (type && id ? `https://open.spotify.com/embed/${type}/${id}?theme=${themeParam}` : undefined);
+if (!computedSrc) {
+  throw new Error('SpotifyEmbed requires either `src` or both `type` and `id`.');
+}
+---
+<div class="rounded-xl overflow-hidden bg-[rgba(10,10,10,0.6)]">
+  <iframe
+    src={computedSrc}
+    width="100%"
+    height={height}
+    class="block"
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+    loading="lazy"
+    title={title}
+  ></iframe>
+  
+</div>
+
+

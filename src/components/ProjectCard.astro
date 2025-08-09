@@ -17,6 +17,7 @@ export interface Props {
 }
 
 const { project } = Astro.props;
+import VercelImage from './VercelImage.astro';
 ---
 
 <article 
@@ -42,10 +43,10 @@ const { project } = Astro.props;
         poster={project.data.coverImage}
       >
         <source src={project.data.coverVideo} type="video/mp4" />
-        <img src={project.data.coverImage} alt={project.data.title} class="w-full h-full object-cover" loading="lazy" decoding="async" fetchpriority="low" />
+        <VercelImage src={project.data.coverImage} alt={project.data.title} class="w-full h-full object-cover" loading="lazy" decoding="async" fetchpriority="low" />
       </video>
     ) : (
-      <img
+      <VercelImage
         src={project.data.coverImage}
         alt={project.data.title}
         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"

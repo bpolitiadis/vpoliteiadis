@@ -21,6 +21,7 @@ export interface Props {
 }
 
 const { creative } = Astro.props;
+import VercelImage from './VercelImage.astro';
 
 // Determine aspect ratio class for responsive layout
 const getAspectRatioClass = (aspectRatio?: string) => {
@@ -65,13 +66,13 @@ const aspectClass = getAspectRatioClass(creative.data.aspectRatio);
         poster={creative.data.coverImage}
       >
         <source src={creative.data.coverVideo} type="video/mp4" />
-        <img src={creative.data.coverImage} alt={creative.data.title} class="w-full h-full object-cover" loading="lazy" decoding="async" fetchpriority="low" />
+        <VercelImage src={creative.data.coverImage} alt={creative.data.title} class="w-full h-full object-cover" loading="lazy" decoding="async" fetchpriority="low" />
       </video>
     ) : (
-       <img
+       <VercelImage
         src={creative.data.coverImage}
         alt={creative.data.title}
-         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 will-change-transform"
+        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 will-change-transform"
         loading="lazy"
         decoding="async"
         fetchpriority="low"

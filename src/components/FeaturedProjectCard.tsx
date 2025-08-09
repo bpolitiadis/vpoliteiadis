@@ -7,11 +7,15 @@ type FeaturedProjectCardProps = {
   role: string;
   description: string;
   hero: string;
+  /** How the hero should fit within the aspect box */
+  heroFit?: 'cover' | 'contain';
   detailUrl: string;
   cta: { label: string; href: string; external?: boolean };
   galleryThumbs?: string[];
   spotifyEmbed?: string;
   instagramGrid?: string[];
+  /** Optional small logo to overlay on the hero image (e.g., brand mark) */
+  logoSrc?: string;
 };
 
 export default function FeaturedProjectCard(props: FeaturedProjectCardProps) {
@@ -20,11 +24,13 @@ export default function FeaturedProjectCard(props: FeaturedProjectCardProps) {
     role,
     description,
     hero,
+    heroFit = 'cover',
     detailUrl,
     cta,
     galleryThumbs,
     spotifyEmbed,
     instagramGrid,
+    logoSrc,
   } = props;
 
   const openDetail = () => {
@@ -52,13 +58,25 @@ export default function FeaturedProjectCard(props: FeaturedProjectCardProps) {
       transition={{ type: 'spring', stiffness: 140, damping: 18 }}
     >
       {/* Hero */}
-      <div className="relative overflow-hidden rounded-t-2xl aspect-video">
+      <div className="relative overflow-hidden rounded-t-2xl aspect-video bg-dark-slate/60">
         <OptimizedImage
           src={hero}
           alt={title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 will-change-transform"
+          className={
+            `w-full h-full ${heroFit === 'contain' ? 'object-contain p-6' : 'object-cover'} ` +
+            'transition-transform duration-500 group-hover:scale-105 will-change-transform'
+          }
           width={1280}
         />
+        {logoSrc && heroFit === 'cover' && (
+          <img
+            src={logoSrc}
+            alt={`${title} logo`}
+            className="absolute left-4 top-4 h-12 w-12 rounded-md border border-border/40 bg-background/70 p-1 shadow-neon backdrop-blur-xs"
+            loading="lazy"
+            decoding="async"
+          />
+        )}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/70 via-background/20 to-transparent" />
       </div>
 
@@ -69,14 +87,14 @@ export default function FeaturedProjectCard(props: FeaturedProjectCardProps) {
         <p className="text-matrix-white/90 text-sm leading-relaxed line-clamp-3 mb-5">{description}</p>
 
         {Array.isArray(galleryThumbs) && galleryThumbs.length > 0 && (
-          <div className="mt-4 grid grid-cols-8 gap-1.5">
+          <div className="mt-5 grid grid-cols-4 gap-2">
             {galleryThumbs.map((src, idx) => (
               <OptimizedImage
                 key={idx}
                 src={src}
                 alt={`Thumbnail ${idx + 1}`}
-                className="h-10 w-full object-cover rounded-sm"
-                width={160}
+                className="aspect-square w-full object-cover rounded-md ring-1 ring-border/30"
+                width={300}
               />
             ))}
           </div>
