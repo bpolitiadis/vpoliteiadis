@@ -20,7 +20,7 @@ const tagCounts = posts
     map[tag] = (map[tag] || 0) + 1;
     return map;
   }, {});
-const popularTags = Object.entries(tagCounts)
+const popularTags = (Object.entries(tagCounts) as [string, number][])
   .sort((a, b) => b[1] - a[1])
   .map(([tag]) => tag)
   .slice(0, 6);
@@ -96,8 +96,9 @@ const description =
                      const base = cover.replace(/\.(avif|webp|jpe?g|png)$/i, '');
                      return (
                        <picture>
-                         <source srcset={`${base}-1200.avif 1200w, ${base}-800.avif 800w, ${base}-480.avif 480w`} type="image/avif" />
-                         <source srcset={`${base}-1200.webp 1200w, ${base}-800.webp 800w, ${base}-480.webp 480w`} type="image/webp" />
+                         {/* Only include sizes we always generate to avoid 404s on high DPR screens */}
+                         <source srcset={`${base}-800.avif 800w, ${base}-480.avif 480w`} type="image/avif" />
+                         <source srcset={`${base}-800.webp 800w, ${base}-480.webp 480w`} type="image/webp" />
                          <img 
                            src={cover}
                            alt={`Cover image for ${post.data.title}`}

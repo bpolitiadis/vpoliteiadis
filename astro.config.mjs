@@ -50,7 +50,7 @@ export default defineConfig({
     // Optimize asset handling
     assets: '_astro',
     // Inline critical stylesheets automatically
-    inlineStylesheets: 'auto',
+    inlineStylesheets: 'always',
     // Use directory-style URLs so static hosts (like Vercel) can resolve routes
     // e.g. /about -> /about/index.html instead of /about.html
     format: 'directory'
