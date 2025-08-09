@@ -14,16 +14,21 @@ type OptimizedImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
 export function OptimizedImage(props: OptimizedImageProps) {
   const { src, width = 1200, quality = 75, ...rest } = props;
 
+  // Always use absolute URL for the optimizer in production so it can fetch assets reliably
+  const toAbsolute = (maybeRelative: string) => {
+    if (/^https?:\/\//.test(maybeRelative)) return maybeRelative;
+    const site = (globalThis as any).Astro?.site || (typeof document !== 'undefined' ? `${location.protocol}//${location.host}` : '');
+    return `${String(site).replace(/\/$/, '')}${maybeRelative}`;
+  };
+
   const optimizedSrc =
     typeof window === 'undefined'
-      ? // SSR: respect environment variable set by Vercel during build
-        (process.env.NODE_ENV === 'production'
-          ? `/_vercel/image?url=${encodeURIComponent(src)}&w=${width}&q=${quality}`
-          : src)
-      : // Client: check runtime mode
-        (import.meta.env.MODE === 'production'
-          ? `/_vercel/image?url=${encodeURIComponent(src)}&w=${width}&q=${quality}`
-          : src);
+      ? process.env.NODE_ENV === 'production'
+        ? `/_vercel/image?url=${encodeURIComponent(toAbsolute(src))}&w=${width}&q=${quality}`
+        : src
+      : import.meta.env.MODE === 'production'
+        ? `/_vercel/image?url=${encodeURIComponent(toAbsolute(src))}&w=${width}&q=${quality}`
+        : src;
 
   return (
     <img

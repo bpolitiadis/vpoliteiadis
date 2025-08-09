@@ -1,5 +1,15 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
+// Import assets with astro:assets so they are bundled and available in production
+import es1 from '../../assets/images/emmanuelle-silk-1.png';
+import es2 from '../../assets/images/emmanuelle-silk-2.png';
+import es3 from '../../assets/images/emmanuelle-silk-3.png';
+import es4 from '../../assets/images/emmanuelle-silk-4.png';
+import es5 from '../../assets/images/emmanuelle-silk-5.png';
+import es6 from '../../assets/images/emmanuelle-silk-6.png';
+import es7 from '../../assets/images/emmanuelle-silk-7.png';
+import es8 from '../../assets/images/emmanuelle-silk-8.png';
+const thumbs: string[] = [es1.src, es2.src, es3.src, es4.src, es5.src, es6.src, es7.src, es8.src];
 ---
 
 <MainLayout 
@@ -22,7 +32,7 @@ import MainLayout from '../../layouts/MainLayout.astro';
       </header>
 
       <div class="rounded-2xl overflow-hidden border border-border/40 bg-[rgba(10,10,10,0.6)] shadow-inner mb-10">
-        <img src="/creative/emmanuelle-silk/hero.jpg" alt="Emmanuelle Silk collection hero" class="w-full h-auto object-cover" loading="lazy" decoding="async" />
+        <img src={thumbs[0]} alt="Emmanuelle Silk collection hero" class="w-full h-auto object-cover" loading="lazy" decoding="async" />
       </div>
 
       <h2 class="font-orbitron text-primary text-xl md:text-2xl mb-4">The Collection</h2>
@@ -32,8 +42,8 @@ import MainLayout from '../../layouts/MainLayout.astro';
       </p>
 
       <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-2">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <img src={`/creative/emmanuelle-silk/thumb-${i + 1}.jpg`} alt={`Silk design ${i + 1}`} class="w-full h-20 object-cover rounded" loading="lazy" decoding="async" />
+        {thumbs.map((src, i) => (
+          <img src={src} alt={`Silk design ${i + 1}`} class="w-full h-20 object-cover rounded" loading="lazy" decoding="async" />
         ))}
       </div>
     </div>

@@ -6,7 +6,8 @@ export const GET: APIRoute = async () => {
     '@type': 'Person',
     name: 'Vasileios Politeiadis',
     url: 'https://vpoliteiadis.com',
-    image: 'https://vpoliteiadis.com/images/profile.jpg',
+    // Use an existing small, optimized asset to avoid 404s
+    image: 'https://vpoliteiadis.com/images/vp-logo-800.webp',
     sameAs: [
       'https://linkedin.com/in/vpoliteiadis',
       'https://github.com/bpolitiadis',
