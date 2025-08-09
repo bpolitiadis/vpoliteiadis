@@ -7,6 +7,7 @@ export const GET: APIRoute = async () => {
     name: 'Vasileios Politeiadis',
     url: 'https://vpoliteiadis.com',
     description: 'Full-Stack Developer & AI Visionary portfolio',
+    inLanguage: 'en',
     author: {
       '@type': 'Person',
       name: 'Vasileios Politeiadis',
@@ -21,6 +22,7 @@ export const GET: APIRoute = async () => {
     headers: {
       'Content-Type': 'application/ld+json; charset=utf-8',
       'Cache-Control': 'public, max-age=3600',
+      'X-Content-Type-Options': 'nosniff'
     },
   });
 };
