@@ -128,6 +128,12 @@ vpoliteiadis/
 - **Modern Development:** TypeScript, ESLint, Prettier
 - **Brand Consistency:** Custom design system based on cyberpunk aesthetics
 
+### Navigation (2025 best practice)
+- Mobile menu is driven by a tiny script at `public/scripts/navbar.js` loaded with `defer` to avoid race conditions in production.
+- The script uses a ready helper to run immediately if DOM is already parsed.
+- The mobile menu toggles the Tailwind `hidden` class and keeps `md:hidden` so it remains hidden on desktop.
+- Theme toggle inside `Navbar.astro` is temporarily removed. Global theme is still initialized by `public/scripts/theme-init.js`.
+
 ### Content Management
 - **Dynamic Content:** MDX-based content collections for projects, case studies, and blog posts
 - **Advanced Filtering:** Search and filter projects and blog posts by tags, categories, and keywords

@@ -66,26 +66,8 @@ const navItems = [
         </div>
       </div>
 
-      <!-- Right side: Theme Toggle + Mobile Menu Button -->
+      <!-- Right side: Mobile Menu Button -->
       <div class="flex items-center space-x-4">
-        
-        <!-- Theme Toggle Button -->
-        <button
-          id="theme-toggle"
-          class="p-2 rounded-lg bg-muted border border-border text-primary hover:bg-primary/10 hover:border-primary/40 transition-all duration-300 group"
-          aria-label="Toggle between dark and light theme"
-          aria-pressed="false"
-        >
-          <!-- Sun icon for light mode (vector) -->
-          <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364 6.364l-1.414-1.414M7.05 7.05L5.636 5.636m12.728 0l-1.414 1.414M7.05 16.95l-1.414 1.414M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <!-- Moon icon for dark mode (vector) -->
-          <svg id="theme-toggle-dark-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/>
-          </svg>
-        </button>
-
         <!-- Mobile menu button -->
         <button
           id="mobile-menu-button"
@@ -143,4 +125,4 @@ const navItems = [
   </div>
 </nav>
 
-<script src="/scripts/navbar.js" async></script>
+<script src="/scripts/navbar.js" defer></script>

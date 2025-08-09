@@ -1,32 +1,14 @@
 ---
 import { Image } from 'astro:assets';
 import avatarSrc from '../assets/images/avatar.png';
+import bgSrc from '../assets/images/home-bg.png';
 // Hero component with Matrix-inspired animations and neon glow effects
 // Features: Animated background, VP logo, smooth text animations, and interactive CTA
 ---
 
 <!-- Background decorative image (content-neutral) -->
 <div class="absolute inset-0 overflow-hidden pointer-events-none bg-gradient-to-br from-background via-muted/20 to-background" aria-hidden="true">
-  <picture>
-    <source srcset="/images/home-bg-1200.avif" type="image/avif" media="(min-width: 1200px)" />
-    <source srcset="/images/home-bg-800.avif" type="image/avif" media="(min-width: 800px)" />
-    <source srcset="/images/home-bg-480.avif" type="image/avif" />
-    <source srcset="/images/home-bg-1200.webp" type="image/webp" media="(min-width: 1200px)" />
-    <source srcset="/images/home-bg-800.webp" type="image/webp" media="(min-width: 800px)" />
-    <source srcset="/images/home-bg-480.webp" type="image/webp" />
-    <img 
-      src="/images/home-bg.png" 
-      alt=""
-      class="w-full h-full object-cover opacity-25"
-      width="2400"
-      height="1400"
-      loading="eager"
-      decoding="async"
-      fetchpriority="high"
-      sizes="100vw"
-      onerror="this.style.display='none'"
-    />
-  </picture>
+  <Image src={bgSrc} alt="" class="w-full h-full object-cover opacity-25" widths={[480,800,1200,1600,2000]} sizes="100vw" format="webp" loading="eager" fetchpriority="high" />
 </div>
 
 <!-- Matrix Rain Canvas -->

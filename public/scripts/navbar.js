@@ -1,38 +1,3 @@
-function initTheme() {
-  var themeToggle = document.getElementById('theme-toggle');
-  var lightIcon = document.getElementById('theme-toggle-light-icon');
-  var darkIcon = document.getElementById('theme-toggle-dark-icon');
-
-  var savedTheme = localStorage.getItem('theme') || 'dark';
-  document.documentElement.classList.toggle('dark', savedTheme === 'dark');
-
-  if (savedTheme === 'dark') {
-    lightIcon && lightIcon.classList.remove('hidden');
-    darkIcon && darkIcon.classList.add('hidden');
-    themeToggle && themeToggle.setAttribute('aria-pressed', 'true');
-  } else {
-    lightIcon && lightIcon.classList.add('hidden');
-    darkIcon && darkIcon.classList.remove('hidden');
-    themeToggle && themeToggle.setAttribute('aria-pressed', 'false');
-  }
-
-  themeToggle && themeToggle.addEventListener('click', function () {
-    var isDark = document.documentElement.classList.contains('dark');
-    var newTheme = isDark ? 'light' : 'dark';
-    document.documentElement.classList.toggle('dark');
-    localStorage.setItem('theme', newTheme);
-    if (newTheme === 'dark') {
-      lightIcon && lightIcon.classList.remove('hidden');
-      darkIcon && darkIcon.classList.add('hidden');
-      themeToggle && themeToggle.setAttribute('aria-pressed', 'true');
-    } else {
-      lightIcon && lightIcon.classList.add('hidden');
-      darkIcon && darkIcon.classList.remove('hidden');
-      themeToggle && themeToggle.setAttribute('aria-pressed', 'false');
-    }
-  });
-}
-
 function initMobileMenu() {
   var mobileMenuButton = document.getElementById('mobile-menu-button');
   var mobileMenu = document.getElementById('mobile-menu');
@@ -61,9 +26,12 @@ function initMobileMenu() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-  initTheme();
-  initMobileMenu();
-});
+(function ready(fn) {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fn);
+  } else {
+    fn();
+  }
+})(initMobileMenu);
 
 
