@@ -68,6 +68,7 @@ const blogSchema = z.object({
     'creative',
     'career',
     'tutorial',
+    'finance',
   ]),
   featured: z.boolean().default(false),
   publishedAt: z.string(),
