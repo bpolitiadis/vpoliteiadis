@@ -8,7 +8,9 @@
   let activeTag = 'all';
 
   function normalize(text) {
-    return (text || '').toLowerCase();
+    return String(text || '')
+      .replace(/[<>]/g, '')
+      .toLowerCase();
   }
 
   function applyFilters() {

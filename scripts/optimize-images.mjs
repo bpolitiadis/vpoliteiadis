@@ -5,8 +5,9 @@ import sharp from 'sharp';
 
 const root = process.cwd();
 const imagesDir = path.join(root, 'public', 'images');
+const creativeDir = path.join(root, 'public', 'creative');
 
-const targets = [imagesDir];
+const targets = [imagesDir, creativeDir];
 const sizes = [3840, 2400, 1600, 1200, 800, 480];
 const formats = [
   { ext: 'webp', options: { quality: 78 } },

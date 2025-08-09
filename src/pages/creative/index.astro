@@ -2,6 +2,17 @@
 import MainLayout from '../../layouts/MainLayout.astro';
 import PageHero from '../../components/PageHero.astro';
 import FeaturedProjectCard from '../../components/FeaturedProjectCard.tsx';
+// Import local assets to ensure consistent paths and allow editor assistance
+import s2Logo from '../../assets/images/s2-logo.png';
+import emmanuelleLogo from '../../assets/images/emmanuelle-silk-logo.webp';
+import es1 from '../../assets/images/emmanuelle-silk-1.png';
+import es2 from '../../assets/images/emmanuelle-silk-2.png';
+import es3 from '../../assets/images/emmanuelle-silk-3.png';
+import es4 from '../../assets/images/emmanuelle-silk-4.png';
+import es5 from '../../assets/images/emmanuelle-silk-5.png';
+import es6 from '../../assets/images/emmanuelle-silk-6.png';
+import es7 from '../../assets/images/emmanuelle-silk-7.png';
+import es8 from '../../assets/images/emmanuelle-silk-8.png';
 // Featured projects content (links and assets live under /public/creative/*)
 const projects = [
   {
@@ -10,19 +21,25 @@ const projects = [
     role: 'AI Fashion Collection · Creative Direction & Design',
     description:
       'Among the first AI-driven fashion collections in Greece. An 8-piece silk scarf series exploring generative aesthetics and material storytelling.',
-    hero: '/creative/emmanuelle-silk/hero.jpg',
+    hero: emmanuelleLogo.src,
+    // Fill the hero container for a full-bleed card look
+    heroFit: 'cover',
     galleryThumbs: [
-      '/creative/emmanuelle-silk/thumb-1.jpg',
-      '/creative/emmanuelle-silk/thumb-2.jpg',
-      '/creative/emmanuelle-silk/thumb-3.jpg',
-      '/creative/emmanuelle-silk/thumb-4.jpg',
-      '/creative/emmanuelle-silk/thumb-5.jpg',
-      '/creative/emmanuelle-silk/thumb-6.jpg',
-      '/creative/emmanuelle-silk/thumb-7.jpg',
-      '/creative/emmanuelle-silk/thumb-8.jpg',
+      es1.src,
+      es2.src,
+      es3.src,
+      es4.src,
+      es5.src,
+      es6.src,
+      es7.src,
+      es8.src,
     ],
     detailUrl: '/creative/emmanuelle-silk',
-    cta: { label: 'View Collection', href: '/creative/emmanuelle-silk', external: false },
+    cta: { 
+      label: 'View Collection', 
+      href: 'https://www.emmanuellesilk.com/product-category/artificial-intelligence/', 
+      external: true 
+    },
   },
   {
     slug: 'smoking-two',
@@ -30,11 +47,14 @@ const projects = [
     role: 'Art Direction · Visual Identity',
     description:
       'Art director for all visuals: album covers, Spotify canvases, Instagram promos, and upcoming AI-driven music videos.',
-    hero: '/creative/smoking-two/hero.jpg',
+    hero: s2Logo.src,
+    // Full-bleed hero to avoid letterboxing
+    heroFit: 'cover',
+    // Use artist embed to match the dedicated Smoking Two page experience
     spotifyEmbed:
-      'https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?utm_source=generator',
+      'https://open.spotify.com/embed/artist/3iyLSllxJjbHUi1PZOzJAm?utm_source=generator',
     detailUrl: '/creative/smoking-two',
-    cta: { label: 'Listen on Spotify', href: 'https://open.spotify.com/', external: true },
+    cta: { label: 'Listen on Spotify', href: 'https://open.spotify.com/artist/3iyLSllxJjbHUi1PZOzJAm', external: true },
   },
   {
     slug: 'arte-imaginari',
@@ -82,7 +102,19 @@ const projects = [
           </h2>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((p) => (
-              <FeaturedProjectCard client:load {...p} />
+              <FeaturedProjectCard
+                client:load
+                title={p.title}
+                role={p.role}
+                description={p.description}
+                hero={p.hero}
+                heroFit={p.heroFit as 'contain' | 'cover' | undefined}
+                detailUrl={p.detailUrl}
+                cta={p.cta}
+                galleryThumbs={p.galleryThumbs}
+                spotifyEmbed={p.spotifyEmbed}
+                instagramGrid={p.instagramGrid}
+              />
             ))}
           </div>
         </div>
