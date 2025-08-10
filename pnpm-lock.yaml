@@ -23,6 +23,9 @@ importers:
       astro:
         specifier: ^5.12.8
         version: 5.12.8(@types/node@24.1.0)(jiti@1.21.7)(rollup@4.46.2)(terser@5.43.1)(typescript@5.9.2)(yaml@2.8.0)
+      glightbox:
+        specifier: ^3.3.0
+        version: 3.3.1
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -2058,6 +2061,9 @@ packages:
 
   github-slugger@2.0.0:
     resolution: {integrity: sha512-IaOQ9puYtjrkq7Y0Ygl9KDZnrf/aiUJYUpVf89y8kyaxbRG7Y1SrX/jaumrv81vc61+kiMempujsM3Yw7w5qcw==}
+
+  glightbox@3.3.1:
+    resolution: {integrity: sha512-nXoKfJRnQTDaAFAw5799hjpfAAHx5aLvOLG0SIGudeMCwtHgO3P2/avNYapJ+SL4UEZxO2YNBPtq6pzMhSx42g==}
 
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
@@ -6397,6 +6403,8 @@ snapshots:
       - supports-color
 
   github-slugger@2.0.0: {}
+
+  glightbox@3.3.1: {}
 
   glob-parent@5.1.2:
     dependencies:
