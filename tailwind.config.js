@@ -39,7 +39,8 @@ export default {
         'neon-purple': '#8A2BE2',
         'neon-pink': '#FF1493',
         // Refined blue to better harmonize with neon greens
-        'cyber-blue': '#00AEEF',
+        // Adjusted to improve contrast on dark backgrounds
+        'cyber-blue': '#2EA3FF',
         'matrix-gold': '#FFD700',
         'dark-slate': '#1A1A1A',
         'light-slate': '#2A2A2A',
@@ -68,6 +69,9 @@ export default {
         'info': '#39FF14',
         'info-foreground': '#000000',
       },
+      ringColor: ({ theme }) => ({
+        DEFAULT: theme('colors.primary'),
+      }),
       fontFamily: {
         orbitron: ['Orbitron', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
@@ -109,8 +113,8 @@ export default {
         xs: '2px',
       },
       boxShadow: {
-        'neon': '0 0 20px rgba(57, 255, 20, 0.3)',
-        'neon-lg': '0 0 40px rgba(57, 255, 20, 0.4)',
+        'neon': '0 0 0 3px rgba(57, 255, 20, 0.5)',
+        'neon-lg': '0 0 0 4px rgba(57, 255, 20, 0.6)',
         'emerald': '0 0 20px rgba(0, 184, 107, 0.3)',
         'emerald-lg': '0 0 40px rgba(0, 184, 107, 0.4)',
         'cyan': '0 0 20px rgba(0, 255, 255, 0.3)',
