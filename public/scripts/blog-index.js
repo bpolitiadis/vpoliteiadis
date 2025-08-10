@@ -6,6 +6,13 @@
   const noResults = document.getElementById('no-results');
 
   let activeTag = 'all';
+  // Lookup maps curated chips to multiple synonyms for robust filtering
+  function getActiveSynonyms(tag) {
+    if (!tag || tag === 'all') return [];
+    const btn = tagContainer && tagContainer.querySelector(`button[data-tag="${tag}"]`);
+    const matches = btn && btn.getAttribute('data-match');
+    return (matches || '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean);
+  }
 
   function normalize(text) {
     return String(text || '')
@@ -15,6 +22,7 @@
 
   function applyFilters() {
     const q = normalize(searchInput && searchInput.value);
+    const synonyms = getActiveSynonyms(activeTag);
 
     let visibleCount = 0;
     cards.forEach((card) => {
@@ -23,7 +31,12 @@
       const tags = normalize(card.dataset.tags);
 
       const matchesSearch = !q || title.includes(q) || excerpt.includes(q) || tags.includes(q);
-      const matchesTag = activeTag === 'all' || (tags && tags.split(',').includes(normalize(activeTag)));
+      const matchesTag =
+        activeTag === 'all' ||
+        (tags && (
+          tags.split(',').includes(normalize(activeTag)) ||
+          synonyms.some((syn) => tags.includes(syn))
+        ));
 
       const isVisible = matchesSearch && matchesTag;
       card.classList.toggle('hidden', !isVisible);

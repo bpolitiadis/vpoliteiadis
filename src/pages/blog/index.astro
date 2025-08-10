@@ -13,17 +13,42 @@ const posts = allPosts
       new Date(a.data.publishedAt).getTime()
   );
 
-// Compute popular tags (2025 minimalist approach: show top 6 + All)
-const tagCounts = posts
-  .flatMap((post) => post.data.tags || [])
-  .reduce((map: Record<string, number>, tag: string) => {
-    map[tag] = (map[tag] || 0) + 1;
-    return map;
-  }, {});
-const popularTags = (Object.entries(tagCounts) as [string, number][])
-  .sort((a, b) => b[1] - a[1])
-  .map(([tag]) => tag)
-  .slice(0, 6);
+// Curated categories with synonym matching for filtering
+// These are displayed below the search bar regardless of post tags
+const curatedTags: { label: string; value: string; match: string[] }[] = [
+  {
+    label: 'Bitcoin',
+    value: 'bitcoin',
+    match: ['bitcoin', 'cryptocurrency', 'blockchain', 'decentralization'],
+  },
+  {
+    label: 'Quality Assurance',
+    value: 'quality-assurance',
+    match: ['quality assurance', 'qa', 'testing', 'test', 'playwright', 'vitest', 'automation'],
+  },
+  {
+    label: 'Full‑Stack Development',
+    value: 'full-stack-development',
+    match: [
+      'full-stack',
+      'development',
+      'next.js',
+      'react',
+      'prisma',
+      'postgresql',
+      'supabase',
+      'nextauth',
+      'tailwindcss',
+      'shadcn',
+      'radix',
+      'zod',
+    ],
+  },
+  { label: 'AI', value: 'ai', match: ['ai', 'artificial intelligence', 'prompt engineering', 'context engineering', 'templates', 'workflows'] },
+  { label: 'Web3.0', value: 'web3', match: ['web3', 'web3.0', 'cryptocurrency', 'blockchain', 'decentralization'] },
+  { label: 'Blockchain', value: 'blockchain', match: ['blockchain', 'bitcoin', 'cryptocurrency', 'decentralization'] },
+  { label: 'AI Art', value: 'ai-art', match: ['ai art', 'midjourney', 'image generation', 'art'] },
+];
 
 // SEO metadata
 const title = 'Blog - Vasileios Politeiadis';
@@ -45,7 +70,7 @@ const description =
       metaText={`${posts.length} articles`}
       eager={true}
     >
-      <!-- Search + Tags -->
+      <!-- Search + Curated Categories -->
       <div class="mx-auto max-w-3xl mt-6">
           <div class="relative">
             <label for="search" class="sr-only">Search articles</label>
@@ -60,14 +85,22 @@ const description =
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z" /></svg>
             </div>
           </div>
-          {popularTags.length > 0 && (
-            <div class="mt-4 flex flex-wrap gap-2" id="tag-chips" aria-label="Filter by tag">
+          <div class="mt-4 rounded-xl border border-neon-lime/10 bg-card/60 backdrop-blur-md p-2">
+            <div class="flex flex-wrap gap-2" id="tag-chips" aria-label="Filter by topic">
               <button class="filter-btn active" data-tag="all" aria-pressed="true">All</button>
-              {popularTags.map((tag) => (
-                <button class="filter-btn" data-tag={tag} aria-pressed="false">{tag}</button>
+              {curatedTags.map((t) => (
+                <button
+                  class="filter-btn"
+                  data-tag={t.value}
+                  data-match={t.match.join(',')}
+                  aria-pressed="false"
+                  title={`Filter by ${t.label}`}
+                >
+                  {t.label}
+                </button>
               ))}
             </div>
-          )}
+          </div>
       </div>
     </PageHero>
 
@@ -122,7 +155,7 @@ const description =
                     </>
                   )}
                 </div>
-                <h3 class="text-xl font-orbitron font-bold text-neon-lime">
+                 <h3 class="text-lg sm:text-xl font-orbitron font-bold text-neon-lime tracking-tight text-balance break-words hyphens-auto">
                   <a href={`/blog/${post.slug}`} class="hover:text-glow transition-all duration-300">
                     {post.data.title}
                   </a>
