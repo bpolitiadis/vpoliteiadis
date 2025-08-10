@@ -39,7 +39,7 @@ export default function FeaturedProjectCard(props: FeaturedProjectCardProps) {
                  cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
     >
       {/* Hero */}
-      <a href={detailUrl} className="relative overflow-hidden rounded-t-2xl aspect-video bg-dark-slate/60 block">
+      <a href={detailUrl} className="relative overflow-hidden rounded-t-2xl aspect-video bg-dark-slate/60 block" aria-label={`Open ${title} details`}>
         <OptimizedImage
           src={hero}
           alt={title}
