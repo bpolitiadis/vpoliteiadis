@@ -29,7 +29,7 @@ if (!computedSrc) {
   throw new Error('SpotifyEmbed requires either `src` or both `type` and `id`.');
 }
 ---
-<div class="rounded-xl overflow-hidden bg-[rgba(10,10,10,0.6)]">
+<div class="rounded-xl overflow-hidden bg-card/60 border border-border/30">
   <iframe
     src={computedSrc}
     width="100%"
@@ -38,6 +38,8 @@ if (!computedSrc) {
     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
     loading="lazy"
     title={title}
+    style="border-radius: 12px"
+    frameborder="0"
   ></iframe>
   
 </div>

@@ -57,6 +57,7 @@ const navItems = [
               }`}
               role="menuitem"
               aria-current={currentPath === item.href ? 'page' : undefined}
+              aria-label={`${item.label}${currentPath === item.href ? ' (current page)' : ''}`}
             >
               {item.label}
               {/* Hover glow effect */}
@@ -75,6 +76,7 @@ const navItems = [
           aria-label="Toggle mobile navigation menu"
           aria-expanded="false"
           aria-controls="mobile-menu"
+          aria-haspopup="menu"
         >
           <!-- Hamburger icon -->
           <svg data-icon="menu" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
@@ -101,6 +103,8 @@ const navItems = [
             }`}
             role="menuitem"
             aria-current={currentPath === item.href ? 'page' : undefined}
+            tabindex="0"
+            aria-label={`${item.label}${currentPath === item.href ? ' (current page)' : ''}`}
           >
             {item.label}
           </a>

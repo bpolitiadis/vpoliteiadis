@@ -38,14 +38,15 @@ const aspectClass = getAspectRatioClass(creative.data.aspectRatio);
 ---
 
 <article 
-  class="group relative border border-secondary/30 rounded-2xl bg-[rgba(10,10,10,0.6)] p-6 md:p-8 transition-all hover:border-primary hover:shadow-neon cursor-pointer shadow-inner backdrop-blur-md"
+  class="group relative border border-border rounded-2xl bg-card/60 p-6 md:p-8 transition-all hover:border-primary hover:shadow-neon cursor-pointer shadow-inner backdrop-blur-md"
+  aria-labelledby={`creative-${creative.slug}-title`}
 >
   <!-- Featured Badge -->
-  {creative.data.featured && (
-    <div class="bg-neon-lime text-black px-2 py-1 rounded font-bold text-xs uppercase absolute -mt-4 -ml-4">
-      Featured
-    </div>
-  )}
+    {creative.data.featured && (
+      <div class="bg-primary text-background px-2 py-1 rounded font-bold text-xs uppercase absolute -mt-4 -ml-4">
+        Featured
+      </div>
+    )}
 
   <!-- Media Container -->
   <div class={`relative overflow-hidden ${aspectClass} mb-6 rounded-xl content-visibility-auto`}>
@@ -66,12 +67,12 @@ const aspectClass = getAspectRatioClass(creative.data.aspectRatio);
         poster={creative.data.coverImage}
       >
         <source src={creative.data.coverVideo} type="video/mp4" />
-        <VercelImage src={creative.data.coverImage} alt={creative.data.title} class="w-full h-full object-cover" loading="lazy" decoding="async" fetchpriority="low" />
+        <VercelImage src={creative.data.coverImage} alt={`${creative.data.title} cover image`} class="w-full h-full object-cover" loading="lazy" decoding="async" fetchpriority="low" />
       </video>
     ) : (
        <VercelImage
         src={creative.data.coverImage}
-        alt={creative.data.title}
+        alt={`${creative.data.title} cover image`}
         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 will-change-transform"
         loading="lazy"
         decoding="async"
@@ -86,7 +87,7 @@ const aspectClass = getAspectRatioClass(creative.data.aspectRatio);
       
       <!-- Overlay Content -->
       <div class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-        <h3 class="text-h3 font-orbitron text-primary mb-2 group-hover:text-foreground transition-colors">
+        <h3 id={`creative-${creative.slug}-title`} class="text-h3 font-orbitron text-primary mb-2 group-hover:text-foreground transition-colors">
           {creative.data.title}
         </h3>
         
@@ -114,7 +115,7 @@ const aspectClass = getAspectRatioClass(creative.data.aspectRatio);
     </div>
 
     <!-- Category Badge -->
-    <div class="absolute top-4 right-4 px-2 py-1 bg-background/80 text-muted-foreground text-xs rounded">
+     <div class="absolute top-4 right-4 px-2 py-1 bg-background/80 text-muted-foreground text-xs rounded">
       {creative.data.category.replace('-', ' ')}
     </div>
 
@@ -138,11 +139,11 @@ const aspectClass = getAspectRatioClass(creative.data.aspectRatio);
 
   <!-- Card Content -->
   <div>
-    <h3 class="text-h3 font-orbitron text-primary mb-3 group-hover:text-foreground transition-colors">
+    <h3 class="text-xl md:text-2xl font-orbitron text-primary mb-3 group-hover:text-foreground transition-colors">
       {creative.data.title}
     </h3>
     
-    <p class="text-body text-muted-foreground mb-6 line-clamp-2">
+    <p class="text-sm md:text-base text-muted-foreground mb-6 line-clamp-2">
       {creative.data.excerpt || creative.data.description}
     </p>
 
@@ -164,12 +165,13 @@ const aspectClass = getAspectRatioClass(creative.data.aspectRatio);
     <button
       class="w-full inline-flex items-center justify-center px-4 py-2 bg-transparent border border-primary text-primary 
              hover:bg-primary hover:text-background transition-all duration-300 rounded-lg
-             group-hover:animate-glow"
+             group-hover:animate-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+      aria-label={`View details for ${creative.data.title}`}
+      type="button"
     >
       View Details
-      <svg class="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+      <svg class="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M13 5l7 7-7 7" />
       </svg>
     </button>
   </div>

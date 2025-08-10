@@ -1,7 +1,7 @@
 ---
 export interface Props {
   src: string;
-  alt: string;
+  alt?: string;
   width?: number;
   quality?: number;
   class?: string;
@@ -11,9 +11,10 @@ export interface Props {
   fetchpriority?: 'high' | 'low' | 'auto';
 }
 
+const props = Astro.props as Props;
 const {
   src,
-  alt,
+  alt = '',
   width = 1200,
   quality = 75,
   class: className = '',
@@ -21,7 +22,7 @@ const {
   loading = 'lazy',
   decoding = 'async',
   fetchpriority = 'auto',
-} = Astro.props as Props;
+} = props;
 
 // Build an absolute source URL in production so Vercel's optimizer can always fetch it
 let optimizedURL = src;
@@ -33,11 +34,21 @@ if (import.meta.env.MODE === 'production') {
     const site = typeof Astro !== 'undefined' && Astro.site ? String(Astro.site) : '';
     const absoluteSrc = src.startsWith('http') ? src : `${site.replace(/\/$/, '')}${src}`;
     optimizedURL = `/_vercel/image?url=${encodeURIComponent(absoluteSrc)}&w=${width}&q=${quality}`;
-  } else {
-    optimizedURL = src;
   }
 }
+
+const isDecorative = (alt || '').trim() === '';
 ---
-<img src={optimizedURL} alt={alt} class={className} sizes={sizes} loading={loading} decoding={decoding} fetchpriority={fetchpriority} />
+<img
+  src={optimizedURL}
+  alt={alt}
+  class={className}
+  sizes={sizes}
+  loading={loading}
+  decoding={decoding}
+  fetchpriority={fetchpriority}
+  aria-hidden={isDecorative ? 'true' : undefined}
+  role={isDecorative ? 'presentation' : undefined}
+/>
 
 
