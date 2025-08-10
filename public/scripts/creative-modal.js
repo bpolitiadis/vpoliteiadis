@@ -1,6 +1,8 @@
 var currentCreativeItems = [];
 var currentIndex = 0;
 var previousActiveElement = null;
+var touchStartX = 0;
+var touchEndX = 0;
 
 function initModal() {
   var modal = document.getElementById('creative-modal');
@@ -18,6 +20,25 @@ function initModal() {
       if (e.key === 'ArrowRight') nextItem();
     }
   });
+
+  // Basic swipe navigation for touch devices
+  var media = modal.querySelector('#modal-media');
+  if (media) {
+    media.addEventListener('touchstart', function (e) {
+      var t = e.changedTouches && e.changedTouches[0];
+      if (!t) return;
+      touchStartX = t.clientX;
+    }, { passive: true });
+    media.addEventListener('touchend', function (e) {
+      var t = e.changedTouches && e.changedTouches[0];
+      if (!t) return;
+      touchEndX = t.clientX;
+      var delta = touchEndX - touchStartX;
+      if (Math.abs(delta) > 40) {
+        if (delta > 0) previousItem(); else nextItem();
+      }
+    }, { passive: true });
+  }
 }
 
 function openModal(creativeItems, startIndex) {
@@ -72,10 +93,43 @@ function updateModalContent() {
 
   var titleEl = modal.querySelector('#modal-title');
   var descEl = modal.querySelector('#modal-description');
-  if (titleEl && item && typeof item === 'object' && 'data' in item && item.data) {
-    var itemData = item.data;
-    titleEl.textContent = (itemData.title) || '';
-    if (descEl) descEl.textContent = (itemData.description) || '';
+  // Support items with "data" or simple { src, alt }
+  if (titleEl) {
+    if (item && typeof item === 'object' && 'data' in item && item.data) {
+      var itemData = item.data;
+      titleEl.textContent = (itemData.title) || '';
+      if (descEl) descEl.textContent = (itemData.description) || '';
+    } else {
+      titleEl.textContent = (item && item.alt) || '';
+      if (descEl) descEl.textContent = '';
+    }
+  }
+
+  // Render media
+  var mediaContainer = modal.querySelector('#modal-media');
+  if (mediaContainer) {
+    var src = (item && item.src) || (item && item.url) || '';
+    var alt = (item && item.alt) || '';
+    // Use object-contain so large images fit within viewport; provide max height
+    mediaContainer.innerHTML = '';
+    var img = document.createElement('img');
+    img.src = src;
+    img.alt = alt;
+    img.loading = 'eager';
+    img.decoding = 'async';
+    img.className = 'w-full max-h-[70vh] object-contain bg-background';
+    mediaContainer.appendChild(img);
+
+    // Preload neighbors to make navigation snappier
+    var prev = currentCreativeItems[currentIndex - 1];
+    var next = currentCreativeItems[currentIndex + 1];
+    [prev, next].forEach(function (neighbor) {
+      var neighborSrc = neighbor && (neighbor.src || neighbor.url);
+      if (neighborSrc) {
+        var preload = new Image();
+        preload.src = neighborSrc;
+      }
+    });
   }
 
   var prevBtn = modal.querySelector('#modal-prev');

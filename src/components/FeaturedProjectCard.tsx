@@ -129,9 +129,9 @@ export default function FeaturedProjectCard(props: FeaturedProjectCardProps) {
             href={cta.href}
             target={cta.external ? '_blank' : undefined}
             rel={cta.external ? 'noopener noreferrer' : undefined}
-            className="inline-flex items-center gap-2 px-4 py-2 border border-primary text-primary rounded-lg
-                       hover:bg-primary hover:text-background transition-colors duration-300 focus-visible:outline
-                       focus-visible:outline-2 focus-visible:outline-primary"
+            className="inline-flex items-center px-6 py-3 bg-primary text-background hover:bg-secondary
+                       transition-all duration-300 rounded-lg font-orbitron font-bold animate-glow focus-visible:outline
+                       focus-visible:outline-2 focus-visible:outline-primary gap-2"
             onClick={(e) => e.stopPropagation()}
             aria-label={cta.label}
           >

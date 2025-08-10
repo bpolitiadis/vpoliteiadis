@@ -9,7 +9,10 @@ import es5 from '../../assets/images/emmanuelle-silk-5.png';
 import es6 from '../../assets/images/emmanuelle-silk-6.png';
 import es7 from '../../assets/images/emmanuelle-silk-7.png';
 import es8 from '../../assets/images/emmanuelle-silk-8.png';
+import logo from '../../assets/images/emmanuelle-silk-logo.webp';
+import CreativeModal from '../../components/CreativeModal.astro';
 const thumbs: string[] = [es1.src, es2.src, es3.src, es4.src, es5.src, es6.src, es7.src, es8.src];
+const galleryItems = thumbs.map((src, i) => ({ src, alt: `Emmanuelle Silk design ${i + 1}` }));
 ---
 
 <MainLayout 
@@ -31,8 +34,8 @@ const thumbs: string[] = [es1.src, es2.src, es3.src, es4.src, es5.src, es6.src, 
         </p>
       </header>
 
-      <div class="rounded-2xl overflow-hidden border border-border/40 bg-[rgba(10,10,10,0.6)] shadow-inner mb-10">
-        <img src={thumbs[0]} alt="Emmanuelle Silk collection hero" class="w-full h-auto object-cover" loading="lazy" decoding="async" />
+      <div class="rounded-2xl overflow-hidden border border-border/40 bg-[rgba(10,10,10,0.6)] shadow-inner mb-10 flex items-center justify-center py-8">
+        <img src={logo.src} alt="Emmanuelle Silk logo" class="h-20 md:h-24 w-auto object-contain" loading="eager" decoding="async" />
       </div>
 
       <h2 class="font-orbitron text-primary text-xl md:text-2xl mb-4">The Collection</h2>
@@ -43,11 +46,40 @@ const thumbs: string[] = [es1.src, es2.src, es3.src, es4.src, es5.src, es6.src, 
 
       <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-2">
         {thumbs.map((src, i) => (
-          <img src={src} alt={`Silk design ${i + 1}`} class="w-full h-20 object-cover rounded" loading="lazy" decoding="async" />
+          <button type="button" data-silk-index={i} class="group relative rounded overflow-hidden focus:outline-none focus:ring-2 focus:ring-primary/70">
+            <img src={src} alt={`Emmanuelle Silk design ${i + 1}`} class="w-full h-20 object-cover transition-transform duration-200 group-hover:scale-[1.02]" loading="lazy" decoding="async" />
+            <span class="absolute inset-0 ring-1 ring-inset ring-border/40 pointer-events-none"></span>
+          </button>
         ))}
       </div>
     </div>
   </section>
+  <CreativeModal id="creative-modal" />
+  <script id="silk-gallery-data" type="application/json">{JSON.stringify(galleryItems)}</script>
+  <script type="module">
+    const dataEl = document.getElementById('silk-gallery-data');
+    let items = [];
+    try { items = JSON.parse((dataEl && dataEl.textContent) || '[]'); } catch {}
+    const openWithIndex = (index) => {
+      if (window.creativeModal && typeof window.creativeModal.open === 'function') {
+        window.creativeModal.open(items, index || 0);
+      }
+    };
+    document.querySelectorAll('[data-silk-index]')
+      .forEach((el) => {
+        el.addEventListener('click', () => {
+          const i = parseInt(el.getAttribute('data-silk-index') || '0', 10);
+          openWithIndex(i);
+        });
+        el.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            const i = parseInt(el.getAttribute('data-silk-index') || '0', 10);
+            openWithIndex(i);
+          }
+        });
+      });
+  </script>
 </MainLayout>
 
 

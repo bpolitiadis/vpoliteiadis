@@ -184,6 +184,51 @@
     box-shadow: 0 0 0 2px var(--secondary), 0 0 0 4px var(--background);
   }
 
+  /* Modern compact link-CTA used for subtle actions (e.g. Read More) */
+  .btn-link {
+    @apply inline-flex items-center gap-1.5 text-sm font-medium rounded-sm px-0.5 transition-all duration-200;
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: rgba(57, 255, 20, 0.35);
+  }
+
+  .btn-link:hover {
+    text-underline-offset: 6px;
+    text-decoration-color: rgba(57, 255, 20, 0.9);
+    transform: translateX(2px);
+  }
+
+  .btn-link:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(57, 255, 20, 0.5), 0 0 0 4px var(--background);
+    border-radius: 4px;
+  }
+
+  /* Apply the compact CTA treatment to existing blog card links without changing markup */
+  .card a.text-primary {
+    @apply inline-flex items-center gap-1.5 text-sm font-semibold px-0.5 transition-all duration-200;
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: rgba(57, 255, 20, 0.35);
+  }
+
+  .card a.text-primary:hover {
+    text-underline-offset: 6px;
+    text-decoration-color: rgba(57, 255, 20, 0.9);
+    transform: translateX(2px);
+    text-shadow: none;
+  }
+
+  .card a.text-primary:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(57, 255, 20, 0.4), 0 0 0 4px var(--background);
+    border-radius: 4px;
+  }
+
   .card {
     background-color: var(--card);
     border: 1px solid var(--border);

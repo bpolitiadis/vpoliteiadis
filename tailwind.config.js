@@ -13,7 +13,9 @@ export default {
     // Gradient overlay strengths used for backgrounds
     'from-black/20','from-black/30','via-black/10','via-black/15','to-black/25','to-black/35',
     // Attachment helper if enabled later
-    'bg-fixed','bg-local','bg-scroll'
+    'bg-fixed','bg-local','bg-scroll',
+    // CTA link class used in cards
+    'btn-link'
   ],
   darkMode: 'class',
   

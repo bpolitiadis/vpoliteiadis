@@ -16,12 +16,12 @@ import avatarSrc from '../assets/images/avatar.png';
   
 
   <!-- Hero Section -->
-  <section class="relative isolate z-10 min-h-[70vh] flex items-center">
+  <section class="relative isolate z-10 min-h-[60vh] flex items-center">
     <div class="w-full">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col items-center text-center py-16 md:py-24 lg:py-28">
+        <div class="flex flex-col items-center text-center py-10 md:py-16 lg:py-20">
           <!-- Centered circular holographic avatar -->
-          <div class="avatar-orb relative mb-8 md:mb-10" role="img" aria-label="Portrait of Vasileios Politeiadis">
+          <div class="avatar-orb relative mb-6 md:mb-8" role="img" aria-label="Portrait of Vasileios Politeiadis">
             <Image src={avatarSrc} alt="Vasileios Politeiadis avatar" class="holo-avatar block w-40 h-40 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full object-cover" widths={[160,224,256]} sizes="(max-width: 768px) 160px, 224px" format="webp" loading="eager" />
           </div>
 
@@ -31,7 +31,7 @@ import avatarSrc from '../assets/images/avatar.png';
   </section>
 
   <!-- Main Content -->
-  <section class="relative z-10 py-16">
+  <section class="relative z-10 pt-10 md:pt-12 pb-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <!-- Professional Identity -->
@@ -240,27 +240,25 @@ import avatarSrc from '../assets/images/avatar.png';
       <!-- Creative Projects -->
       <div class="card border border-neon-lime/20 shadow-neon">
         <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-6 text-shadow-neon">
-          🎨 Creative & AI-Art
+          🎨 Creative AI-Artist
         </h2>
         <div class="space-y-6">
-          <div class="bg-cyber-gray/50 p-6 rounded-xl border border-neon-lime/30 hover:border-neon-lime/50 transition-colors shadow-neon">
-            <h3 class="font-orbitron font-bold text-neon-lime mb-3 text-shadow-neon">Instagram: Arte Imaginari</h3>
-            <p class="text-matrix-white/80 mb-4">
-              AI-driven image and video experimentation using Midjourney, Kling AI, and other generative tools.
-            </p>
-            <div class="space-y-2">
-              <p class="text-sm text-matrix-white/70">🎨 <span class="text-digital-emerald">Commission Work:</span></p>
-              <ul class="text-sm text-matrix-white/70 ml-4 space-y-1">
-                <li>• Silk scarf designs for Emmanuelle Silk fashion brand</li>
-                <li>• Album covers for Thessaloniki hip-hop artists</li>
-                <li>• Event posters for Berlin techno parties</li>
-              </ul>
-            </div>
-            <div class="mt-4 flex items-center space-x-4">
-              <a href="https://instagram.com/arte.imaginari" target="_blank" rel="noopener noreferrer" class="text-neon-lime hover:text-glow transition-all duration-300 text-sm">
-                View Portfolio →
-              </a>
-            </div>
+          <h3 class="font-orbitron font-bold text-neon-lime text-shadow-neon">Instagram: Arte Imaginari</h3>
+          <p class="text-matrix-white/80">
+            AI-driven image and video experimentation using Midjourney, Kling AI, and other generative tools.
+          </p>
+          <div class="space-y-2">
+            <p class="text-sm text-matrix-white/70">🎨 <span class="text-digital-emerald">Commission Work:</span></p>
+            <ul class="text-sm text-matrix-white/70 ml-4 space-y-1">
+              <li>• Silk scarf designs for Emmanuelle Silk fashion brand</li>
+              <li>• Album covers for Thessaloniki hip-hop artists</li>
+              <li>• Event posters for Berlin techno parties</li>
+            </ul>
+          </div>
+          <div class="flex items-center space-x-4">
+            <a href="https://instagram.com/arte.imaginari" target="_blank" rel="noopener noreferrer" class="text-neon-lime hover:text-glow transition-all duration-300 text-sm">
+              View Portfolio →
+            </a>
           </div>
         </div>
       </div>
