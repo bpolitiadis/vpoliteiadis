@@ -9,7 +9,7 @@ const { id } = Astro.props;
 <!-- Creative Modal/Lightbox -->
 <div 
   id={id}
-  class="creative-modal fixed inset-0 z-50 hidden bg-background/95 backdrop-blur-sm"
+  class="creative-modal fixed inset-0 z-[120] hidden bg-background/95 backdrop-blur-sm"
   role="dialog"
   aria-modal="true"
   aria-labelledby="modal-title"
@@ -17,7 +17,7 @@ const { id } = Astro.props;
   tabindex="-1"
 >
   <!-- Modal Backdrop -->
-  <div class="absolute inset-0" id="modal-backdrop"></div>
+  <div class="absolute inset-0" id="modal-backdrop" aria-hidden="true"></div>
   
   <!-- Modal Content -->
   <div class="relative h-full flex items-center justify-center p-4">
@@ -41,7 +41,7 @@ const { id } = Astro.props;
           aria-label="Close modal"
           type="button"
         >
-          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
@@ -141,4 +141,147 @@ const { id } = Astro.props;
   </div>
 </div>
 
-<script src="/scripts/creative-modal.js" type="module" defer></script>
+<script>
+// @ts-nocheck
+// Lightweight modal script inlined to avoid external script path issues
+(function(){
+  /** @type {{ src?: string, url?: string, alt?: string, data?: any }[]} */
+  var currentCreativeItems = [];
+  /** @type {number} */
+  var currentIndex = 0;
+  /** @type {HTMLElement|null} */
+  var previousActiveElement = null;
+  /** @type {number} */
+  var touchStartX = 0;
+  /** @type {number} */
+  var touchEndX = 0;
+  /** @type {boolean} */
+  var modalInitialized = false;
+
+  function initModal(){
+    if (modalInitialized) return;
+    var modal = document.getElementById('creative-modal');
+    if (!modal) return;
+    modalInitialized = true;
+
+    var backdrop = modal.querySelector('#modal-backdrop');
+    var closeBtn = modal.querySelector('#modal-close');
+    var prevBtn = modal.querySelector('#modal-prev');
+    var nextBtn = modal.querySelector('#modal-next');
+    if (backdrop) backdrop.addEventListener('click', closeModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (prevBtn) prevBtn.addEventListener('click', previousItem);
+    if (nextBtn) nextBtn.addEventListener('click', nextItem);
+
+    document.addEventListener('keydown', function(/** @type {KeyboardEvent} */ e){
+      if (!modal.classList.contains('hidden')){
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowLeft') previousItem();
+        if (e.key === 'ArrowRight') nextItem();
+      }
+    });
+
+    var media = modal.querySelector('#modal-media');
+    if (media){
+      media.addEventListener('touchstart', function(/** @type {TouchEvent} */ e){
+        var t = e.changedTouches && e.changedTouches[0];
+        if (!t) return; touchStartX = t.clientX;
+      }, { passive: true });
+      media.addEventListener('touchend', function(/** @type {TouchEvent} */ e){
+        var t = e.changedTouches && e.changedTouches[0];
+        if (!t) return; touchEndX = t.clientX;
+        var delta = touchEndX - touchStartX;
+        if (Math.abs(delta) > 40) { if (delta > 0) previousItem(); else nextItem(); }
+      }, { passive: true });
+    }
+  }
+
+  /** @param {{ src?: string, url?: string, alt?: string, data?: any }[]} items @param {number} [startIndex] */
+  function openModal(items, startIndex){
+    if (startIndex === void 0) startIndex = 0;
+    currentCreativeItems = Array.isArray(items) ? items : [];
+    currentIndex = startIndex;
+    var modal = document.getElementById('creative-modal');
+    if (modal){
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      previousActiveElement = /** @type {HTMLElement|null} */ (document.activeElement);
+      modal.setAttribute('tabindex', '-1');
+      modal.focus();
+      trapFocus(modal);
+      updateModalContent();
+    }
+  }
+
+  function closeModal(){
+    var modal = document.getElementById('creative-modal');
+    if (modal){
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+      if (previousActiveElement && typeof previousActiveElement.focus === 'function') previousActiveElement.focus();
+    }
+  }
+
+  function previousItem(){ if (currentIndex > 0){ currentIndex--; updateModalContent(); } }
+  function nextItem(){ if (currentIndex < currentCreativeItems.length - 1){ currentIndex++; updateModalContent(); } }
+
+  function updateModalContent(){
+    var item = currentCreativeItems[currentIndex];
+    if (!item) return;
+    var modal = document.getElementById('creative-modal');
+    if (!modal) return;
+
+    var titleEl = modal.querySelector('#modal-title');
+    var descEl = modal.querySelector('#modal-description');
+    if (titleEl){
+      if (item && typeof item === 'object' && 'data' in item && item.data){
+        var d = item.data; titleEl.textContent = d.title || ''; if (descEl) descEl.textContent = d.description || '';
+      } else {
+        titleEl.textContent = (item && item.alt) || ''; if (descEl) descEl.textContent = '';
+      }
+    }
+
+    var mediaContainer = modal.querySelector('#modal-media');
+    if (mediaContainer){
+      var src = (item && item.src) || (item && item.url) || '';
+      var alt = (item && item.alt) || '';
+      mediaContainer.innerHTML = '';
+      var img = document.createElement('img');
+      img.src = src; img.alt = alt; img.loading = 'eager'; img.decoding = 'async';
+      img.className = 'w-full max-h-[85vh] object-contain bg-background';
+      mediaContainer.appendChild(img);
+      var prev = currentCreativeItems[currentIndex - 1];
+      var next = currentCreativeItems[currentIndex + 1];
+      [prev, next].forEach(function(n){ var s = n && (n.src || n.url); if (s){ var p = new Image(); p.src = s; }});
+    }
+
+    var prevBtn = /** @type {HTMLButtonElement|null} */ (modal.querySelector('#modal-prev'));
+    var nextBtn = /** @type {HTMLButtonElement|null} */ (modal.querySelector('#modal-next'));
+    var counter = modal.querySelector('#modal-counter');
+    if (prevBtn) prevBtn.disabled = currentIndex === 0;
+    if (nextBtn) nextBtn.disabled = currentIndex === currentCreativeItems.length - 1;
+    if (counter) counter.textContent = (currentIndex + 1) + ' of ' + currentCreativeItems.length;
+  }
+
+  /** @param {HTMLElement} container */
+  function trapFocus(container){
+    /** @param {KeyboardEvent} e */
+    function handleKeyDown(e){
+      if (e.key !== 'Tab') return;
+      var selectors = ['a[href]','area[href]','input:not([disabled])','select:not([disabled])','textarea:not([disabled])','button:not([disabled])','iframe','object','embed','[contenteditable]','[tabindex]:not([tabindex="-1"])'];
+      var focusable = container.querySelectorAll(selectors.join(','));
+      if (!focusable.length) return; var first = focusable[0]; var last = focusable[focusable.length - 1];
+      if (e.shiftKey){ if (document.activeElement === first){ e.preventDefault(); last.focus(); } }
+      else { if (document.activeElement === last){ e.preventDefault(); first.focus(); } }
+    }
+    container.addEventListener('keydown', handleKeyDown);
+  }
+
+  // Expose API immediately
+  // @ts-ignore - define global w/out ambient types
+  if (!window.creativeModal){ window.creativeModal = { open: openModal }; }
+  // Init when ready
+  if (document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', function(){ initModal(); window.dispatchEvent(new CustomEvent('creative-modal:ready')); }); }
+  else { initModal(); window.dispatchEvent(new CustomEvent('creative-modal:ready')); }
+})();
+</script>

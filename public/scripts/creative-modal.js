@@ -3,10 +3,13 @@ var currentIndex = 0;
 var previousActiveElement = null;
 var touchStartX = 0;
 var touchEndX = 0;
+var modalInitialized = false;
 
 function initModal() {
+  if (modalInitialized) return;
   var modal = document.getElementById('creative-modal');
   if (!modal) return;
+  modalInitialized = true;
 
   modal.querySelector('#modal-backdrop') && modal.querySelector('#modal-backdrop').addEventListener('click', closeModal);
   modal.querySelector('#modal-close') && modal.querySelector('#modal-close').addEventListener('click', closeModal);
@@ -117,7 +120,7 @@ function updateModalContent() {
     img.alt = alt;
     img.loading = 'eager';
     img.decoding = 'async';
-    img.className = 'w-full max-h-[70vh] object-contain bg-background';
+    img.className = 'w-full max-h-[85vh] object-contain bg-background';
     mediaContainer.appendChild(img);
 
     // Preload neighbors to make navigation snappier
@@ -175,9 +178,18 @@ function trapFocus(container) {
   container.addEventListener('keydown', handleKeyDown);
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-  initModal();
+// Expose API immediately so callers can queue open() calls safely
+if (!window.creativeModal) {
   window.creativeModal = { open: openModal };
-});
+}
+
+// Initialize when ready; if DOM is already loaded, run now
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', function () {
+    initModal();
+  });
+} else {
+  initModal();
+}
 
 
