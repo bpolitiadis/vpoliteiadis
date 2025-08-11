@@ -506,6 +506,14 @@ pnpm preview
 - **No Sensitive Data:** No API keys in client code
 - **Dependency Scanning:** Regular security updates
 
+## 🤖 AI & LLM Crawling
+
+- The site exposes a dynamic `robots.txt` that explicitly allows common AI crawlers (e.g., `GPTBot`, `Google-Extended`, `PerplexityBot`, `ClaudeBot`, `Applebot-Extended`, `Bytespider`, `Amazonbot`).
+- An `ai.txt` endpoint declares AI usage preferences (attribution required, crawl delay). While not a formal standard, it is adopted by several AI crawlers.
+- Endpoints:
+  - `https://vpoliteiadis.com/robots.txt`
+  - `https://vpoliteiadis.com/ai.txt`
+
 ## 📈 Analytics & Monitoring
 
 ### Recommended Tools

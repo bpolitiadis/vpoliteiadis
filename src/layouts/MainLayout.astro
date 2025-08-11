@@ -26,6 +26,7 @@ export interface Props {
   publishedAt?: string;
   updatedAt?: string;
   author?: string;
+  keywords?: string | string[];
   /** Optional background image slug from `/public/images` to cover the whole page */
   bgSlug?: string;
   /** Eager-load background image for above-the-fold heavy pages */
@@ -41,11 +42,12 @@ const {
   description = "Full-Stack Developer & AI Visionary - Vasileios Politeiadis",
   currentPath,
   // Use VP logo as default OG image (small and always present)
-  image = '/images/vp-logo-800.webp',
+  image = '/images/og-default.webp',
   type = 'website',
   publishedAt,
   updatedAt,
   author = 'Vasileios Politeiadis',
+  keywords,
   bgSlug,
   bgEager = false,
   bgOpacityClass = 'opacity-40 md:opacity-50',
@@ -65,7 +67,7 @@ const ogImageURL = new URL(image, Astro.site);
   <head>
     <!-- Profile verification & identity hints for crawlers -->
     <link rel="me" href="https://github.com/bpolitiadis" />
-    <link rel="me" href="https://www.linkedin.com/in/vasileios-politeiadis/" />
+    <link rel="me" href="https://www.linkedin.com/in/vpoliteiadis" />
     <link rel="me" href="https://www.instagram.com/arte.imaginari/" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -74,10 +76,16 @@ const ogImageURL = new URL(image, Astro.site);
     <link rel="apple-touch-icon" href="/images/avatar.png" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    {keywords && (
+      <meta name="keywords" content={Array.isArray(keywords) ? keywords.join(', ') : keywords} />
+    )}
     <title>{title}</title>
     
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalURL} />
+    <!-- Language alternates -->
+    <link rel="alternate" hreflang="en" href={canonicalURL} />
+    <link rel="alternate" hreflang="x-default" href={canonicalURL} />
     
     <!-- Preload critical resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -104,18 +112,21 @@ const ogImageURL = new URL(image, Astro.site);
     <meta property="og:locale" content="en_US" />
     
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:site" content="@vpoliteiadis" />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={ogImageURL} />
-    <meta property="twitter:image:alt" content={title} />
-    <meta property="twitter:creator" content="@vpoliteiadis" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@vpoliteiadis" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+    <meta name="twitter:image:alt" content={title} />
+    <meta name="twitter:creator" content="@vpoliteiadis" />
+    <!-- Additional OG image hints -->
+    <meta property="og:image:secure_url" content={ogImageURL} />
+    <meta property="og:image:type" content="image/webp" />
     
     <!-- Additional Meta Tags -->
     <meta name="author" content={author} />
-    <meta name="robots" content="index, follow" />
-    <meta name="googlebot" content="index, follow" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     
     <!-- Publication Date -->
     {publishedAt && <meta property="article:published_time" content={publishedAt} />}
