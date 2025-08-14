@@ -145,17 +145,11 @@ const { id } = Astro.props;
 // @ts-nocheck
 // Lightweight modal script inlined to avoid external script path issues
 (function(){
-  /** @type {{ src?: string, url?: string, alt?: string, data?: any }[]} */
   var currentCreativeItems = [];
-  /** @type {number} */
   var currentIndex = 0;
-  /** @type {HTMLElement|null} */
   var previousActiveElement = null;
-  /** @type {number} */
   var touchStartX = 0;
-  /** @type {number} */
   var touchEndX = 0;
-  /** @type {boolean} */
   var modalInitialized = false;
 
   function initModal(){
@@ -173,7 +167,7 @@ const { id } = Astro.props;
     if (prevBtn) prevBtn.addEventListener('click', previousItem);
     if (nextBtn) nextBtn.addEventListener('click', nextItem);
 
-    document.addEventListener('keydown', function(/** @type {KeyboardEvent} */ e){
+    document.addEventListener('keydown', function(e){
       if (!modal.classList.contains('hidden')){
         if (e.key === 'Escape') closeModal();
         if (e.key === 'ArrowLeft') previousItem();
@@ -183,11 +177,11 @@ const { id } = Astro.props;
 
     var media = modal.querySelector('#modal-media');
     if (media){
-      media.addEventListener('touchstart', function(/** @type {TouchEvent} */ e){
+      media.addEventListener('touchstart', function(e){
         var t = e.changedTouches && e.changedTouches[0];
         if (!t) return; touchStartX = t.clientX;
       }, { passive: true });
-      media.addEventListener('touchend', function(/** @type {TouchEvent} */ e){
+      media.addEventListener('touchend', function(e){
         var t = e.changedTouches && e.changedTouches[0];
         if (!t) return; touchEndX = t.clientX;
         var delta = touchEndX - touchStartX;
@@ -196,7 +190,6 @@ const { id } = Astro.props;
     }
   }
 
-  /** @param {{ src?: string, url?: string, alt?: string, data?: any }[]} items @param {number} [startIndex] */
   function openModal(items, startIndex){
     if (startIndex === void 0) startIndex = 0;
     currentCreativeItems = Array.isArray(items) ? items : [];
@@ -255,17 +248,15 @@ const { id } = Astro.props;
       [prev, next].forEach(function(n){ var s = n && (n.src || n.url); if (s){ var p = new Image(); p.src = s; }});
     }
 
-    var prevBtn = /** @type {HTMLButtonElement|null} */ (modal.querySelector('#modal-prev'));
-    var nextBtn = /** @type {HTMLButtonElement|null} */ (modal.querySelector('#modal-next'));
+    var prevBtn = modal.querySelector('#modal-prev');
+    var nextBtn = modal.querySelector('#modal-next');
     var counter = modal.querySelector('#modal-counter');
     if (prevBtn) prevBtn.disabled = currentIndex === 0;
     if (nextBtn) nextBtn.disabled = currentIndex === currentCreativeItems.length - 1;
     if (counter) counter.textContent = (currentIndex + 1) + ' of ' + currentCreativeItems.length;
   }
 
-  /** @param {HTMLElement} container */
   function trapFocus(container){
-    /** @param {KeyboardEvent} e */
     function handleKeyDown(e){
       if (e.key !== 'Tab') return;
       var selectors = ['a[href]','area[href]','input:not([disabled])','select:not([disabled])','textarea:not([disabled])','button:not([disabled])','iframe','object','embed','[contenteditable]','[tabindex]:not([tabindex="-1"])'];

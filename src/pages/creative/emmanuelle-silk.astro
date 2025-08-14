@@ -11,7 +11,7 @@ import es5 from '../../assets/images/emmanuelle-silk-5.png';
 import es6 from '../../assets/images/emmanuelle-silk-6.png';
 import es7 from '../../assets/images/emmanuelle-silk-7.png';
 import es8 from '../../assets/images/emmanuelle-silk-8.png';
-import logo from '../../assets/images/emmanuelle-silk-logo.webp';
+// import logo from '../../assets/images/emmanuelle-silk-logo.webp';
 
 const sources = [es1, es2, es3, es4, es5, es6, es7, es8];
 const items = await Promise.all(
@@ -76,9 +76,9 @@ const items = await Promise.all(
       </div>
     </div>
   </section>
-  <script type="module">
+  <script is:inline type="module">
     import GLightbox from 'glightbox';
-    const lightbox = GLightbox({
+    GLightbox({
       selector: 'a.glightbox[data-gallery="silk"]',
       touchNavigation: true,
       loop: true,

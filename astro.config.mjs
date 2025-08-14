@@ -46,35 +46,7 @@ export default defineConfig({
     react(),
     tailwind(),
   ],
-  build: {
-    // Optimize asset handling
-    assets: '_astro',
-    // Inline critical stylesheets automatically
-    inlineStylesheets: 'always',
-    // Use directory-style URLs so static hosts (like Vercel) can resolve routes
-    // e.g. /about -> /about/index.html instead of /about.html
-    format: 'directory'
-  },
-  vite: {
-    server: {
-      fs: { strict: true }
-    },
-    css: {
-      // Ensure CSS is minimized and deduped
-      devSourcemap: false,
-    },
-    build: {
-      // Enable minification (use Vite defaults)
-      minify: 'esbuild',
-      cssMinify: true,
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            astro: ['astro:assets']
-          }
-        }
-      }
-    },
-    // Use project-level PostCSS config (postcss.config.js)
-  }
+  // Rely on Astro 5+ defaults for build and Vite configuration.
+  // Defaults already include: hashed assets in `/_astro`,
+  // directory-style URLs, CSS/JS minification and optimal code-splitting.
 });

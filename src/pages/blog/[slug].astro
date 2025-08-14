@@ -32,7 +32,7 @@ const relatedPosts = allPosts
 // SEO metadata
 const title = post.data.seo?.title || `${post.data.title} - Vasileios Politeiadis`;
 const description = post.data.seo?.description || post.data.description;
-const keywords = post.data.seo?.keywords || post.data.tags.join(', ');
+// const keywords = post.data.seo?.keywords || post.data.tags.join(', ');
 const publishedDate = new Date(post.data.publishedAt).toISOString();
 const modifiedDate = post.data.updatedAt ? new Date(post.data.updatedAt).toISOString() : publishedDate;
 ---
@@ -48,7 +48,7 @@ const modifiedDate = post.data.updatedAt ? new Date(post.data.updatedAt).toISOSt
   image={post.data.coverImage || '/images/vp-logo-800.webp'}
 >
   <!-- SEO Structured Data (external, CSP-safe) -->
-  <script type="application/ld+json" src={`/structured/blog/${post.slug}.json`}></script>
+  <script is:inline type="application/ld+json" src={`/structured/blog/${post.slug}.json`}></script>
 
   <!-- Hero Section with background cover image -->
   <section class="relative overflow-hidden py-28 lg:py-36">

@@ -92,7 +92,6 @@ export default function FeaturedProjectCard(props: FeaturedProjectCardProps) {
               src={spotifyEmbed}
               width="100%"
               height={152}
-              frameBorder={0}
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               loading="lazy"
               title="Spotify Player"

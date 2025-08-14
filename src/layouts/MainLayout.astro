@@ -152,8 +152,8 @@ const ogImageURL = new URL(image, Astro.site);
     )}
     
     <!-- Structured Data (external, CSP-safe) -->
-    <script type="application/ld+json" src="/structured/person.json"></script>
-    <script type="application/ld+json" src="/structured/website.json"></script>
+    <script is:inline type="application/ld+json" src="/structured/person.json"></script>
+    <script is:inline type="application/ld+json" src="/structured/website.json"></script>
   </head>
   <body class="min-h-screen bg-background text-foreground transition-colors duration-300 flex flex-col">
     {(() => {
@@ -211,7 +211,7 @@ const ogImageURL = new URL(image, Astro.site);
     </div>
     
     <!-- Theme initialization (external, CSP-safe) -->
-    <script src="/scripts/theme-init.js" defer></script>
+    <script is:inline src="/scripts/theme-init.js" defer></script>
   </body>
 </html>
 
