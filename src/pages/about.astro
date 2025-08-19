@@ -2,6 +2,7 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import { Image } from 'astro:assets';
 import avatarSrc from '../assets/images/avatar.png';
+import { GraduationIcon, AwardIcon, BriefcaseIcon, MonitorIcon, PaletteIcon } from '../components/icons/Icon';
 ---
 
 <MainLayout 
@@ -35,8 +36,9 @@ import avatarSrc from '../assets/images/avatar.png';
       
       <!-- Professional Identity -->
       <div class="card mb-12 border border-neon-lime/20 shadow-neon">
-        <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-6 text-shadow-neon">
-          🧠 Professional Identity
+        <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-6 text-shadow-neon flex items-center gap-3">
+          <AwardIcon size="lg" className="text-neon-lime" aria-label="Professional identity icon" />
+          Professional Identity
         </h2>
          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div class="bg-card/50 p-4 rounded-xl border border-secondary/30 hover:border-secondary/50 transition-colors shadow-emerald flex flex-col">
@@ -74,8 +76,9 @@ import avatarSrc from '../assets/images/avatar.png';
         
         <!-- Education -->
         <div class="card border border-neon-lime/20 shadow-neon">
-          <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-6 text-shadow-neon">
-            🎓 Education
+          <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-6 text-shadow-neon flex items-center gap-3">
+            <GraduationIcon size="lg" className="text-neon-lime" aria-label="Education icon" />
+            Education
           </h2>
           <div class="space-y-4">
             <div>
@@ -88,8 +91,9 @@ import avatarSrc from '../assets/images/avatar.png';
 
         <!-- Current Role -->
          <div class="card border border-neon-lime/20 shadow-neon">
-           <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-6 text-shadow-neon">
-            💼 Current Role
+           <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-6 text-shadow-neon flex items-center gap-3">
+            <BriefcaseIcon size="lg" className="text-neon-lime" aria-label="Current role icon" />
+            Current Role
           </h2>
           <div class="space-y-4">
              <div>
@@ -105,8 +109,9 @@ import avatarSrc from '../assets/images/avatar.png';
 
       <!-- Skill Matrix -->
       <div class="card mb-12 border border-neon-lime/20 shadow-neon">
-        <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-6 text-shadow-neon">
-          🔍 Skill Matrix
+        <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-6 text-shadow-neon flex items-center gap-3">
+          <MonitorIcon size="lg" className="text-neon-lime" aria-label="Skill matrix icon" />
+          Skill Matrix
         </h2>
         
         <!-- Clean, Consistent Table Design -->
@@ -130,7 +135,7 @@ import avatarSrc from '../assets/images/avatar.png';
               <!-- Full-Stack Development -->
               <tr class="border-b border-muted/30 hover:bg-card/20 transition-all duration-300 group">
                 <td class="py-4 text-matrix-white font-semibold">Full-Stack Development</td>
-                <td class="py-4 text-digital-emerald font-medium">React, Next.js, Node.js, Prisma, Supabase, PHP</td>
+                <td class="py-4 text-digital-emerald font-medium">React, Next.js, Node.js, Prisma, Supabase</td>
                 <td class="py-4 text-matrix-white/60 font-medium">Advanced, Product Development</td>
               </tr>
               
@@ -144,7 +149,7 @@ import avatarSrc from '../assets/images/avatar.png';
               <!-- AI & Creative Tech -->
               <tr class="border-b border-muted/30 hover:bg-card/20 transition-all duration-300 group">
                 <td class="py-4 text-matrix-white font-semibold">AI & Creative Tech</td>
-                <td class="py-4 text-digital-emerald font-medium">Midjourney, Kling AI, generative AI tools</td>
+                <td class="py-4 text-digital-emerald font-medium">Midjourney, Kling AI, Generative AI tools</td>
                 <td class="py-4 text-matrix-white/60 font-medium">Intermediate, Creative Hobbyist</td>
               </tr>
               
@@ -161,8 +166,12 @@ import avatarSrc from '../assets/images/avatar.png';
 
       <!-- Professional Timeline -->
       <div class="card mb-12 border border-neon-lime/20 shadow-neon">
-        <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-8 text-shadow-neon">
-          ⏰ Professional Timeline
+        <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-8 text-shadow-neon flex items-center gap-3">
+          <svg class="w-6 h-6 text-neon-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12,6 12,12 16,14" />
+          </svg>
+          Professional Timeline
         </h2>
         <div class="relative">
           <!-- Timeline line -->
@@ -246,8 +255,9 @@ import avatarSrc from '../assets/images/avatar.png';
 
       <!-- Creative Projects -->
       <div class="card border border-neon-lime/20 shadow-neon">
-        <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-6 text-shadow-neon">
-          🎨 Creative AI-Artist
+        <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-6 text-shadow-neon flex items-center gap-3">
+          <PaletteIcon size="lg" className="text-neon-lime" aria-label="Creative AI artist icon" />
+          Creative AI-Artist
         </h2>
         <div class="space-y-6">
                       <h3 class="font-orbitron font-bold text-neon-lime text-shadow-neon">

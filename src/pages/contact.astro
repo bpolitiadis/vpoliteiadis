@@ -21,15 +21,18 @@ import PageHero from '../components/PageHero.astro';
   <section class="pt-6 md:pt-8 pb-12 md:pb-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <!-- Contact Grid -->
+      <!-- Contact Grid with Equal Heights -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 mb-10">
         
         <!-- Contact Form -->
-        <section class="border border-primary/30 rounded-xl bg-card/40 p-5 md:p-6 backdrop-blur-sm" aria-labelledby="contact-form-title">
-          <h2 id="contact-form-title" class="text-2xl font-orbitron font-bold text-primary mb-6 drop-shadow-neon">
-            📧 Send Message
+        <section class="border border-primary/30 rounded-xl bg-card/40 p-5 md:p-6 backdrop-blur-sm h-fit lg:h-full flex flex-col" aria-labelledby="contact-form-title">
+          <h2 id="contact-form-title" class="text-2xl font-orbitron font-bold text-primary mb-6 drop-shadow-neon flex items-center gap-3">
+            <span class="text-2xl" role="img" aria-label="Email">✉️</span>
+            Send Message
           </h2>
-          <form class="space-y-6" id="contact-form" novalidate autocomplete="off" role="form" aria-labelledby="contact-form-title">
+          
+          <form class="space-y-6 flex-1 flex flex-col" id="contact-form" novalidate autocomplete="off" role="form" aria-labelledby="contact-form-title">
+            <!-- Name Fields -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label for="firstName" class="block text-sm font-medium text-neon-lime/90 mb-2">
@@ -44,13 +47,14 @@ import PageHero from '../components/PageHero.astro';
                   autocapitalize="words"
                   autocomplete="given-name"
                   maxlength="60"
-                   class="w-full px-4 py-3 bg-muted border border-primary/30 rounded-lg text-foreground placeholder-primary/40 focus:border-primary focus:outline-none transition-all duration-300 focus:ring-2 focus:ring-primary/20"
+                  class="w-full px-4 py-3 bg-muted border border-primary/30 rounded-lg text-foreground placeholder-primary/40 focus:border-primary focus:outline-none transition-all duration-300 focus:ring-2 focus:ring-primary/20"
                   placeholder="Your first name"
                   aria-describedby="firstName-error"
                   aria-invalid="false"
                 >
                 <div id="firstName-error" class="hidden text-destructive text-sm mt-1" role="alert" aria-live="polite"></div>
               </div>
+              
               <div>
                 <label for="lastName" class="block text-sm font-medium text-neon-lime/90 mb-2">
                   Last Name <span class="text-neon-lime" aria-label="required">*</span>
@@ -64,7 +68,7 @@ import PageHero from '../components/PageHero.astro';
                   autocapitalize="words"
                   autocomplete="family-name"
                   maxlength="60"
-                   class="w-full px-4 py-3 bg-muted border border-primary/30 rounded-lg text-foreground placeholder-primary/40 focus:border-primary focus:outline-none transition-all duration-300 focus:ring-2 focus:ring-primary/20"
+                  class="w-full px-4 py-3 bg-muted border border-primary/30 rounded-lg text-foreground placeholder-primary/40 focus:border-primary focus:outline-none transition-all duration-300 focus:ring-2 focus:ring-primary/20"
                   placeholder="Your last name"
                   aria-describedby="lastName-error"
                   aria-invalid="false"
@@ -73,6 +77,7 @@ import PageHero from '../components/PageHero.astro';
               </div>
             </div>
             
+            <!-- Email Field -->
             <div>
               <label for="email" class="block text-sm font-medium text-neon-lime/90 mb-2">
                 Email <span class="text-neon-lime" aria-label="required">*</span>
@@ -85,38 +90,16 @@ import PageHero from '../components/PageHero.astro';
                 inputmode="email"
                 autocomplete="email"
                 maxlength="254"
-                 class="w-full px-4 py-3 bg-cyber-gray border border-neon-lime/30 rounded-lg text-matrix-white placeholder-neon-lime/60 focus:border-neon-lime focus:outline-none transition-all duration-300 focus:ring-2 focus:ring-neon-lime/20"
+                class="w-full px-4 py-3 bg-muted border border-primary/30 rounded-lg text-foreground placeholder-primary/40 focus:border-primary focus:outline-none transition-all duration-300 focus:ring-2 focus:ring-primary/20"
                 placeholder="your.email@example.com"
                 aria-describedby="email-error"
                 aria-invalid="false"
               >
-              <div id="email-error" class="hidden text-red-400 text-sm mt-1" role="alert" aria-live="polite"></div>
+              <div id="email-error" class="hidden text-destructive text-sm mt-1" role="alert" aria-live="polite"></div>
             </div>
             
-            <div>
-              <label for="subject" class="block text-sm font-medium text-neon-lime/90 mb-2">
-                Subject <span class="text-neon-lime" aria-label="required">*</span>
-              </label>
-              <select 
-                id="subject" 
-                name="subject" 
-                required
-                autocomplete="off"
-                 class="w-full px-4 py-3 bg-muted border border-primary/30 rounded-lg text-foreground focus:border-primary focus:outline-none transition-all duration-300 focus:ring-2 focus:ring-primary/20"
-                aria-describedby="subject-error"
-                aria-invalid="false"
-              >
-                <option value="">Select a subject</option>
-                <option value="project-inquiry">Project Inquiry</option>
-                <option value="collaboration">Collaboration Opportunity</option>
-                <option value="creative-commission">Creative Commission</option>
-                <option value="consulting">Consulting Request</option>
-                <option value="other">Other</option>
-              </select>
-              <div id="subject-error" class="hidden text-destructive text-sm mt-1" role="alert" aria-live="polite"></div>
-            </div>
-            
-            <div>
+            <!-- Message Field -->
+            <div class="flex-1">
               <label for="message" class="block text-sm font-medium text-neon-lime/90 mb-2">
                 Message <span class="text-neon-lime" aria-label="required">*</span>
               </label>
@@ -127,7 +110,7 @@ import PageHero from '../components/PageHero.astro';
                 required
                 maxlength="5000"
                 autocomplete="off"
-                 class="w-full px-4 py-3 bg-muted border border-primary/30 rounded-lg text-foreground placeholder-primary/40 focus:border-primary focus:outline-none transition-all duration-300 resize-none focus:ring-2 focus:ring-primary/20"
+                class="w-full px-4 py-3 bg-muted border border-primary/30 rounded-lg text-foreground placeholder-primary/40 focus:border-primary focus:outline-none transition-all duration-300 resize-none focus:ring-2 focus:ring-primary/20 min-h-[120px]"
                 placeholder="Tell me about your project or inquiry..."
                 aria-describedby="message-error"
                 aria-invalid="false"
@@ -139,19 +122,24 @@ import PageHero from '../components/PageHero.astro';
             <div id="form-message" class="hidden" role="alert" aria-live="polite">
               <div id="success-message" class="hidden text-digital-emerald bg-digital-emerald/10 border border-digital-emerald/20 p-4 rounded-lg">
                 <div class="flex items-center space-x-2">
-                  <span class="text-lg" aria-hidden="true">✅</span>
+                  <span class="text-xl" role="img" aria-label="Success">✅</span>
                   <span>Message sent successfully! I'll get back to you within 24-48 hours.</span>
                 </div>
               </div>
               <div id="error-message" class="hidden text-destructive bg-destructive/10 border border-destructive/25 p-4 rounded-lg">
                 <div class="flex items-center space-x-2">
-                  <span class="text-lg" aria-hidden="true">❌</span>
+                  <span class="text-xl" role="img" aria-label="Error">❌</span>
                   <span>There was an error sending your message. Please try again or contact me directly.</span>
                 </div>
               </div>
             </div>
             
-             <button type="submit" class="w-full text-lg py-4 relative overflow-hidden group bg-muted border border-primary/40 rounded-lg text-primary hover:border-primary hover:shadow-neon transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/20" aria-label="Send message">
+            <!-- Submit Button with Improved Spacing -->
+            <button 
+              type="submit" 
+              class="w-full text-lg py-4 relative overflow-hidden group bg-muted border border-primary/40 rounded-lg text-primary hover:border-primary hover:shadow-neon transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/20 mt-8" 
+              aria-label="Send message"
+            >
               <span class="relative z-10">🚀 Send Message</span>
               <div class="absolute inset-0 bg-gradient-to-r from-neon-lime to-digital-emerald opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true"></div>
             </button>
@@ -159,21 +147,18 @@ import PageHero from '../components/PageHero.astro';
         </section>
 
         <!-- Contact Information -->
-        <aside class="space-y-8" aria-label="Contact information">
+        <aside class="space-y-8 h-fit lg:h-full flex flex-col" aria-label="Contact information">
           
           <!-- Professional Services -->
-          <section class="border border-secondary/40 rounded-xl bg-card/40 p-5 md:p-6 backdrop-blur-sm" aria-labelledby="services-title">
-            <h2 id="services-title" class="text-2xl font-orbitron font-bold text-secondary mb-6 drop-shadow-emerald">
-              💼 Services
+          <section class="border border-secondary/40 rounded-xl bg-card/40 p-5 md:p-6 backdrop-blur-sm flex-1" aria-labelledby="services-title">
+            <h2 id="services-title" class="text-2xl font-orbitron font-bold text-secondary mb-6 drop-shadow-emerald flex items-center gap-3">
+              <span class="text-2xl" role="img" aria-label="Services">💼</span>
+              Services
             </h2>
             <div class="space-y-4">
               <div class="flex items-start space-x-4">
                 <div class="w-8 h-8 bg-neon-lime/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1" aria-hidden="true">
-                  <svg class="w-5 h-5 text-neon-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="4" width="18" height="12" rx="2" ry="2"/>
-                    <path d="M7 20h10"/>
-                    <path d="M12 16v4"/>
-                  </svg>
+                  <span class="text-lg" role="img" aria-label="QA Automation">🤖</span>
                 </div>
                 <div>
                   <h3 class="font-orbitron font-bold text-neon-lime mb-1">QA Automation</h3>
@@ -183,10 +168,7 @@ import PageHero from '../components/PageHero.astro';
               
               <div class="flex items-start space-x-4">
                 <div class="w-8 h-8 bg-digital-emerald/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1" aria-hidden="true">
-                  <svg class="w-5 h-5 text-digital-emerald" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="3" width="20" height="14" rx="2"/>
-                    <path d="M8 21h8"/>
-                  </svg>
+                  <span class="text-lg" role="img" aria-label="Full-Stack Development">💻</span>
                 </div>
                 <div>
                   <h3 class="font-orbitron font-bold text-digital-emerald mb-1">Full-Stack Development</h3>
@@ -196,12 +178,7 @@ import PageHero from '../components/PageHero.astro';
               
               <div class="flex items-start space-x-4">
                 <div class="w-8 h-8 bg-neon-lime/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1" aria-hidden="true">
-                  <svg class="w-5 h-5 text-neon-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22c4.97 0 9-3.582 9-8s-4.03-8-9-8S3 9.582 3 14c0 2.21 1.79 4 4 4h1.5a2.5 2.5 0 0 0 0-5H8"/>
-                    <circle cx="7.5" cy="10.5" r="1.5"/>
-                    <circle cx="12" cy="7.5" r="1.5"/>
-                    <circle cx="16.5" cy="10.5" r="1.5"/>
-                  </svg>
+                  <span class="text-lg" role="img" aria-label="Creative Commissions">🎨</span>
                 </div>
                 <div>
                   <h3 class="font-orbitron font-bold text-neon-lime mb-1">Creative Commissions</h3>
@@ -212,17 +189,15 @@ import PageHero from '../components/PageHero.astro';
           </section>
 
           <!-- Contact Methods -->
-          <section class="border border-primary/30 rounded-xl bg-card/40 p-5 md:p-6 backdrop-blur-sm" aria-labelledby="contact-methods-title">
-            <h2 id="contact-methods-title" class="text-2xl font-orbitron font-bold text-primary mb-6 drop-shadow-neon">
-              📞 Get In Touch
+          <section class="border border-primary/30 rounded-xl bg-card/40 p-5 md:p-6 backdrop-blur-sm flex-1" aria-labelledby="contact-methods-title">
+            <h2 id="contact-methods-title" class="text-2xl font-orbitron font-bold text-primary mb-6 drop-shadow-neon flex items-center gap-3">
+              <span class="text-2xl" role="img" aria-label="Get in touch">📞</span>
+              Get In Touch
             </h2>
             <div class="space-y-4">
               <div class="flex items-center space-x-4">
                 <div class="w-10 h-10 bg-neon-lime/20 rounded-lg flex items-center justify-center" aria-hidden="true">
-                  <svg class="w-5 h-5 text-neon-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 4h16v16H4z"/>
-                    <path d="M22 6l-10 7L2 6"/>
-                  </svg>
+                  <span class="text-xl" role="img" aria-label="Email">✉️</span>
                 </div>
                 <div>
                   <h3 class="font-orbitron font-bold text-neon-lime/90">Email</h3>
@@ -234,9 +209,8 @@ import PageHero from '../components/PageHero.astro';
               
               <div class="flex items-center space-x-4">
                 <div class="w-10 h-10 bg-digital-emerald/20 rounded-lg flex items-center justify-center" aria-hidden="true">
-                  <svg class="w-5 h-5 text-digital-emerald" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 7h18v10H3z"/>
-                    <path d="M8 7V5h8v2"/>
+                  <svg class="w-5 h-5 text-digital-emerald" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.047-1.852-3.047-1.853 0-2.136 1.445-2.136 2.939v5.677H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                   </svg>
                 </div>
                 <div>
@@ -250,11 +224,8 @@ import PageHero from '../components/PageHero.astro';
               
               <div class="flex items-center space-x-4">
                 <div class="w-10 h-10 bg-neon-lime/20 rounded-lg flex items-center justify-center" aria-hidden="true">
-                  <svg class="w-5 h-5 text-neon-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22c4.97 0 9-3.582 9-8s-4.03-8-9-8S3 9.582 3 14c0 2.21 1.79 4 4 4h1.5a2.5 2.5 0 0 0 0-5H8"/>
-                    <circle cx="7.5" cy="10.5" r="1.5"/>
-                    <circle cx="12" cy="7.5" r="1.5"/>
-                    <circle cx="16.5" cy="10.5" r="1.5"/>
+                  <svg class="w-5 h-5 text-neon-lime" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                   </svg>
                 </div>
                 <div>
@@ -268,9 +239,8 @@ import PageHero from '../components/PageHero.astro';
               
               <div class="flex items-center space-x-4">
                 <div class="w-10 h-10 bg-digital-emerald/20 rounded-lg flex items-center justify-center" aria-hidden="true">
-                  <svg class="w-5 h-5 text-digital-emerald" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 1 0 10 0V7a5 5 0 0 0-5-5z"/>
-                    <path d="M9 20c0 1.1.9 2 2 2h2a2 2 0 0 0 2-2"/>
+                  <svg class="w-5 h-5 text-digital-emerald" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                   </svg>
                 </div>
                 <div>
@@ -283,92 +253,11 @@ import PageHero from '../components/PageHero.astro';
               </div>
             </div>
           </section>
-
-          <!-- Response Time -->
-          <section class="border border-secondary/40 rounded-xl bg-card/40 p-5 md:p-6 backdrop-blur-sm" aria-labelledby="response-time-title">
-            <h2 id="response-time-title" class="text-2xl font-orbitron font-bold text-secondary mb-6 drop-shadow-emerald">
-              ⏱️ Response Time
-            </h2>
-            <div class="space-y-3">
-              <div class="flex justify-between items-center">
-                <span class="text-neon-lime/70">Business Inquiries</span>
-                <span class="text-neon-lime font-semibold">24-48 hours</span>
-              </div>
-              <div class="flex justify-between items-center">
-                <span class="text-digital-emerald/70">Creative Commissions</span>
-                <span class="text-digital-emerald font-semibold">1-3 days</span>
-              </div>
-              <div class="flex justify-between items-center">
-                <span class="text-neon-lime/70">Urgent Projects</span>
-                <span class="text-neon-lime font-semibold">Same day</span>
-              </div>
-            </div>
-          </section>
         </aside>
       </div>
-
-      <!-- FAQ Section -->
-      <section class="border border-neon-lime/30 rounded-xl bg-card/40 p-5 md:p-6 backdrop-blur-sm" aria-labelledby="faq-title">
-        <h2 id="faq-title" class="text-2xl font-orbitron font-bold text-neon-lime mb-6 drop-shadow-neon">
-          ❓ Frequently Asked Questions
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-          
-          <div class="space-y-4">
-            <article>
-              <h3 class="font-orbitron font-bold text-digital-emerald mb-2">What types of projects do you take on?</h3>
-              <p class="text-neon-lime/60 text-sm">
-                I work on QA automation projects, full-stack web applications, and creative AI art commissions. 
-                I'm particularly interested in projects that combine technical expertise with creative innovation.
-              </p>
-            </article>
-            
-            <article>
-              <h3 class="font-orbitron font-bold text-neon-lime mb-2">Do you work with international clients?</h3>
-              <p class="text-neon-lime/60 text-sm">
-                Yes! I work with clients globally, particularly on European Commission projects and creative commissions. 
-                I'm comfortable with remote collaboration and flexible scheduling.
-              </p>
-            </article>
-            
-            <article>
-              <h3 class="font-orbitron font-bold text-digital-emerald mb-2">What's your availability for new projects?</h3>
-              <p class="text-neon-lime/60 text-sm">
-                I maintain a balance between my stable QA automation work and creative projects. 
-                I'm selective about new opportunities to ensure quality delivery.
-              </p>
-            </article>
-          </div>
-          
-          <div class="space-y-4">
-            <article>
-              <h3 class="font-orbitron font-bold text-neon-lime mb-2">How do you handle project communication?</h3>
-              <p class="text-neon-lime/60 text-sm">
-                I prefer clear, regular communication through email, video calls, or project management tools. 
-                I provide regular updates and am always available for questions or clarifications.
-              </p>
-            </article>
-            
-            <article>
-              <h3 class="font-orbitron font-bold text-digital-emerald mb-2">What are your rates and payment terms?</h3>
-              <p class="text-neon-lime/60 text-sm">
-                Rates vary based on project complexity and scope. I offer flexible payment terms and can work 
-                on hourly, project-based, or retainer arrangements depending on your needs.
-              </p>
-            </article>
-            
-            <article>
-              <h3 class="font-orbitron font-bold text-neon-lime mb-2">Do you provide ongoing support?</h3>
-              <p class="text-neon-lime/60 text-sm">
-                Yes, I provide post-launch support and maintenance for projects. I believe in building 
-                long-term relationships and ensuring your project continues to meet your needs.
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
     </div>
   </section>
-    </div>
+  </div>
+  
   <script is:inline src="/scripts/contact-form.js" defer></script>
 </MainLayout>

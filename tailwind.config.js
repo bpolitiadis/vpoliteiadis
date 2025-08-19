@@ -15,7 +15,11 @@ export default {
     // Attachment helper if enabled later
     'bg-fixed','bg-local','bg-scroll',
     // CTA link class used in cards
-    'btn-link'
+    'btn-link',
+    // Filter button states
+    'filter-btn-compact',
+    // Search and filter layout classes
+    'max-w-4xl','pl-12','focus:ring-2','focus:ring-primary/20','backdrop-blur-sm'
   ],
   darkMode: 'class',
   

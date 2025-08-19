@@ -4,8 +4,11 @@
   const tagContainer = document.getElementById('tag-chips');
   const cards = Array.from(document.querySelectorAll('#posts-grid article'));
   const noResults = document.getElementById('no-results');
+  const clearFiltersBtn = document.getElementById('clear-filters');
 
   let activeTag = 'all';
+  let searchQuery = '';
+
   // Lookup maps curated chips to multiple synonyms for robust filtering
   function getActiveSynonyms(tag) {
     if (!tag || tag === 'all') return [];
@@ -20,8 +23,32 @@
       .toLowerCase();
   }
 
+  function clearAllFilters() {
+    // Reset search
+    if (searchInput) {
+      searchInput.value = '';
+      searchQuery = '';
+    }
+    
+    // Reset tag filter
+    activeTag = 'all';
+    
+    // Update tag button states
+    if (tagContainer) {
+      tagContainer.querySelectorAll('button').forEach((btn) => {
+        const isAll = btn.getAttribute('data-tag') === 'all';
+        btn.classList.toggle('active', isAll);
+        btn.setAttribute('aria-pressed', String(isAll));
+      });
+    }
+    
+    // Apply filters to show all posts
+    applyFilters();
+  }
+
   function applyFilters() {
     const q = normalize(searchInput && searchInput.value);
+    searchQuery = q;
     const synonyms = getActiveSynonyms(activeTag);
 
     let visibleCount = 0;
@@ -44,6 +71,13 @@
     });
 
     if (noResults) noResults.classList.toggle('hidden', visibleCount !== 0);
+    
+    // Update clear filters button state
+    if (clearFiltersBtn) {
+      const hasActiveFilters = q || activeTag !== 'all';
+      clearFiltersBtn.style.opacity = hasActiveFilters ? '1' : '0.5';
+      clearFiltersBtn.style.pointerEvents = hasActiveFilters ? 'auto' : 'none';
+    }
   }
 
   if (searchInput) {
@@ -73,6 +107,10 @@
 
       applyFilters();
     });
+  }
+
+  if (clearFiltersBtn) {
+    clearFiltersBtn.addEventListener('click', clearAllFilters);
   }
 
   // Initial state
