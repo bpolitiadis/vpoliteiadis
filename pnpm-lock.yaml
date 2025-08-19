@@ -26,6 +26,12 @@ importers:
       glightbox:
         specifier: ^3.3.0
         version: 3.3.1
+      lucide-astro:
+        specifier: ^0.540.0
+        version: 0.540.0(astro@5.12.8(@types/node@24.1.0)(jiti@1.21.7)(rollup@4.46.2)(terser@5.43.1)(typescript@5.9.2)(yaml@2.8.0))
+      lucide-react:
+        specifier: ^0.540.0
+        version: 0.540.0(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -2444,6 +2450,16 @@ packages:
   lru-cache@7.18.3:
     resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
     engines: {node: '>=12'}
+
+  lucide-astro@0.540.0:
+    resolution: {integrity: sha512-yPYtNwrtmAo2G2PRKSq5VToGW68/+UxQGZg9ULIkBy6XFqWAMaknBVjdi2eoWPrqvDQ68LKbEtrdQJWNN/HFfA==}
+    peerDependencies:
+      astro: '>=2.7.1'
+
+  lucide-react@0.540.0:
+    resolution: {integrity: sha512-armkCAqQvO62EIX4Hq7hqX/q11WSZu0Jd23cnnqx0/49yIxGXyL/zyZfBxNN9YDx0ensPTb4L+DjTh3yQXUxtQ==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   magic-string@0.30.17:
     resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
@@ -6858,6 +6874,14 @@ snapshots:
       yallist: 3.1.1
 
   lru-cache@7.18.3: {}
+
+  lucide-astro@0.540.0(astro@5.12.8(@types/node@24.1.0)(jiti@1.21.7)(rollup@4.46.2)(terser@5.43.1)(typescript@5.9.2)(yaml@2.8.0)):
+    dependencies:
+      astro: 5.12.8(@types/node@24.1.0)(jiti@1.21.7)(rollup@4.46.2)(terser@5.43.1)(typescript@5.9.2)(yaml@2.8.0)
+
+  lucide-react@0.540.0(react@18.3.1):
+    dependencies:
+      react: 18.3.1
 
   magic-string@0.30.17:
     dependencies:

@@ -1,5 +1,7 @@
 ---
 // Navbar component with cyberpunk styling and theme toggle
+import { Icon } from './icons/Icon';
+
 export interface Props {
   currentPath?: string;
 }
@@ -79,16 +81,9 @@ const navItems = [
           aria-haspopup="menu"
         >
           <!-- Hamburger icon -->
-          <svg data-icon="menu" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
+          <Icon name="Menu" size="lg" className="text-current" aria-hidden="true" />
           <!-- Close icon -->
-          <svg data-icon="close" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-            <line x1="6" y1="6" x2="18" y2="18" />
-            <line x1="18" y1="6" x2="6" y2="18" />
-          </svg>
+          <Icon name="X" size="lg" className="text-current" aria-hidden="true" />
         </button>
       </div>
     </div>

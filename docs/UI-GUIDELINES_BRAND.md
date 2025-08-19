@@ -44,10 +44,15 @@ Prefer Tailwind utilities. Keep additional custom classes in `global.css` (e.g.,
   - Create `Button` variants: `default`, `outline`, `ghost` with neon focus rings.
   - Dialogs/Forms: keep rounded radius, backdrop blur, neon focus.
 
-## Iconography
+## Icon Standards
 
-- Current: inline SVGs with stroke 2 for consistency.
-- If adopting Lucide later: use 20–24px size, `currentColor`, and accessible titles.
+- **Use Lucide Icons**: All icons come from the Lucide library via our Icon component
+- **Naming Convention**: Use PascalCase icon names (e.g., `Menu`, `ChevronRight`)
+- **Sizing**: Use predefined sizes: `xs` (12px), `sm` (16px), `md` (20px), `lg` (24px), `xl` (32px), `2xl` (40px)
+- **Accessibility**: Always provide `aria-label` for meaningful icons, use `aria-hidden="true"` for decorative ones
+- **Styling**: Icons inherit text color via `currentColor`; use Tailwind text color classes
+- **Consistency**: All icons use 24x24 viewBox for uniform scaling
+- **Performance**: Tree-shaking ensures only used icons are included in the bundle
 
 ## Motion principles
 
