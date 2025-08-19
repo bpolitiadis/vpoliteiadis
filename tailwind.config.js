@@ -68,6 +68,14 @@ export default {
         'warning-foreground': '#000000',
         'info': '#39FF14',
         'info-foreground': '#000000',
+        
+        // Brand color variations for consistent styling
+        'brand-green-dark': '#1A4D1A',
+        'brand-green-darker': '#0F2E0F',
+        'brand-emerald-dark': '#005C3A',
+        'brand-emerald-darker': '#003D26',
+        'text-muted': '#9CA3AF',
+        'text-muted-dark': '#6B7280',
       },
       ringColor: ({ theme }) => ({
         DEFAULT: theme('colors.primary'),
