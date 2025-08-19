@@ -271,6 +271,47 @@
     box-shadow: 0 0 0 2px rgba(57,255,20,0.35), 0 8px 24px rgba(0,0,0,0.25);
   }
 
+  /* Desktop-optimized filter buttons for better tag layout */
+  @media (min-width: 1024px) {
+    .filter-btn {
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.025em;
+    }
+  }
+
+  /* Extra large screens - even more compact for tag density */
+  @media (min-width: 1280px) {
+    .filter-btn {
+      padding: 0.3125rem 0.625rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+  }
+
+  /* Ultra-wide screens - maximum tag density */
+  @media (min-width: 1536px) {
+    .filter-btn {
+      padding: 0.25rem 0.625rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+  }
+
+  /* Ultra-wide screens - maximum tag density with optimized spacing */
+  @media (min-width: 1920px) {
+    .filter-btn {
+      padding: 0.1875rem 0.5rem;
+      font-size: 0.6875rem;
+      font-weight: 500;
+    }
+    
+    .tag-container {
+      gap: 0.1875rem;
+    }
+  }
+
   /* Mobile touch target improvements */
   @media (max-width: 768px) {
     .btn-primary,
@@ -408,6 +449,55 @@
   .content-visibility-auto {
     content-visibility: auto;
     contain-intrinsic-size: 0 500px;
+  }
+
+  /* Tag layout optimization utilities */
+  .tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .tag-container {
+      gap: 0.25rem;
+      justify-content: flex-start;
+    }
+  }
+
+  /* Blog-specific filter container optimization */
+  .blog-filter-container {
+    max-width: 64rem; /* 1024px */
+    margin: 0 auto;
+  }
+
+  @media (min-width: 1280px) {
+    .blog-filter-container {
+      max-width: 72rem; /* 1152px */
+    }
+  }
+
+  @media (min-width: 1536px) {
+    .blog-filter-container {
+      max-width: 80rem; /* 1280px */
+    }
+  }
+
+  /* Compact tag buttons for high-density layouts */
+  .tag-compact {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+  }
+
+  @media (min-width: 1280px) {
+    .tag-compact {
+      padding: 0.1875rem 0.4375rem;
+      font-size: 0.6875rem;
+    }
   }
 
   /* Theme-specific utilities */
