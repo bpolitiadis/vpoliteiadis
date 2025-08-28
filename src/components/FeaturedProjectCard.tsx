@@ -11,7 +11,6 @@ type FeaturedProjectCardProps = {
   cta: { label: string; href: string; external?: boolean };
   galleryThumbs?: string[];
   spotifyEmbed?: string;
-  instagramGrid?: string[];
   /** Optional small logo to overlay on the hero image (e.g., brand mark) */
   logoSrc?: string;
 };
@@ -27,14 +26,13 @@ export default function FeaturedProjectCard(props: FeaturedProjectCardProps) {
     cta,
     galleryThumbs,
     spotifyEmbed,
-    instagramGrid,
     logoSrc,
   } = props;
 
   return (
     <article
       aria-label={`Open ${title} details`}
-      className="relative rounded-2xl border border-border/40 bg-[rgba(10,10,10,0.6)] shadow-inner
+      className="relative h-full flex flex-col rounded-2xl border border-border/40 bg-[rgba(10,10,10,0.6)] shadow-inner
                  backdrop-blur-md transition-transform duration-300 hover:border-primary hover:shadow-neon hover:scale-[1.02]
                  cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
     >
@@ -62,7 +60,7 @@ export default function FeaturedProjectCard(props: FeaturedProjectCardProps) {
       </a>
 
       {/* Body */}
-      <div className="p-6 md:p-7">
+      <div className="p-6 md:p-7 flex-1 flex flex-col">
         <h3 className="font-orbitron text-primary text-xl md:text-2xl mb-2">
           <a href={detailUrl} className="hover:underline">
             {title}
@@ -71,19 +69,7 @@ export default function FeaturedProjectCard(props: FeaturedProjectCardProps) {
         <p className="text-matrix-white text-sm md:text-base opacity-90 mb-3">{role}</p>
         <p className="text-matrix-white/90 text-sm leading-relaxed line-clamp-3 mb-5">{description}</p>
 
-        {Array.isArray(galleryThumbs) && galleryThumbs.length > 0 && (
-          <div className="mt-5 grid grid-cols-4 gap-2">
-            {galleryThumbs.map((src, idx) => (
-              <OptimizedImage
-                key={idx}
-                src={src}
-                alt={`Thumbnail ${idx + 1}`}
-                className="aspect-square w-full object-cover rounded-md ring-1 ring-border/30"
-                width={300}
-              />
-            ))}
-          </div>
-        )}
+        {/* Thumbnails section removed for cleaner, consistent cards */}
 
         {spotifyEmbed && (
           <div className="mt-4 rounded-lg overflow-hidden border border-border/30">
@@ -99,22 +85,10 @@ export default function FeaturedProjectCard(props: FeaturedProjectCardProps) {
           </div>
         )}
 
-        {Array.isArray(instagramGrid) && instagramGrid.length > 0 && (
-          <div className="mt-4 grid grid-cols-3 gap-2">
-            {instagramGrid.map((src, idx) => (
-              <OptimizedImage
-                key={idx}
-                src={src}
-                alt={`Instagram preview ${idx + 1}`}
-                className="aspect-square w-full object-cover rounded"
-                width={400}
-              />
-            ))}
-          </div>
-        )}
 
-        {/* Footer */}
-        <div className="mt-6 flex items-center justify-between gap-3">
+
+        {/* Footer - pushed to bottom */}
+        <div className="mt-auto pt-6 flex items-center justify-between gap-3">
           <a
             href={detailUrl}
             className="inline-flex items-center gap-2 text-sm text-muted-foreground underline-offset-4 hover:underline"

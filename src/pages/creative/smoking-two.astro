@@ -21,30 +21,21 @@ const albums = await getArtistAlbums(ARTIST_ID).catch(() => [] as Array<{ id: st
       <header class="mb-8 text-center">
         <h1 class="font-orbitron text-3xl md:text-5xl text-primary mb-4">Smoking Two</h1>
         <p class="text-muted-foreground max-w-3xl mx-auto">
-          Art director for all visuals: album covers, Spotify canvases, Instagram promos, and upcoming AI-driven music videos.
+          Art director for all visuals: album covers, social media promos, and AI-driven music videos.
         </p>
       </header>
 
-      <div class="mt-6 grid gap-6 lg:grid-cols-2 items-start">
-        <section class="rounded-2xl bg-[rgba(10,10,10,0.6)] p-6 shadow-inner">
-          <h2 class="font-orbitron text-primary text-xl md:text-2xl mb-3">About SmokingTwo</h2>
-          <p class="text-muted-foreground">
-            SmokingTwo is a hip‑hop duo from Thessaloniki, Greece, formed by
-            <span class="text-foreground">022</span> (rap) and
-            <span class="text-foreground">Black Smoke</span> (production). They blend the
-            soul of old‑school culture with modern energy — gritty boom‑bap textures,
-            cinematic samples, and drill‑ready drums — delivering raw storytelling with a
-            sleek, contemporary edge.
+      <div class="mt-6 flex justify-center">
+        <section class="rounded-2xl bg-[rgba(10,10,10,0.6)] p-6 shadow-inner max-w-2xl">
+          <p class="text-muted-foreground leading-relaxed">
+            Rolling from the streets of Thessaloniki, Greece, Smoking Two is the brainchild of 
+            <span class="text-foreground font-medium">022</span> on the mic and 
+            <span class="text-foreground font-medium">Black Smoke</span> behind the boards. 
+            They're crafting that raw, unfiltered hip-hop that hits different. As for me, I handle 
+            all their visual direction — from album covers that capture their gritty aesthetic to 
+            social media promos that build hype, plus some AI-driven music video experiments that'll 
+            blow minds. More surprises coming soon.
           </p>
-        </section>
-
-        <section class="rounded-2xl bg-[rgba(10,10,10,0.6)] p-6 shadow-inner">
-          <h2 class="font-orbitron text-primary text-xl md:text-2xl mb-3">Listen on Spotify</h2>
-          <SpotifyEmbed
-            src="https://open.spotify.com/embed/artist/3iyLSllxJjbHUi1PZOzJAm?utm_source=generator&theme=0"
-            height={152}
-            title="Smoking Two on Spotify"
-          />
         </section>
       </div>
 

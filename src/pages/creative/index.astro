@@ -5,35 +5,28 @@ import FeaturedProjectCard from '../../components/FeaturedProjectCard.tsx';
 // Import local assets to ensure consistent paths and allow editor assistance
 import s2Logo from '../../assets/images/s2-logo.png';
 import emmanuelleLogo from '../../assets/images/emmanuelle-silk-logo.webp';
-import es1 from '../../assets/images/emmanuelle-silk-1.png';
-import es2 from '../../assets/images/emmanuelle-silk-2.png';
-import es3 from '../../assets/images/emmanuelle-silk-3.png';
-import es4 from '../../assets/images/emmanuelle-silk-4.png';
-import es5 from '../../assets/images/emmanuelle-silk-5.png';
-import es6 from '../../assets/images/emmanuelle-silk-6.png';
-import es7 from '../../assets/images/emmanuelle-silk-7.png';
-import es8 from '../../assets/images/emmanuelle-silk-8.png';
+import arteImaginariHero from '../../assets/images/arte-imaginari-hero.webp';
 // Featured projects content (links and assets live under /public/creative/*)
-const projects = [
+const projects: Array<{
+  slug: string;
+  title: string;
+  role: string;
+  description: string;
+  hero: string;
+  heroFit?: 'cover' | 'contain';
+  galleryThumbs?: string[];
+  detailUrl: string;
+  cta: { label: string; href: string; external?: boolean };
+}> = [
   {
     slug: 'emmanuelle-silk',
     title: 'Emmanuelle Silk',
-    role: 'AI Fashion Collection · Creative Direction & Design',
+    role: 'AI Fashion Collection Design',
     description:
-      'Among the first AI-driven fashion collections in Greece. An 8-piece silk scarf series exploring generative aesthetics and material storytelling.',
+      'Among the first AI-driven fashion collections in Greece. An 8-piece silk scarf series exploring generative aesthetics and storytelling.',
     hero: emmanuelleLogo.src,
     // Fill the hero container for a full-bleed card look
     heroFit: 'cover',
-    galleryThumbs: [
-      es1.src,
-      es2.src,
-      es3.src,
-      es4.src,
-      es5.src,
-      es6.src,
-      es7.src,
-      es8.src,
-    ],
     detailUrl: '/creative/emmanuelle-silk',
     cta: { 
       label: 'View Collection', 
@@ -46,15 +39,12 @@ const projects = [
     title: 'Smoking Two',
     role: 'Art Direction · Visual Identity',
     description:
-      'Art director for all visuals: album covers, Spotify canvases, Instagram promos, and upcoming AI-driven music videos.',
+      'Art director for all visuals: album covers, social media promos, and AI-driven music videos.',
     hero: s2Logo.src,
     // Full-bleed hero to avoid letterboxing
     heroFit: 'cover',
-    // Use artist embed to match the dedicated Smoking Two page experience
-    spotifyEmbed:
-      'https://open.spotify.com/embed/artist/3iyLSllxJjbHUi1PZOzJAm?utm_source=generator',
     detailUrl: '/creative/smoking-two',
-    cta: { label: 'Listen on Spotify', href: 'https://open.spotify.com/artist/3iyLSllxJjbHUi1PZOzJAm', external: true },
+    cta: { label: 'View Project', href: '/creative/smoking-two', external: false },
   },
   {
     slug: 'arte-imaginari',
@@ -62,18 +52,7 @@ const projects = [
     role: 'Personal Experimental AI Art Lab',
     description:
       'A personal lab where I test and push boundaries with new AI tools, techniques, and aesthetics.',
-    hero: '/creative/arte-imaginari/hero.jpg',
-    instagramGrid: [
-      '/creative/arte-imaginari/ig-1.jpg',
-      '/creative/arte-imaginari/ig-2.jpg',
-      '/creative/arte-imaginari/ig-3.jpg',
-      '/creative/arte-imaginari/ig-4.jpg',
-      '/creative/arte-imaginari/ig-5.jpg',
-      '/creative/arte-imaginari/ig-6.jpg',
-      '/creative/arte-imaginari/ig-7.jpg',
-      '/creative/arte-imaginari/ig-8.jpg',
-      '/creative/arte-imaginari/ig-9.jpg',
-    ],
+    hero: arteImaginariHero.src,
     detailUrl: '/creative/arte-imaginari',
     cta: { label: 'Follow on Instagram', href: 'https://instagram.com/arte.imaginari', external: true },
   },
@@ -96,11 +75,11 @@ const projects = [
     <section class="px-4 sm:px-6 lg:px-8">
       <div class="max-w-7xl mx-auto">
         <!-- Featured Works (3-card responsive layout) -->
-        <div class="mb-20">
-          <h2 class="text-primary drop-shadow-neon text-2xl md:text-3xl mb-8 uppercase tracking-widest text-center">
+        <div class="mb-12">
+          <h2 class="text-primary drop-shadow-neon text-xl md:text-2xl mb-6 uppercase tracking-widest text-center">
             Featured Works
           </h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
             {projects.map((p) => (
               <FeaturedProjectCard
                 client:visible
@@ -111,9 +90,6 @@ const projects = [
                 heroFit={p.heroFit as 'contain' | 'cover' | undefined}
                 detailUrl={p.detailUrl}
                 cta={p.cta}
-                galleryThumbs={p.galleryThumbs}
-                spotifyEmbed={p.spotifyEmbed}
-                instagramGrid={p.instagramGrid}
               />
             ))}
           </div>

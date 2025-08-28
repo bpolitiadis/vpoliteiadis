@@ -1,5 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
+import arteImaginariHero from '../../assets/images/arte-imaginari-hero.webp';
 ---
 
 <MainLayout 
@@ -21,15 +22,10 @@ import MainLayout from '../../layouts/MainLayout.astro';
       </header>
 
       <div class="rounded-2xl overflow-hidden border border-border/40 bg-[rgba(10,10,10,0.6)] shadow-inner mb-10">
-        <img src="/creative/arte-imaginari/hero.jpg" alt="Arte Imaginari collage" class="w-full h-auto object-cover" loading="lazy" decoding="async" />
+        <img src={arteImaginariHero.src} alt="Arte Imaginari collage" class="w-full h-auto object-cover" loading="lazy" decoding="async" />
       </div>
 
-      <h2 class="font-orbitron text-primary text-xl md:text-2xl mb-4">Instagram Preview</h2>
-      <div class="grid grid-cols-3 gap-2">
-        {Array.from({ length: 9 }).map((_, i) => (
-          <img src={`/creative/arte-imaginari/ig-${i + 1}.jpg`} alt={`Instagram preview ${i + 1}`} class="aspect-square w-full object-cover rounded" loading="lazy" decoding="async" />
-        ))}
-      </div>
+
 
       <div class="pt-8">
         <a href="https://instagram.com/arte.imaginari" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-6 py-3 border border-primary text-primary rounded-lg hover:bg-primary hover:text-background transition-colors duration-300">
