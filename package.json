@@ -34,7 +34,8 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "sharp": "^0.33.5",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "yet-another-react-lightbox": "^3.25.0"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^6.0.2",
