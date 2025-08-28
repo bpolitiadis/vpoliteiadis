@@ -26,9 +26,9 @@ const sizeClasses = {
 export const iconMap: Record<string, LucideIcon> = {
 	menu: Menu,
 	x: X,
-	chevronRight: ChevronRight,
-	arrowRight: ArrowRight,
-	externalLink: ExternalLink,
+	chevronright: ChevronRight,
+	arrowright: ArrowRight,
+	externallink: ExternalLink,
 	mail: Mail,
 	phone: Phone,
 	briefcase: Briefcase,
@@ -45,7 +45,7 @@ export const iconMap: Record<string, LucideIcon> = {
 	info: Info,
 	clock: Clock,
 	calendar: Calendar,
-	graduationCap: GraduationCap,
+	graduationcap: GraduationCap,
 	award: Award,
 };
 
@@ -57,7 +57,9 @@ export function Icon({
 	'aria-hidden': ariaHidden = false,
 	...props
 }: IconProps) {
-	const IconComponent = iconMap[name as keyof typeof iconMap];
+	// Convert PascalCase to lowercase for consistency
+	const iconKey = name.toLowerCase();
+	const IconComponent = iconMap[iconKey];
 
 	if (!IconComponent) {
 		console.warn(`Icon "${name}" not found`);
@@ -76,28 +78,28 @@ export function Icon({
 }
 
 // Export commonly used icons for convenience
-export const MenuIcon = (props: Omit<IconProps, 'name'>) => <Icon name="Menu" {...props} />;
-export const CloseIcon = (props: Omit<IconProps, 'name'>) => <Icon name="X" {...props} />;
-export const ChevronRightIcon = (props: Omit<IconProps, 'name'>) => <Icon name="ChevronRight" {...props} />;
-export const ArrowRightIcon = (props: Omit<IconProps, 'name'>) => <Icon name="ArrowRight" {...props} />;
-export const ExternalLinkIcon = (props: Omit<IconProps, 'name'>) => <Icon name="ExternalLink" {...props} />;
-export const MailIcon = (props: Omit<IconProps, 'name'>) => <Icon name="Mail" {...props} />;
-export const PhoneIcon = (props: Omit<IconProps, 'name'>) => <Icon name="Phone" {...props} />;
-export const BriefcaseIcon = (props: Omit<IconProps, 'name'>) => <Icon name="Briefcase" {...props} />;
-export const MonitorIcon = (props: Omit<IconProps, 'name'>) => <Icon name="Monitor" {...props} />;
-export const CodeIcon = (props: Omit<IconProps, 'name'>) => <Icon name="Code" {...props} />;
-export const PaletteIcon = (props: Omit<IconProps, 'name'>) => <Icon name="Palette" {...props} />;
-export const LinkedInIcon = (props: Omit<IconProps, 'name'>) => <Icon name="Linkedin" {...props} />;
-export const InstagramIcon = (props: Omit<IconProps, 'name'>) => <Icon name="Instagram" {...props} />;
-export const GitHubIcon = (props: Omit<IconProps, 'name'>) => <Icon name="Github" {...props} />;
-export const PlayIcon = (props: Omit<IconProps, 'name'>) => <Icon name="Play" {...props} />;
-export const ImageIcon = (props: Omit<IconProps, 'name'>) => <Icon name="Image" {...props} />;
-export const VideoIcon = (props: Omit<IconProps, 'name'>) => <Icon name="Video" {...props} />;
-export const GalleryIcon = (props: Omit<IconProps, 'name'>) => <Icon name="Image" {...props} />;
-export const CheckIcon = (props: Omit<IconProps, 'name'>) => <Icon name="Check" {...props} />;
-export const XIcon = (props: Omit<IconProps, 'name'>) => <Icon name="X" {...props} />;
-export const InfoIcon = (props: Omit<IconProps, 'name'>) => <Icon name="Info" {...props} />;
-export const ClockIcon = (props: Omit<IconProps, 'name'>) => <Icon name="Clock" {...props} />;
-export const CalendarIcon = (props: Omit<IconProps, 'name'>) => <Icon name="Calendar" {...props} />;
-export const GraduationIcon = (props: Omit<IconProps, 'name'>) => <Icon name="GraduationCap" {...props} />;
-export const AwardIcon = (props: Omit<IconProps, 'name'>) => <Icon name="Award" {...props} />;
+export const MenuIcon = (props: Omit<IconProps, 'name'>) => <Icon name="menu" {...props} />;
+export const CloseIcon = (props: Omit<IconProps, 'name'>) => <Icon name="x" {...props} />;
+export const ChevronRightIcon = (props: Omit<IconProps, 'name'>) => <Icon name="chevronright" {...props} />;
+export const ArrowRightIcon = (props: Omit<IconProps, 'name'>) => <Icon name="arrowright" {...props} />;
+export const ExternalLinkIcon = (props: Omit<IconProps, 'name'>) => <Icon name="externallink" {...props} />;
+export const MailIcon = (props: Omit<IconProps, 'name'>) => <Icon name="mail" {...props} />;
+export const PhoneIcon = (props: Omit<IconProps, 'name'>) => <Icon name="phone" {...props} />;
+export const BriefcaseIcon = (props: Omit<IconProps, 'name'>) => <Icon name="briefcase" {...props} />;
+export const MonitorIcon = (props: Omit<IconProps, 'name'>) => <Icon name="monitor" {...props} />;
+export const CodeIcon = (props: Omit<IconProps, 'name'>) => <Icon name="code" {...props} />;
+export const PaletteIcon = (props: Omit<IconProps, 'name'>) => <Icon name="palette" {...props} />;
+export const LinkedInIcon = (props: Omit<IconProps, 'name'>) => <Icon name="linkedin" {...props} />;
+export const InstagramIcon = (props: Omit<IconProps, 'name'>) => <Icon name="instagram" {...props} />;
+export const GitHubIcon = (props: Omit<IconProps, 'name'>) => <Icon name="github" {...props} />;
+export const PlayIcon = (props: Omit<IconProps, 'name'>) => <Icon name="play" {...props} />;
+export const ImageIcon = (props: Omit<IconProps, 'name'>) => <Icon name="image" {...props} />;
+export const VideoIcon = (props: Omit<IconProps, 'name'>) => <Icon name="video" {...props} />;
+export const GalleryIcon = (props: Omit<IconProps, 'name'>) => <Icon name="image" {...props} />;
+export const CheckIcon = (props: Omit<IconProps, 'name'>) => <Icon name="check" {...props} />;
+export const XIcon = (props: Omit<IconProps, 'name'>) => <Icon name="x" {...props} />;
+export const InfoIcon = (props: Omit<IconProps, 'name'>) => <Icon name="info" {...props} />;
+export const ClockIcon = (props: Omit<IconProps, 'name'>) => <Icon name="clock" {...props} />;
+export const CalendarIcon = (props: Omit<IconProps, 'name'>) => <Icon name="calendar" {...props} />;
+export const GraduationIcon = (props: Omit<IconProps, 'name'>) => <Icon name="graduationcap" {...props} />;
+export const AwardIcon = (props: Omit<IconProps, 'name'>) => <Icon name="award" {...props} />;

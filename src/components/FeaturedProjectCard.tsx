@@ -85,7 +85,8 @@ export default function FeaturedProjectCard({
 
 
         {/* Footer - pushed to bottom */}
-        <div className="mt-auto pt-6 flex items-center justify-between gap-3">
+        <div className="mt-auto pt-6 flex items-center justify-center gap-3">
+          {/* View details button temporarily hidden - pages are incomplete
           <a
             href={detailUrl}
             className="inline-flex items-center gap-2 text-sm text-muted-foreground underline-offset-4 hover:underline"
@@ -94,6 +95,7 @@ export default function FeaturedProjectCard({
           >
             View details
           </a>
+          */}
 
           <a
             href={cta.href}
