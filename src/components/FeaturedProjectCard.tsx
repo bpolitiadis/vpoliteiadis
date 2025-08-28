@@ -15,20 +15,17 @@ type FeaturedProjectCardProps = {
   logoSrc?: string;
 };
 
-export default function FeaturedProjectCard(props: FeaturedProjectCardProps) {
-  const {
-    title,
-    role,
-    description,
-    hero,
-    heroFit = 'cover',
-    detailUrl,
-    cta,
-    galleryThumbs,
-    spotifyEmbed,
-    logoSrc,
-  } = props;
-
+export default function FeaturedProjectCard({
+  title,
+  role,
+  description,
+  hero,
+  heroFit = 'cover',
+  detailUrl,
+  cta,
+  spotifyEmbed,
+  logoSrc,
+}: FeaturedProjectCardProps) {
   return (
     <article
       aria-label={`Open ${title} details`}

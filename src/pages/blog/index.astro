@@ -13,43 +13,6 @@ const posts = allPosts
       new Date(a.data.publishedAt).getTime()
   );
 
-// Curated categories with synonym matching for filtering
-// These are displayed below the search bar regardless of post tags
-const curatedTags: { label: string; value: string; match: string[] }[] = [
-  {
-    label: 'Bitcoin',
-    value: 'bitcoin',
-    match: ['bitcoin', 'cryptocurrency', 'blockchain', 'decentralization'],
-  },
-  {
-    label: 'Quality Assurance',
-    value: 'quality-assurance',
-    match: ['quality assurance', 'qa', 'testing', 'test', 'playwright', 'vitest', 'automation'],
-  },
-  {
-    label: 'Full‑Stack Development',
-    value: 'full-stack-development',
-    match: [
-      'full-stack',
-      'development',
-      'next.js',
-      'react',
-      'prisma',
-      'postgresql',
-      'supabase',
-      'nextauth',
-      'tailwindcss',
-      'shadcn',
-      'radix',
-      'zod',
-    ],
-  },
-  { label: 'AI', value: 'ai', match: ['ai', 'artificial intelligence', 'prompt engineering', 'context engineering', 'templates', 'workflows'] },
-  { label: 'Web3.0', value: 'web3', match: ['web3', 'web3.0', 'cryptocurrency', 'blockchain', 'decentralization'] },
-  { label: 'Blockchain', value: 'blockchain', match: ['blockchain', 'bitcoin', 'cryptocurrency', 'decentralization'] },
-  { label: 'AI Art', value: 'ai-art', match: ['ai art', 'midjourney', 'image generation', 'art'] },
-];
-
 // SEO metadata
 const title = 'Blog - Vasileios Politeiadis';
 const description =

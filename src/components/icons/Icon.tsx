@@ -1,7 +1,8 @@
-import { 
+import {
 	Menu, X, ChevronRight, ArrowRight, ExternalLink, Mail, Phone,
 	Briefcase, Monitor, Code, Palette, Linkedin, Instagram, Github,
-	Play, Image, Video, Check, Info, Clock, Calendar, GraduationCap, Award
+	Play, Image, Video, Check, Info, Clock, Calendar, GraduationCap, Award,
+	type LucideIcon,
 } from 'lucide-react';
 
 export interface IconProps {
@@ -22,30 +23,30 @@ const sizeClasses = {
 	'2xl': 'w-10 h-10',
 };
 
-const iconMap = {
-	Menu,
-	X,
-	ChevronRight,
-	ArrowRight,
-	ExternalLink,
-	Mail,
-	Phone,
-	Briefcase,
-	Monitor,
-	Code,
-	Palette,
-	Linkedin,
-	Instagram,
-	Github,
-	Play,
-	Image,
-	Video,
-	Check,
-	Info,
-	Clock,
-	Calendar,
-	GraduationCap,
-	Award,
+export const iconMap: Record<string, LucideIcon> = {
+	menu: Menu,
+	x: X,
+	chevronRight: ChevronRight,
+	arrowRight: ArrowRight,
+	externalLink: ExternalLink,
+	mail: Mail,
+	phone: Phone,
+	briefcase: Briefcase,
+	monitor: Monitor,
+	code: Code,
+	palette: Palette,
+	linkedin: Linkedin,
+	instagram: Instagram,
+	github: Github,
+	play: Play,
+	image: Image,
+	video: Video,
+	check: Check,
+	info: Info,
+	clock: Clock,
+	calendar: Calendar,
+	graduationCap: GraduationCap,
+	award: Award,
 };
 
 export function Icon({
