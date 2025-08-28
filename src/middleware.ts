@@ -6,7 +6,7 @@ export const onRequest: MiddlewareHandler = async (context, next) => {
 
   const cspDirectives = [
     "default-src 'self'",
-    // Only first-party scripts
+    // Allow first-party scripts only
     "script-src 'self'",
     // Allow inline styles for framework-generated <style> tags; restrict to self + Google Fonts
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
