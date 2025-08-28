@@ -155,7 +155,7 @@ const ogImageURL = new URL(image, Astro.site);
     <script is:inline type="application/ld+json" src="/structured/person.json"></script>
     <script is:inline type="application/ld+json" src="/structured/website.json"></script>
   </head>
-  <body class="min-h-screen bg-background text-foreground transition-colors duration-300 flex flex-col">
+  <body class="min-h-screen bg-background text-foreground transition-colors duration-300">
     {(() => {
       if (!bgSlug) return null;
       const optimized = backgroundMap[bgSlug];
@@ -198,12 +198,12 @@ const ogImageURL = new URL(image, Astro.site);
       Skip to main content
     </a>
     
-    <div class="relative z-10">
+    <div class="relative z-10 flex flex-col min-h-screen">
       <!-- Navbar -->
       <Navbar currentPath={currentPath} />
       
       <!-- Main Content -->
-      <main id="main-content" class="flex-1 pb-0">
+      <main id="main-content" class="flex-1">
         <slot />
       </main>
       

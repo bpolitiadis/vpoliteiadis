@@ -37,6 +37,23 @@ Prefer Tailwind utilities. Keep additional custom classes in `global.css` (e.g.,
 - Don’t:
   - Overuse heavy drop-shadows; avoid illegible low-contrast overlays.
 
+## Page hero sizing (compact-first)
+
+- Prefer compact heroes to maximize above-the-fold content on content-heavy pages.
+- Default hero: only for landing pages with strong visuals.
+- Compact hero pattern (previous):
+  - Section height: `min-h-[28vh]` with vertical padding `py-4 md:py-6 lg:py-8`.
+  - Avatar sizes: `w-24 h-24` → `md:w-28 h-28` → `lg:w-32 h-32`.
+  - Keep holographic ring subtle; reduce surrounding margins (`mb-3 md:mb-4`).
+  - Follow accessibility: `role="img"` and descriptive `aria-label`.
+- Ultra-compact hero pattern (current About page):
+  - Section height: `min-h-[16vh]` with vertical padding `py-2 md:py-3 lg:py-4`.
+  - Avatar sizes: `w-20 h-20` → `md:w-24 h-24` → `lg:w-28 h-28`.
+  - Smaller surrounding margins (`mb-2 md:mb-3`).
+  - Same accessibility requirements.
+
+Rationale: smaller hero reduces scroll friction and highlights primary content immediately while preserving brand identity.
+
 ## Component theming (shadcn/ui)
 
 - Note: `@shadcn/ui` present but not used yet. If adopted:

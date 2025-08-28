@@ -44,6 +44,7 @@ What you’ll learn: inventory, purpose, props, and dependencies.
 | `src/components/SpotifyEmbed.astro` | Spotify iframe helper | `src` or (`type`, `id`); `height?`, `title?`, `theme?` |
 | `src/components/VercelImage.astro` | Image helper using Vercel optimizer in prod | `src`, `alt?`, `width?`, `quality?`, `class?` |
 | `src/components/OptimizedImage.tsx` | React image helper (Vercel optimizer aware) | `src`, `width?`, `quality?`, plus `<img>` attrs |
+| `src/components/LightboxGallery.tsx` | React lightbox grid powered by `yet-another-react-lightbox` | `items: { thumbSrc, fullSrc, alt }[]`, `className?` |
 
 ### Modals
 
@@ -74,6 +75,11 @@ import PageHero from '../components/PageHero.astro';
 <PageHero title="Projects" description="Selected work" bgSlug="projects-bg" eager />
 ```
 
+### Compact hero guidance
+
+- For profile/about or detail pages, use a compact hero or small avatar-only intro rather than a full-bleed visual.
+- See `src/pages/about.astro` for the compact pattern: reduced section height and a 24–32px avatar scale with subtle holographic ring.
+
 Rendering projects (from content collection):
 
 ```astro
@@ -84,3 +90,24 @@ const projects = await getCollection('projects');
 ---
 {projects.map((p) => (<ProjectCard project={p} />))}
 ```
+
+### LightboxGallery
+
+Minimal usage in an Astro page:
+
+```astro
+---
+import LightboxGallery from '../components/LightboxGallery.tsx';
+// Build items using astro:assets for thumbs and full-size
+const items = [
+  { thumbSrc: '/path/thumb.webp', fullSrc: '/path/full.webp', alt: 'Artwork 1' },
+];
+---
+<LightboxGallery items={items} client:visible />
+```
+
+Notes:
+- Opens full-screen, with keyboard (Esc/arrow) and touch gestures enabled.
+- Preserves original image aspect ratios in the grid (`aspect-auto`, `object-contain`).
+- Theme adapts to Matrix neon via local `.yarl__*` CSS overrides in the page.
+- Reuse across pages by passing `items` arrays. Large images should be optimized via `astro:assets`.
