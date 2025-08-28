@@ -27,6 +27,13 @@ const projectSchema = z.object({
   status: z.enum(['completed', 'in-progress', 'archived']).default('completed'),
   featuredImage: z.string().optional(),
   gallery: z.array(z.string()).optional(),
+  // Compact page fields
+  roleSummary: z.string().optional(),
+  highlights: z.array(z.string()).optional(),
+  // New UI/UX split sections
+  about: z.string().optional(),
+  roleDetails: z.string().optional(),
+  roleHighlights: z.array(z.string()).optional(),
 });
 
 // Define the schema for creative pieces frontmatter

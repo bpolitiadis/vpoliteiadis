@@ -1,0 +1,131 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import GlassCard from '../../components/GlassCard.astro';
+import NeonCTA from '../../components/NeonCTA.astro';
+import HighlightBlock from '../../components/HighlightBlock.astro';
+import ScreenshotFrame from '../../components/ScreenshotFrame.astro';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects');
+const project = projects.find((p) => p.slug === 'upiria');
+if (!project) {
+  throw new Error('Project "upiria" not found in content collection.');
+}
+const data = project.data;
+---
+
+<MainLayout 
+  title={`${data.title} - Case Study`} 
+  description={data.description}
+  currentPath={'/projects/upiria'}
+  type="article"
+  publishedAt={new Date(data.publishedAt).toISOString()}
+  updatedAt={data.updatedAt ? new Date(data.updatedAt).toISOString() : undefined}
+  author="Vasileios Politeiadis"
+  image={data.coverImage || '/images/vp-logo-800.webp'}
+>
+  <!-- SEO Structured Data (external, CSP-safe) -->
+  <script is:inline type="application/ld+json" src="/structured/project/upiria.json"></script>
+
+  <section class="bg-matrix-black text-matrix-white">
+    <section class="relative py-10 md:py-12 lg:py-14 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <!-- Back Button -->
+        <div class="mb-6">
+          <a 
+            href="/projects" 
+            class="inline-flex items-center text-neon-lime hover:text-matrix-white transition-colors"
+            aria-label="Back to Projects"
+          >
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Projects
+          </a>
+        </div>
+        <!-- Scroll reveal init -->
+        <script is:inline>
+          (function() {
+            const init = () => {
+              document.documentElement.classList.add('js');
+              if (!('IntersectionObserver' in window)) {
+                document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in-view'));
+                return;
+              }
+              const observer = new IntersectionObserver((entries) => {
+                entries.forEach((e) => {
+                  if (e.isIntersecting) {
+                    e.target.classList.add('in-view');
+                    observer.unobserve(e.target);
+                  }
+                });
+              }, { threshold: 0.12 });
+              document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+            };
+            if (document.readyState === 'loading') {
+              document.addEventListener('DOMContentLoaded', init, { once: true });
+            } else {
+              init();
+            }
+          })();
+        </script>
+
+        <!-- Hero: text left, screenshot right -->
+        <div class="grid lg:grid-cols-2 gap-8 items-start mb-8 reveal">
+          <div>
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-orbitron neon-heading mb-3">{data.title}</h1>
+            <p class="text-base md:text-lg text-text-muted mb-4 max-w-2xl">
+              I joined <strong>Upiria</strong> at a critical early stage and bridged <strong>frontend development</strong> with a <strong>scalable testing framework</strong>, enabling rapid product evolution with confidence.
+            </p>
+            {data.liveUrl && (
+              <NeonCTA href={data.liveUrl} ariaLabel={`View ${data.title} live`}>
+                View Live Project
+              </NeonCTA>
+            )}
+          </div>
+          <div class="lg:justify-self-end">
+            <ScreenshotFrame src={data.coverImage ?? data.featuredImage ?? '/images/vp-logo-800.webp'} alt={data.title} />
+          </div>
+        </div>
+
+        <!-- About the Project -->
+        <GlassCard class="mb-6 reveal">
+          <p class="text-sm text-text-muted leading-relaxed">
+            Upiria is a digital platform that helps travel professionals and tour operators connect with global audiences. By offering booking, data insights, and loyalty tools, it enables brands to adapt to changing travel trends while keeping customers engaged.
+          </p>
+        </GlassCard>
+
+        <!-- My Contribution: two-column bullets -->
+        <GlassCard class="mb-6 reveal">
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <h2 class="text-sm font-semibold neon-heading mb-1">Frontend</h2>
+              <ul class="list-disc pl-5 text-sm text-text-muted space-y-1">
+                <li>Built accessible, modular React components for a consistent user experience.</li>
+              </ul>
+            </div>
+            <div>
+              <h2 class="text-sm font-semibold neon-heading mb-1">Testing & QA</h2>
+              <ul class="list-disc pl-5 text-sm text-text-muted space-y-1">
+                <li>Led QA as test architect — API and end-to-end test suites with Playwright + TypeScript, integrated into CI/CD.</li>
+              </ul>
+            </div>
+          </div>
+        </GlassCard>
+
+       
+
+        <!-- Intentionally no second primary CTA to avoid duplication and reduce noise -->
+      </div>
+    </section>
+  </section>
+</MainLayout>
+
+<style>
+  .prose { color: hsl(var(--foreground)); }
+  .prose a { color: hsl(var(--primary)); text-decoration: none; }
+  .prose a:hover { color: hsl(var(--foreground)); text-decoration: underline; }
+  .prose code { background-color: hsl(var(--muted)); color: hsl(var(--primary)); padding: 0.125rem 0.25rem; border-radius: 0.25rem; }
+</style>
+
+

@@ -12,23 +12,28 @@ export interface Props {
       techStack: string[];
       featured: boolean;
       status: string;
+      role?: string;
+      liveUrl?: string;
     };
   };
+  index?: number;
 }
 
-const { project } = Astro.props;
+const { project, index = 0 } = Astro.props;
 import VercelImage from './VercelImage.astro';
+import NeonCTA from './NeonCTA.astro';
 ---
 
 <article 
-  class="group relative border border-border rounded-xl bg-card/70 p-5 md:p-6 transition-all hover:border-primary hover:shadow-neon"
+  class="group relative glass-card glass-card-accent rounded-2xl p-6 md:p-8 backdrop-blur-md transition-all duration-300 hover:shadow-neon-lg hover:border-primary/60 reveal"
   role="article"
   aria-labelledby={`proj-${project.slug}-title`}
+  style={`transition-delay:${index * 80}ms`}
 >
   
 
   <!-- Project Cover -->
-    <div class="relative overflow-hidden h-40 md:h-44 mb-5 rounded-lg content-visibility-auto">
+    <div class="relative overflow-hidden h-44 md:h-52 mb-6 rounded-xl content-visibility-auto holo-frame">
     <picture>
       <source srcset="/images/project-card-1-bg-800.avif 800w, /images/project-card-1-bg-480.avif 480w" type="image/avif" />
       <source srcset="/images/project-card-1-bg-800.webp 800w, /images/project-card-1-bg-480.webp 480w" type="image/webp" />
@@ -36,7 +41,7 @@ import VercelImage from './VercelImage.astro';
     </picture>
     {project.data.coverVideo ? (
       <video
-        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 motion-reduce:transition-none"
         autoplay
         muted
         loop
@@ -51,7 +56,7 @@ import VercelImage from './VercelImage.astro';
       <VercelImage
         src={project.data.coverImage}
         alt={`${project.data.title} cover image`}
-        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 motion-reduce:transition-none"
         loading="lazy"
         decoding="async"
         fetchpriority="low"
@@ -61,47 +66,62 @@ import VercelImage from './VercelImage.astro';
     
     <!-- Overlay with neon glow effect -->
     <div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 
-                group-hover:opacity-100 transition-opacity duration-300"></div>
+                group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
   </div>
 
   <!-- Project Content -->
     <div>
-      <h3 id={`proj-${project.slug}-title`} class="text-xl md:text-2xl font-orbitron text-primary mb-2 group-hover:text-foreground transition-colors">
-      {project.data.title}
-    </h3>
-    
-      <p class="text-sm md:text-base text-muted-foreground mb-4 line-clamp-3">
-      {project.data.excerpt || project.data.description}
-    </p>
+      <h3 id={`proj-${project.slug}-title`} class="text-2xl md:text-[1.6rem] font-orbitron neon-heading mb-3">
+        {project.data.title}
+      </h3>
+      
+      <p class="text-sm md:text-base text-text-muted mb-5">
+        {project.slug === 'upiria'
+          ? 'Built a scalable frontend and testing foundation at an early stage of a fast-growing travel startup.'
+          : project.slug === 'casa-capoeira'
+          ? 'Created a fast, reliable CMS to help capoeira schools manage classes, payments, and community with ease.'
+          : (project.data.excerpt || project.data.description)}
+      </p>
 
-    <!-- Minimal Tags Display -->
-    <div class="flex flex-wrap gap-2 mb-4">
-      {project.data.tags.slice(0, 3).map(tag => (
-        <span class="bg-secondary/10 border border-secondary/50 text-secondary rounded-full px-3 py-1 text-xs font-medium">
-          {tag}
-        </span>
-      ))}
-      {project.data.tags.length > 3 && (
-        <span class="bg-secondary/10 border border-secondary/50 text-secondary rounded-full px-3 py-1 text-xs font-medium">
-          +{project.data.tags.length - 3}
-        </span>
-      )}
-    </div>
+      <!-- HUD-style metadata -->
+      <div class="rounded-lg border border-primary/30 bg-card/40 p-4 mb-6">
+        <div class="text-xs md:text-sm font-mono text-matrix-white/80 tracking-tight">
+          <div class="flex flex-wrap gap-2 md:gap-3 items-start mb-1">
+            <span class="text-neon-lime/90">Focus:</span>
+            <span class="text-neon-lime/90">{project.data.role ?? (project.slug === 'upiria' ? 'Frontend + QA' : 'Full‑Stack + Product')}</span>
+          </div>
+          <div class="my-2 h-px bg-primary/20"></div>
+          <div class="flex flex-wrap gap-2 md:gap-3 items-start">
+            <span class="text-neon-lime/90">Tech:</span>
+            <span class="text-neon-lime/90">{project.data.techStack.slice(0,3).join(', ')}</span>
+          </div>
+        </div>
+      </div>
 
-    <!-- CTA Button -->
-      <a
-        href={`/projects/${project.slug}`}
-        class="inline-flex items-center px-4 py-2 bg-transparent border border-primary text-primary 
-               hover:bg-primary hover:text-background transition-all duration-300 rounded-lg
-               group-hover:animate-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
-        aria-label={`View case study: ${project.data.title}`}
-      >
-        View Case Study
-        <svg class="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <line x1="5" y1="12" x2="19" y2="12" />
-          <polyline points="12,5 19,12 12,19" />
-        </svg>
-      </a>
+      <!-- Dual CTA Buttons -->
+      <div class="flex flex-col sm:flex-row gap-3 justify-center items-center">
+        <!-- Learn More (Case Study) -->
+        <a
+          href={`/projects/${project.slug}`}
+          class="inline-flex items-center justify-center px-4 py-2.5 bg-transparent border border-primary/40 text-primary hover:bg-primary/10 hover:border-primary/60 transition-all duration-300 rounded-lg text-sm font-medium group"
+          aria-label={`Read case study: ${project.data.title}`}
+        >
+          <svg class="w-4 h-4 mr-2 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          Learn More
+        </a>
+        
+        <!-- View Live (External Project) -->
+        {project.data.liveUrl && (
+          <NeonCTA 
+            href={project.data.liveUrl} 
+            ariaLabel={`Visit live project: ${project.data.title}`} 
+            class="px-4 py-2.5 text-sm"
+            text="View Live"
+          />
+        )}
+      </div>
   </div>
 </article>
 

@@ -104,6 +104,27 @@
             "type": "string"
           }
         },
+        "roleSummary": {
+          "type": "string"
+        },
+        "highlights": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "about": {
+          "type": "string"
+        },
+        "roleDetails": {
+          "type": "string"
+        },
+        "roleHighlights": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "$schema": {
           "type": "string"
         }

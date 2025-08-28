@@ -28,6 +28,8 @@ What you’ll learn: inventory, purpose, props, and dependencies.
 |---|---|---|
 | `src/components/Hero.astro` | Home hero with matrix rain | — |
 | `src/components/PageHero.astro` | Page hero with optional background | `title` (req), `description?`, `bgSlug?`, `metaText?`, `eager?` |
+| `src/components/GlassCard.astro` | Glassmorphic container with neon accent | `accent?`, `ariaLabel?`, `class?` |
+| `src/components/HighlightBlock.astro` | Compact highlight tile for impact points | `title` (req), `description?`, `class?` |
 
 ### Cards
 
@@ -45,6 +47,7 @@ What you’ll learn: inventory, purpose, props, and dependencies.
 | `src/components/VercelImage.astro` | Image helper using Vercel optimizer in prod | `src`, `alt?`, `width?`, `quality?`, `class?` |
 | `src/components/OptimizedImage.tsx` | React image helper (Vercel optimizer aware) | `src`, `width?`, `quality?`, plus `<img>` attrs |
 | `src/components/LightboxGallery.tsx` | React lightbox grid powered by `yet-another-react-lightbox` | `items: { thumbSrc, fullSrc, alt }[]`, `className?` |
+| `src/components/ScreenshotFrame.astro` | Premium framed screenshot with neon/scanlines | `src` (req), `alt` (req), `eager?`, `width?`, `height?`, `class?` |
 
 ### Modals
 
@@ -65,6 +68,19 @@ graph LR
 ```
 
 ## Usage examples
+### ProjectCard HUD metadata
+
+The `ProjectCard` uses a glassmorphic neon panel with a framed cover image, concise blurb, and a HUD-style metadata block:
+
+- Focus: highlighted in neon
+- Tech: first three items from `techStack`
+
+**Dual CTA Layout:**
+- **Learn More**: Transparent button with document icon, links to case study page
+- **View Live**: Neon holographic button (when `liveUrl` exists), links to external project
+
+Buttons are stacked vertically on mobile, horizontal on larger screens.
+
 
 Minimal `PageHero`:
 
@@ -75,39 +91,15 @@ import PageHero from '../components/PageHero.astro';
 <PageHero title="Projects" description="Selected work" bgSlug="projects-bg" eager />
 ```
 
-### Compact hero guidance
-
-- For profile/about or detail pages, use a compact hero or small avatar-only intro rather than a full-bleed visual.
-- See `src/pages/about.astro` for the compact pattern: reduced section height and a 24–32px avatar scale with subtle holographic ring.
-
-Rendering projects (from content collection):
+Glass card + CTA snippet:
 
 ```astro
 ---
-import ProjectCard from '../components/ProjectCard.astro';
-import { getCollection } from 'astro:content';
-const projects = await getCollection('projects');
+import GlassCard from '../components/GlassCard.astro';
+import NeonCTA from '../components/NeonCTA.astro';
 ---
-{projects.map((p) => (<ProjectCard project={p} />))}
+<GlassCard class="mb-6">
+  <p class="text-sm text-text-muted">Concise body copy inside a glass card.</p>
+</GlassCard>
+<NeonCTA href="https://example.com">View Live Project</NeonCTA>
 ```
-
-### LightboxGallery
-
-Minimal usage in an Astro page:
-
-```astro
----
-import LightboxGallery from '../components/LightboxGallery.tsx';
-// Build items using astro:assets for thumbs and full-size
-const items = [
-  { thumbSrc: '/path/thumb.webp', fullSrc: '/path/full.webp', alt: 'Artwork 1' },
-];
----
-<LightboxGallery items={items} client:visible />
-```
-
-Notes:
-- Opens full-screen, with keyboard (Esc/arrow) and touch gestures enabled.
-- Preserves original image aspect ratios in the grid (`aspect-auto`, `object-contain`).
-- Theme adapts to Matrix neon via local `.yarl__*` CSS overrides in the page.
-- Reuse across pages by passing `items` arrays. Large images should be optimized via `astro:assets`.

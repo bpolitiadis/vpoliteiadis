@@ -1,7 +1,7 @@
 ---
 title: 'Casa Capoeira'
-description: 'A comprehensive CMS platform for capoeira schools and academies, streamlining class management, student enrollment, and community engagement.'
-excerpt: 'Modern CMS platform revolutionizing how capoeira schools manage their operations and engage with students.'
+description: 'Focused CMS for capoeira academies with scheduling, enrollment, payments, and community.'
+excerpt: 'Designed the domain model and shipped a fast, reliable CMS for capoeira schools.'
 coverImage: '/images/casa-capoeira-cover.png'
 coverVideo: '/videos/casa-capoeira-preview.mp4'
 tags: ['CMS', 'Education', 'Community', 'Full-Stack', 'SaaS']
@@ -54,6 +54,23 @@ gallery:
     '/images/projects/casa-capoeira-dashboard.jpg',
     '/images/projects/casa-capoeira-scheduling.jpg',
     '/images/projects/casa-capoeira-mobile.jpg',
+  ]
+# Compact-page fields
+roleSummary: 'Owned product backbone: domain model, secure auth/data flows, and a maintainable UI kit. Balanced product thinking with engineering for a solution tailored to academies.'
+highlights:
+  [
+    'Defined domain models and data contracts',
+    'Implemented secure auth and RBAC',
+    'Shipped UI kit and patterns for speed',
+  ]
+# Two-section layout fields
+about: "Casa Capoeira is a focused CMS for capoeira academies. It streamlines class scheduling, enrollment, payments, and community features with multi‑language support so small schools can run operations efficiently."
+roleDetails: "Full‑stack developer and product designer. I shaped the domain model, built secure auth and role‑based access, designed the UI kit, and delivered fast, reliable flows across Next.js, Prisma, and Supabase."
+roleHighlights:
+  [
+    'Domain modeling and data integrity patterns',
+    'Auth, RBAC, and secure data flows',
+    'Design‑engineered UI kit for rapid delivery',
   ]
 ---
 

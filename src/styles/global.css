@@ -644,3 +644,156 @@
     animation: none;
   }
 }
+
+/* --- Project page enhancements: glass, neon, HUD, holographic frame --- */
+@layer components {
+  /* Glassmorphic card with subtle neon border and blur */
+  .glass-card {
+    position: relative;
+    background: rgba(10, 10, 10, 0.45);
+    border: 1px solid rgba(57, 255, 20, 0.18);
+    border-radius: 1rem;
+    padding: 0.875rem;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Thin neon accent line at the top */
+  .glass-card-accent {
+    overflow: hidden;
+  }
+  .glass-card-accent::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto auto 0;
+    height: 3px;
+    width: 100%;
+    background: linear-gradient(90deg, rgba(57,255,20,0.75), rgba(0,184,107,0.75));
+    box-shadow: 0 0 16px rgba(57,255,20,0.45);
+  }
+
+  /* Neon heading helper (Orbitron already applied at global) */
+  .neon-heading {
+    color: var(--primary);
+    text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+  }
+
+  /* Outline badge with subtle glow on hover */
+  .badge-outline-neon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.625rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(57,255,20,0.35);
+    color: var(--secondary);
+    background: transparent;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    will-change: transform, box-shadow;
+  }
+  .badge-outline-neon:hover {
+    border-color: rgba(57,255,20,0.75);
+    box-shadow: 0 0 12px rgba(57,255,20,0.35);
+    transform: translateY(-1px);
+  }
+
+  /* Primary neon CTA */
+  .neon-cta {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 1.25rem;
+    font-weight: 700;
+    border-radius: 0.75rem;
+    color: #0A0A0A;
+    background: linear-gradient(180deg, #39FF14, #2ECC71);
+    box-shadow: 0 0 0 3px rgba(57,255,20,0.3), 0 8px 24px rgba(57,255,20,0.25);
+    transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    will-change: transform, box-shadow;
+  }
+  .neon-cta:hover {
+    transform: translateY(-1px) scale(1.01);
+    box-shadow: 0 0 0 4px rgba(57,255,20,0.5), 0 12px 32px rgba(57,255,20,0.35);
+    filter: saturate(1.05);
+  }
+  .neon-cta:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(57,255,20,0.6), 0 0 0 6px rgba(10,10,10,0.9);
+  }
+
+  /* Holographic frame for media */
+  .holo-frame {
+    position: relative;
+    display: inline-block;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    isolation: isolate;
+    transform: translateZ(0);
+  }
+  .holo-frame::before {
+    /* Soft neon edge glow */
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: inset 0 0 0 1px rgba(57,255,20,0.25), 0 0 24px rgba(57,255,20,0.25);
+    mix-blend-mode: screen;
+  }
+  .holo-frame::after {
+    /* Scanline overlay */
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.06),
+      rgba(255,255,255,0.06) 1px,
+      transparent 3px,
+      transparent 6px
+    );
+    opacity: 0.12;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    animation: scanLines 8s linear infinite;
+  }
+  .holo-frame img, .holo-frame video {
+    display: block;
+    border-radius: inherit;
+    transition: transform 0.35s ease;
+    will-change: transform;
+  }
+  .holo-frame:hover img, .holo-frame:hover video {
+    transform: scale(1.02);
+  }
+}
+
+@layer utilities {
+  /* Scroll reveal utility */
+  /* Progressive enhancement: visible by default to avoid CSP/JS issues */
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: opacity 400ms ease, transform 400ms ease;
+    will-change: opacity, transform;
+  }
+  .reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* Optional: if a parent adds .js class, start hidden for animation */
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* Scanline keyframes */
+@keyframes scanLines {
+  0% { background-position-y: 0; }
+  100% { background-position-y: 200px; }
+}

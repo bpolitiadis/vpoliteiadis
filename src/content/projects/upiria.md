@@ -1,7 +1,7 @@
 ---
 title: 'Upiria'
-description: 'Front-end development and testing infrastructure for a cutting-edge startup, focusing on React applications and comprehensive test automation.'
-excerpt: 'Contributed to front-end development and built robust testing infrastructure for a fast-growing startup.'
+description: 'Building the foundation for a travel‑tech startup with reliable velocity.'
+excerpt: 'Joined early to bridge frontend development with a scalable testing infrastructure.'
 coverImage: '/images/upiria-cover.png'
 tags: ['Startup', 'Frontend', 'Testing', 'React', 'Automation']
 techStack:
@@ -47,56 +47,21 @@ gallery:
     '/images/projects/upiria-testing.jpg',
     '/images/projects/upiria-components.jpg',
   ]
+# Compact-page fields
+roleSummary: 'Led front-end quality and delivery: built accessible React components, introduced modern testing (Playwright + Jest + Testing Library), and wired CI checks that gated releases. My focus was maintainability and reliability so the team could ship fast without regressions.'
+highlights:
+  [
+    'Scalable testing framework',
+    'Developer workflow improvements',
+    'Infrastructure reliability',
+  ]
+# Two-section layout fields
+about: "Upiria is a digital platform that helps travel professionals and tour operators connect with global audiences. By offering booking, data insights, and loyalty tools, it enables brands to adapt to changing travel trends while keeping customers engaged."
+roleDetails: "At Upiria, I wore two hats: Front‑End Development — building accessible, modular components in React to create a consistent user experience. Quality Architecture — leading QA as test architect, designing API and end‑to‑end test suites with Playwright + TypeScript, integrated directly into CI/CD. This dual focus enabled rapid feature delivery with confidence in stability and performance."
+roleHighlights:
+  [
+    'Accessible, modular React components',
+    'Playwright E2E + API suites with TypeScript, CI/CD gating',
+    'Collaboration on Dockerized services and AWS ops',
+  ]
 ---
-
-# Upiria - Startup Frontend Development & Testing
-
-## The Challenge
-
-Upiria, a fast-growing startup, needed to rapidly develop and deploy front-end features while maintaining high code quality and reliability. The team was moving fast but needed a solid testing foundation to prevent regressions.
-
-## The Solution
-
-I joined the team to focus on front-end development and establish comprehensive testing practices. This involved building React components, implementing automated testing, and setting up CI/CD pipelines.
-
-### Key Contributions
-
-- **React Component Development**: Built reusable, accessible components following modern React patterns
-- **Testing Infrastructure**: Implemented Playwright for end-to-end testing and Jest for unit testing
-- **TypeScript Integration**: Migrated JavaScript codebase to TypeScript for better type safety
-- **CI/CD Pipeline**: Set up automated testing in GitHub Actions for every pull request
-- **Documentation**: Created testing guidelines and component documentation
-
-### Technical Stack
-
-- **Frontend**: React 18 with TypeScript
-- **Testing**: Playwright for E2E, Jest + Testing Library for unit tests
-- **CI/CD**: GitHub Actions with automated testing
-- **State Management**: React Context + custom hooks
-- **Styling**: CSS Modules with design system
-
-## The Impact
-
-The testing infrastructure and development practices I implemented had significant impact:
-
-- **60% reduction** in bug reports from production
-- **40% improvement** in development velocity
-- **100% test coverage** for critical user flows
-- **Established best practices** that continue to benefit the team
-
-## Key Learnings
-
-Working at a startup taught me valuable lessons about balancing speed and quality:
-
-- **Testing-first approach** pays dividends even in fast-moving environments
-- **TypeScript** significantly reduces runtime errors and improves developer experience
-- **Automated testing** enables confident deployments and rapid iteration
-- **Documentation** is crucial for team scaling and knowledge transfer
-
-## Looking Back
-
-The experience at Upiria reinforced my belief in the importance of solid engineering practices, even in fast-paced startup environments. The testing infrastructure and development patterns established continue to serve the team well.
-
----
-
-_Startup environments require a unique balance of speed and quality - this project demonstrated how proper testing infrastructure enables both._

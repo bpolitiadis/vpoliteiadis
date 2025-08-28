@@ -46,6 +46,11 @@ What you’ll learn: schemas, fields, frontmatter, and editorial workflow.
 | `status` | enum('completed','in-progress','archived') | default 'completed' |
 | `featuredImage` | string? | — |
 | `gallery` | string[]? | — |
+| `roleSummary` | string? | legacy compact summary |
+| `highlights` | string[]? | legacy highlight chips |
+| `about` | string? | short “About the project” paragraph |
+| `roleDetails` | string? | short “My role” paragraph |
+| `roleHighlights` | string[]? | 2–3 chips under “My role” |
 
 ### creative
 
@@ -109,6 +114,9 @@ techStack: ["Next.js", "Prisma", "Supabase", "PostgreSQL"]
 featured: true
 publishedAt: "2025-02-01"
 status: "completed"
+about: "Short 1–3 sentence description."
+roleDetails: "Short paragraph describing your impact."
+roleHighlights: ["Highlight A", "Highlight B", "Highlight C"]
 ---
 ```
 
