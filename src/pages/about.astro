@@ -16,14 +16,14 @@ import { GraduationIcon, AwardIcon, BriefcaseIcon, MonitorIcon, PaletteIcon } fr
 >
   
 
-  <!-- Hero Section -->
-  <section class="relative isolate z-10 min-h-[60vh] flex items-center">
+  <!-- Hero Section (ultra-compact) -->
+  <section class="relative isolate z-10 min-h-[20vh] flex items-center pt-8 md:pt-12 lg:pt-16">
     <div class="w-full">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col items-center text-center py-10 md:py-16 lg:py-20">
+        <div class="flex flex-col items-center text-center py-4 md:py-6 lg:py-8">
           <!-- Centered circular holographic avatar -->
-          <div class="avatar-orb relative mb-6 md:mb-8" role="img" aria-label="Portrait of Vasileios Politeiadis">
-            <Image src={avatarSrc} alt="Vasileios Politeiadis avatar" class="holo-avatar block w-40 h-40 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full object-cover" widths={[160,224,256]} sizes="(max-width: 768px) 160px, 224px" format="webp" loading="eager" />
+          <div class="avatar-orb relative mb-2 md:mb-3" role="img" aria-label="Portrait of Vasileios Politeiadis">
+            <Image src={avatarSrc} alt="Vasileios Politeiadis avatar" class="holo-avatar block w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full object-cover" widths={[80,96,112]} sizes="(max-width: 768px) 80px, 96px" format="webp" loading="eager" />
           </div>
         </div>
       </div>
@@ -31,19 +31,19 @@ import { GraduationIcon, AwardIcon, BriefcaseIcon, MonitorIcon, PaletteIcon } fr
   </section>
 
   <!-- Main Content -->
-  <section class="relative z-10 pt-10 md:pt-12 pb-16">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section class="relative z-10 pt-6 md:pt-8 pb-12">
+    <div class="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <!-- Professional Identity -->
-      <div class="card mb-12 border border-neon-lime/20 shadow-neon">
+      <div class="card mb-8 border border-neon-lime/20 shadow-neon">
         <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-6 text-shadow-neon flex items-center gap-3">
           <AwardIcon size="lg" className="text-neon-lime" aria-label="Professional identity icon" />
           Professional Identity
         </h2>
-         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+         <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 md:gap-6">
           <div class="bg-card/50 p-4 rounded-xl border border-secondary/30 hover:border-secondary/50 transition-colors shadow-emerald flex flex-col">
-            <h3 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald">🤖 Senior QA Automation Specialist</h3>
-            <p class="text-sm text-matrix-white/80 mb-3 flex-grow">European Commission projects with focus on quality assurance and testing automation</p>
+            <h3 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald leading-tight text-[1.05rem] md:text-lg">🤖 QA Automation Specialist</h3>
+            <p class="text-sm text-matrix-white/80 mb-3 flex-grow">Experience with European Commission projects, as well as startup experience managing end-to-end QA processes</p>
             <div class="flex flex-wrap gap-2 mt-auto">
               <span class="inline-block bg-digital-emerald/10 text-digital-emerald px-2 py-1 rounded text-xs">Java</span>
               <span class="inline-block bg-digital-emerald/10 text-digital-emerald px-2 py-1 rounded text-xs">Selenium</span>
@@ -51,8 +51,8 @@ import { GraduationIcon, AwardIcon, BriefcaseIcon, MonitorIcon, PaletteIcon } fr
             </div>
           </div>
            <div class="bg-card/50 p-4 rounded-xl border border-secondary/30 hover:border-secondary/50 transition-colors shadow-emerald flex flex-col">
-            <h3 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald">💻 Full-Stack Developer</h3>
-            <p class="text-sm text-matrix-white/80 mb-3 flex-grow">Modern web applications and CMS platforms with end-to-end development expertise</p>
+            <h3 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald leading-tight text-[1.05rem] md:text-lg">💻 Full-Stack Developer</h3>
+            <p class="text-sm text-matrix-white/80 mb-3 flex-grow">Development of modern web applications, including frontend, backend, database architecture, API design, and cloud deployment</p>
             <div class="flex flex-wrap gap-2 mt-auto">
               <span class="inline-block bg-digital-emerald/10 text-digital-emerald px-2 py-1 rounded text-xs">React</span>
               <span class="inline-block bg-digital-emerald/10 text-digital-emerald px-2 py-1 rounded text-xs">Next.js</span>
@@ -60,35 +60,20 @@ import { GraduationIcon, AwardIcon, BriefcaseIcon, MonitorIcon, PaletteIcon } fr
             </div>
           </div>
            <div class="bg-card/50 p-4 rounded-xl border border-secondary/30 hover:border-secondary/50 transition-colors shadow-emerald flex flex-col">
-            <h3 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald">🎨 Creative AI-Art Hobbyist</h3>
-            <p class="text-sm text-matrix-white/80 mb-3 flex-grow">AI-driven creative technologist and digital artist</p>
+            <h3 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald leading-tight text-[1.05rem] md:text-lg">🔧 AI-Powered Solutions</h3>
+            <p class="text-sm text-matrix-white/80 mb-3 flex-grow">Leveraging AI tools and automation to streamline workflows, enhance web development, and build smarter digital solutions</p>
             <div class="flex flex-wrap gap-2 mt-auto">
-              <span class="inline-block bg-digital-emerald/10 text-digital-emerald px-2 py-1 rounded text-xs">Midjourney</span>
-              <span class="inline-block bg-digital-emerald/10 text-digital-emerald px-2 py-1 rounded text-xs">Kling AI</span>
-              <span class="inline-block bg-digital-emerald/10 text-digital-emerald px-2 py-1 rounded text-xs">Design</span>
+              <span class="inline-block bg-digital-emerald/10 text-digital-emerald px-2 py-1 rounded text-xs">AI Automation</span>
+              <span class="inline-block bg-digital-emerald/10 text-digital-emerald px-2 py-1 rounded text-xs">Web Development</span>
+              <span class="inline-block bg-digital-emerald/10 text-digital-emerald px-2 py-1 rounded text-xs">Productivity</span>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Education & Experience -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 mb-10">
         
-        <!-- Education -->
-        <div class="card border border-neon-lime/20 shadow-neon">
-          <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-6 text-shadow-neon flex items-center gap-3">
-            <GraduationIcon size="lg" className="text-neon-lime" aria-label="Education icon" />
-            Education
-          </h2>
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-orbitron font-bold text-matrix-white">Electrical Engineering & Computer Science</h3>
-              <p class="text-digital-emerald">Aristotle University of Thessaloniki</p>
-              <p class="text-sm text-matrix-white/70 mt-1">Graduated 2017</p>
-            </div>
-          </div>
-        </div>
-
         <!-- Current Role -->
          <div class="card border border-neon-lime/20 shadow-neon">
            <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-6 text-shadow-neon flex items-center gap-3">
@@ -105,10 +90,25 @@ import { GraduationIcon, AwardIcon, BriefcaseIcon, MonitorIcon, PaletteIcon } fr
             </div>
           </div>
         </div>
+
+        <!-- Education -->
+        <div class="card border border-neon-lime/20 shadow-neon">
+          <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-6 text-shadow-neon flex items-center gap-3">
+            <GraduationIcon size="lg" className="text-neon-lime" aria-label="Education icon" />
+            Education
+          </h2>
+          <div class="space-y-4">
+            <div>
+              <h3 class="font-orbitron font-bold text-matrix-white">Electrical Engineering & Computer Science</h3>
+              <p class="text-digital-emerald">Aristotle University of Thessaloniki</p>
+              <p class="text-sm text-matrix-white/70 mt-1">Graduated 2018</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Skill Matrix -->
-      <div class="card mb-12 border border-neon-lime/20 shadow-neon">
+      <div class="card mb-10 border border-neon-lime/20 shadow-neon">
         <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-6 text-shadow-neon flex items-center gap-3">
           <MonitorIcon size="lg" className="text-neon-lime" aria-label="Skill matrix icon" />
           Skill Matrix
@@ -240,7 +240,7 @@ import { GraduationIcon, AwardIcon, BriefcaseIcon, MonitorIcon, PaletteIcon } fr
               <div class="absolute left-2 top-2 w-4 h-4 bg-neon-lime rounded-full border-2 border-matrix-black shadow-neon"></div>
               <div class="ml-12">
                 <div class="flex items-center space-x-2 mb-2">
-                  <span class="text-sm text-matrix-white/60">2017</span>
+                  <span class="text-sm text-matrix-white/60">2018</span>
                 </div>
                 <h3 class="font-orbitron font-bold text-neon-lime mb-1 text-shadow-neon">Electrical Engineering & Computer Science</h3>
                 <p class="text-digital-emerald text-sm mb-2">Aristotle University of Thessaloniki</p>
@@ -268,14 +268,7 @@ import { GraduationIcon, AwardIcon, BriefcaseIcon, MonitorIcon, PaletteIcon } fr
           <p class="text-matrix-white/80">
             AI-driven image and video projects using Midjourney, Kling AI, and other generative tools.
           </p>
-          <div class="space-y-2">
-            <p class="text-sm text-matrix-white/70">🎨 <span class="text-digital-emerald">Commission Work:</span></p>
-            <ul class="text-sm text-matrix-white/70 ml-4 space-y-1">
-              <li>• Silk scarf designs for Emmanuelle Silk fashion brand</li>
-              <li>• Album covers and artwork for Smoking Two hip-hop artist</li>
-              <li>• Event posters for Berlin techno parties</li>
-            </ul>
-          </div>
+          
           <div class="flex items-center space-x-4">
             <a href="/creative" class="text-neon-lime hover:text-glow transition-all duration-300 text-sm">
               View Portfolio →
