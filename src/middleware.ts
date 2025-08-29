@@ -8,6 +8,8 @@ export const onRequest: MiddlewareHandler = async (context, next) => {
     "default-src 'self'",
     // Allow first-party scripts only
     "script-src 'self'",
+    // Explicitly block external script elements
+    "script-src-elem 'self'",
     // Allow inline styles for framework-generated <style> tags; restrict to self + Google Fonts
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     // Images from self, data uris, and https for social/og
