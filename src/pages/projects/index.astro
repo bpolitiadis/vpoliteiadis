@@ -29,12 +29,20 @@ const featuredProjects = sortedProjects.filter(project => project.data.featured)
     />
     <section class="px-4 sm:px-6 lg:px-8">
       <div class="max-w-7xl mx-auto">
-        <!-- Featured Projects Section -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Featured Projects Section - Responsive grid with optimal spacing -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 xl:gap-12">
           {featuredProjects.map((project, idx) => (
             <ProjectCard project={project} index={idx} />
           ))}
         </div>
+        
+        <!-- Future: Additional project categories or pagination can go here -->
+        {featuredProjects.length === 0 && (
+          <div class="text-center py-16">
+            <p class="text-matrix-white/60 text-lg">No featured projects available at the moment.</p>
+            <p class="text-matrix-white/40 text-sm mt-2">Check back soon for new case studies!</p>
+          </div>
+        )}
       </div>
     </section>
   </section>

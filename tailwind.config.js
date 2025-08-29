@@ -19,7 +19,11 @@ export default {
     // Filter button states
     'filter-btn-compact',
     // Search and filter layout classes
-    'max-w-4xl','pl-12','focus:ring-2','focus:ring-primary/20','backdrop-blur-sm'
+    'max-w-4xl','pl-12','focus:ring-2','focus:ring-primary/20','backdrop-blur-sm',
+    // Responsive aspect ratios for project cards
+    'aspect-[16/10]','aspect-[16/9]','aspect-[16/8]',
+    // Responsive grid layouts
+    'grid-cols-1','lg:grid-cols-2','gap-6','sm:gap-8','lg:gap-10','xl:gap-12'
   ],
   darkMode: 'class',
   
@@ -96,6 +100,14 @@ export default {
         '88': '22rem',
         '128': '32rem',
       },
+      aspectRatio: {
+        '16/10': '16 / 10',
+        '16/9': '16 / 9',
+        '16/8': '16 / 8',
+        '4/3': '4 / 3',
+        '3/2': '3 / 2',
+        '2/1': '2 / 1',
+      },
       animation: {
         glow: 'glow 2s ease-in-out infinite alternate',
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
@@ -105,6 +117,7 @@ export default {
         'bounce-slow': 'bounce 2s infinite',
         'float': 'float 6s ease-in-out infinite',
         'matrix-rain': 'matrixRain 20s linear infinite',
+        'scale-smooth': 'scaleSmooth 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
       },
       keyframes: {
         glow: {
@@ -126,6 +139,10 @@ export default {
         matrixRain: {
           '0%': { transform: 'translateY(-100%)' },
           '100%': { transform: 'translateY(100vh)' },
+        },
+        scaleSmooth: {
+          '0%': { transform: 'scale(1)' },
+          '100%': { transform: 'scale(1.05)' },
         },
       },
       backdropBlur: {
@@ -171,6 +188,15 @@ export default {
         '90': '90',
         '100': '100',
       },
+      // Enhanced responsive breakpoints for better mobile experience
+      screens: {
+        'xs': '475px',
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+        'xl': '1280px',
+        '2xl': '1536px',
+      },
     },
   },
   corePlugins: {
@@ -215,6 +241,27 @@ export default {
         },
         '.scrollbar-thin::-webkit-scrollbar-thumb:hover': {
           backgroundColor: 'rgba(57, 255, 20, 0.5)',
+        },
+      }
+      addUtilities(newUtilities)
+    },
+    // Custom plugin for responsive image utilities
+    function({ addUtilities }) {
+      const newUtilities = {
+        '.image-cover': {
+          objectFit: 'cover',
+          objectPosition: 'center',
+        },
+        '.image-contain': {
+          objectFit: 'contain',
+          objectPosition: 'center',
+        },
+        '.image-fill': {
+          objectFit: 'fill',
+        },
+        '.image-scale': {
+          willChange: 'transform',
+          transform: 'translateZ(0)',
         },
       }
       addUtilities(newUtilities)

@@ -3,6 +3,7 @@ export interface Props {
   src: string;
   alt?: string;
   width?: number;
+  height?: number;
   quality?: number;
   class?: string;
   sizes?: string;
@@ -16,6 +17,7 @@ const {
   src,
   alt = '',
   width = 1200,
+  height = 800,
   quality = 75,
   class: className = '',
   sizes = '100vw',
@@ -39,9 +41,12 @@ if (import.meta.env.MODE === 'production') {
 
 const isDecorative = (alt || '').trim() === '';
 ---
+
 <img
   src={optimizedURL}
   alt={alt}
+  width={width}
+  height={height}
   class={className}
   sizes={sizes}
   loading={loading}
@@ -49,6 +54,4 @@ const isDecorative = (alt || '').trim() === '';
   fetchpriority={fetchpriority}
   aria-hidden={isDecorative ? 'true' : undefined}
   role={isDecorative ? 'presentation' : undefined}
-/>
-
-
+/> 
