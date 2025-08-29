@@ -1,7 +1,7 @@
 # UI Guidelines & Brand
 
 Who this is for: designers/devs ensuring consistent visual identity.
-What you’ll learn: tokens, typography, motifs, components, icons, motion.
+What you'll learn: tokens, typography, motifs, components, icons, motion.
 
 > TL;DR
 > - Matrix/cyberpunk aesthetic: Neon Lime + Digital Emerald on dark.
@@ -34,8 +34,41 @@ Prefer Tailwind utilities. Keep additional custom classes in `global.css` (e.g.,
   - Use neon glows sparingly to accent CTAs and headings (`text-shadow-neon`, `shadow-neon`).
   - Use glassmorphism lightly (`bg-card/60`, `backdrop-blur-sm`).
   - Maintain contrast on dark background.
-- Don’t:
+- Don't:
   - Overuse heavy drop-shadows; avoid illegible low-contrast overlays.
+
+## Navigation Bar
+
+### Compact Design
+- **Height**: 60px desktop, 50px mobile (`h-15 md:h-16`)
+- **Background**: Dark matrix-black with subtle gradient and backdrop blur
+- **Border**: Subtle neon-lime/20 bottom border
+- **Logo**: VP logo with neon glow effect and hover scale animation
+
+### Desktop Navigation
+- **Layout**: Horizontal with compact spacing (`space-x-3 lg:space-x-4`)
+- **Active State**: Glowing neon underline instead of filled button
+- **Hover Effects**: Subtle glow and slight upward movement
+- **Typography**: Orbitron font, 14px size
+
+### Mobile Navigation
+- **Hamburger**: Glowing cyan icon with hover effects
+- **Menu**: Full-width black dropdown with neon accents
+- **Animation**: Smooth slide-down with backdrop blur
+- **Touch Targets**: 44px minimum for accessibility
+
+### Styling Classes
+- `.navbar-compact`: Main container with gradient background
+- `.nav-link-desktop`: Desktop navigation links
+- `.nav-active-indicator`: Active page glowing underline
+- `.mobile-menu-btn`: Mobile menu button with cyan styling
+- `.mobile-menu`: Mobile dropdown container
+- `.mobile-nav-link`: Mobile navigation items
+
+### Future Enhancements
+- Background texture support via `.navbar-bg-texture` class
+- Matrix glyph patterns or cyber-grid overlays
+- Can be enabled by uncommenting the texture div in Navbar.astro
 
 ## Page hero sizing (compact-first)
 
@@ -75,3 +108,4 @@ Rationale: smaller hero reduces scroll friction and highlights primary content i
 
 - Use CSS keyframes/utilities for most effects. Framer Motion is not installed; if added later, keep durations 200–500ms and apply stagger minimally.
 - Respect `prefers-reduced-motion: reduce` (already handled in `global.css`).
+- Navbar animations: subtle hover effects, smooth transitions, glowing indicators.

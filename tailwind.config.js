@@ -45,6 +45,7 @@ export default {
         // Refined blue to better harmonize with neon greens
         // Adjusted to improve contrast on dark backgrounds
         'cyber-blue': '#2EA3FF',
+        'cyan-blue': '#00BFFF',
         'matrix-gold': '#FFD700',
         'dark-slate': '#1A1A1A',
         'light-slate': '#2A2A2A',
@@ -88,6 +89,12 @@ export default {
         orbitron: ['Orbitron', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'],
+      },
+      spacing: {
+        '15': '3.75rem', // 60px for compact navbar
+        '18': '4.5rem',
+        '88': '22rem',
+        '128': '32rem',
       },
       animation: {
         glow: 'glow 2s ease-in-out infinite alternate',
@@ -153,11 +160,6 @@ export default {
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'matrix-pattern': "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2339ff14' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
       },
-      spacing: {
-        '18': '4.5rem',
-        '88': '22rem',
-        '128': '32rem',
-      },
       maxWidth: {
         '8xl': '88rem',
         '9xl': '96rem',
@@ -184,6 +186,9 @@ export default {
         },
         '.text-shadow-emerald': {
           textShadow: '0 0 10px rgba(0, 184, 107, 0.5)',
+        },
+        '.text-shadow-cyan': {
+          textShadow: '0 0 10px rgba(0, 191, 255, 0.5)',
         },
         '.text-shadow-none': {
           textShadow: 'none',

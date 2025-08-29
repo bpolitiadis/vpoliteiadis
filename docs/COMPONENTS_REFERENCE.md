@@ -1,7 +1,7 @@
 # Components Reference
 
 Who this is for: developers reusing/extending UI blocks.
-What you’ll learn: inventory, purpose, props, and dependencies.
+What you'll learn: inventory, purpose, props, and dependencies.
 
 > TL;DR
 > - Astro components are static by default; React used where needed.
@@ -19,7 +19,7 @@ What you’ll learn: inventory, purpose, props, and dependencies.
 
 | Path | Purpose | Key props |
 |---|---|---|
-| `src/components/Navbar.astro` | Top nav with mobile menu script | `currentPath?` |
+| `src/components/Navbar.astro` | Compact Matrix-inspired top nav with neon styling | `currentPath?` |
 | `src/components/Footer.astro` | Footer with social links | — |
 
 ### Sections/Blocks
@@ -81,6 +81,27 @@ The `ProjectCard` uses a glassmorphic neon panel with a framed cover image, conc
 
 Buttons are stacked vertically on mobile, horizontal on larger screens.
 
+### Navbar Component
+
+The redesigned `Navbar` component features a compact, Matrix-inspired design:
+
+**Key Features:**
+- **Compact Height**: 60px desktop, 50px mobile
+- **Neon Styling**: Dark background with neon-lime accents
+- **Active States**: Glowing underline instead of filled buttons
+- **Responsive**: Horizontal desktop nav, hamburger mobile menu
+
+**Styling Classes:**
+- `.navbar-compact`: Main container with gradient background
+- `.nav-link-desktop`: Desktop navigation links with hover effects
+- `.nav-active-indicator`: Active page glowing underline
+- `.mobile-menu-btn`: Mobile menu button with cyan styling
+- `.mobile-menu`: Mobile dropdown with backdrop blur
+
+**Future Enhancements:**
+- Background texture support via `.navbar-bg-texture` class
+- Matrix glyph patterns or cyber-grid overlays
+- Enable by uncommenting texture div in component
 
 Minimal `PageHero`:
 

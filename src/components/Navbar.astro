@@ -1,5 +1,5 @@
 ---
-// Navbar component with cyberpunk styling and theme toggle
+// Compact Matrix-inspired navbar with neon styling
 import { Icon } from './icons/Icon';
 
 export interface Props {
@@ -19,85 +19,96 @@ const navItems = [
 ];
 ---
 
-<nav class="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-md border-b border-border transition-all duration-300" role="navigation" aria-label="Main navigation">
+<nav class="navbar-compact sticky top-0 z-50 w-full bg-matrix-black/95 backdrop-blur-md border-b border-neon-lime/20 transition-all duration-300" role="navigation" aria-label="Main navigation">
+  <!-- Optional background texture strip - can be enabled later -->
+  <!-- <div class="navbar-bg-texture absolute inset-0 opacity-5 pointer-events-none"></div> -->
+  
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-16">
+    <div class="flex justify-between items-center h-15 md:h-16">
       
-      <!-- Logo -->
+      <!-- Left: Neon-glowing VP logo -->
       <div class="flex-shrink-0">
-        <a href="/" class="flex items-center space-x-2 group" aria-label="Vasileios Politeiadis - Home">
-          <picture>
-            <source srcset="/images/vp-logo-480.avif 480w" type="image/avif" />
-            <source srcset="/images/vp-logo-480.webp 480w" type="image/webp" />
-            <img 
-              src="/images/vp-logo-480.webp" 
-              alt="Vasileios Politeiadis logo"
-              class="w-10 h-10 rounded-lg object-contain shadow-neon"
-              width="40" height="40"
-              loading="eager"
-              decoding="async"
-              fetchpriority="low"
-              sizes="40px"
-            />
-          </picture>
-          <span class="font-orbitron font-bold text-primary text-xl hidden sm:block group-hover:text-primary/80 transition-all duration-300">
+        <a href="/" class="flex items-center space-x-3 group" aria-label="Vasileios Politeiadis - Home">
+          <div class="logo-container relative">
+            <picture>
+              <source srcset="/images/vp-logo-480.avif 480w" type="image/avif" />
+              <source srcset="/images/vp-logo-480.webp 480w" type="image/webp" />
+              <img 
+                src="/images/vp-logo-480.webp" 
+                alt="Vasileios Politeiadis logo"
+                class="w-8 h-8 md:w-10 md:h-10 rounded-lg object-contain transition-all duration-300 group-hover:scale-110"
+                width="40" height="40"
+                loading="eager"
+                decoding="async"
+                fetchpriority="low"
+                sizes="(max-width: 768px) 32px, 40px"
+              />
+            </picture>
+            <!-- Neon glow effect -->
+            <div class="logo-glow absolute inset-0 rounded-lg bg-neon-lime/20 blur-md group-hover:bg-neon-lime/30 transition-all duration-300" aria-hidden="true"></div>
+          </div>
+          <span class="font-orbitron font-bold text-neon-lime text-lg md:text-xl hidden sm:block group-hover:text-neon-lime/80 transition-all duration-300">
             Vasileios Politeiadis
           </span>
         </a>
       </div>
 
-      <!-- Desktop Navigation -->
+      <!-- Desktop Navigation: Horizontal with compact spacing -->
       <div class="hidden md:block">
-        <div class="ml-10 flex items-baseline space-x-8" role="menubar">
+        <div class="flex items-center space-x-3 lg:space-x-4" role="menubar">
           {navItems.map((item) => (
             <a
               href={item.href}
-              class={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 relative group font-orbitron ${
+              class={`nav-link-desktop px-3 py-2 text-sm font-medium transition-all duration-300 relative group font-orbitron ${
                 currentPath === item.href
-                  ? 'text-primary bg-primary/10 border border-primary/30'
-                  : 'text-foreground hover:text-primary hover:bg-primary/5'
+                  ? 'text-neon-lime'
+                  : 'text-matrix-white/80 hover:text-neon-lime'
               }`}
               role="menuitem"
               aria-current={currentPath === item.href ? 'page' : undefined}
               aria-label={`${item.label}${currentPath === item.href ? ' (current page)' : ''}`}
             >
               {item.label}
+              {/* Active page glowing underline */}
+              {currentPath === item.href && (
+                <div class="nav-active-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-neon-lime shadow-neon transition-all duration-300" aria-hidden="true"></div>
+              )}
               {/* Hover glow effect */}
-              <div class="absolute inset-0 rounded-md bg-primary/0 group-hover:bg-primary/5 transition-all duration-300" aria-hidden="true"></div>
+              <div class="nav-hover-glow absolute inset-0 rounded-md bg-neon-lime/0 group-hover:bg-neon-lime/5 transition-all duration-300" aria-hidden="true"></div>
             </a>
           ))}
         </div>
       </div>
 
       <!-- Right side: Mobile Menu Button -->
-      <div class="flex items-center space-x-4">
-        <!-- Mobile menu button -->
+      <div class="flex items-center">
+        <!-- Mobile menu button with glowing cyan icon -->
         <button
           id="mobile-menu-button"
-          class="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-transparent text-foreground hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+          class="mobile-menu-btn md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-neon-cyan/30 bg-transparent text-neon-cyan hover:text-neon-cyan/80 hover:border-neon-cyan/50 hover:bg-neon-cyan/5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-cyan/60 focus-visible:ring-offset-2 focus-visible:ring-offset-matrix-black"
           aria-label="Toggle mobile navigation menu"
           aria-expanded="false"
           aria-controls="mobile-menu"
           aria-haspopup="menu"
         >
-          <!-- Hamburger icon -->
-          <Icon name="Menu" size="lg" className="text-current" aria-hidden="true" />
-          <!-- Close icon -->
-          <Icon name="X" size="lg" className="text-current" aria-hidden="true" />
+          <!-- Hamburger icon with glow -->
+          <Icon name="Menu" size="md" className="text-current drop-shadow-neon-cyan" aria-hidden="true" />
+          <!-- Close icon with glow -->
+          <Icon name="X" size="md" className="text-current drop-shadow-neon-cyan" aria-hidden="true" />
         </button>
       </div>
     </div>
 
-    <!-- Mobile Navigation Menu -->
-    <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-md border-b border-border z-50" role="menu" aria-labelledby="mobile-menu-button">
-      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+    <!-- Mobile Navigation Menu: Full black with neon accents -->
+    <div id="mobile-menu" class="mobile-menu hidden md:hidden absolute top-full left-0 right-0 bg-matrix-black/98 backdrop-blur-lg border-b border-neon-lime/20 z-50" role="menu" aria-labelledby="mobile-menu-button">
+      <div class="px-4 py-4 space-y-2">
         {navItems.map((item) => (
           <a
             href={item.href}
-            class={`block px-3 py-2 rounded-md text-base font-medium transition-all duration-300 font-orbitron ${
+            class={`mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 font-orbitron ${
               currentPath === item.href
-                ? 'text-primary bg-primary/10 border border-primary/30'
-                : 'text-foreground hover:text-primary hover:bg-primary/5'
+                ? 'text-neon-lime bg-neon-lime/10 border border-neon-lime/30'
+                : 'text-matrix-white/90 hover:text-neon-lime hover:bg-neon-lime/5'
             }`}
             role="menuitem"
             aria-current={currentPath === item.href ? 'page' : undefined}
@@ -119,4 +130,56 @@ const navItems = [
   #mobile-menu-button [data-icon="close"] { display: none; }
   #mobile-menu-button[aria-expanded="true"] [data-icon="menu"] { display: none; }
   #mobile-menu-button[aria-expanded="true"] [data-icon="close"] { display: inline; }
+  
+  /* Custom navbar height */
+  .navbar-compact {
+    height: 60px;
+  }
+  
+  @media (max-width: 768px) {
+    .navbar-compact {
+      height: 50px;
+    }
+  }
+  
+  /* Logo glow animation */
+  .logo-glow {
+    animation: logoPulse 3s ease-in-out infinite alternate;
+  }
+  
+  @keyframes logoPulse {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.6; }
+  }
+  
+  /* Active page indicator glow */
+  .nav-active-indicator {
+    animation: activeGlow 2s ease-in-out infinite alternate;
+  }
+  
+  @keyframes activeGlow {
+    0% { box-shadow: 0 0 8px rgba(57, 255, 20, 0.4); }
+    100% { box-shadow: 0 0 16px rgba(57, 255, 20, 0.7); }
+  }
+  
+  /* Mobile menu slide animation */
+  .mobile-menu {
+    transform: translateY(-10px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .mobile-menu.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  /* Optional background texture styles for future use */
+  .navbar-bg-texture {
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(57, 255, 20, 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(0, 184, 107, 0.02) 0%, transparent 50%);
+    background-size: 200px 200px, 150px 150px;
+    background-position: 0 0, 100px 100px;
+  }
 </style>
