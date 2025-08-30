@@ -151,6 +151,7 @@ vpoliteiadis/
 - **Screen Reader Support:** Proper ARIA labels and semantic HTML
 - **High Contrast Mode:** Support for high contrast preferences
 - **Reduced Motion:** Respects user's motion preferences
+- **Motion Library:** Uses Motion (2025 successor to framer-motion) for React animations
 - **Focus Management:** Clear focus indicators and logical tab order
 
 ### Performance Features

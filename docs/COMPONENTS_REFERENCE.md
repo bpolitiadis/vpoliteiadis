@@ -341,7 +341,7 @@ const theme = {
 ```
 
 ### Animation Library
-If adding Framer Motion later:
+If using Motion (installed):
 
 ```typescript
 // Keep animations subtle and performant

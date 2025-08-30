@@ -29,9 +29,10 @@ What you’ll learn: rationale, trade‑offs, and links to implementation.
 - Decision: Keep ready for future primitives; current UI is custom Tailwind.
 - Links: `package.json`.
 
-## ADR-005: Framer Motion and Lucide icons (not installed)
-- Context: Scope requested; packages absent.
-- Decision: Not used currently. If added later, use sparingly (Framer for complex motion; Lucide for consistent icons).
+## ADR-005: Motion and Lucide icons
+- Context: Motion (successor to framer-motion) is installed and ready for use.
+- Decision: **Motion** is available for complex animations; use sparingly. Lucide for consistent icons.
+- **2025 Update**: Motion provides better performance and cross-framework support than the legacy framer-motion.
 
 ## ADR-006: Security headers and CSP
 - Context: Static hosting on Vercel with strict security posture.
