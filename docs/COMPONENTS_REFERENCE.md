@@ -1,146 +1,344 @@
-# Components Reference
+# 🧩 Components Reference
 
-Who this is for: developers reusing/extending UI blocks.
-What you'll learn: inventory, purpose, props, and dependencies.
+**Who this is for:** Frontend developers reusing/extending UI blocks and components.  
+**What you'll learn:** Component inventory, purpose, props, dependencies, and usage patterns.
 
-> TL;DR
-> - Astro components are static by default; React used where needed.
-> - Prefer existing tokens/utilities for consistent UI.
+> **TL;DR** - Astro components are static by default; React used only where needed for interactivity. Prefer existing design tokens and utilities for consistent UI. Components follow Matrix-inspired cyberpunk aesthetic with accessibility compliance.
 
-## Inventory (by domain)
+## 📋 Component Inventory
 
-### Layout
+### Layout & Structure
 
-| Path | Purpose | Key props |
-|---|---|---|
-| `src/layouts/MainLayout.astro` | Global shell, meta, backgrounds, navbar/footer | `title`, `description`, `currentPath`, `bgSlug`, `bgEager`, `bgOpacityClass`, `bgOverlayClass` |
+| Component | Path | Purpose | Key Props | Dependencies |
+|-----------|------|---------|-----------|--------------|
+| `MainLayout.astro` | `src/layouts/MainLayout.astro` | Global shell, meta tags, backgrounds, navbar/footer | `title`, `description`, `currentPath`, `bgSlug`, `bgEager`, `bgOpacityClass`, `bgOverlayClass` | Navbar, Footer, global styles |
+| `PageHero.astro` | `src/components/PageHero.astro` | Page hero with optional background | `title` (req), `description?`, `bgSlug?`, `metaText?`, `eager?` | MainLayout, background images |
 
-### Navigation & chrome
+### Navigation & Chrome
 
-| Path | Purpose | Key props |
-|---|---|---|
-| `src/components/Navbar.astro` | Compact Matrix-inspired top nav with neon styling | `currentPath?` |
-| `src/components/Footer.astro` | Footer with social links | — |
+| Component | Path | Purpose | Key Props | Dependencies |
+|-----------|------|---------|-----------|--------------|
+| `Navbar.astro` | `src/components/Navbar.astro` | Compact Matrix-inspired top nav with neon styling | `currentPath?` | `/public/scripts/navbar.js`, global styles |
+| `Footer.astro` | `src/components/Footer.astro` | Footer with social links and branding | — | SocialLink components |
 
-### Sections/Blocks
+### Hero & Animation
 
-| Path | Purpose | Key props |
-|---|---|---|
-| `src/components/Hero.astro` | Home hero with matrix rain and dynamic subtitle | — |
-| `src/components/HeroAnimationController.tsx` | React component managing hero animation sequence | `quotes` (string[]) |
-| `src/components/PageHero.astro` | Page hero with optional background | `title` (req), `description?`, `bgSlug?`, `metaText?`, `eager?` |
-| `src/components/GlassCard.astro` | Glassmorphic container with neon accent | `accent?`, `ariaLabel?`, `class?` |
-| `src/components/HighlightBlock.astro` | Compact highlight tile for impact points | `title` (req), `description?`, `class?` |
+| Component | Path | Purpose | Key Props | Dependencies |
+|-----------|------|---------|-----------|--------------|
+| `Hero.astro` | `src/components/Hero.astro` | Home hero with matrix rain and dynamic subtitle | — | HeroAnimationController, matrix-rain.js |
+| `HeroAnimationController.tsx` | `src/components/HeroAnimationController.tsx` | React component managing hero animation sequence | `quotes: string[]` | DecryptedText, TextType |
+| `DecryptedText.tsx` | `src/components/DecryptedText.tsx` | Matrix-style text decryption effect | `text: string`, `speed?: number`, `className?: string` | React, CSS animations |
+| `TextType.tsx` | `src/components/TextType.tsx` | Typing/erasing text rotator with cursor | `text: string \| string[]`, `typingSpeed?`, `deletingSpeed?`, `pauseDuration?`, `showCursor?`, `cursorCharacter?`, `cursorClassName?`, `className?`, `startOnVisible?` | React, CSS animations |
 
-### Cards
+### Cards & Containers
 
-| Path | Purpose | Key props |
-|---|---|---|
-| `src/components/ProjectCard.astro` | Project card (from content collection) | `project` (object with `slug`, `data`) |
-| `src/components/CreativeCard.astro` | Creative piece card | `creative` (object with `slug`, `data`) |
-| `src/components/FeaturedProjectCard.tsx` | Featured, rich project card (React) | see props in file (`title`, `role`, `description`, `hero`, `detailUrl`, `cta`, etc.) |
+| Component | Path | Purpose | Key Props | Dependencies |
+|-----------|------|---------|-----------|--------------|
+| `GlassCard.astro` | `src/components/GlassCard.astro` | Glassmorphic container with neon accent | `accent?`, `ariaLabel?`, `class?` | global.css glass-card styles |
+| `HighlightBlock.astro` | `src/components/HighlightBlock.astro` | Compact highlight tile for impact points | `title: string`, `description?`, `class?` | global.css styling |
+| `ProjectCard.astro` | `src/components/ProjectCard.astro` | Project card from content collection | `project: { slug, data }` | VercelImage, global.css card styles |
+| `FeaturedProjectCard.tsx` | `src/components/FeaturedProjectCard.tsx` | Featured, rich project card (React) | `title`, `role`, `description`, `hero`, `detailUrl`, `cta`, `techStack`, `tags` | OptimizedImage, React |
 
-### Media & embeds
+### Media & Images
 
-| Path | Purpose | Key props |
-|---|---|---|
-| `src/components/SpotifyEmbed.astro` | Spotify iframe helper | `src` or (`type`, `id`); `height?`, `title?`, `theme?` |
-| `src/components/VercelImage.astro` | Image helper using Vercel optimizer in prod | `src`, `alt?`, `width?`, `quality?`, `class?` |
-| `src/components/OptimizedImage.tsx` | React image helper (Vercel optimizer aware) | `src`, `width?`, `quality?`, plus `<img>` attrs |
-| `src/components/LightboxGallery.tsx` | React lightbox grid powered by `yet-another-react-lightbox` | `items: { thumbSrc, fullSrc, alt }[]`, `className?` |
-| `src/components/ScreenshotFrame.astro` | Premium framed screenshot with neon/scanlines | `src` (req), `alt` (req), `eager?`, `width?`, `height?`, `class?` |
-| `src/components/TextType.tsx` | Typing/erasing text rotator with cursor | `text` (string or string[]), `typingSpeed?`, `deletingSpeed?`, `pauseDuration?`, `showCursor?`, `cursorCharacter?`, `cursorClassName?`, `className?`, `startOnVisible?` |
+| Component | Path | Purpose | Key Props | Dependencies |
+|-----------|------|---------|-----------|--------------|
+| `VercelImage.astro` | `src/components/VercelImage.astro` | Image helper using Vercel optimizer in production | `src`, `alt?`, `width?`, `quality?`, `class?` | Astro Image component |
+| `OptimizedImage.tsx` | `src/components/OptimizedImage.tsx` | React image helper (Vercel optimizer aware) | `src`, `width?`, `quality?`, plus `<img>` attrs | React, Vercel Image API |
+| `ScreenshotFrame.astro` | `src/components/ScreenshotFrame.astro` | Premium framed screenshot with neon/scanlines | `src` (req), `alt` (req), `eager?`, `width?`, `height?`, `class?` | global.css holo-frame styles |
+| `LightboxGallery.tsx` | `src/components/LightboxGallery.tsx` | React lightbox grid powered by `yet-another-react-lightbox` | `items: { thumbSrc, fullSrc, alt }[]`, `className?` | React, yet-another-react-lightbox |
 
-### Modals
+### Interactive Elements
 
-| Path | Purpose | Key props |
-|---|---|---|
-| `src/components/CreativeModal.astro` | Accessible modal/lightbox for creative items (inline script) | `id` |
+| Component | Path | Purpose | Key Props | Dependencies |
+|-----------|------|---------|-----------|--------------|
+| `ElectricBorder.tsx` | `src/components/ElectricBorder.tsx` | Animated electric border effect using SVG filters | `color?`, `speed?`, `chaos?`, `thickness?`, `className?`, `style?` | React, SVG filters, CSS animations |
+| `NeonCTA.astro` | `src/components/NeonCTA.astro` | Neon-styled call-to-action button | `href`, `text?`, `class?` | global.css neon-cta styles |
+| `SpotifyEmbed.astro` | `src/components/SpotifyEmbed.astro` | Spotify iframe helper with cyberpunk styling | `src` or (`type`, `id`), `height?`, `title?`, `theme?` | Spotify embed API |
 
-## Dependencies between components
+### Icons & Graphics
 
+| Component | Path | Purpose | Key Props | Dependencies |
+|-----------|------|---------|-----------|--------------|
+| `Icon.tsx` | `src/components/icons/Icon.tsx` | Lucide icon wrapper with consistent sizing | `name: string`, `size?: 'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl'`, `className?` | React, Lucide React |
+
+## 🔗 Component Dependencies
+
+### Dependency Graph
 ```mermaid
-graph LR
-  PageHero --> MainLayout
-  ProjectCard --> VercelImage
-  CreativeCard --> VercelImage
-  FeaturedProjectCard --> OptimizedImage
-  Navbar --> /public/scripts/navbar.js
-  Hero --> /public/scripts/matrix-rain.js, HeroAnimationController
-  HeroAnimationController --> DecryptedText, TextType
+graph TD
+  A[MainLayout.astro] --> B[Navbar.astro]
+  A --> C[Footer.astro]
+  B --> D[/public/scripts/navbar.js]
+  
+  E[PageHero.astro] --> A
+  
+  F[Hero.astro] --> G[HeroAnimationController.tsx]
+  G --> H[DecryptedText.tsx]
+  G --> I[TextType.tsx]
+  F --> J[/public/scripts/matrix-rain.js]
+  
+  K[ProjectCard.astro] --> L[VercelImage.astro]
+  M[FeaturedProjectCard.tsx] --> N[OptimizedImage.tsx]
+  
+  O[Footer.astro] --> P[SocialLink.astro]
+  
+  Q[LightboxGallery.tsx] --> R[yet-another-react-lightbox]
+  
+  S[ElectricBorder.tsx] --> T[SVG Filters]
+  S --> U[CSS Animations]
 ```
 
-## Usage examples
-### ProjectCard HUD metadata
+### Script Dependencies
+- **`/public/scripts/navbar.js`**: Mobile navigation toggle and compact navbar behavior
+- **`/public/scripts/matrix-rain.js`**: Matrix-style background animation
+- **`/public/scripts/blog-filter.js`**: Blog post filtering and search functionality
+- **`/public/scripts/contact-form.js`**: Contact form validation and submission
+- **`/public/scripts/theme-init.js`**: Theme initialization and persistence
 
-The `ProjectCard` uses a glassmorphic neon panel with a framed cover image, concise blurb, and a HUD-style metadata block:
+## 🎨 Component Theming
 
-- Focus: highlighted in neon
-- Tech: first three items from `techStack`
+### Design System Integration
+All components use the established design tokens from `src/styles/global.css`:
 
-**Dual CTA Layout:**
-- **Learn More**: Transparent button with document icon, links to case study page
-- **View Live**: Neon holographic button (when `liveUrl` exists), links to external project
+```css
+/* Primary brand colors */
+--primary: #39FF14;        /* Neon Lime */
+--secondary: #00B86B;      /* Digital Emerald */
+--background: #0A0A0A;     /* Matrix Black */
+--foreground: #E8FFE8;     /* Matrix White */
 
-Buttons are stacked vertically on mobile, horizontal on larger screens.
+/* Component-specific utilities */
+.btn-primary, .btn-secondary, .filter-btn-compact
+.glass-card, .holo-frame, .neon-cta
+```
 
-### Navbar Component
+### Responsive Design
+Components follow mobile-first responsive patterns:
 
-The redesigned `Navbar` component features a compact, Matrix-inspired design:
+```css
+/* Example responsive pattern */
+.container {
+  @apply px-4 md:px-6 lg:px-8;
+  @apply py-6 md:py-8 lg:py-12;
+}
 
-**Key Features:**
-- **Compact Height**: 60px desktop, 50px mobile
-- **Neon Styling**: Dark background with neon-lime accents
-- **Active States**: Glowing underline instead of filled buttons
-- **Responsive**: Horizontal desktop nav, hamburger mobile menu
+.hero-content {
+  @apply text-center md:text-left;
+  @apply space-y-4 md:space-y-6;
+}
+```
 
-**Styling Classes:**
-- `.navbar-compact`: Main container with gradient background
-- `.nav-link-desktop`: Desktop navigation links with hover effects
-- `.nav-active-indicator`: Active page glowing underline
-- `.mobile-menu-btn`: Mobile menu button with cyan styling
-- `.mobile-menu`: Mobile dropdown with backdrop blur
+## 📱 Usage Examples
 
-**Future Enhancements:**
-- Background texture support via `.navbar-bg-texture` class
-- Matrix glyph patterns or cyber-grid overlays
-- Enable by uncommenting texture div in component
-
-Minimal `PageHero`:
-
+### Minimal PageHero
 ```astro
 ---
 import PageHero from '../components/PageHero.astro';
 ---
-<PageHero title="Projects" description="Selected work" bgSlug="projects-bg" eager />
+<PageHero 
+  title="Projects" 
+  description="Selected work and case studies" 
+  bgSlug="projects-bg" 
+  eager 
+/>
 ```
 
-Hero with dynamic subtitle:
-
+### Hero with Animation Sequence
 ```astro
 ---
 import Hero from '../components/Hero.astro';
 ---
 <Hero />
 <!-- Automatically includes:
-- Matrix rain background
-- Avatar with neon glow
+- Matrix rain background via matrix-rain.js
+- Avatar with ElectricBorder animation
 - HeroAnimationController managing:
-  - DecryptedText headline
-  - DecryptedText subtitle
-  - TextType quotes (starts immediately after headline completion)
-- CTA buttons with animations (triggered after first quote completes) -->
+  - DecryptedText headline animation
+  - TextType subtitle with rotating quotes (starts immediately)
+  - CTA buttons (animate after first quote completes)
+- Timing: Typing 45ms, deleting 25ms, pause 1500ms between quotes -->
 ```
 
-Glass card + CTA snippet:
-
+### Glass Card with CTA
 ```astro
 ---
 import GlassCard from '../components/GlassCard.astro';
 import NeonCTA from '../components/NeonCTA.astro';
 ---
-<GlassCard class="mb-6">
-  <p class="text-sm text-text-muted">Concise body copy inside a glass card.</p>
+<GlassCard class="mb-6" accent>
+  <p class="text-sm text-text-muted">
+    Concise body copy inside a glass card with neon accent line.
+  </p>
 </GlassCard>
 <NeonCTA href="https://example.com">View Live Project</NeonCTA>
 ```
+
+### Project Card with HUD Metadata
+```astro
+---
+import ProjectCard from '../components/ProjectCard.astro';
+---
+<ProjectCard project={project} />
+<!-- Features:
+- Glassmorphic neon panel with framed cover image
+- Concise blurb and HUD-style metadata block
+- Tech stack highlights (first three items)
+- Dual CTA layout: Learn More + View Live (when available)
+- Responsive: vertical stack on mobile, horizontal on desktop -->
+```
+
+### Electric Border Avatar
+```tsx
+import ElectricBorder from '../components/ElectricBorder';
+
+<ElectricBorder
+  color="#39FF14"
+  speed={1}
+  chaos={0.5}
+  thickness={2}
+  style={{ borderRadius: '50%' }}
+>
+  <img src="/avatar.png" alt="Avatar" />
+</ElectricBorder>
+```
+
+## 🔧 Component Development
+
+### Adding New Components
+1. **Choose Framework**: Prefer Astro for static content, React only for interactivity
+2. **Follow Naming**: Use PascalCase for component files
+3. **Type Props**: Define TypeScript interfaces for all props
+4. **Accessibility**: Include proper ARIA labels and keyboard navigation
+5. **Styling**: Use existing design tokens and Tailwind utilities
+
+### Component Template
+```typescript
+// src/components/NewComponent.tsx
+import React from 'react';
+
+interface NewComponentProps {
+  title: string;
+  description?: string;
+  className?: string;
+}
+
+export default function NewComponent({ 
+  title, 
+  description, 
+  className = '' 
+}: NewComponentProps) {
+  return (
+    <div className={`glass-card ${className}`}>
+      <h3 className="neon-heading">{title}</h3>
+      {description && <p className="text-muted">{description}</p>}
+    </div>
+  );
+}
+```
+
+### Testing Components
+```bash
+# Build validation
+pnpm build
+
+# Type checking
+pnpm astro check
+
+# Linting
+pnpm lint
+
+# Manual testing checklist
+- [ ] Responsive design (mobile, tablet, desktop)
+- [ ] Accessibility (screen reader, keyboard navigation)
+- [ ] Performance (no layout shifts, efficient rendering)
+- [ ] Brand consistency (colors, typography, spacing)
+```
+
+## 🎯 Performance Considerations
+
+### Astro vs React
+- **Astro Components**: Render to HTML at build time, zero JavaScript
+- **React Islands**: Hydrate on demand, use sparingly for interactivity
+- **Client Directives**: `client:load` for immediate hydration, `client:visible` for lazy loading
+
+### Image Optimization
+- **VercelImage**: Automatic optimization in production
+- **OptimizedImage**: React wrapper with lazy loading
+- **Picture Elements**: WebP/AVIF with fallbacks
+- **Lazy Loading**: Images load as they enter viewport
+
+### Bundle Optimization
+- **Tree Shaking**: Only used components included in bundle
+- **Code Splitting**: Automatic by Astro for optimal performance
+- **CSS Inlining**: Critical styles inlined for fast rendering
+
+## ♿ Accessibility Features
+
+### ARIA Implementation
+- **Labels**: Descriptive `aria-label` for interactive elements
+- **Roles**: Proper semantic roles for complex components
+- **States**: ARIA states for dynamic content updates
+- **Live Regions**: Announcements for screen readers
+
+### Keyboard Navigation
+- **Tab Order**: Logical tab sequence through components
+- **Focus Management**: Clear focus indicators with neon styling
+- **Skip Links**: Available for keyboard users
+- **Shortcuts**: Keyboard shortcuts for power users
+
+### Motion Preferences
+```css
+@media (prefers-reduced-motion: reduce) {
+  .animate-glow,
+  .animate-pulse-slow,
+  .animate-spin-slow,
+  .animate-bounce-slow,
+  .animate-float,
+  .animate-matrix-rain {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+```
+
+## 🔄 Future Enhancements
+
+### shadcn/ui Integration
+When adopting shadcn/ui components:
+
+```typescript
+// Map design tokens to shadcn/ui theme
+const theme = {
+  colors: {
+    primary: "hsl(var(--primary))",
+    secondary: "hsl(var(--secondary))",
+    background: "hsl(var(--background))",
+    foreground: "hsl(var(--foreground))",
+  },
+  borderRadius: {
+    lg: "var(--radius)",
+    md: "calc(var(--radius) - 2px)",
+  },
+}
+```
+
+### Animation Library
+If adding Framer Motion later:
+
+```typescript
+// Keep animations subtle and performant
+const variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.3, ease: "easeOut" }
+  }
+};
+```
+
+---
+
+**This component system prioritizes consistency, accessibility, and performance while maintaining the Matrix-inspired cyberpunk aesthetic. Use existing patterns and tokens for new components to ensure brand consistency.**
