@@ -10,6 +10,9 @@ export interface Props {
   loading?: 'eager' | 'lazy';
   decoding?: 'auto' | 'sync' | 'async';
   fetchpriority?: 'high' | 'low' | 'auto';
+  format?: 'auto' | 'webp' | 'avif' | 'png' | 'jpg';
+  placeholder?: 'blur' | 'dominantColor' | 'none';
+  blurDataURL?: string;
 }
 
 const props = Astro.props as Props;
@@ -18,12 +21,15 @@ const {
   alt = '',
   width = 1200,
   height = 800,
-  quality = 75,
+  quality = 80,
   class: className = '',
   sizes = '100vw',
   loading = 'lazy',
   decoding = 'async',
   fetchpriority = 'auto',
+  format = 'auto',
+  placeholder = 'none',
+  blurDataURL = '',
 } = props;
 
 // Build an absolute source URL in production so Vercel's optimizer can always fetch it
@@ -35,11 +41,41 @@ if (import.meta.env.MODE === 'production') {
   if (!isSameOriginPath && isAbsolute) {
     const site = typeof Astro !== 'undefined' && Astro.site ? String(Astro.site) : '';
     const absoluteSrc = src.startsWith('http') ? src : `${site.replace(/\/$/, '')}${src}`;
-    optimizedURL = `/_vercel/image?url=${encodeURIComponent(absoluteSrc)}&w=${width}&q=${quality}`;
+    
+    // 2025 Best Practices: Enhanced Vercel Image optimization
+    const params = new URLSearchParams({
+      url: absoluteSrc,
+      w: width.toString(),
+      q: quality.toString(),
+      f: format === 'auto' ? 'auto' : format,
+    });
+    
+    // Add placeholder support for better UX
+    if (placeholder !== 'none') {
+      params.append('placeholder', placeholder);
+    }
+    
+    optimizedURL = `/_vercel/image?${params.toString()}`;
   }
 }
 
 const isDecorative = (alt || '').trim() === '';
+
+// 2025 Best Practices: Enhanced responsive image attributes
+const responsiveAttributes: Record<string, string> = {
+  // Modern responsive image attributes
+  'data-loading': loading,
+  'data-decoding': decoding,
+  'data-fetchpriority': fetchpriority,
+  // Performance optimizations
+  'data-format': format,
+  'data-placeholder': placeholder,
+};
+
+// Add blur data URL if provided for better loading experience
+if (blurDataURL) {
+  responsiveAttributes['data-blur'] = blurDataURL;
+}
 ---
 
 <img
@@ -54,4 +90,5 @@ const isDecorative = (alt || '').trim() === '';
   fetchpriority={fetchpriority}
   aria-hidden={isDecorative ? 'true' : undefined}
   role={isDecorative ? 'presentation' : undefined}
+  {...responsiveAttributes}
 /> 

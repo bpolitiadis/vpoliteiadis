@@ -101,3 +101,14 @@ Desktop.ini
 
 # Personal/Professional files
 professional-identity.md
+
+# 2025 Best Practices: Ignore generated optimized images
+# These are build artifacts that should be generated during build/deploy
+public/images/*.avif
+public/images/*.webp
+public/images/*.png
+public/images/*.jpg
+public/images/*.jpeg
+
+# Keep source images committed
+!src/assets/images/
