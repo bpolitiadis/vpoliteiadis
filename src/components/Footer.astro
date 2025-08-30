@@ -1,6 +1,4 @@
 ---
-import { Image } from 'astro:assets';
-import vpLogo from '../assets/images/vp-logo.png';
 import SocialLink from './SocialLink.astro';
 import { getAllSocialProfiles } from '../lib/social-config';
 
@@ -18,19 +16,17 @@ const currentYear = new Date().getFullYear();
         <!-- Left: VP monogram logo with subtle glow -->
         <a href="/" class="flex items-center gap-2 group" aria-label="Go to homepage">
           <div class="relative">
-            <Image
-              src={vpLogo}
+            <img
+              src="/src/assets/images/vp-logo.png"
               alt="Vasileios Politeiadis logo"
-              width={24}
-              height={24}
+              width="24"
+              height="24"
               class="w-6 h-6 rounded-md transition-transform duration-200 group-hover:scale-105"
             />
             <!-- Subtle glow effect -->
             <div class="absolute inset-0 rounded-md bg-neon-lime/15 blur-sm group-hover:bg-neon-lime/25 transition-opacity duration-200"></div>
           </div>
-          <span class="font-orbitron text-neon-lime text-sm tracking-wide transition-colors group-hover:text-neon-lime/90">
-            VP
-          </span>
+          
         </a>
 
         <!-- Center: copyright text -->

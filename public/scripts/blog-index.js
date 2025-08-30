@@ -7,7 +7,6 @@
   const clearFiltersBtn = document.getElementById('clear-filters');
 
   let activeTag = 'all';
-  let searchQuery = '';
 
   // Lookup maps curated chips to multiple synonyms for robust filtering
   function getActiveSynonyms(tag) {
@@ -27,7 +26,6 @@
     // Reset search
     if (searchInput) {
       searchInput.value = '';
-      searchQuery = '';
     }
     
     // Reset tag filter
@@ -48,7 +46,6 @@
 
   function applyFilters() {
     const q = normalize(searchInput && searchInput.value);
-    searchQuery = q;
     const synonyms = getActiveSynonyms(activeTag);
 
     let visibleCount = 0;

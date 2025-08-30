@@ -27,20 +27,16 @@ const navItems = [
       <div class="flex-shrink-0">
         <a href="/" class="flex items-center space-x-3 group" aria-label="Vasileios Politeiadis - Home">
           <div class="logo-container relative">
-            <picture>
-              <source srcset="/images/vp-logo-480.avif 480w" type="image/avif" />
-              <source srcset="/images/vp-logo-480.webp 480w" type="image/webp" />
-              <img 
-                src="/images/vp-logo-480.webp" 
-                alt="Vasileios Politeiadis logo"
-                class="w-7 h-7 md:w-8 md:h-8 rounded-md object-contain transition-transform duration-200 group-hover:scale-105"
-                width="32" height="32"
-                loading="eager"
-                decoding="async"
-                fetchpriority="high"
-                sizes="(max-width: 768px) 28px, 32px"
-              />
-            </picture>
+            <img 
+              src="/src/assets/images/vp-logo.png" 
+              alt="Vasileios Politeiadis logo"
+              class="w-7 h-7 md:w-8 md:h-8 rounded-md object-contain transition-transform duration-200 group-hover:scale-105"
+              width="32" height="32"
+              loading="eager"
+              decoding="async"
+              fetchpriority="high"
+              sizes="(max-width: 768px) 28px, 32px"
+            />
             <!-- Subtle neon glow effect -->
             <div class="logo-glow absolute inset-0 rounded-md bg-neon-lime/15 blur-sm group-hover:bg-neon-lime/25 transition-all duration-200" aria-hidden="true"></div>
           </div>

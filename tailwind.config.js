@@ -6,26 +6,16 @@ export default {
     './src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}',
     './public/scripts/**/*.js'
   ],
-  // Ensure dynamic classes passed via props are never purged
+  // Optimized safelist - only include classes that are dynamically generated
   safelist: [
-    // Opacity levels we use for page backgrounds
-    'opacity-40','opacity-50','opacity-60','opacity-70','opacity-80',
-    // Gradient overlay strengths used for backgrounds
-    'from-black/20','from-black/30','via-black/10','via-black/15','to-black/25','to-black/35',
-    // Attachment helper if enabled later
-    'bg-fixed','bg-local','bg-scroll',
-    // CTA link class used in cards
-    'btn-link',
-    // Filter button states
-    'filter-btn-compact',
-    // Search and filter layout classes
-    'max-w-4xl','pl-12','focus:ring-2','focus:ring-primary/20','backdrop-blur-sm',
-    // Responsive aspect ratios for project cards
-    'aspect-[16/10]','aspect-[16/9]','aspect-[16/8]',
-    // Responsive grid layouts
-    'grid-cols-1','lg:grid-cols-2','gap-6','sm:gap-8','lg:gap-10','xl:gap-12',
-    // StarBorder component classes
-    'animate-star-movement-bottom','animate-star-movement-top'
+    // Essential opacity levels for dynamic backgrounds
+    'opacity-40', 'opacity-50', 'opacity-60', 'opacity-70', 'opacity-80',
+    // Critical gradient overlays
+    'from-black/20', 'from-black/30', 'via-black/10', 'via-black/15', 'to-black/25', 'to-black/35',
+    // Essential responsive grid classes
+    'grid-cols-1', 'lg:grid-cols-2', 'gap-6', 'sm:gap-8', 'lg:gap-10', 'xl:gap-12',
+    // Animation classes for dynamic content
+    'animate-star-movement-bottom', 'animate-star-movement-top'
   ],
   darkMode: ['class', 'class'],
   
@@ -139,7 +129,7 @@ export default {
   			'3/2': '3 / 2',
   			'2/1': '2 / 1'
   		},
-  				animation: {
+  		animation: {
 			glow: 'glow 2s ease-in-out infinite alternate',
 			'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
 			'fade-in': 'fadeIn 0.5s ease-in-out',
@@ -217,7 +207,7 @@ export default {
   					transform: 'translateY(100vh)'
   				}
   			},
-  						scaleSmooth: {
+  			scaleSmooth: {
 				'0%': {
 					transform: 'scale(1)'
 				},
@@ -370,6 +360,6 @@ export default {
       }
       addUtilities(newUtilities)
     },
-      require("tailwindcss-animate")
-],
+    require("tailwindcss-animate")
+  ],
 };

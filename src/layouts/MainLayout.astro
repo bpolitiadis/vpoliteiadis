@@ -71,9 +71,10 @@ const ogImageURL = new URL(image, Astro.site);
     <link rel="me" href="https://www.instagram.com/arte.imaginari/" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/images/avatar.webp" type="image/webp" />
-    <link rel="shortcut icon" href="/images/avatar.webp" type="image/webp" />
-    <link rel="apple-touch-icon" href="/images/avatar.webp" />
+    <link rel="icon" href="/src/assets/images/vp-logo.png" type="image/png" />
+    <link rel="shortcut icon" href="/src/assets/images/vp-logo.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/src/assets/images/vp-logo.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     {keywords && (
@@ -108,7 +109,7 @@ const ogImageURL = new URL(image, Astro.site);
     <meta name="color-scheme" content="dark" />
     
     <!-- Structured data for SEO -->
-    <script type="application/ld+json" set:html={JSON.stringify({
+    <script type="application/ld+json" is:inline set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Vasileios Politeiadis",
@@ -268,7 +269,7 @@ const ogImageURL = new URL(image, Astro.site);
     <!-- Theme initialization (external, CSP-safe) -->
     <script is:inline src="/scripts/theme-init.js" defer></script>
     <!-- Performance optimization script -->
-    <script src="/scripts/performance.js" defer></script>
+    <script is:inline src="/scripts/performance.js" defer></script>
   </body>
 </html>
 

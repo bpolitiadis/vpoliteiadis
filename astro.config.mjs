@@ -11,6 +11,27 @@ import rehypeSanitize from 'rehype-sanitize';
 export default defineConfig({
   site: 'https://vpoliteiadis.com',
   output: 'static',
+  // Performance optimizations
+  build: {
+    inlineStylesheets: 'auto',
+  },
+  // Vite optimizations
+  vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'react-vendor': ['react', 'react-dom'],
+            'ui-vendor': ['@radix-ui/react-avatar', '@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-label', '@radix-ui/react-progress', '@radix-ui/react-select', '@radix-ui/react-slot'],
+            'animation-vendor': ['gsap', 'motion'],
+          },
+        },
+      },
+    },
+    ssr: {
+      noExternal: ['@radix-ui/*'],
+    },
+  },
   integrations: [
     sitemap({
       changefreq: 'weekly',
@@ -43,7 +64,11 @@ export default defineConfig({
         ],
       ],
     }),
-    react(),
+    react({
+      // React optimization settings
+      include: ['**/*.{tsx,jsx}'],
+      experimentalReactChildren: true,
+    }),
     tailwind(),
   ],
   // Rely on Astro 5+ defaults for build and Vite configuration.
