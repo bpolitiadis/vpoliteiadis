@@ -59,7 +59,7 @@ async function processImage(filePath) {
     if (width > metadata.width) continue;
     
     for (const fmt of formats) {
-      const out = path.join(outputDir, `${base}-${width}.${fmt.ext}`);
+      const out = path.join(outputDir, `${base}-${width}w.${fmt.ext}`);
       if (fs.existsSync(out)) continue;
       
       try {

@@ -37,8 +37,12 @@ let optimizedURL = src;
 if (import.meta.env.MODE === 'production') {
   const isAbsolute = /^https?:\/\//.test(src);
   const isSameOriginPath = src.startsWith('/') || src.startsWith('_astro');
-  // For local static assets (/_astro/* or /images/*), avoid optimizer to prevent 404s
-  if (!isSameOriginPath && isAbsolute) {
+  
+  // For local static assets (/_astro/* or /images/*), use them directly
+  if (isSameOriginPath) {
+    optimizedURL = src; // Use local path directly
+  } else if (isAbsolute) {
+    // For external URLs, use Vercel's optimizer
     const site = typeof Astro !== 'undefined' && Astro.site ? String(Astro.site) : '';
     const absoluteSrc = src.startsWith('http') ? src : `${site.replace(/\/$/, '')}${src}`;
     
