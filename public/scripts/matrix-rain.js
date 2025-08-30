@@ -43,6 +43,10 @@ function initMatrixRain() {
   var lastUpdateTimestamp;
   var rowsPerSecond = 14; // tuned for a classic Matrix-like pace
   var stepMs = 1000 / rowsPerSecond;
+  
+  // Track if matrix has filled the screen to trigger hero sequence
+  var hasFilledScreen = false;
+  var screenFillThreshold = 0.7; // 70% of screen filled
 
   function draw(now) {
     if (lastUpdateTimestamp === undefined) {
@@ -64,6 +68,8 @@ function initMatrixRain() {
     context.fillStyle = '#39FF14';
     context.font = fontSize + 'px monospace';
 
+    // Count how many drops are active to determine screen fill
+    var activeDrops = 0;
     for (var i = 0; i < drops.length; i++) {
       var text = matrix[Math.floor(Math.random() * matrix.length)];
       context.fillText(text, i * fontSize, drops[i] * fontSize);
@@ -71,7 +77,25 @@ function initMatrixRain() {
         drops[i] = 0;
       }
       drops[i] = drops[i] + 1;
+      
+      // Count drops that are visible on screen
+      if (drops[i] * fontSize > 0 && drops[i] * fontSize < canvas.height) {
+        activeDrops++;
+      }
     }
+    
+    // Check if matrix has filled enough of the screen to trigger hero sequence
+    var screenFillRatio = activeDrops / columns;
+    if (!hasFilledScreen && screenFillRatio >= screenFillThreshold) {
+      hasFilledScreen = true;
+      console.log('🌊 Matrix rain has filled the screen, starting hero sequence');
+      
+      // Trigger hero sequence by dispatching a custom event
+      window.dispatchEvent(new CustomEvent('matrixRainFilled', {
+        detail: { screenFillRatio, activeDrops, totalColumns: columns }
+      }));
+    }
+    
     rafId = window.requestAnimationFrame(draw);
   }
 

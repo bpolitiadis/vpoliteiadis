@@ -109,3 +109,4 @@ Rationale: smaller hero reduces scroll friction and highlights primary content i
 - Use CSS keyframes/utilities for most effects. Framer Motion is not installed; if added later, keep durations 200–500ms and apply stagger minimally.
 - Respect `prefers-reduced-motion: reduce` (already handled in `global.css`).
 - Navbar animations: subtle hover effects, smooth transitions, glowing indicators.
+- Hero animations: DecryptedText headline → TextType subtitle (immediate start) → CTA buttons (after first quote).

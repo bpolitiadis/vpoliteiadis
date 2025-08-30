@@ -11,7 +11,7 @@ What you’ll learn: route inventory, data sources, SEO notes, relationships.
 
 | Route | File | Data source | Key components | SEO notes |
 |---|---|---|---|---|
-| `/` | `src/pages/index.astro` | — | `Hero`, `MainLayout` | Home hero, background via layout |
+| `/` | `src/pages/index.astro` | — | `Hero`, `MainLayout` | Home hero with immediate TextType animation, background via layout |
 | `/about` | `src/pages/about.astro` | — | `MainLayout` | Eager bg image |
 | `/contact` | `src/pages/contact.astro` | — | `PageHero` | Form markup + `/scripts/contact-form.js` |
 | `/projects` | `src/pages/projects/index.astro` | `getCollection('projects')` | `PageHero`, `ProjectCard` | Featured filter, bg `projects-bg` |

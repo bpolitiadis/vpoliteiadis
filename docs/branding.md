@@ -98,7 +98,8 @@ A dual-persona brand—**Full-Stack Developer + Automation Engineer** and **Visi
 - **Hero Section:**
 
   - Your stylized portrait or neon "VP" logo
-  - Holographic headline text
+  - Holographic headline text with DecryptedText effect
+  - Dynamic subtitle with TextType rotating quotes (starts immediately)
   - Matrix-style flowing glyphs in the background.
 
 - **Icons:** Line-based, neon-accented, minimalist.

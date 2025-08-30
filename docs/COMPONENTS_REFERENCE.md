@@ -27,6 +27,7 @@ What you'll learn: inventory, purpose, props, and dependencies.
 | Path | Purpose | Key props |
 |---|---|---|
 | `src/components/Hero.astro` | Home hero with matrix rain and dynamic subtitle | — |
+| `src/components/HeroAnimationController.tsx` | React component managing hero animation sequence | `quotes` (string[]) |
 | `src/components/PageHero.astro` | Page hero with optional background | `title` (req), `description?`, `bgSlug?`, `metaText?`, `eager?` |
 | `src/components/GlassCard.astro` | Glassmorphic container with neon accent | `accent?`, `ariaLabel?`, `class?` |
 | `src/components/HighlightBlock.astro` | Compact highlight tile for impact points | `title` (req), `description?`, `class?` |
@@ -65,7 +66,8 @@ graph LR
   CreativeCard --> VercelImage
   FeaturedProjectCard --> OptimizedImage
   Navbar --> /public/scripts/navbar.js
-  Hero --> /public/scripts/matrix-rain.js, TextType
+  Hero --> /public/scripts/matrix-rain.js, HeroAnimationController
+  HeroAnimationController --> DecryptedText, TextType
 ```
 
 ## Usage examples
@@ -123,9 +125,11 @@ import Hero from '../components/Hero.astro';
 <!-- Automatically includes:
 - Matrix rain background
 - Avatar with neon glow
-- DecryptedText headline
-- Dynamic subtitle with TextType quotes
-- CTA buttons with animations -->
+- HeroAnimationController managing:
+  - DecryptedText headline
+  - DecryptedText subtitle
+  - TextType quotes (starts immediately after headline completion)
+- CTA buttons with animations (triggered after first quote completes) -->
 ```
 
 Glass card + CTA snippet:
