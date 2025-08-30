@@ -171,9 +171,6 @@ const finalStructuredData = structuredData ? { ...baseStructuredData, ...structu
     <link rel="dns-prefetch" href="//fonts.googleapis.com" />
     <link rel="dns-prefetch" href="//fonts.gstatic.com" />
     
-    <!-- Preload critical images for LCP optimization -->
-    <link rel="preload" as="image" href="/images/avatar.webp" type="image/webp" />
-    
     <!-- Performance meta tags -->
     <meta name="color-scheme" content="dark" />
     
@@ -320,20 +317,7 @@ const finalStructuredData = structuredData ? { ...baseStructuredData, ...structu
               fetchpriority={bgEager ? 'high' : 'auto'}
             />
           ) : (
-            <picture>
-              <source srcset={`/images/${bgSlug}-1200.avif 1200w, /images/${bgSlug}-800.avif 800w, /images/${bgSlug}-480.avif 480w`} type="image/avif" />
-              <source srcset={`/images/${bgSlug}-1200.webp 1200w, /images/${bgSlug}-800.webp 800w, /images/${bgSlug}-480.webp 480w`} type="image/webp" />
-              <img 
-                src={`/images/${bgSlug}.png`}
-                alt=""
-                class={`w-full h-full object-cover ${bgOpacityClass}`}
-                width="2400" height="1400"
-                loading={bgEager ? 'eager' : 'lazy'}
-                decoding="async"
-                fetchpriority={bgEager ? 'high' : 'low'}
-                sizes="100vw"
-              />
-            </picture>
+            <div class="w-full h-full bg-gradient-to-br from-matrix-black via-cyber-gray to-matrix-black"></div>
           )}
           <div class={`absolute inset-0 bg-gradient-to-b ${bgOverlayClass}`}></div>
         </div>

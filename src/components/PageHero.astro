@@ -15,26 +15,27 @@ export interface Props {
   eager?: boolean;
 }
 
-const { title, description, bgSlug, metaText, eager = false } = Astro.props;
+const { title, description, bgSlug, metaText } = Astro.props;
 ---
 
 <section class="relative py-8 md:py-12 overflow-hidden">
   {bgSlug && (
     <div class="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
-      <picture>
+      {/* Background image - removed to avoid 404s */}
+      {/* <picture>
         <source srcset={`/images/${bgSlug}-1200.avif 1200w, /images/${bgSlug}-800.avif 800w, /images/${bgSlug}-480.avif 480w`} type="image/avif" />
         <source srcset={`/images/${bgSlug}-1200.webp 1200w, /images/${bgSlug}-800.webp 800w, /images/${bgSlug}-480.webp 480w`} type="image/webp" />
         <img 
-          src={`/images/${bgSlug}.png`} 
+          src={`/images/${bgSlug}.png`}
           alt=""
-          class="w-full h-full object-cover opacity-40 md:opacity-50"
-          width="2400" height="1400"
-          loading={eager ? 'eager' : 'lazy'}
+          class="absolute inset-0 -z-10 h-full w-full object-cover object-center opacity-40 md:opacity-50"
+          aria-hidden="true"
+          loading="eager"
+          fetchpriority="high"
           decoding="async"
-          fetchpriority={eager ? 'high' : 'low'}
           sizes="100vw"
         />
-      </picture>
+      </picture> */}
       <div class="absolute inset-0 bg-gradient-to-br from-black/40 via-black/25 to-black/40"></div>
     </div>
   )}

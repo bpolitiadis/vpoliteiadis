@@ -39,6 +39,7 @@
 
 | Route | File | Purpose | Implementation | Notes |
 |-------|------|---------|----------------|-------|
+| `/404` | `src/pages/404.astro` | Error page | Static generation | Matrix-themed 404 with navigation help |
 | `/robots.txt` | `src/pages/robots.txt.ts` | Crawler configuration | Dynamic generation | Allows common AI bots, sitemap links |
 | `/ai.txt` | `src/pages/ai.txt.ts` | AI crawling policy | Dynamic generation | Community AI policy declaration |
 | `/sitemap-index.xml` | Auto-generated | Sitemap index | Astro sitemap integration | Links to collection-specific sitemaps |
@@ -61,6 +62,7 @@ src/pages/
 ├── index.astro                    # Homepage with hero animation
 ├── about.astro                    # About page with compact hero
 ├── contact.astro                  # Contact form with validation
+├── 404.astro                     # Matrix-themed 404 error page
 ├── projects/
 │   ├── index.astro               # Projects grid with filtering
 │   └── [slug].astro              # Dynamic project case study
@@ -121,6 +123,39 @@ export async function getStaticPaths() {
 ```
 
 ### Utility Route Implementation
+
+#### 404 Error Page
+```astro
+<!-- src/pages/404.astro -->
+<MainLayout 
+  title="Page Not Found - 404 Error | Vasileios Politeiadis"
+  description="The page you're looking for doesn't exist. Navigate back to the main portfolio or explore our projects and blog."
+  currentPath="/404"
+  structuredData={errorStructuredData}
+>
+  <!-- Matrix Rain Background Canvas -->
+  <canvas id="matrixCanvas" class="w-full h-full opacity-20"></canvas>
+  
+  <!-- 404 Content with Matrix Theme -->
+  <section class="min-h-screen flex items-center justify-center">
+    <!-- Large 404 number with neon effects -->
+    <!-- Error message with cyberpunk styling -->
+    <!-- Action buttons for navigation -->
+    <!-- Suggested pages grid -->
+    <!-- Technical details for developers -->
+  </section>
+</MainLayout>
+```
+
+**Features:**
+- **Matrix Rain Background**: Animated digital rain effect using existing matrix-rain.js
+- **Neon Typography**: Large 404 number with gradient and glitch effects
+- **Cyberpunk Messaging**: Themed error text with brand colors
+- **Navigation Help**: Primary CTA to return home, secondary to report issues
+- **Suggested Pages**: Grid of common pages to help users find content
+- **Technical Details**: Expandable section with error information for developers
+- **Accessibility**: Proper ARIA labels, focus states, and reduced motion support
+- **SEO**: Structured data and meta tags for search engines
 
 #### Robots.txt
 ```typescript
