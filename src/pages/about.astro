@@ -4,6 +4,9 @@ import { Image } from 'astro:assets';
 import avatarSrc from '../assets/images/avatar.png';
 import arteImaginariAvatar from '../assets/images/arte-imaginari-avatar.png';
 import { GraduationIcon, AwardIcon, MonitorIcon, PaletteIcon } from '../components/icons/Icon';
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Badge } from '../components/ui/badge';
+import { Button } from '../components/ui/button';
 ---
 
 <MainLayout 
@@ -33,310 +36,329 @@ import { GraduationIcon, AwardIcon, MonitorIcon, PaletteIcon } from '../componen
     <div class="max-w-5xl xl:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 md:space-y-10">
       
       <!-- Professional Identity Summary -->
-      <div class="card fade-in-card" data-delay="0">
-        <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-6 text-shadow-neon flex items-center gap-3">
-          <AwardIcon size="lg" className="text-neon-lime" aria-label="Professional identity icon" />
-          Professional Summary
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-          <div class="p-4 rounded-xl flex flex-col transition-all duration-300 hover:bg-cyber-gray/20 hover:-translate-y-1 hover:shadow-neon">
-            <h3 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald leading-tight text-[1.05rem] md:text-lg">🤖 QA Automation Specialist</h3>
-            <p class="text-sm text-matrix-white/80 mb-3 flex-grow">European Commission projects, end-to-end QA processes, Java, Selenium, Playwright</p>
-            <div class="flex flex-wrap gap-2 mt-auto">
-              <span class="inline-block bg-digital-emerald/10 text-digital-emerald px-2 py-1 rounded text-xs border border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 transition-all duration-200">Java</span>
-              <span class="inline-block bg-digital-emerald/10 text-digital-emerald px-2 py-1 rounded text-xs border border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 transition-all duration-200">Selenium</span>
-              <span class="inline-block bg-digital-emerald/10 text-digital-emerald px-2 py-1 rounded text-xs border border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 transition-all duration-200">Playwright</span>
-            </div>
+      <Card className="fade-in-card border-neon-lime/20 bg-matrix-black/60 backdrop-blur-md" data-delay="0">
+        <CardHeader>
+          <CardTitle className="text-2xl font-orbitron font-bold text-neon-lime text-shadow-neon flex items-center gap-3">
+            <AwardIcon size="lg" className="text-neon-lime" aria-label="Professional identity icon" />
+            Professional Summary
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            <Card className="border-digital-emerald/20 bg-cyber-gray/20 hover:bg-cyber-gray/30 hover:border-digital-emerald/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-emerald">
+              <CardContent className="p-4">
+                <h3 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald leading-tight text-[1.05rem] md:text-lg">🤖 QA Automation Specialist</h3>
+                <p class="text-sm text-matrix-white/80 mb-3 flex-grow">European Commission projects, end-to-end QA processes, Java, Selenium, Playwright</p>
+                <div class="flex flex-wrap gap-2 mt-auto">
+                  <Badge variant="secondary" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50">Java</Badge>
+                  <Badge variant="secondary" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50">Selenium</Badge>
+                  <Badge variant="secondary" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50">Playwright</Badge>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="border-digital-emerald/20 bg-cyber-gray/20 hover:bg-cyber-gray/30 hover:border-digital-emerald/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-emerald">
+              <CardContent className="p-4">
+                <h3 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald leading-tight text-[1.05rem] md:text-lg">💻 Full-Stack Developer</h3>
+                <p class="text-sm text-matrix-white/80 mb-3 flex-grow">Modern web applications, React, Next.js, Supabase, cloud deployment</p>
+                <div class="flex flex-wrap gap-2 mt-auto">
+                  <Badge variant="secondary" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50">React</Badge>
+                  <Badge variant="secondary" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50">Next.js</Badge>
+                  <Badge variant="secondary" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50">Supabase</Badge>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="border-digital-emerald/20 bg-cyber-gray/20 hover:bg-cyber-gray/30 hover:border-digital-emerald/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-emerald">
+              <CardContent className="p-4">
+                <h3 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald leading-tight text-[1.05rem] md:text-lg">🔧 AI-Powered Solutions</h3>
+                <p class="text-sm text-matrix-white/80 mb-3 flex-grow">AI tools, automation, streamlined workflows, smarter digital solutions</p>
+                <div class="flex flex-wrap gap-2 mt-auto">
+                  <Badge variant="secondary" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50">AI Automation</Badge>
+                  <Badge variant="secondary" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50">Productivity</Badge>
+                  <Badge variant="secondary" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50">Innovation</Badge>
+                </div>
+              </CardContent>
+            </Card>
           </div>
-          <div class="p-4 rounded-xl flex flex-col transition-all duration-300 hover:bg-cyber-gray/20 hover:-translate-y-1 hover:shadow-neon">
-            <h3 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald leading-tight text-[1.05rem] md:text-lg">💻 Full-Stack Developer</h3>
-            <p class="text-sm text-matrix-white/80 mb-3 flex-grow">Modern web applications, React, Next.js, Supabase, cloud deployment</p>
-            <div class="flex flex-wrap gap-2 mt-auto">
-              <span class="inline-block bg-digital-emerald/10 text-digital-emerald px-2 py-1 rounded text-xs border border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 transition-all duration-200">React</span>
-              <span class="inline-block bg-digital-emerald/10 text-digital-emerald px-2 py-1 rounded text-xs border border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 transition-all duration-200">Next.js</span>
-              <span class="inline-block bg-digital-emerald/10 text-digital-emerald px-2 py-1 rounded text-xs border border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 transition-all duration-200">Supabase</span>
-            </div>
-          </div>
-          <div class="p-4 rounded-xl flex flex-col transition-all duration-300 hover:bg-cyber-gray/20 hover:-translate-y-1 hover:shadow-neon">
-            <h3 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald leading-tight text-[1.05rem] md:text-lg">🔧 AI-Powered Solutions</h3>
-            <p class="text-sm text-matrix-white/80 mb-3 flex-grow">AI tools, automation, streamlined workflows, smarter digital solutions</p>
-            <div class="flex flex-wrap gap-2 mt-auto">
-              <span class="inline-block bg-digital-emerald/10 text-digital-emerald px-2 py-1 rounded text-xs border border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 transition-all duration-200">AI Automation</span>
-              <span class="inline-block bg-digital-emerald/10 text-digital-emerald px-2 py-1 rounded text-xs border border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 transition-all duration-200">Productivity</span>
-              <span class="inline-block bg-digital-emerald/10 text-digital-emerald px-2 py-1 rounded text-xs border border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 transition-all duration-200">Innovation</span>
-            </div>
-          </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <!-- Current Role & Education -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
-
-        
-      </div>
-
-      <!-- Professional Timeline & Skills Matrix - 2 Column Layout with Equal Heights -->
+      <!-- Professional Timeline & Skills Matrix - 2 Column Layout -->
       <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 md:gap-10 mb-10">
         
         <!-- Left Column: Professional Timeline -->
-        <div class="card fade-in-card" data-delay="1" data-reveal-group="career">
-          <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-10 text-shadow-neon flex items-center gap-3">
-            <svg class="w-6 h-6 text-neon-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" />
-              <polyline points="12,6 12,12 16,14" />
-            </svg>
-            Professional Timeline
-          </h2>
-          <div class="relative">
-            <!-- Timeline line -->
-            <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-neon-lime/20"></div>
-            
-            <!-- Timeline items -->
-            <div class="space-y-10">
-              <div class="relative flex items-start">
-                <div class="absolute left-2 top-2 w-4 h-4 bg-neon-lime rounded-full border-2 border-matrix-black shadow-neon"></div>
-                <div class="ml-12">
-                  <div class="flex items-center space-x-2 mb-3">
-                    <span class="text-sm text-matrix-white/60">2024 - Present</span>
-                    <span class="px-2 py-1 bg-neon-lime/10 text-neon-lime text-xs rounded">Current</span>
+        <Card className="fade-in-card border-neon-lime/20 bg-matrix-black/60 backdrop-blur-md" data-delay="1" data-reveal-group="career">
+          <CardHeader>
+            <CardTitle className="text-2xl font-orbitron font-bold text-neon-lime text-shadow-neon flex items-center gap-3">
+              <svg class="w-6 h-6 text-neon-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12,6 12,12 16,14" />
+              </svg>
+              Professional Timeline
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div class="relative">
+              <!-- Timeline line -->
+              <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-neon-lime/20"></div>
+              
+              <!-- Timeline items -->
+              <div class="space-y-10">
+                <div class="relative flex items-start">
+                  <div class="absolute left-2 top-2 w-4 h-4 bg-neon-lime rounded-full border-2 border-matrix-black shadow-neon"></div>
+                  <div class="ml-12">
+                    <div class="flex items-center space-x-2 mb-3">
+                      <span class="text-sm text-matrix-white/60">2024 - Present</span>
+                      <Badge className="bg-neon-lime/10 text-neon-lime border-neon-lime/30">Current</Badge>
+                    </div>
+                    <h3 class="font-orbitron font-bold text-neon-lime mb-2 text-shadow-neon text-lg">Senior QA Automation Specialist</h3>
+                    <p class="text-digital-emerald text-base mb-3">European Commission - DG DIGIT Directorate</p>
+                    <p class="text-matrix-white/80 text-base leading-relaxed">
+                      Leading testing automation in quality assurance for European Commission projects, specializing in Java-based automation frameworks and modern testing tools.
+                    </p>
                   </div>
-                  <h3 class="font-orbitron font-bold text-neon-lime mb-2 text-shadow-neon text-lg">Senior QA Automation Specialist</h3>
-                  <p class="text-digital-emerald text-base mb-3">European Commission - DG DIGIT Directorate</p>
-                  <p class="text-matrix-white/80 text-base leading-relaxed">
-                    Leading testing automation in quality assurance for European Commission projects, specializing in Java-based automation frameworks and modern testing tools.
-                  </p>
                 </div>
-              </div>
 
-              <div class="relative flex items-start">
-                <div class="absolute left-2 top-2 w-4 h-4 bg-digital-emerald rounded-full border-2 border-matrix-black shadow-emerald"></div>
-                <div class="ml-12">
-                  <div class="flex items-center space-x-2 mb-3">
-                    <span class="text-sm text-matrix-white/60">2025 - Present</span>
+                <div class="relative flex items-start">
+                  <div class="absolute left-2 top-2 w-4 h-4 bg-digital-emerald rounded-full border-2 border-matrix-black shadow-emerald"></div>
+                  <div class="ml-12">
+                    <div class="flex items-center space-x-2 mb-3">
+                      <span class="text-sm text-matrix-white/60">2025 - Present</span>
+                    </div>
+                    <h3 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald text-lg">Full-Stack Developer & Project Lead</h3>
+                    <p class="text-neon-lime text-base mb-3">Casa Capoeira - Modern CMS Platform</p>
+                    <p class="text-matrix-white/80 text-base leading-relaxed">
+                      End-to-end development of a modern CMS platform for international capoeira schools, managing the complete development lifecycle from concept to deployment.
+                    </p>
                   </div>
-                  <h3 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald text-lg">Full-Stack Developer & Project Lead</h3>
-                  <p class="text-neon-lime text-base mb-3">Casa Capoeira - Modern CMS Platform</p>
-                  <p class="text-matrix-white/80 text-base leading-relaxed">
-                    End-to-end development of a modern CMS platform for international capoeira schools, managing the complete development lifecycle from concept to deployment.
-                  </p>
                 </div>
-              </div>
 
-              <div class="relative flex items-start">
-                <div class="absolute left-2 top-2 w-4 h-4 bg-neon-lime rounded-full border-2 border-matrix-black shadow-neon"></div>
-                <div class="ml-12">
-                  <div class="flex items-center space-x-2 mb-3">
-                    <span class="text-sm text-matrix-white/60">2022 - Present</span>
+                <div class="relative flex items-start">
+                  <div class="absolute left-2 top-2 w-4 h-4 bg-neon-lime rounded-full border-2 border-matrix-black shadow-neon"></div>
+                  <div class="ml-12">
+                    <div class="flex items-center space-x-2 mb-3">
+                      <span class="text-sm text-matrix-white/60">2022 - Present</span>
+                    </div>
+                    <h3 class="font-orbitron font-bold text-neon-lime mb-2 text-shadow-neon text-lg">Full-Stack Developer & QA Lead</h3>
+                    <p class="text-digital-emerald text-base mb-3">Upiria (Freelance)</p>
+                    <p class="text-matrix-white/80 text-base leading-relaxed">
+                      Full-stack development and leading QA processes for startup projects, delivering scalable solutions with modern technologies and best practices.
+                    </p>
                   </div>
-                  <h3 class="font-orbitron font-bold text-neon-lime mb-2 text-shadow-neon text-lg">Full-Stack Developer & QA Lead</h3>
-                  <p class="text-digital-emerald text-base mb-3">Upiria (Freelance)</p>
-                  <p class="text-matrix-white/80 text-base leading-relaxed">
-                    Full-stack development and leading QA processes for startup projects, delivering scalable solutions with modern technologies and best practices.
-                  </p>
                 </div>
-              </div>
 
-              <div class="relative flex items-start">
-                <div class="absolute left-2 top-2 w-4 h-4 bg-digital-emerald rounded-full border-2 border-matrix-black shadow-emerald"></div>
-                <div class="ml-12">
-                  <div class="flex items-center space-x-2 mb-3">
-                    <span class="text-sm text-matrix-white/60">2018 - 2021</span>
+                <div class="relative flex items-start">
+                  <div class="absolute left-2 top-2 w-4 h-4 bg-digital-emerald rounded-full border-2 border-matrix-black shadow-emerald"></div>
+                  <div class="ml-12">
+                    <div class="flex items-center space-x-2 mb-3">
+                      <span class="text-sm text-matrix-white/60">2018 - 2021</span>
+                    </div>
+                    <h3 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald text-lg">Junior QA Automation Engineer</h3>
+                    <p class="text-neon-lime text-base mb-3">SWORD - European Commission Projects</p>
+                    <p class="text-matrix-white/80 text-base leading-relaxed">
+                      Quality assurance and testing automation for European Commission projects, establishing foundational testing practices and automation workflows.
+                    </p>
                   </div>
-                  <h3 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald text-lg">Junior QA Automation Engineer</h3>
-                  <p class="text-neon-lime text-base mb-3">SWORD - European Commission Projects</p>
-                  <p class="text-matrix-white/80 text-base leading-relaxed">
-                    Quality assurance and testing automation for European Commission projects, establishing foundational testing practices and automation workflows.
-                  </p>
                 </div>
-              </div>
 
-              <div class="relative flex items-start">
-                <div class="absolute left-2 top-2 w-4 h-4 bg-neon-lime rounded-full border-2 border-matrix-black shadow-neon"></div>
-                <div class="ml-12">
-                  <div class="flex items-center space-x-2 mb-3">
-                    <span class="text-sm text-matrix-white/60">2018</span>
+                <div class="relative flex items-start">
+                  <div class="absolute left-2 top-2 w-4 h-4 bg-neon-lime rounded-full border-2 border-matrix-black shadow-neon"></div>
+                  <div class="ml-12">
+                    <div class="flex items-center space-x-2 mb-3">
+                      <span class="text-sm text-matrix-white/60">2018</span>
+                    </div>
+                    <h3 class="font-orbitron font-bold text-neon-lime mb-2 text-shadow-neon text-lg">Electrical Engineering & Computer Science</h3>
+                    <p class="text-digital-emerald text-base mb-3">Aristotle University of Thessaloniki</p>
+                    <p class="text-matrix-white/80 text-base leading-relaxed">
+                      Foundation in engineering principles and computer science fundamentals, providing the theoretical and practical knowledge for modern software development.
+                    </p>
                   </div>
-                  <h3 class="font-orbitron font-bold text-neon-lime mb-2 text-shadow-neon text-lg">Electrical Engineering & Computer Science</h3>
-                  <p class="text-digital-emerald text-base mb-3">Aristotle University of Thessaloniki</p>
-                  <p class="text-matrix-white/80 text-base leading-relaxed">
-                    Foundation in engineering principles and computer science fundamentals, providing the theoretical and practical knowledge for modern software development.
-                  </p>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
 
-        <!-- Right Column: Skills Matrix & Hobby Section - Equal Height Container -->
+        <!-- Right Column: Skills Matrix & Hobby Section -->
         <div class="space-y-6 md:space-y-8 flex flex-col justify-between">
           <!-- Education -->
-          <div class="card fade-in-card" data-delay="1" data-reveal-group="career">
-            <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-6 text-shadow-neon flex items-center gap-3">
-              <GraduationIcon size="lg" className="text-neon-lime" aria-label="Education icon" />
-              Education
-            </h2>
-            <div class="space-y-4">
-              <div>
-                <h3 class="font-orbitron font-bold text-matrix-white text-lg">Electrical Engineering & Computer Science</h3>
-                <p class="text-digital-emerald text-base">Aristotle University of Thessaloniki</p>
-                <p class="text-sm text-matrix-white/70 mt-1">Graduated 2018</p>
-                <p class="text-sm text-matrix-white/80 mt-2">
-                  Foundation in engineering principles and computer science fundamentals
-                </p>
+          <Card className="fade-in-card border-neon-lime/20 bg-matrix-black/60 backdrop-blur-md" data-delay="1" data-reveal-group="career">
+            <CardHeader>
+              <CardTitle className="text-2xl font-orbitron font-bold text-neon-lime text-shadow-neon flex items-center gap-3">
+                <GraduationIcon size="lg" className="text-neon-lime" aria-label="Education icon" />
+                Education
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div class="space-y-4">
+                <div>
+                  <h3 class="font-orbitron font-bold text-matrix-white text-lg">Electrical Engineering & Computer Science</h3>
+                  <p class="text-digital-emerald text-base">Aristotle University of Thessaloniki</p>
+                  <p class="text-sm text-matrix-white/70 mt-1">Graduated 2018</p>
+                  <p class="text-sm text-matrix-white/80 mt-2">
+                    Foundation in engineering principles and computer science fundamentals
+                  </p>
+                </div>
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
           
           <!-- Skills Matrix -->
-          <div class="card fade-in-card" data-delay="1" data-reveal-group="career">
-            <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-6 text-shadow-neon flex items-center gap-3">
-              <MonitorIcon size="lg" className="text-neon-lime" aria-label="Skills icon" />
-              Skills
-            </h2>
-            
-            <!-- Enhanced Skills Presentation -->
-            <div class="space-y-5">
-              
-              <!-- QA Automation - Expert Level -->
-              <div class="skill-category">
-                <div class="flex items-center justify-between mb-3">
-                  <h3 class="font-orbitron font-bold text-matrix-white text-base">QA Automation</h3>
-                  <div class="flex items-center gap-2">
-                    <span class="text-neon-lime text-xs font-semibold">Expert</span>
-                    <div class="w-12 h-1.5 bg-muted rounded-full overflow-hidden">
-                      <div class="w-full h-full bg-neon-lime rounded-full"></div>
-                    </div>
-                  </div>
-                </div>
-                <p class="text-matrix-white/70 text-xs mb-3 leading-relaxed">
-                  Leading quality assurance initiatives with European Commission projects, specializing in Java-based automation frameworks and modern testing tools.
-                </p>
-                <div class="flex flex-wrap gap-1.5">
-                  <span class="skill-tag bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">Java</span>
-                  <span class="skill-tag bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">Selenium</span>
-                  <span class="skill-tag bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">Playwright</span>
-                  <span class="skill-tag bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">TypeScript</span>
-                </div>
-              </div>
-
-              <!-- Full-Stack Development - Advanced Level -->
-              <div class="skill-category">
-                <div class="flex items-center justify-between mb-3">
-                  <h3 class="font-orbitron font-bold text-matrix-white text-base">Full-Stack Development</h3>
-                  <div class="flex items-center gap-2">
-                    <span class="text-digital-emerald text-xs font-semibold">Advanced</span>
-                    <div class="w-12 h-1.5 bg-muted rounded-full overflow-hidden">
-                      <div class="w-11 h-full bg-digital-emerald rounded-full transition-all duration-300"></div>
-                    </div>
-                  </div>
-                </div>
-                <p class="text-matrix-white/70 text-xs mb-3 leading-relaxed">
-                  Building modern web applications from concept to deployment, with expertise in React ecosystems, backend architecture, and cloud infrastructure.
-                </p>
-                <div class="flex flex-wrap gap-1.5">
-                  <span class="skill-tag bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">React</span>
-                  <span class="skill-tag bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">Next.js</span>
-                  <span class="skill-tag bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">Node.js</span>
-                  <span class="skill-tag bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">Supabase</span>
-                </div>
-              </div>
-
-              <!-- Website Development - Advanced Level -->
-              <div class="skill-category">
-                <div class="flex items-center justify-between mb-3">
-                  <h3 class="font-orbitron font-bold text-matrix-white text-base">Website Development</h3>
-                  <div class="flex items-center gap-2">
-                    <span class="text-digital-emerald text-xs font-semibold">Advanced</span>
-                    <div class="w-12 h-1.5 bg-muted rounded-full overflow-hidden">
-                      <div class="w-11 h-full bg-digital-emerald rounded-full transition-all duration-300"></div>
-                    </div>
-                  </div>
-                </div>
-                <p class="text-matrix-white/70 text-xs mb-3 leading-relaxed">
-                  Crafting performant, accessible websites using modern frameworks and best practices, with a focus on user experience and technical excellence.
-                </p>
-                <div class="flex flex-wrap gap-1.5">
-                  <span class="skill-tag bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">Astro</span>
-                  <span class="skill-tag bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">Tailwind CSS</span>
-                  <span class="skill-tag bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">TypeScript</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Creative AI-Artist Hobby - Redesigned with Cleaner Buttons -->
-          <div class="card fade-in-card creative-hobby-card" data-delay="3">
-            <h2 class="text-2xl font-orbitron font-bold text-cyan-400 mb-6 text-shadow-cyan flex items-center gap-3">
-              <PaletteIcon size="lg" className="text-cyan-400" aria-label="Hobbies icon" />
-              Hobbies
-            </h2>
-            
-            <div class="space-y-4">
-              <div class="flex items-start gap-4">
-                <!-- Arte Imaginari Avatar -->
-                <div class="creative-avatar-container flex-shrink-0">
-                  <div class="creative-avatar-orb" role="img" aria-label="Arte Imaginari creative avatar">
-                    <Image 
-                      src={arteImaginariAvatar} 
-                      alt="Arte Imaginari AI creative avatar" 
-                      class="creative-avatar w-16 h-16 rounded-full object-cover" 
-                      widths={[64]} 
-                      sizes="64px" 
-                      format="webp" 
-                      loading="lazy" 
-                    />
-                  </div>
-                </div>
+          <Card className="fade-in-card border-neon-lime/20 bg-matrix-black/60 backdrop-blur-md" data-delay="1" data-reveal-group="career">
+            <CardHeader>
+              <CardTitle className="text-2xl font-orbitron font-bold text-neon-lime text-shadow-neon flex items-center gap-3">
+                <MonitorIcon size="lg" className="text-neon-lime" aria-label="Skills icon" />
+                Skills
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div class="space-y-5">
                 
-                <!-- Content -->
-                <div class="flex-1">
-                  <h3 class="font-orbitron font-bold text-cyan-400 mb-2 text-shadow-cyan text-lg">
-                    Creative AI-Artist
-                  </h3>
-                  <p class="text-matrix-white/80 mb-4 text-sm leading-relaxed">
-                    AI-driven image and video projects — a personal creative outlet using Midjourney, Kling AI, and other generative tools.
+                <!-- QA Automation - Expert Level -->
+                <div class="skill-category">
+                  <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-orbitron font-bold text-matrix-white text-base">QA Automation</h3>
+                    <div class="flex items-center gap-2">
+                      <Badge variant="secondary" className="bg-neon-lime/10 text-neon-lime border-neon-lime/30">Expert</Badge>
+                      <div class="w-12 h-1.5 bg-muted rounded-full overflow-hidden">
+                        <div class="w-full h-full bg-neon-lime rounded-full"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="text-matrix-white/70 text-xs mb-3 leading-relaxed">
+                    Leading quality assurance initiatives with European Commission projects, specializing in Java-based automation frameworks and modern testing tools.
                   </p>
-                  
-                  <!-- Clean Button Layout -->
-                  <div class="flex items-center gap-3">
-                    <!-- View Portfolio Button (Left) -->
-                    <a 
-                      href="/creative" 
-                      class="clean-cta-btn primary"
-                      aria-label="View creative portfolio"
-                    >
-                      <span class="btn-text">View Portfolio</span>
-                      <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 18L15 12L9 6"/>
-                      </svg>
-                    </a>
-                    
-                    <!-- Follow on Instagram Button (Right) -->
-                    <a 
-                      href="https://instagram.com/arte.imaginari" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      class="clean-cta-btn secondary social-link"
-                      data-platform="instagram"
-                      data-deep-link="instagram://user?username=arte.imaginari"
-                      data-web-url="https://instagram.com/arte.imaginari"
-                      aria-label="Follow @arte.imaginari on Instagram"
-                    >
-                      <svg class="instagram-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                      </svg>
-                      <span class="btn-text">Follow</span>
-                    </a>
+                  <div class="flex flex-wrap gap-1.5">
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">Java</Badge>
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">Selenium</Badge>
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">Playwright</Badge>
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">TypeScript</Badge>
+                  </div>
+                </div>
+
+                <!-- Full-Stack Development - Advanced Level -->
+                <div class="skill-category">
+                  <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-orbitron font-bold text-matrix-white text-base">Full-Stack Development</h3>
+                    <div class="flex items-center gap-2">
+                      <Badge variant="secondary" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">Advanced</Badge>
+                      <div class="w-12 h-1.5 bg-muted rounded-full overflow-hidden">
+                        <div class="w-11 h-full bg-digital-emerald rounded-full transition-all duration-300"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="text-matrix-white/70 text-xs mb-3 leading-relaxed">
+                    Building modern web applications from concept to deployment, with expertise in React ecosystems, backend architecture, and cloud infrastructure.
+                  </p>
+                  <div class="flex flex-wrap gap-1.5">
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">React</Badge>
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">Next.js</Badge>
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">Node.js</Badge>
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">Supabase</Badge>
+                  </div>
+                </div>
+
+                <!-- Website Development - Advanced Level -->
+                <div class="skill-category">
+                  <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-orbitron font-bold text-matrix-white text-base">Website Development</h3>
+                    <div class="flex items-center gap-2">
+                      <Badge variant="secondary" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">Advanced</Badge>
+                      <div class="w-12 h-1.5 bg-muted rounded-full overflow-hidden">
+                        <div class="w-11 h-full bg-digital-emerald rounded-full transition-all duration-300"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="text-matrix-white/70 text-xs mb-3 leading-relaxed">
+                    Crafting performant, accessible websites using modern frameworks and best practices, with a focus on user experience and technical excellence.
+                  </p>
+                  <div class="flex flex-wrap gap-1.5">
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">Astro</Badge>
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">Tailwind CSS</Badge>
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30 hover:bg-digital-emerald/20 hover:border-digital-emerald/50 hover:scale-105 transition-all duration-200">TypeScript</Badge>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
+
+          <!-- Creative AI-Artist Hobby -->
+          <Card className="fade-in-card border-cyan-400/20 bg-matrix-black/60 backdrop-blur-md creative-hobby-card" data-delay="3">
+            <CardHeader>
+              <CardTitle className="text-2xl font-orbitron font-bold text-cyan-400 text-shadow-cyan flex items-center gap-3">
+                <PaletteIcon size="lg" className="text-cyan-400" aria-label="Hobbies icon" />
+                Hobbies
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div class="space-y-4">
+                <div class="flex items-start gap-4">
+                  <!-- Arte Imaginari Avatar -->
+                  <div class="creative-avatar-container flex-shrink-0">
+                    <div class="creative-avatar-orb" role="img" aria-label="Arte Imaginari creative avatar">
+                      <Image 
+                        src={arteImaginariAvatar} 
+                        alt="Arte Imaginari AI creative avatar" 
+                        class="creative-avatar w-16 h-16 rounded-full object-cover" 
+                        widths={[64]} 
+                        sizes="64px" 
+                        format="webp" 
+                        loading="lazy" 
+                      />
+                    </div>
+                  </div>
+                  
+                  <!-- Content -->
+                  <div class="flex-1">
+                    <h3 class="font-orbitron font-bold text-cyan-400 mb-2 text-shadow-cyan text-lg">
+                      Creative AI-Artist
+                    </h3>
+                    <p class="text-matrix-white/80 mb-4 text-sm leading-relaxed">
+                      AI-driven image and video projects — a personal creative outlet using Midjourney, Kling AI, and other generative tools.
+                    </p>
+                    
+                    <!-- Button Layout -->
+                    <div class="flex items-center gap-3">
+                      <!-- View Portfolio Button -->
+                      <Button asChild variant="outline" className="border-cyan-400/40 text-cyan-400 hover:bg-cyan-400/10 hover:border-cyan-400/60">
+                        <a href="/creative" aria-label="View creative portfolio">
+                          <span>View Portfolio</span>
+                          <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18L15 12L9 6"/>
+                          </svg>
+                        </a>
+                      </Button>
+                      
+                      <!-- Follow on Instagram Button -->
+                      <Button asChild variant="outline" className="border-cyan-400/40 text-cyan-400 hover:bg-cyan-400/10 hover:border-cyan-400/60">
+                        <a 
+                          href="https://instagram.com/arte.imaginari" 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          class="social-link"
+                          data-platform="instagram"
+                          data-deep-link="instagram://user?username=arte.imaginari"
+                          data-web-url="https://instagram.com/arte.imaginari"
+                          aria-label="Follow @arte.imaginari on Instagram"
+                        >
+                          <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                          </svg>
+                          <span>Follow</span>
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
   </section>
-</MainLayout> 
+</MainLayout>
 
 <style>
   /* Holographic circular avatar with subtle rotating ring */
@@ -440,157 +462,6 @@ import { GraduationIcon, AwardIcon, MonitorIcon, PaletteIcon } from '../componen
     transform: translateY(-2px);
   }
 
-  .skill-tag {
-    display: inline-block;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.375rem;
-    font-size: 0.625rem;
-    font-weight: 500;
-    border: 1px solid;
-    transition: all 0.2s ease;
-  }
-
-  .skill-tag:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  }
-
-  /* Clean CTA Button Design - Simplified and Streamlined */
-  .clean-cta-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.625rem 1rem;
-    font-weight: 600;
-    border-radius: 0.5rem;
-    text-decoration: none;
-    font-size: 0.875rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-    border: 1px solid transparent;
-    backdrop-filter: blur(8px);
-    min-height: 2.5rem;
-  }
-
-  .clean-cta-btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-    border-radius: inherit;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .clean-cta-btn:hover::before {
-    opacity: 1;
-  }
-
-  .clean-cta-btn.primary {
-    background: linear-gradient(135deg, rgba(57, 255, 20, 0.15), rgba(0, 184, 107, 0.1));
-    border-color: rgba(57, 255, 20, 0.4);
-    color: #39FF14;
-    box-shadow: 
-      0 4px 12px rgba(57, 255, 20, 0.15),
-      0 0 0 1px rgba(57, 255, 20, 0.1) inset;
-  }
-
-  .clean-cta-btn.primary:hover {
-    background: linear-gradient(135deg, rgba(57, 255, 20, 0.25), rgba(0, 184, 107, 0.2));
-    border-color: rgba(57, 255, 20, 0.6);
-    box-shadow: 
-      0 8px 24px rgba(57, 255, 20, 0.25),
-      0 0 0 1px rgba(57, 255, 20, 0.2) inset,
-      0 0 0 4px rgba(57, 255, 20, 0.1);
-    transform: translateY(-2px);
-  }
-
-  .clean-cta-btn.secondary {
-    background: linear-gradient(135deg, rgba(0, 191, 255, 0.15), rgba(0, 150, 255, 0.1));
-    border-color: rgba(0, 191, 255, 0.4);
-    color: #00BFFF;
-    box-shadow: 
-      0 4px 12px rgba(0, 191, 255, 0.15),
-      0 0 0 1px rgba(0, 191, 255, 0.1) inset;
-  }
-
-  .clean-cta-btn.secondary:hover {
-    background: linear-gradient(135deg, rgba(0, 191, 255, 0.25), rgba(0, 150, 255, 0.2));
-    border-color: rgba(0, 191, 255, 0.6);
-    box-shadow: 
-      0 8px 24px rgba(0, 191, 255, 0.25),
-      0 0 0 1px rgba(0, 191, 255, 0.2) inset,
-      0 0 0 4px rgba(0, 191, 255, 0.1);
-    transform: translateY(-2px);
-  }
-
-  .clean-cta-btn:focus-visible {
-    outline: none;
-    box-shadow: 
-      0 0 0 2px rgba(0, 191, 255, 0.6),
-      0 0 0 4px rgba(10, 10, 10, 0.9),
-      0 8px 24px rgba(0, 191, 255, 0.3);
-  }
-
-  .clean-cta-btn.primary:focus-visible {
-    box-shadow: 
-      0 0 0 2px rgba(57, 255, 20, 0.6),
-      0 0 0 4px rgba(10, 10, 10, 0.9),
-      0 8px 24px rgba(57, 255, 20, 0.3);
-  }
-
-  .clean-cta-btn.secondary:focus-visible {
-    box-shadow: 
-      0 0 0 2px rgba(0, 191, 255, 0.6),
-      0 0 0 4px rgba(10, 10, 10, 0.9),
-      0 8px 24px rgba(0, 191, 255, 0.3);
-  }
-
-  .btn-text {
-    font-size: 0.875rem;
-    font-weight: 600;
-  }
-
-  .btn-icon {
-    width: 1rem;
-    height: 1rem;
-    flex-shrink: 0;
-    transition: transform 0.3s ease;
-  }
-
-  .instagram-icon {
-    width: 1.125rem;
-    height: 1.125rem;
-    flex-shrink: 0;
-  }
-
-  .clean-cta-btn:hover .btn-icon {
-    transform: translateX(2px);
-  }
-
-  .clean-cta-btn.secondary:hover .btn-icon {
-    transform: translateX(2px);
-  }
-
-  /* Active and pressed states */
-  .clean-cta-btn:active {
-    transform: translateY(0);
-    transition: transform 0.1s ease;
-  }
-
-  /* Responsive adjustments */
-  @media (max-width: 640px) {
-    .clean-cta-btn {
-      padding: 0.5rem 0.875rem;
-      min-height: 2.25rem;
-    }
-    
-    .btn-text {
-      font-size: 0.8125rem;
-    }
-  }
-
   /* Fade-in animation for cards */
   .fade-in-card {
     opacity: 0;
@@ -653,7 +524,7 @@ import { GraduationIcon, AwardIcon, MonitorIcon, PaletteIcon } from '../componen
     });
   });
 
-  // Social link deep-linking logic (same as in SocialLink component)
+  // Social link deep-linking logic
   class SocialLinkHandler {
     private static instance: SocialLinkHandler;
     private isMobile: boolean;
