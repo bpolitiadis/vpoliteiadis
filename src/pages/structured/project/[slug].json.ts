@@ -36,6 +36,7 @@ export const GET: APIRoute = async ({ params }) => {
       description: project.data.description,
       applicationCategory: 'WebApplication',
       operatingSystem: 'Web Browser',
+      url: `https://vpoliteiadis.com/projects/${project.slug}`,
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
     },
   } as const;

@@ -34,6 +34,7 @@ export const GET: APIRoute = async ({ params }) => {
     image: post.data.coverImage
       ? `https://vpoliteiadis.com${post.data.coverImage}`
       : undefined,
+    url: `https://vpoliteiadis.com/blog/${post.slug}`,
   } as const;
 
   return new Response(JSON.stringify(payload), {
