@@ -7,9 +7,10 @@
 - **Framework:** [Astro](https://astro.build) v5.12.8
 - **Styling:** [TailwindCSS](https://tailwindcss.com) v3.4.1
 - **UI Components:** [shadcn/ui](https://ui.shadcn.com) v0.0.4
-- **Package Manager:** [pnpm](https://pnpm.io)
-- **Linting:** [ESLint](https://eslint.org) v8.57.0
-- **Formatting:** [Prettier](https://prettier.io) v3.2.5
+- **Package Manager:** [pnpm](https://pnpm.io) v9.12.0
+- **Runtime:** Node.js v20.10.0
+- **Linting:** [ESLint](https://eslint.org) v9.32.0
+- **Formatting:** [Prettier](https://prettier.io) v3.6.2
 - **Language:** TypeScript v5.9.2
 - **Animations:** CSS keyframes & Tailwind utilities
 
@@ -68,11 +69,10 @@ pnpm format:check # Check formatting
 vpoliteiadis/
 ├── src/
 │   ├── components/
-│   │   ├── Hero.astro           # Hero section component
+│   │   ├── Hero.astro           # Hero section with quotes and matrix rain
 │   │   ├── Navbar.astro         # Navigation component
 │   │   ├── ProjectCard.astro    # Reusable project card component
-│   │   ├── CreativeCard.astro   # Creative portfolio card component
-│   │   ├── CreativeModal.astro  # Modal for creative pieces
+│   │   ├── FeaturedProjectCard.tsx # Featured project card (React)
 │   │   ├── SocialLink.astro     # Smart social media link component
 │   │   └── Footer.astro         # Footer with social links
 │   ├── lib/
@@ -132,6 +132,7 @@ vpoliteiadis/
 - **Accessibility:** WCAG 2.1 AA compliant with proper contrast ratios
 - **Modern Development:** TypeScript, ESLint, Prettier
 - **Brand Consistency:** Custom design system based on cyberpunk aesthetics
+- **Dynamic Content:** Hero component with 14 rotating professional quotes and matrix rain animation
 
 ### Navigation (2025 best practice)
 - Mobile menu is driven by a tiny script at `public/scripts/navbar.js` loaded with `defer` to avoid race conditions in production.
@@ -253,7 +254,7 @@ excerpt: "Short excerpt for cards"
 coverImage: "/images/blog/post-cover.jpg" # Optional
 author: "Vasileios Politeiadis"
 tags: ["Tag1", "Tag2", "Tag3"]
-category: "technology" # technology, ai, development, automation, creative, career, tutorial
+  category: "technology" # technology, ai, development, automation, creative, career, tutorial, finance
 featured: false # Set to true for featured posts
   publishedAt: "2025-08-03"
   updatedAt: "2025-08-04" # Optional
@@ -401,6 +402,13 @@ This project is optimized for deployment on any static hosting service:
 - **Firebase Hosting**
 - **Cloudflare Pages**
 - **Surge.sh**
+
+### Security Features
+
+- **Content Security Policy:** Configured for security
+- **Content Sanitization:** MDX content sanitized via rehype plugins
+- **External Link Safety:** External links automatically get `rel="noopener noreferrer nofollow"`
+- **HTTPS Only:** All deployments use HTTPS
 
 ## 🤝 Contributing
 
@@ -603,4 +611,4 @@ This project is private and proprietary. All rights reserved.
 
 **Built with ❤️ and ☕ by Vasileios Politeiadis**
 
-*Last updated: December 2025* 
+*Last updated: January 2025* 

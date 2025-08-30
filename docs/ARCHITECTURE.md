@@ -9,6 +9,7 @@
 
 - **Framework:** Astro 5.12.8 with `output: 'static'` (see `astro.config.mjs`)
 - **Styling:** TailwindCSS 3.4.1 + custom utilities in `src/styles/global.css`
+- **Package Manager:** pnpm 9.12.0 with Node.js 20.10.0
 - **Components:** Astro components with React islands (`*.tsx`) for interactive elements
 - **Content:** Collections for `blog`, `projects`, `creative` with Zod schemas
 - **Images:** Responsive assets under `public/images` with Sharp optimization pipeline
@@ -59,10 +60,11 @@ graph TD
 - **`src/middleware.ts`**: CSP/headers fallback for non-Vercel deployments
 
 ### Configuration Files
-- **`astro.config.mjs`**: Astro configuration with MDX, sitemap, and React integration
+- **`astro.config.mjs`**: Astro configuration with MDX, sitemap, React integration, and security plugins
 - **`tailwind.config.js`**: Custom theme with Matrix-inspired color palette and utilities
 - **`tsconfig.json`**: TypeScript strict mode configuration
 - **`postcss.config.js`**: PostCSS with TailwindCSS and autoprefixer
+- **`package.json`**: pnpm workspace with Node.js 20.10.0 and pnpm 9.12.0
 
 ## 🔄 Rendering Model
 
@@ -88,9 +90,10 @@ graph TD
 ### Build Process
 1. **Content Processing**: MDX files parsed and validated against Zod schemas
 2. **Static Generation**: All pages pre-rendered to HTML
-3. **Asset Optimization**: Images processed through Sharp pipeline
+3. **Asset Optimization**: Images processed through Sharp pipeline with responsive variants
 4. **Bundle Generation**: CSS/JS optimized and split by Astro
-5. **Output**: Static files in `dist/` directory
+5. **Security**: Content sanitization and external link handling via rehype plugins
+6. **Output**: Static files in `dist/` directory
 
 ## 🛣️ Routing Model
 

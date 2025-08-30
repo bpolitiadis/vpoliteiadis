@@ -33,6 +33,8 @@
 | `/creative/emmanuelle-silk` | `src/pages/creative/emmanuelle-silk.astro` | — | Page-level | Static showcase page for fashion project |
 | `/creative/smoking-two` | `src/pages/creative/smoking-two.astro` | — | Page-level | Static showcase page for creative piece |
 
+**Note:** Creative routes are set up but currently no content is published in the creative collection.
+
 ### Utility & SEO Routes
 
 | Route | File | Purpose | Implementation | Notes |

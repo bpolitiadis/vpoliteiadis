@@ -25,8 +25,10 @@
 
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
-| `Hero.astro` | `src/components/Hero.astro` | Home hero with matrix rain and dynamic subtitle | — | HeroAnimationController, `/public/scripts/matrix-rain.js` |
-| `HeroAnimationController.tsx` | `src/components/HeroAnimationController.tsx` | React component managing hero animation sequence | `quotes: string[]` | DecryptedText, TextType |
+| `Hero.astro` | `src/components/Hero.astro` | Home hero with matrix rain, ElectricBorder avatar, and dynamic subtitle | — | HeroAnimationController, ElectricBorder, `/public/scripts/matrix-rain.js` |
+| `HeroAnimationController.tsx` | `src/components/HeroAnimationController.tsx` | React component managing hero animation sequence | `quotes: string[]` (14 professional quotes) | DecryptedText, TextType |
+
+**Note:** The Hero component now includes a curated array of 14 professional quotes that rotate through the TextType animation, including phrases like "Certified bug hunter", "Automating workflows, amplifying humans", and "Partnering with AI to outpace time". The avatar now features an ElectricBorder effect for enhanced visual appeal.
 | `DecryptedText.tsx` | `src/components/DecryptedText.tsx` | Matrix-style text decryption effect | `text: string`, `speed?: number`, `className?: string` | React, CSS animations |
 | `TextType.tsx` | `src/components/TextType.tsx` | Typing/erasing text rotator with cursor | `text: string \| string[]`, `typingSpeed?`, `deletingSpeed?`, `pauseDuration?`, `showCursor?`, `cursorCharacter?`, `cursorClassName?`, `className?`, `startOnVisible?` | React, CSS animations |
 

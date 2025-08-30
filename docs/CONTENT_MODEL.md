@@ -182,6 +182,8 @@ As developers, we're constantly seeking ways to enhance our creative process...
 
 **Purpose:** AI-generated art, digital creations, and experimental pieces showcasing artistic vision.
 
+**Note:** Currently no creative pieces are published, but the schema and infrastructure are ready for future content.
+
 **Schema:**
 ```typescript
 const creativeSchema = z.object({
