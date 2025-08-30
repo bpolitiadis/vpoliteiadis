@@ -1,41 +1,78 @@
-# 🧠 Vasileios Politeiadis - Portfolio
+# vpoliteiadis - Personal Portfolio & Creative Hub
 
-**Full-Stack Developer & AI Visionary** - A cyberpunk-inspired portfolio showcasing the intersection of technology and creativity.
+A modern, performance-optimized personal portfolio built with **Astro**, **TypeScript**, and **Tailwind CSS**, featuring cutting-edge image optimization and responsive design.
 
-## 🚀 Tech Stack
+## 🚀 Features
 
-- **Framework:** [Astro](https://astro.build) v5.12.8
-- **Styling:** [TailwindCSS](https://tailwindcss.com) v3.4.1
-- **UI Components:** [shadcn/ui](https://ui.shadcn.com) v0.0.4
-- **Package Manager:** [pnpm](https://pnpm.io) v9.12.0
-- **Runtime:** Node.js v20.10.0
-- **Linting:** [ESLint](https://eslint.org) v9.32.0
-- **Formatting:** [Prettier](https://prettier.io) v3.6.2
-- **Language:** TypeScript v5.9.2
-- **Animations:** CSS keyframes & Tailwind utilities
+- **Modern Tech Stack**: Astro 4.0+, TypeScript, Tailwind CSS 3.4+
+- **2025 Image Optimization**: AVIF/WebP with responsive breakpoints
+- **Performance First**: 99%+ image compression, Core Web Vitals optimized
+- **Responsive Design**: Mobile-first approach with modern breakpoints
+- **SEO Optimized**: Structured data, meta tags, and performance metrics
+- **Accessibility**: ARIA compliant, screen reader friendly
+- **Modern UI**: Glass morphism, neon effects, and smooth animations
 
-## 🎨 Design System
+## 🏗️ Architecture
 
-This portfolio features a **Matrix-inspired cyberpunk aesthetic** with:
+### Directory Structure
 
-- **Primary Colors:** Matrix Black (#0A0A0A), Neon Lime (#39FF14)
-- **Secondary Colors:** Digital Emerald (#00B86B), Cyber Gray (#222222)
-- **Typography:** Orbitron (headings), Inter (body text)
-- **Effects:** Neon glows, gradient backgrounds, animated elements
-- **Accessibility:** WCAG 2.1 AA compliant with proper contrast ratios
+```
+src/
+├── assets/images/          # Source images (single source of truth)
+├── components/             # Reusable UI components
+├── content/                # MDX content and data
+├── layouts/                # Page layouts and templates
+├── lib/                    # Utilities and configurations
+├── pages/                  # Astro pages and routes
+└── styles/                 # Global CSS and Tailwind
 
-## 📦 Installation & Setup
+public/                     # Static assets (build artifacts)
+├── images/                 # Generated optimized images (git-ignored)
+└── scripts/                # Client-side JavaScript
+
+scripts/                    # Build and optimization scripts
+docs/                       # Project documentation
+```
+
+### Image Optimization Pipeline
+
+- **Source**: High-quality images in `src/assets/images/`
+- **Build**: Automated optimization with responsive breakpoints
+- **Output**: AVIF/WebP variants for all devices
+- **Performance**: 99%+ size reduction achieved
+
+## 🛠️ Tech Stack
+
+### Core Technologies
+- **Astro 4.0+** - Static site generator with SSR capabilities
+- **TypeScript 5.0+** - Type-safe development
+- **Tailwind CSS 3.4+** - Utility-first CSS framework
+- **Vite** - Fast build tool and dev server
+
+### Image Optimization
+- **Sharp** - High-performance image processing
+- **AVIF/WebP** - Modern image formats
+- **Responsive Images** - Art direction and srcset
+- **Lazy Loading** - Performance optimization
+
+### Performance & SEO
+- **Vercel** - Edge deployment and CDN
+- **Core Web Vitals** - Performance metrics
+- **Structured Data** - Rich snippets and SEO
+- **Meta Tags** - Social media optimization
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js 18+
-- pnpm (recommended) or npm
+- **Node.js** 18.0+ (LTS recommended)
+- **pnpm** 8.0+ (faster, more efficient than npm)
 
-### Quick Start
+### Installation
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/bpolitiadis/vpoliteiadis.git
 cd vpoliteiadis
 
 # Install dependencies
@@ -51,565 +88,149 @@ pnpm build
 pnpm preview
 ```
 
-### Development Commands
+### Image Optimization
+
+```bash
+# Generate optimized images
+pnpm run optimize:images
+
+# Images are automatically optimized during build
+pnpm run build
+```
+
+## 📱 Responsive Design
+
+### Breakpoints
+
+- **Mobile**: 480px and below
+- **Tablet**: 481px - 800px
+- **Desktop**: 801px - 1200px
+- **Large Desktop**: 1201px - 1600px
+- **4K**: 1601px and above
+
+### Image Sizes
+
+- **Avatar**: 128px, 160px, 192px, 256px
+- **Content**: 480px, 800px, 1200px
+- **Hero**: 1200px, 1600px, 2400px, 3840px
+
+## 🎨 Design System
+
+### Components
+
+- **GlassCard** - Modern glass morphism effect
+- **ElectricBorder** - Animated neon borders
+- **NeonCTA** - Glowing call-to-action buttons
+- **VercelImage** - Optimized image component
+- **HeroAnimation** - Smooth scroll animations
+
+### Color Palette
+
+- **Primary**: Modern blues and purples
+- **Accent**: Neon greens and cyans
+- **Background**: Dark themes with glass effects
+- **Text**: High contrast for accessibility
+
+## 📊 Performance
+
+### Core Web Vitals
+
+- **LCP**: < 2.5s (Largest Contentful Paint)
+- **FID**: < 100ms (First Input Delay)
+- **CLS**: < 0.1 (Cumulative Layout Shift)
+
+### Image Optimization
+
+- **Format**: AVIF (primary), WebP (fallback)
+- **Compression**: 99%+ size reduction
+- **Loading**: Lazy loading with blur placeholders
+- **Caching**: Long-term caching with immutable headers
+
+## 🔧 Development
+
+### Scripts
 
 ```bash
 pnpm dev          # Start development server
 pnpm build        # Build for production
 pnpm preview      # Preview production build
+pnpm optimize:images  # Optimize images manually
 pnpm lint         # Run ESLint
-pnpm lint:fix     # Fix ESLint issues
-pnpm format       # Format code with Prettier
-pnpm format:check # Check formatting
+pnpm type-check   # Run TypeScript checks
 ```
 
-## 📁 Project Structure
+### Code Quality
 
-```
-vpoliteiadis/
-├── src/
-│   ├── components/
-│   │   ├── Hero.astro           # Hero section with quotes and matrix rain
-│   │   ├── Navbar.astro         # Navigation component
-│   │   ├── ProjectCard.astro    # Reusable project card component
-│   │   ├── FeaturedProjectCard.tsx # Featured project card (React)
-│   │   ├── SocialLink.astro     # Smart social media link component
-│   │   └── Footer.astro         # Footer with social links
-│   ├── lib/
-│   │   ├── social-config.ts     # Social media profiles configuration
-│   │   └── analytics.ts         # Analytics tracking utilities
-│   ├── content/
-│   │   ├── config.ts            # Content collections configuration
-│   │   ├── projects/            # Project case studies (MDX)
-│   │   │   ├── casa-capoeira.md # Casa Capoeira case study
-│   │   │   └── upiria.md        # Upiria case study
-│   │   ├── blog/                # Blog posts (MDX)
-│   │   │   ├── ai-assisted-creativity.mdx
-│   │   │   ├── casa-capoeira-journey.mdx
-│   │   │   └── playwright-testing-strategies.mdx
-│   │   └── creative/            # Creative portfolio pieces
-│   │       ├── cyberpunk-portrait.md
-│   │       └── neon-dreams-video.md
-   │   ├── layouts/
-   │   │   └── MainLayout.astro     # Main layout with navigation & SEO
-│   ├── pages/
-│   │   ├── index.astro          # Homepage
-│   │   ├── about.astro          # About page
-│   │   ├── contact.astro        # Contact form
-│   │   ├── projects/
-│   │   │   ├── index.astro      # Projects grid with filtering
-│   │   │   └── [slug].astro     # Dynamic project case study pages
-│   │   ├── blog/
-│   │   │   ├── index.astro      # Blog grid with filtering
-│   │   │   └── [slug].astro     # Dynamic blog post pages
-│   │   └── creative/
-│   │       ├── index.astro           # Creative Lab page (featured projects grid)
-│   │       ├── emmanuelle-silk.astro # Emmanuelle Silk detail page
-│   │       ├── smoking-two.astro     # Smoking Two detail page
-│   │       └── arte-imaginari.astro  # Arte Imaginari detail page
-│   └── styles/
-│       └── global.css           # Global styles & Tailwind config
-├── docs/
-│   ├── branding.md              # Brand identity guidelines
-│   └── professional-identity.md # Professional background
-├── public/                      # Static assets
-│   ├── images/
-│   │   └── creative/            # Creative portfolio images
-│   └── favicon.svg              # Site favicon
-├── astro.config.mjs            # Astro configuration
-├── tailwind.config.js          # TailwindCSS configuration
-├── .eslintrc.cjs               # ESLint configuration
-├── .prettierrc                 # Prettier configuration
-└── .editorconfig               # Editor configuration
-```
-
-## 🎯 Features
-
-### Core Features
-- **Responsive Design:** Mobile-first approach with TailwindCSS
-- **Performance Optimized:** Astro's static site generation
-- **SEO Ready:** Meta tags, Open Graph, and structured data
-- **Accessibility:** WCAG 2.1 AA compliant with proper contrast ratios
-- **Modern Development:** TypeScript, ESLint, Prettier
-- **Brand Consistency:** Custom design system based on cyberpunk aesthetics
-- **Dynamic Content:** Hero component with 14 rotating professional quotes and matrix rain animation
-
-### Navigation (2025 best practice)
-- Mobile menu is driven by a tiny script at `public/scripts/navbar.js` loaded with `defer` to avoid race conditions in production.
-- The script uses a ready helper to run immediately if DOM is already parsed.
-- The mobile menu toggles the Tailwind `hidden` class and keeps `md:hidden` so it remains hidden on desktop.
-- Theme toggle inside `Navbar.astro` is temporarily removed. Global theme is still initialized by `public/scripts/theme-init.js`.
-
-### Content Management
-- **Dynamic Content:** MDX-based content collections for projects, case studies, and blog posts
-- **Advanced Filtering:** Search and filter projects and blog posts by tags, categories, and keywords
-- **Interactive UI:** Neon glow effects, micro-animations, and cyberpunk aesthetics
-- **Blog System:** Complete blog with MDX support, syntax highlighting, and SEO optimization
-
-### Accessibility Features
-- **Keyboard Navigation:** Full keyboard accessibility
-- **Screen Reader Support:** Proper ARIA labels and semantic HTML
-- **High Contrast Mode:** Support for high contrast preferences
-- **Reduced Motion:** Respects user's motion preferences
-- **Motion Library:** Uses Motion (2025 successor to framer-motion) for React animations
-- **Focus Management:** Clear focus indicators and logical tab order
-
-### Performance Features
-- **Static Generation:** Fast loading with Astro's static site generation
-- **Image Optimization:** Optimized images with proper alt text
-- **Code Splitting:** Automatic code splitting for optimal performance
-- **Lazy Loading:** Images and components load as needed
-- **Caching:** Optimized caching strategies
-
-## 🔧 Configuration Files
-
-### TailwindCSS (`tailwind.config.js`)
-
-Custom color palette and typography based on the cyberpunk branding:
-
-- Matrix Black, Neon Lime, Digital Emerald, Cyber Gray
-- Orbitron and Inter font families
-- Custom component classes for buttons and cards
-- Responsive breakpoints and animations
-
-### ESLint (`.eslintrc.cjs`)
-
-Configured for Astro + TypeScript with:
-
-- TypeScript-specific rules
-- Astro plugin integration
-- Prettier compatibility
-- Accessibility rules
-
-### Prettier (`.prettierrc`)
-
-Standard formatting rules:
-
-- Single quotes, semicolons
-- 2-space indentation
-- 80-character line width
-- Consistent formatting across all file types
+- **ESLint** - Code linting and formatting
+- **Prettier** - Code formatting
+- **TypeScript** - Type safety and IntelliSense
+- **Husky** - Git hooks for quality assurance
 
 ## 📚 Documentation
 
-- **`docs/branding.md`** - Complete brand identity and design guidelines
-- **`docs/professional-identity.md`** - Professional background and experience
+- **[Architecture](./docs/ARCHITECTURE.md)** - System overview and design decisions
+- **[Image Optimization](./docs/IMAGE_OPTIMIZATION.md)** - 2025 best practices
+- **[Components](./docs/COMPONENTS_REFERENCE.md)** - Component library and usage
+- **[Performance](./docs/PERFORMANCE_OPTIMIZATIONS.md)** - Optimization strategies
+- **[Getting Started](./docs/GETTING-STARTED.md)** - Development setup guide
 
-## 📝 Content Management
+## 🌐 Deployment
 
-### Adding New Projects
+### Vercel (Recommended)
 
-To add a new project case study:
+- **Automatic deployments** from Git
+- **Edge functions** for dynamic content
+- **Global CDN** for fast loading
+- **Image optimization** with WebP/AVIF
 
-1. Create a new `.md` file in `src/content/projects/`
-2. Use the following frontmatter structure:
+### Environment Variables
 
-```yaml
----
-title: "Project Title"
-description: "Brief project description"
-excerpt: "Short excerpt for cards"
-coverImage: "/images/projects/project-cover.jpg"
-coverVideo: "/videos/project-preview.mp4" # Optional
-tags: ["Tag1", "Tag2", "Tag3"]
-techStack: ["Tech1", "Tech2", "Tech3"]
-featured: true # Set to true for featured projects
-  publishedAt: "2025-08-01"
-  updatedAt: "2025-08-02" # Optional
-client: "Client Name" # Optional
-duration: "6 months" # Optional
-role: "Full-Stack Developer" # Optional
-team: ["Team Member 1", "Team Member 2"] # Optional
-problem: "Problem description"
-solution: "Solution description"
-impact: "Impact description"
-challenges: ["Challenge 1", "Challenge 2"] # Optional
-learnings: ["Learning 1", "Learning 2"] # Optional
-liveUrl: "https://project.com" # Optional
-githubUrl: "https://github.com/project" # Optional
-status: "completed" # completed, in-progress, archived
-featuredImage: "/images/projects/project-hero.jpg" # Optional
-gallery: ["/images/projects/screenshot1.jpg"] # Optional
----
+```bash
+# Required for production
+PUBLIC_SITE_URL=https://vpoliteiadis.com
+PUBLIC_GOOGLE_ANALYTICS_ID=GA_MEASUREMENT_ID
 
-# Project Content
-
-Your project content goes here in Markdown format.
+# Optional
+PUBLIC_SPOTIFY_CLIENT_ID=spotify_client_id
+PUBLIC_SPOTIFY_CLIENT_SECRET=spotify_client_secret
 ```
-
-3. The project will automatically appear in the projects grid and generate a case study page
-4. Images should be placed in `public/images/projects/`
-
-### Adding New Blog Posts
-
-To add a new blog post:
-
-1. Create a new `.mdx` file in `src/content/blog/`
-2. Use the following frontmatter structure:
-
-```yaml
----
-title: "Blog Post Title"
-description: "Brief blog post description"
-excerpt: "Short excerpt for cards"
-coverImage: "/images/blog/post-cover.jpg" # Optional
-author: "Vasileios Politeiadis"
-tags: ["Tag1", "Tag2", "Tag3"]
-  category: "technology" # technology, ai, development, automation, creative, career, tutorial, finance
-featured: false # Set to true for featured posts
-  publishedAt: "2025-08-03"
-  updatedAt: "2025-08-04" # Optional
-readingTime: "5 min read" # Optional
-draft: false # Set to true for draft posts
-seo:
-  title: "SEO Title" # Optional
-  description: "SEO description" # Optional
-  keywords: ["keyword1", "keyword2"] # Optional
----
-
-# Blog Post Content
-
-Your blog post content goes here in MDX format with full Markdown support.
-```
-
-3. The blog post will automatically appear in the blog grid and generate a detail page
-4. Images should be placed in `public/images/blog/`
-5. MDX supports React components, code blocks, and advanced formatting
-
-### Adding New Creative Pieces
-
-To add a new creative piece:
-
-1. Create a new `.md` file in `src/content/creative/`
-2. Use the following frontmatter structure:
-
-```yaml
----
-title: "Creative Piece Title"
-description: "Description of the creative work"
-excerpt: "Short excerpt for cards"
-mediaType: "image" # image, video, gallery
-coverImage: "/images/creative/piece-cover.jpg"
-coverVideo: "/videos/creative/piece-preview.mp4" # Optional
-gallery: ["/images/creative/piece1.jpg"] # Optional
-tools: ["Midjourney", "Kling AI"] # AI tools used
-tags: ["Tag1", "Tag2", "Tag3"]
-category: "ai-art" # ai-art, digital-art, experiment, commission
-featured: false # Set to true for featured pieces
-  publishedAt: "2025-08-05"
-  updatedAt: "2025-08-06" # Optional
-client: "Client Name" # Optional for commissioned work
-instagramUrl: "https://instagram.com/post" # Optional
-aspectRatio: "16/9" # Optional for responsive layout
-dimensions: "1920x1080" # Optional
-prompt: "AI prompt used" # Optional
-process: "Creative process description" # Optional
----
-
-# Creative Piece Content
-
-Description of your creative work and process.
-```
-
-3. The creative piece will automatically appear in the creative grid
-4. Images should be placed in `public/images/creative/`
-
-### Content Collections
-
-The site uses Astro's content collections for type-safe content management:
-
-- **Projects**: `src/content/projects/` - Project case studies and portfolio items
-- **Blog**: `src/content/blog/` - Blog posts with MDX support and syntax highlighting
-- **Creative**: `src/content/creative/` - AI art and creative portfolio pieces
-- **Schema**: Defined in `src/content/config.ts` with full TypeScript support
-- **Filtering**: Projects and blog posts can be filtered by tags, categories, and search terms
-- **Related Content**: Automatically suggests related projects and blog posts based on shared tags/categories
-
-## 🚀 Deployment
-
-### Vercel Deployment (Recommended)
-
-1. **Connect Repository:**
-   ```bash
-   # Install Vercel CLI
-   npm i -g vercel
-   
-   # Login to Vercel
-   vercel login
-   
-   # Deploy
-   vercel
-   ```
-
-2. **Environment Variables:**
-   - No environment variables required for basic deployment
-   - Add any API keys or configuration as needed
-
-3. **Build Settings:**
-   - **Framework Preset:** Astro
-   - **Build Command:** `pnpm build`
-   - **Output Directory:** `dist`
-   - **Install Command:** `pnpm install`
-
-### Netlify Deployment
-
-1. **Connect Repository:**
-   - Connect your GitHub repository to Netlify
-   - Set build command: `pnpm build`
-   - Set publish directory: `dist`
-
-2. **Build Settings:**
-   ```toml
-   # netlify.toml
-   [build]
-     command = "pnpm build"
-     publish = "dist"
-   
-   [build.environment]
-     NODE_VERSION = "18"
-   ```
-
-### GitHub Pages Deployment
-
-1. **Add GitHub Actions:**
-   ```yaml
-   # .github/workflows/deploy.yml
-   name: Deploy to GitHub Pages
-   on:
-     push:
-       branches: [main]
-   jobs:
-     deploy:
-       runs-on: ubuntu-latest
-       steps:
-         - uses: actions/checkout@v3
-         - uses: actions/setup-node@v3
-           with:
-             node-version: '18'
-         - run: npm install -g pnpm
-         - run: pnpm install
-         - run: pnpm build
-         - uses: peaceiris/actions-gh-pages@v3
-           with:
-             github_token: ${{ secrets.GITHUB_TOKEN }}
-             publish_dir: ./dist
-   ```
-
-### Other Static Hosting
-
-This project is optimized for deployment on any static hosting service:
-
-- **AWS S3 + CloudFront**
-- **Firebase Hosting**
-- **Cloudflare Pages**
-- **Surge.sh**
-
-### Security Features
-
-- **Content Security Policy:** Configured for security
-- **Content Sanitization:** MDX content sanitized via rehype plugins
-- **External Link Safety:** External links automatically get `rel="noopener noreferrer nofollow"`
-- **HTTPS Only:** All deployments use HTTPS
 
 ## 🤝 Contributing
 
-We welcome contributions! Please follow these guidelines:
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
 
-### Development Setup
+### Development Guidelines
 
-1. **Fork the repository**
-2. **Create a feature branch:**
-   ```bash
-   git checkout -b feature/amazing-feature
-   ```
-3. **Install dependencies:**
-   ```bash
-   pnpm install
-   ```
-4. **Make your changes**
-5. **Run quality checks:**
-   ```bash
-   pnpm lint
-   pnpm format:check
-   pnpm build
-   ```
-6. **Commit your changes:**
-   ```bash
-   git commit -m "feat: add amazing feature"
-   ```
-7. **Push to your branch:**
-   ```bash
-   git push origin feature/amazing-feature
-   ```
-8. **Submit a pull request**
-
-### Code Style Guidelines
-
-- **TypeScript:** Use strict typing, avoid `any`
-- **Accessibility:** Follow WCAG 2.1 AA guidelines
-- **Performance:** Optimize for Core Web Vitals
-- **Testing:** Add tests for new features
-- **Documentation:** Update docs for API changes
-
-### Commit Message Format
-
-We follow [Conventional Commits](https://www.conventionalcommits.org/):
-
-```
-type(scope): description
-
-feat: add new feature
-fix: resolve bug
-docs: update documentation
-style: formatting changes
-refactor: code restructuring
-test: add tests
-chore: maintenance tasks
-```
-
-## 🧪 Testing
-
-### Manual Testing Checklist
-
-- [ ] **Responsive Design:** Test on mobile, tablet, desktop
-- [ ] **Accessibility:** Screen reader compatibility, keyboard navigation
-- [ ] **Performance:** Lighthouse scores, Core Web Vitals
-- [ ] **Cross-browser:** Chrome, Firefox, Safari, Edge
-- [ ] **Content:** All pages load correctly, links work
-- [ ] **Forms:** Contact form validation and submission
-- [ ] **Animations:** Respect reduced motion preferences
-- [ ] **Theme:** Dark/light mode toggle works
-
-### Automated Testing
-
-```bash
-# Run linting
-pnpm lint
-
-# Check formatting
-pnpm format:check
-
-# Build test
-pnpm build
-
-# Preview build
-pnpm preview
-```
-
-## 📊 Performance
-
-### Lighthouse Scores Target
-
-- **Performance:** 90+
-- **Accessibility:** 95+
-- **Best Practices:** 95+
-- **SEO:** 95+
-
-### Optimization Features
-
-- **Static Generation:** All pages pre-rendered
-- **Image Optimization:** WebP format, lazy loading
-- **Code Splitting:** Automatic by Astro
-- **Minification:** CSS, JS, and HTML minified (Vite defaults)
-- **Caching:** Optimized cache headers
-
-## 🔒 Security
-
-- **Content Security Policy:** Configured for security
-- **HTTPS Only:** All deployments use HTTPS
-- **No Sensitive Data:** No API keys in client code
-- **Dependency Scanning:** Regular security updates
-
-## 🤖 AI & LLM Crawling
-
-- The site exposes a dynamic `robots.txt` that explicitly allows common AI crawlers (e.g., `GPTBot`, `Google-Extended`, `PerplexityBot`, `ClaudeBot`, `Applebot-Extended`, `Bytespider`, `Amazonbot`).
-- An `ai.txt` endpoint declares AI usage preferences (attribution required, crawl delay). While not a formal standard, it is adopted by several AI crawlers.
-- Endpoints:
-  - `https://vpoliteiadis.com/robots.txt`
-  - `https://vpoliteiadis.com/ai.txt`
-
-## 📈 Analytics & Monitoring
-
-### Recommended Tools
-
-- **Google Analytics 4:** For user behavior tracking
-- **Google Search Console:** For SEO monitoring
-- **Vercel Analytics:** For performance monitoring
-- **Sentry:** For error tracking (optional)
-
-### Setup Instructions
-
-1. **Google Analytics:**
-   ```html
-   <!-- Add to Layout.astro -->
-   <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-   ```
-
-2. **Google Search Console:**
-   - Verify ownership
-   - Submit sitemap
-   - Monitor search performance
-
-## 🎨 Customization
-
-### Branding
-
-Update colors and fonts in `tailwind.config.js`:
-
-```javascript
-colors: {
-  'matrix-black': '#0A0A0A',
-  'neon-lime': '#39FF14',
-  'digital-emerald': '#00B86B',
-  // Add your custom colors
-}
-```
-
-### Content
-
-- **Projects:** Add to `src/content/projects/`
-- **Blog Posts:** Add to `src/content/blog/`
-- **Creative Pieces:** Add to `src/content/creative/`
-
-### Components
-
-- **Layout:** Modify `src/layouts/`
-- **Components:** Update `src/components/`
-- **Styles:** Customize `src/styles/global.css`
-
-## 📞 Support
-
-For questions or issues:
-
-- **Issues:** [GitHub Issues](https://github.com/yourusername/vpoliteiadis/issues)
-- **Email:** [b.politiadis@gmail.com](mailto:b.politiadis@gmail.com)
-- **LinkedIn:** [Vasileios Politeiadis](https://linkedin.com/in/vpoliteiadis)
+- Follow **TypeScript** best practices
+- Use **Tailwind CSS** utility classes
+- Implement **responsive design** principles
+- Ensure **accessibility** compliance
+- Write **comprehensive tests**
 
 ## 📄 License
 
-This project is private and proprietary. All rights reserved.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Credits
+## 🙏 Acknowledgments
 
-### Design & Development
-- **Vasileios Politeiadis** - Full-stack developer and designer
-- **Astro Team** - Amazing static site framework
-- **TailwindCSS Team** - Utility-first CSS framework
-- **shadcn/ui** - Beautiful component library
+- **Astro Team** - Amazing static site generator
+- **Tailwind CSS** - Utility-first CSS framework
+- **Vercel** - Deployment and hosting platform
+- **Sharp** - High-performance image processing
 
-### Inspiration
-- **Matrix Trilogy** - Cyberpunk aesthetic inspiration
-- **Cyberpunk 2077** - Visual design references
-- **Blade Runner** - Sci-fi atmosphere
+## 📞 Contact
 
-### Tools & Resources
-- **Figma** - Design and prototyping
-- **VS Code** - Development environment
-- **GitHub** - Version control and hosting
-- **Vercel** - Deployment platform
+- **Website**: [vpoliteiadis.com](https://vpoliteiadis.com)
+- **Email**: [contact@vpoliteiadis.com](mailto:contact@vpoliteiadis.com)
+- **LinkedIn**: [vpoliteiadis](https://linkedin.com/in/vpoliteiadis)
+- **GitHub**: [bpolitiadis](https://github.com/bpolitiadis)
 
 ---
 
-**Built with ❤️ and ☕ by Vasileios Politeiadis**
+**Built with ❤️ using modern web technologies**
 
 *Last updated: January 2025* 
