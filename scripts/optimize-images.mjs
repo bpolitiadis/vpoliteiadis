@@ -4,10 +4,11 @@ import path from 'node:path';
 import sharp from 'sharp';
 
 const root = process.cwd();
+const sourceImagesDir = path.join(root, 'src', 'assets', 'images');
 const imagesDir = path.join(root, 'public', 'images');
 const creativeDir = path.join(root, 'public', 'creative');
 
-const targets = [imagesDir, creativeDir];
+const targets = [sourceImagesDir, imagesDir, creativeDir];
 const sizes = [3840, 2400, 1600, 1200, 800, 480];
 const formats = [
   { ext: 'webp', options: { quality: 78 } },
@@ -21,6 +22,16 @@ async function processImage(filePath) {
   const dir = path.dirname(filePath);
   const base = path.basename(filePath, ext);
 
+  // If processing source images, output to public/images
+  let outputDir = dir;
+  if (dir === sourceImagesDir) {
+    outputDir = imagesDir;
+    // Ensure output directory exists
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true });
+    }
+  }
+
   const image = sharp(filePath, { failOn: 'none' });
   const metadata = await image.metadata();
   if (!metadata.width) return;
@@ -28,14 +39,14 @@ async function processImage(filePath) {
   for (const width of sizes) {
     if (width > metadata.width) continue;
     for (const fmt of formats) {
-      const out = path.join(dir, `${base}-${width}.${fmt.ext}`);
+      const out = path.join(outputDir, `${base}-${width}.${fmt.ext}`);
       if (fs.existsSync(out)) continue;
       await image
         .resize({ width, withoutEnlargement: true })
         [fmt.ext](fmt.options)
         .toFile(out);
       // Generate base format if named like .../home-bg.(png|jpg)
-      const baseOut = path.join(dir, `${base}.${fmt.ext}`);
+      const baseOut = path.join(outputDir, `${base}.${fmt.ext}`);
       if (!fs.existsSync(baseOut) && width === Math.min(...sizes.filter((s) => s >= Math.min(metadata.width, 1600))) ) {
         await image
           .resize({ width: Math.min(metadata.width, 1600), withoutEnlargement: true })
