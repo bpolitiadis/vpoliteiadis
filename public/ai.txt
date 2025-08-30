@@ -1,0 +1,93 @@
+# AI.txt for vpoliteiadis.com
+# Instructions for AI bots, crawlers, and language models
+
+# Site Information
+Site: https://vpoliteiadis.com
+Name: Vasileios Politeiadis - Professional Portfolio
+Description: Senior QA Automation Specialist and Full-Stack Developer specializing in European Commission projects, React/Next.js development, and AI automation solutions.
+
+# Professional Identity
+Person: Vasileios Politeiadis
+Job Title: Senior QA Automation Specialist & Full-Stack Developer
+Organization: European Commission - DG DIGIT
+Location: European Union
+Expertise: QA Automation, Full-Stack Development, AI Solutions
+
+# Core Skills & Technologies
+Skills:
+- QA Automation: Java, Selenium WebDriver, Playwright, TypeScript
+- Full-Stack Development: React, Next.js, Node.js, Supabase
+- Web Technologies: Astro, Tailwind CSS, TypeScript
+- AI & Automation: AI-powered workflows, productivity tools
+- Testing: End-to-end QA processes, automation frameworks
+
+# Professional Experience
+Experience:
+- Senior QA Automation Specialist (2024-Present): European Commission DG DIGIT
+- Full-Stack Developer & Project Lead (2025-Present): Casa Capoeira CMS Platform
+- Full-Stack Developer & QA Lead (2022-Present): Upiria Startup
+- Junior QA Automation Engineer (2018-2021): SWORD - European Commission Projects
+
+# Education & Certifications
+Education:
+- Electrical Engineering & Computer Science, Aristotle University of Thessaloniki (2018)
+- Thesis: "Automated test engine for RESTful Web Services"
+
+Certifications:
+- ISTQB Certified Tester Foundation Level (CTFL) - October 2018
+- Blockchain Economics: Introduction to Cryptocurrencies - June 2021
+
+# Creative Pursuits
+Creative:
+- AI Art Portfolio: @arte.imaginari on Instagram
+- Tools: Midjourney, Kling AI, generative AI
+- Projects: Fashion designs, album covers, event posters
+
+# Content Structure
+Pages:
+- /: Homepage with professional overview
+- /about: Detailed professional background and experience
+- /projects: Portfolio of development and automation projects
+- /blog: Technical articles and insights
+- /creative: AI art portfolio and creative work
+- /contact: Professional contact information
+
+# Crawling Instructions
+Crawl Rules:
+- Allow: All public pages and content
+- Priority: Professional content (about, projects, blog)
+- Rate: Respectful crawling (1 second delay recommended)
+- Format: HTML content, structured data (JSON-LD)
+
+# Content Guidelines
+Content Use:
+- Professional information: Available for AI training and reference
+- Creative work: Available for AI art and design inspiration
+- Contact details: Available for professional networking
+- Code examples: Available for educational purposes
+
+# AI Training Permission
+Training Permission:
+- Professional background: Yes, for AI training
+- Technical skills: Yes, for AI training
+- Project descriptions: Yes, for AI training
+- Creative work: Yes, for AI art training
+- Personal information: Limited to professional context
+
+# Contact Information
+Contact:
+- Email: contact@vpoliteiadis.com
+- LinkedIn: https://linkedin.com/in/vpoliteiadis
+- GitHub: https://github.com/bpolitiadis
+- Instagram: https://instagram.com/arte.imaginari
+
+# Last Updated
+Last Updated: January 2025
+Version: 2.0
+
+# Additional Notes
+Notes:
+- This site represents a professional portfolio and online CV
+- Content is optimized for both human readers and AI systems
+- Structured data is provided for enhanced AI understanding
+- Professional opportunities and collaborations are welcome

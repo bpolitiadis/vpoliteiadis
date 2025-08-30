@@ -37,6 +37,39 @@ export default defineConfig({
       changefreq: 'weekly',
       priority: 0.7,
       lastmod: new Date(),
+      // Custom sitemap entries for better SEO
+      customPages: [
+        'https://vpoliteiadis.com/',
+        'https://vpoliteiadis.com/about',
+        'https://vpoliteiadis.com/projects',
+        'https://vpoliteiadis.com/blog',
+        'https://vpoliteiadis.com/creative',
+        'https://vpoliteiadis.com/contact',
+      ],
+      // Enhanced sitemap configuration
+      filter: (page) => {
+        // Include all main pages
+        if (page.includes('/about') || page.includes('/projects') || page.includes('/blog') || page.includes('/creative') || page.includes('/contact')) {
+          return true;
+        }
+        // Include blog posts with higher priority
+        if (page.includes('/blog/')) {
+          return true;
+        }
+        // Include project pages with higher priority
+        if (page.includes('/projects/')) {
+          return true;
+        }
+        // Include creative project pages
+        if (page.includes('/creative/')) {
+          return true;
+        }
+        // Exclude admin, private, and system pages
+        if (page.includes('/admin/') || page.includes('/private/') || page.includes('/api/') || page.includes('/_astro/')) {
+          return false;
+        }
+        return true;
+      },
     }),
     mdx({
       // Sanitize any raw HTML in Markdown/MDX and force external links to be safe

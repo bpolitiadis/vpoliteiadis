@@ -146,6 +146,73 @@ pnpm run build
 - **Loading**: Lazy loading with blur placeholders
 - **Caching**: Long-term caching with immutable headers
 
+## 🔍 SEO & Performance
+
+### Target Keywords
+
+- **Primary**: "QA Automation Specialist", "Full-Stack Developer", "Next.js Developer"
+- **Secondary**: "European Commission Projects", "Java Selenium Testing", "React Developer"
+- **Long-tail**: "Senior QA Automation Specialist European Commission", "Vasileios Politeiadis Portfolio"
+
+### SEO Implementation
+
+- **Structured Data**: Complete Person, WebSite, and AboutPage schemas
+- **Meta Tags**: Optimized titles, descriptions, and Open Graph
+- **Performance**: Critical CSS inlining, font preloading, image optimization
+- **Accessibility**: ARIA labels, semantic HTML, keyboard navigation
+
+### Verifying PageSpeed.dev Scores
+
+#### 1. **Run Performance Audit**
+```bash
+# Build the project
+pnpm run build
+
+# Preview the build
+pnpm run preview
+
+# Visit PageSpeed.dev and test your local URL
+# Or deploy to Vercel and test the live URL
+```
+
+#### 2. **Performance Targets**
+- **Performance Score**: 90+ (aim for 95+)
+- **SEO Score**: 100% (all meta tags and structured data)
+- **Accessibility Score**: 95+ (ARIA compliance)
+- **Best Practices Score**: 95+ (modern web standards)
+
+#### 3. **Core Web Vitals**
+- **LCP**: < 2.5s (hero image/avatar optimization)
+- **FID**: < 100ms (minimal JavaScript execution)
+- **CLS**: < 0.1 (stable layout, no shifts)
+
+#### 4. **SEO Audit Checklist**
+- [ ] All pages have unique titles and meta descriptions
+- [ ] Structured data (JSON-LD) is valid and complete
+- [ ] Open Graph and Twitter Card tags are present
+- [ ] Canonical URLs prevent duplicate content
+- [ ] Sitemap.xml and robots.txt are accessible
+- [ ] Images have descriptive alt text with keywords
+
+### Running Regular Audits
+
+#### **Monthly Checks**
+- Google Search Console performance
+- PageSpeed Insights scores
+- Core Web Vitals monitoring
+
+#### **Quarterly Audits**
+- Comprehensive SEO review
+- Structured data validation
+- Performance optimization review
+
+#### **Tools for Monitoring**
+- **PageSpeed Insights**: Performance metrics
+- **Google Search Console**: Search performance
+- **Lighthouse**: Comprehensive auditing
+- **Schema.org Validator**: Structured data testing
+- **Rich Results Test**: Google rich snippet preview
+
 ## 🔧 Development
 
 ### Scripts
@@ -169,6 +236,7 @@ pnpm type-check   # Run TypeScript checks
 ## 📚 Documentation
 
 - **[Architecture](./docs/ARCHITECTURE.md)** - System overview and design decisions
+- **[SEO Guide](./docs/SEO.md)** - Complete SEO implementation and optimization
 - **[Image Optimization](./docs/IMAGE_OPTIMIZATION.md)** - 2025 best practices
 - **[Components](./docs/COMPONENTS_REFERENCE.md)** - Component library and usage
 - **[Performance](./docs/PERFORMANCE_OPTIMIZATIONS.md)** - Optimization strategies
@@ -210,6 +278,7 @@ PUBLIC_SPOTIFY_CLIENT_SECRET=spotify_client_secret
 - Implement **responsive design** principles
 - Ensure **accessibility** compliance
 - Write **comprehensive tests**
+- Maintain **SEO optimization** standards
 
 ## 📄 License
 
