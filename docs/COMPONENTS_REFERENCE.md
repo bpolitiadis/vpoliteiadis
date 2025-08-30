@@ -18,14 +18,14 @@
 
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
-| `Navbar.astro` | `src/components/Navbar.astro` | Compact Matrix-inspired top nav with neon styling | `currentPath?` | `/public/scripts/navbar.js`, global styles |
+| `Navbar.astro` | `src/components/Navbar.astro` | Compact Matrix-inspired top nav with neon styling | `currentPath?` | `/public/scripts/navbar.js` (mobile menu), global styles |
 | `Footer.astro` | `src/components/Footer.astro` | Footer with social links and branding | — | SocialLink components |
 
 ### Hero & Animation
 
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
-| `Hero.astro` | `src/components/Hero.astro` | Home hero with matrix rain and dynamic subtitle | — | HeroAnimationController, matrix-rain.js |
+| `Hero.astro` | `src/components/Hero.astro` | Home hero with matrix rain and dynamic subtitle | — | HeroAnimationController, `/public/scripts/matrix-rain.js` |
 | `HeroAnimationController.tsx` | `src/components/HeroAnimationController.tsx` | React component managing hero animation sequence | `quotes: string[]` | DecryptedText, TextType |
 | `DecryptedText.tsx` | `src/components/DecryptedText.tsx` | Matrix-style text decryption effect | `text: string`, `speed?: number`, `className?: string` | React, CSS animations |
 | `TextType.tsx` | `src/components/TextType.tsx` | Typing/erasing text rotator with cursor | `text: string \| string[]`, `typingSpeed?`, `deletingSpeed?`, `pauseDuration?`, `showCursor?`, `cursorCharacter?`, `cursorClassName?`, `className?`, `startOnVisible?` | React, CSS animations |
@@ -69,32 +69,43 @@
 graph TD
   A[MainLayout.astro] --> B[Navbar.astro]
   A --> C[Footer.astro]
-  B --> D[/public/scripts/navbar.js]
+  A --> D[/public/scripts/theme-init.js]
+  B --> E[/public/scripts/navbar.js]
   
-  E[PageHero.astro] --> A
+  F[PageHero.astro] --> A
   
-  F[Hero.astro] --> G[HeroAnimationController.tsx]
-  G --> H[DecryptedText.tsx]
-  G --> I[TextType.tsx]
-  F --> J[/public/scripts/matrix-rain.js]
+  G[Hero.astro] --> H[HeroAnimationController.tsx]
+  H --> I[DecryptedText.tsx]
+  H --> J[TextType.tsx]
+  G --> K[/public/scripts/matrix-rain.js]
   
-  K[ProjectCard.astro] --> L[VercelImage.astro]
-  M[FeaturedProjectCard.tsx] --> N[OptimizedImage.tsx]
+  L[ProjectCard.astro] --> M[VercelImage.astro]
+  N[FeaturedProjectCard.tsx] --> O[OptimizedImage.tsx]
   
-  O[Footer.astro] --> P[SocialLink.astro]
+  P[Footer.astro] --> Q[SocialLink.astro]
   
-  Q[LightboxGallery.tsx] --> R[yet-another-react-lightbox]
+  R[LightboxGallery.tsx] --> S[yet-another-react-lightbox]
   
-  S[ElectricBorder.tsx] --> T[SVG Filters]
-  S --> U[CSS Animations]
+  T[ElectricBorder.tsx] --> U[SVG Filters]
+  T --> V[CSS Animations]
+  
+  W[contact.astro] --> X[/public/scripts/contact-form.js]
+  Y[blog/index.astro] --> Z[/public/scripts/blog-index.js]
 ```
 
 ### Script Dependencies
-- **`/public/scripts/navbar.js`**: Mobile navigation toggle and compact navbar behavior
-- **`/public/scripts/matrix-rain.js`**: Matrix-style background animation
-- **`/public/scripts/blog-filter.js`**: Blog post filtering and search functionality
-- **`/public/scripts/contact-form.js`**: Contact form validation and submission
-- **`/public/scripts/theme-init.js`**: Theme initialization and persistence
+- **`/public/scripts/navbar.js`**: Mobile navigation toggle and compact navbar behavior (used in `Navbar.astro`)
+- **`/public/scripts/matrix-rain.js`**: Matrix-style background animation (used in `Hero.astro`)
+- **`/public/scripts/contact-form.js`**: Contact form validation and submission (used in `contact.astro`)
+- **`/public/scripts/theme-init.js`**: Theme initialization and persistence (used in `MainLayout.astro`)
+- **`/public/scripts/blog-index.js`**: Blog post indexing and data attributes (used in `blog/index.astro`)
+
+### Unused Scripts (Documentation Cleanup Required)
+- **`/public/scripts/blog-filter.js`**: Blog filtering functionality (exists but not used - blog page has no filters)
+- **`/public/scripts/creative-modal.js`**: Creative portfolio modal functionality (exists but not used)
+- **`/public/scripts/scroll-reveal.js`**: Scroll-triggered animations (exists but not used)
+
+> **Note:** These scripts exist in the codebase but are not currently integrated into any components. They represent planned functionality that may be implemented in future updates. The documentation has been updated to reflect only the currently active script dependencies.
 
 ## 🎨 Component Theming
 
@@ -130,6 +141,8 @@ Components follow mobile-first responsive patterns:
 ```
 
 ## 📱 Usage Examples
+
+> **Current Implementation Status:** Some documented features are planned but not yet implemented. The blog page shows posts without filtering, and the projects page shows featured projects only. Filtering scripts exist in the codebase but are not integrated.
 
 ### Minimal PageHero
 ```astro
@@ -185,7 +198,8 @@ import ProjectCard from '../components/ProjectCard.astro';
 - Concise blurb and HUD-style metadata block
 - Tech stack highlights (first three items)
 - Dual CTA layout: Learn More + View Live (when available)
-- Responsive: vertical stack on mobile, horizontal on desktop -->
+- Responsive: vertical stack on mobile, horizontal on desktop
+- Note: Projects page currently shows featured projects only, no filtering implemented -->
 ```
 
 ### Electric Border Avatar

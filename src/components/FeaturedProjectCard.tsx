@@ -102,7 +102,7 @@ export default function FeaturedProjectCard({
             target={cta.external ? '_blank' : undefined}
             rel={cta.external ? 'noopener noreferrer' : undefined}
             className="inline-flex items-center px-6 py-3 bg-primary text-background hover:bg-secondary
-                       transition-all duration-300 rounded-lg font-orbitron font-bold animate-glow focus-visible:outline
+                       transition-all duration-300 rounded-lg font-orbitron font-bold focus-visible:outline
                        focus-visible:outline-2 focus-visible:outline-primary gap-2"
             onClick={(e) => e.stopPropagation()}
             aria-label={cta.label}

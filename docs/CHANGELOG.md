@@ -15,6 +15,13 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 - Removed static avatar styling in favor of animated borders
 - Enhanced brand consistency with neon-lime color scheme
 - Restructured documentation suite for better developer and AI agent experience
+- Fixed COMPONENTS_REFERENCE.md to accurately reflect actual script dependencies and usage
+
+### Changed
+- Updated Hero.astro to use ElectricBorder component
+- Removed static avatar styling in favor of animated borders
+- Enhanced brand consistency with neon-lime color scheme
+- Restructured documentation suite for better developer and AI agent experience
 
 ### Fixed
 - Resolved TypeScript import issues with type-only imports

@@ -48,40 +48,40 @@ export default {
   			'dark-slate': '#1A1A1A',
   			'light-slate': '#2A2A2A',
   			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))'
+  				DEFAULT: '#39FF14', /* Neon Lime - Direct hex value */
+  				foreground: '#0A0A0A' /* Dark text on neon background */
   			},
   			secondary: {
-  				DEFAULT: 'hsl(var(--secondary))',
-  				foreground: 'hsl(var(--secondary-foreground))'
+  				DEFAULT: '#00B86B', /* Digital Emerald - Direct hex value */
+  				foreground: '#FFFFFF' /* White text on emerald background */
   			},
   			accent: {
-  				DEFAULT: 'hsl(var(--accent))',
-  				foreground: 'hsl(var(--accent-foreground))'
+  				DEFAULT: '#222222', /* Cyber Gray */
+  				foreground: '#E8FFE8' /* Matrix White */
   			},
-  			background: 'hsl(var(--background))',
-  			foreground: 'hsl(var(--foreground))',
+  			background: '#0A0A0A', /* Matrix Black */
+  			foreground: '#E8FFE8', /* Matrix White */
   			muted: {
-  				DEFAULT: 'hsl(var(--muted))',
-  				foreground: 'hsl(var(--muted-foreground))'
+  				DEFAULT: '#222222', /* Cyber Gray */
+  				foreground: '#B5B5B5' /* Muted text */
   			},
   			'muted-foreground': '#B5B5B5',
-  			border: 'hsl(var(--border))',
-  			input: 'hsl(var(--input))',
-  			ring: 'hsl(var(--ring))',
+  			border: '#222222', /* Cyber Gray */
+  			input: '#222222', /* Cyber Gray */
+  			ring: '#39FF14', /* Neon Lime for focus rings */
   			card: {
-  				DEFAULT: 'hsl(var(--card))',
-  				foreground: 'hsl(var(--card-foreground))'
+  				DEFAULT: '#0A0A0A', /* Matrix Black */
+  				foreground: '#E8FFE8' /* Matrix White */
   			},
   			'card-foreground': '#E8FFE8',
   			popover: {
-  				DEFAULT: 'hsl(var(--popover))',
-  				foreground: 'hsl(var(--popover-foreground))'
+  				DEFAULT: '#0A0A0A', /* Matrix Black */
+  				foreground: '#E8FFE8' /* Matrix White */
   			},
   			'popover-foreground': '#E8FFE8',
   			destructive: {
-  				DEFAULT: 'hsl(var(--destructive))',
-  				foreground: 'hsl(var(--destructive-foreground))'
+  				DEFAULT: '#FF4444', /* Red for destructive actions */
+  				foreground: '#FFFFFF' /* White text */
   			},
   			'destructive-foreground': '#FFFFFF',
   			success: '#00B86B',
@@ -97,11 +97,11 @@ export default {
   			'text-muted': '#9CA3AF',
   			'text-muted-dark': '#6B7280',
   			chart: {
-  				'1': 'hsl(var(--chart-1))',
-  				'2': 'hsl(var(--chart-2))',
-  				'3': 'hsl(var(--chart-3))',
-  				'4': 'hsl(var(--chart-4))',
-  				'5': 'hsl(var(--chart-5))'
+  				'1': '#39FF14', /* Neon Lime */
+  				'2': '#00B86B', /* Digital Emerald */
+  				'3': '#00FFFF', /* Neon Cyan */
+  				'4': '#8A2BE2', /* Neon Purple */
+  				'5': '#FF1493' /* Neon Pink */
   			}
   		},
   		ringColor: ({ theme }) => ({

@@ -11,10 +11,10 @@
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
+    --primary: 57 100% 53%; /* Neon Lime #39FF14 */
+    --primary-foreground: 0 0% 9%;
+    --secondary: 160 100% 36%; /* Digital Emerald #00B86B */
+    --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
     --accent: 0 0% 96.1%;
@@ -23,7 +23,7 @@
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 89.8%;
     --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
+    --ring: 57 100% 53%; /* Neon Lime for focus rings */
     --radius: 0.5rem;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
@@ -33,35 +33,11 @@
   }
 
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    /* CSS variables removed - now using direct hex values in Tailwind config */
+    /* This ensures consistent color application across all components */
   }
 
-  * {
-    border-color: var(--border);
-  }
+  /* Global border color removed - now using component-specific colors */
 
   html {
     font-family: 'Inter', system-ui, sans-serif;
@@ -367,6 +343,9 @@
     text-decoration-thickness: 1px;
     text-decoration-color: rgba(57, 255, 20, 0.35);
   }
+  
+  /* Color overrides removed - now using direct Tailwind colors */
+  /* This ensures consistent color application without conflicts */
 
   .card a.text-primary:hover {
     text-underline-offset: 6px;
@@ -653,7 +632,7 @@
   }
 
   .text-digital-emerald {
-    color: var(--secondary);
+    color: #00B86B;
   }
 
   .bg-cyber-gray {
@@ -705,20 +684,10 @@
   }
 }
 
-/* High contrast mode support */
+/* High contrast mode support - only override when explicitly needed */
 @media (prefers-contrast: high) {
-  .text-primary {
-    color: #00ff00 !important;
-  }
-  .text-secondary {
-    color: #00cc00 !important;
-  }
-  .border-primary {
-    border-color: #00ff00 !important;
-  }
-  .border-secondary {
-    border-color: #00cc00 !important;
-  }
+  /* Remove conflicting overrides - let CSS variables handle colors */
+  /* .text-primary and .text-secondary now use CSS variables properly */
 }
 
 /* Print styles for accessibility */

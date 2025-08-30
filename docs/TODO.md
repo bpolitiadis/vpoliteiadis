@@ -6,12 +6,18 @@
 
 ## 🟡 Medium Priority Issues
 
-### 1. **Component Dependencies Verification**
+### 1. **Component Dependencies Verification** ✅ RESOLVED
 - **Documentation Claims:** Specific script dependencies for components
 - **Actual Implementation:** Scripts exist but relationships need verification
 - **Files Affected:** `docs/COMPONENTS_REFERENCE.md`
 - **Issue:** Documentation lists script dependencies, but actual relationships need verification
-- **TODO:** Verify all component-script relationships work as documented
+- **Status:** VERIFIED - Found several discrepancies:
+  - `blog-filter.js` documented but not used in blog page
+  - `creative-modal.js` documented but not used anywhere
+  - `scroll-reveal.js` documented but not used anywhere
+  - Blog page has no filtering functionality despite script existence
+  - Projects page has no filtering despite documentation claims
+- **TODO:** Fix COMPONENTS_REFERENCE.md to accurately reflect actual script usage ✅ COMPLETED
 
 ### 2. **Content Collection Schemas Alignment**
 - **Documentation Claims:** Comprehensive schemas with all fields
@@ -40,7 +46,7 @@
 - [x] shadcn/ui setup verified ✅
 - [x] Structured data endpoints work ✅
 - [x] Image optimization pipeline works ✅
-- [ ] Component dependencies verified
+- [x] Component dependencies verified ✅
 - [ ] Content schemas validated
 - [ ] Performance claims verified
 - [ ] Accessibility features verified

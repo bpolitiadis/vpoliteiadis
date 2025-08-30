@@ -31,7 +31,7 @@ export default function HeroAnimationController({ quotes }: HeroAnimationControl
             sequential={true}
             revealDirection="start"
             characters="01ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+{}[]|\:;'<>?,./~`"
-            className="text-primary text-glow text-center"
+            className="text-matrix-white text-glow text-center"
             encryptedClassName="text-primary/40"
             animateOn="view"
             onComplete={() => {
@@ -50,14 +50,14 @@ export default function HeroAnimationController({ quotes }: HeroAnimationControl
             sequential={true}
             revealDirection="center"
             characters="01ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+{}[]|\:;'<>?,./~`"
-            className="text-secondary text-center"
-            encryptedClassName="text-secondary/40"
+            className="text-digital-emerald text-center"
+            encryptedClassName="text-digital-emerald/40"
             animateOn="view"
             onComplete={() => {
               console.log('🎯 First subtitle text completed');
             }}
           />
-          <span className="hidden sm:inline text-secondary">·</span>
+          <span className="hidden sm:inline text-digital-emerald">·</span>
           <DecryptedText 
             text="AI Powered Solutions"
             speed={80}
@@ -65,9 +65,9 @@ export default function HeroAnimationController({ quotes }: HeroAnimationControl
             sequential={true}
             revealDirection="center"
             characters="01ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+{}[]|\:;'<>?,./~`"
-            className="text-secondary text-center"
-            encryptedClassName="text-secondary/40"
             animateOn="view"
+            className="text-digital-emerald text-center"
+            encryptedClassName="text-digital-emerald/40"
             onComplete={() => {
               console.log('🎯 Both subtitle texts decryption completed');
             }}
