@@ -145,14 +145,11 @@ import ElectricBorder from './ElectricBorder.tsx';
     }
     
     // Listen for matrix rain to fill the screen
-    window.addEventListener('matrixRainFilled', (event) => {
-      console.log('🎬 Matrix rain filled, starting hero sequence');
-      
+    window.addEventListener('matrixRainFilled', () => {      
       // Start headline animation sequence
       if (heroContent) {
         setTimeout(() => {
           heroContent.style.opacity = '1';
-          console.log('🎯 Hero content revealed, headline animation starting');
         }, 500); // Small delay for visual effect
       }
     });
@@ -160,7 +157,6 @@ import ElectricBorder from './ElectricBorder.tsx';
     // Fallback: if matrix rain doesn't trigger within 3 seconds, start anyway
     setTimeout(() => {
       if (heroContent && heroContent.style.opacity === '0') {
-        console.log('⏰ Fallback: Starting hero sequence after timeout');
         heroContent.style.opacity = '1';
       }
     }, 3000);

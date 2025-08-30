@@ -26,7 +26,7 @@ export default function HeroAnimationController({ quotes }: HeroAnimationControl
         <span className="block text-center">
           <DecryptedText 
             text="Full-Stack Developer"
-            speed={60}
+            speed={80}
             maxIterations={20}
             sequential={true}
             revealDirection="start"
@@ -45,7 +45,7 @@ export default function HeroAnimationController({ quotes }: HeroAnimationControl
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center sm:gap-2 mt-2 text-lg sm:text-xl lg:text-2xl xl:text-3xl text-center">
           <DecryptedText 
             text="QA Automation Engineer"
-            speed={60}
+            speed={80}
             maxIterations={20}
             sequential={true}
             revealDirection="center"
@@ -90,7 +90,7 @@ export default function HeroAnimationController({ quotes }: HeroAnimationControl
             cursorBlinkDuration={0.8}
             className="text-base sm:text-md lg:text-lg xl:text-xl font-orbitron text-foreground/90 leading-relaxed tracking-wide"
             startOnVisible={false}
-            onSentenceComplete={(sentence, index) => {
+            onSentenceComplete={(_, index) => {
               // After first quote completes, trigger CTA animation
               if (index === 0) {
                 setTimeout(() => {
