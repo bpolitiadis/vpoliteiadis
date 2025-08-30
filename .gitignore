@@ -2,7 +2,6 @@
 dist/
 .output/
 .astro/
-*.content-modules.mjs
 
 # Dependencies
 node_modules/
