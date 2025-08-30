@@ -29,7 +29,7 @@ const data = project.data;
 
   <section class="bg-matrix-black text-matrix-white">
     <section class="relative py-10 md:py-12 lg:py-14 px-4 sm:px-6 lg:px-8">
-      <div class="max-w-7xl mx-auto">
+              <div class="max-w-5xl mx-auto">
         <!-- Back Button -->
         <div class="mb-6">
           <a 
@@ -43,11 +43,8 @@ const data = project.data;
             Back to Projects
           </a>
         </div>
-        <!-- Scroll reveal init -->
-        <script is:inline src="/scripts/scroll-reveal.js"></script>
-
         <!-- Hero: text left, screenshot right -->
-        <div class="grid lg:grid-cols-2 gap-8 items-start mb-8 reveal">
+        <div class="grid lg:grid-cols-2 gap-8 items-start mb-8">
           <div>
             <h1 class="text-3xl md:text-4xl lg:text-5xl font-orbitron neon-heading mb-3">{data.title}</h1>
             <p class="text-base md:text-lg text-text-muted mb-4 max-w-2xl">
@@ -65,14 +62,14 @@ const data = project.data;
         </div>
 
         <!-- About the Project -->
-        <GlassCard class="mb-6 reveal">
+        <GlassCard class="mb-6">
           <p class="text-sm text-text-muted leading-relaxed">
             Upiria is a digital platform that helps travel professionals and tour operators connect with global audiences. By offering booking, data insights, and loyalty tools, it enables brands to adapt to changing travel trends while keeping customers engaged.
           </p>
         </GlassCard>
 
         <!-- My Contribution: two-column bullets -->
-        <GlassCard class="mb-6 reveal">
+        <GlassCard class="mb-6">
           <div class="grid md:grid-cols-2 gap-4">
             <div>
               <h2 class="text-sm font-semibold neon-heading mb-1">Frontend</h2>

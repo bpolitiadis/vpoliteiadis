@@ -23,12 +23,14 @@
     "pnpm": "9.12.0"
   },
   "dependencies": {
+    "@appletosolutions/reactbits": "^1.0.3",
     "@astrojs/check": "^0.9.4",
     "@astrojs/mdx": "^4.3.3",
     "@astrojs/react": "^4.3.0",
     "@astrojs/sitemap": "^3.0.0",
     "astro": "^5.12.8",
     "glightbox": "^3.3.0",
+    "gsap": "^3.13.0",
     "lucide-astro": "^0.540.0",
     "lucide-react": "^0.540.0",
     "react": "^18.3.1",

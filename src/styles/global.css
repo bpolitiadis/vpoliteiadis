@@ -888,22 +888,10 @@
 }
 
 @layer utilities {
-  /* Scroll reveal utility */
-  /* Progressive enhancement: visible by default to avoid CSP/JS issues */
+  /* Scroll reveal utility - removed to prevent content disappearing */
   .reveal {
     opacity: 1;
     transform: none;
-    transition: opacity 400ms ease, transform 400ms ease;
-    will-change: opacity, transform;
-  }
-  .reveal.in-view {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  /* Optional: if a parent adds .js class, start hidden for animation */
-  .js .reveal {
-    opacity: 0;
-    transform: translateY(10px);
   }
 }
 
