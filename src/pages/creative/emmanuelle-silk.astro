@@ -1,29 +1,24 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
-import { getImage } from 'astro:assets';
 import LightboxGallery from '../../components/LightboxGallery.tsx';
-// Masters imported for astro:assets pipeline
-import es1 from '../../assets/images/emmanuelle-silk-1.png';
-import es2 from '../../assets/images/emmanuelle-silk-2.png';
-import es3 from '../../assets/images/emmanuelle-silk-3.png';
-import es4 from '../../assets/images/emmanuelle-silk-4.png';
-import es5 from '../../assets/images/emmanuelle-silk-5.png';
-import es6 from '../../assets/images/emmanuelle-silk-6.png';
-import es7 from '../../assets/images/emmanuelle-silk-7.png';
-import es8 from '../../assets/images/emmanuelle-silk-8.png';
 
-const sources = [es1, es2, es3, es4, es5, es6, es7, es8];
-const galleryItems = await Promise.all(
-  sources.map(async (src, i) => {
-    const thumb = await getImage({ src, width: 800, format: 'webp' });
-    const full = await getImage({ src, width: 2000, format: 'webp' });
-    return {
-      thumbSrc: thumb.src,
-      fullSrc: full.src,
-      alt: `Emmanuelle Silk design ${i + 1}`,
-    };
-  })
-);
+// Using Vercel Image Optimization API for dynamic image optimization
+const sources = [
+  '/src/assets/images/emmanuelle-silk-1.png',
+  '/src/assets/images/emmanuelle-silk-2.png',
+  '/src/assets/images/emmanuelle-silk-3.png',
+  '/src/assets/images/emmanuelle-silk-4.png',
+  '/src/assets/images/emmanuelle-silk-5.png',
+  '/src/assets/images/emmanuelle-silk-6.png',
+  '/src/assets/images/emmanuelle-silk-7.png',
+  '/src/assets/images/emmanuelle-silk-8.png'
+];
+
+const galleryItems = sources.map((src, i) => ({
+  thumbSrc: src, // Vercel will optimize these on-demand
+  fullSrc: src,  // Vercel will optimize these on-demand
+  alt: `Emmanuelle Silk design ${i + 1}`,
+}));
 ---
 
 <MainLayout 

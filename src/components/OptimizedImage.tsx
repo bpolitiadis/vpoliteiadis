@@ -7,34 +7,27 @@ type OptimizedImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
 };
 
 /**
- * Optimizes images via Vercel's on-the-fly transformer in production.
- * In development, falls back to the raw src to avoid proxying.
- * Works in React components where astro:assets is not available.
+ * 2025 Best Practice: Uses Vercel's Image Optimization API for instant optimization
+ * Eliminates build-time processing and provides automatic format/size optimization
  */
 export function OptimizedImage(props: OptimizedImageProps) {
   const { src, width = 1200, quality = 75, ...rest } = props;
 
-  // Always use absolute URL for the optimizer in production so it can fetch assets reliably
+  // Build absolute URL for Vercel's optimizer
   const toAbsolute = (maybeRelative: string) => {
     if (/^https?:\/\//.test(maybeRelative)) return maybeRelative;
     const site = (globalThis as any).Astro?.site || (typeof document !== 'undefined' ? `${location.protocol}//${location.host}` : '');
     return `${String(site).replace(/\/$/, '')}${maybeRelative}`;
   };
 
-  // If the source is a local static asset (/_astro/* or /images/*), skip optimizer to avoid 404s
-  const isAbsolute = /^https?:\/\//.test(src);
-  const isLocalStatic = src.startsWith('/_astro') || src.startsWith('/images/');
+  // Use Vercel's Image Optimization API in production
+  const isProduction = typeof window === 'undefined' 
+    ? process.env.NODE_ENV === 'production'
+    : import.meta.env.MODE === 'production';
 
-  const buildOptimized = (s: string) => `/_vercel/image?url=${encodeURIComponent(toAbsolute(s))}&w=${width}&q=${quality}`;
-
-  const optimizedSrc =
-    typeof window === 'undefined'
-      ? process.env.NODE_ENV === 'production'
-        ? (isAbsolute && !isLocalStatic ? buildOptimized(src) : src)
-        : src
-      : import.meta.env.MODE === 'production'
-        ? (isAbsolute && !isLocalStatic ? buildOptimized(src) : src)
-        : src;
+  const optimizedSrc = isProduction
+    ? `/_vercel/image?url=${encodeURIComponent(toAbsolute(src))}&w=${width}&q=${quality}`
+    : src;
 
   return (
     <img

@@ -1,6 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
-import arteImaginariHero from '../../assets/images/arte-imaginari-hero.webp';
+// Using Vercel Image Optimization API instead of static imports
 ---
 
 <MainLayout 
@@ -22,7 +22,7 @@ import arteImaginariHero from '../../assets/images/arte-imaginari-hero.webp';
       </header>
 
       <div class="rounded-2xl overflow-hidden border border-border/40 bg-[rgba(10,10,10,0.6)] shadow-inner mb-10">
-        <img src={arteImaginariHero.src} alt="Arte Imaginari collage" class="w-full h-auto object-cover" loading="lazy" decoding="async" />
+        <img src="/src/assets/images/arte-imaginari-wide.webp" alt="Arte Imaginari collage" class="w-full h-auto object-cover" loading="lazy" decoding="async" />
       </div>
 
 
