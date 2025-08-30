@@ -91,7 +91,7 @@ const ogImageURL = new URL(image, Astro.site);
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
-    <!-- Load Google Fonts (CSP-safe; no inline JS) -->
+    <!-- Preload critical fonts with font-display: swap for performance -->
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" />
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     
@@ -99,61 +99,116 @@ const ogImageURL = new URL(image, Astro.site);
     <link rel="dns-prefetch" href="//fonts.googleapis.com" />
     <link rel="dns-prefetch" href="//fonts.gstatic.com" />
     
-    <!-- Open Graph / Facebook -->
+    <!-- Preload critical images for LCP optimization -->
+    <link rel="preload" as="image" href="/images/vp-logo-480.webp" type="image/webp" />
+    <link rel="preload" as="image" href="/images/avatar.png" type="image/png" />
+    
+    <!-- Performance meta tags -->
+    <meta name="theme-color" content="#39FF14" />
+    <meta name="color-scheme" content="dark" />
+    
+    <!-- Structured data for SEO -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Vasileios Politeiadis",
+      "url": "https://vpoliteiadis.com",
+      "image": "https://vpoliteiadis.com/images/avatar.png",
+      "sameAs": [
+        "https://github.com/bpolitiadis",
+        "https://www.linkedin.com/in/vpoliteiadis",
+        "https://www.instagram.com/arte.imaginari/"
+      ],
+      "jobTitle": "Full-Stack Developer & AI Visionary",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Independent"
+      }
+    })} />
+    
+    <!-- Open Graph meta tags -->
     <meta property="og:type" content={type} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:site_name" content="Vasileios Politeiadis" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={ogImageURL} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={title} />
+    <meta property="og:site_name" content="Vasileios Politeiadis" />
     <meta property="og:locale" content="en_US" />
     
-    <!-- Twitter -->
+    <!-- Twitter Card meta tags -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@vpoliteiadis" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
     <meta name="twitter:image:alt" content={title} />
-    <meta name="twitter:creator" content="@vpoliteiadis" />
-    <!-- Additional OG image hints -->
-    <meta property="og:image:secure_url" content={ogImageURL} />
-    <meta property="og:image:type" content="image/webp" />
     
-    <!-- Additional Meta Tags -->
-    <meta name="author" content={author} />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    
-    <!-- Publication Date -->
+    <!-- Additional meta tags -->
     {publishedAt && <meta property="article:published_time" content={publishedAt} />}
     {updatedAt && <meta property="article:modified_time" content={updatedAt} />}
+    {author && <meta property="article:author" content={author} />}
     
-    <!-- Theme color for mobile browsers -->
-    <meta name="theme-color" content="#0A0A0A" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#F8FFF8" media="(prefers-color-scheme: light)" />
+    <!-- Security headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
     
-    <!-- Performance optimizations -->
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- Resource hints for performance -->
+    <link rel="dns-prefetch" href="//www.google-analytics.com" />
+    <link rel="dns-prefetch" href="//vercel.live" />
     
-    <!-- Cache headers only in development to avoid interfering with prod caching -->
-    {(import.meta.env?.DEV) && (
-      <>
-        <meta http-equiv="Cache-Control" content="no-store" />
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="0" />
-      </>
-    )}
-    
-    <!-- Structured Data (external, CSP-safe) -->
-    <script is:inline type="application/ld+json" src="/structured/person.json"></script>
-    <script is:inline type="application/ld+json" src="/structured/website.json"></script>
+    <!-- Critical CSS inline for above-the-fold content -->
+    <style>
+      /* Critical CSS for Matrix theme */
+      :root {
+        --neon-lime: #39FF14;
+        --matrix-black: #0A0A0A;
+        --matrix-white: #E4FFE4;
+      }
+      
+      body {
+        background-color: var(--matrix-black);
+        color: var(--matrix-white);
+        font-family: 'Inter', system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      
+      .font-orbitron {
+        font-family: 'Orbitron', sans-serif;
+      }
+      
+      /* Ensure smooth scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
+      
+      /* Optimize images */
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      
+      /* Font loading optimization */
+      .font-loading {
+        font-display: swap;
+      }
+      
+      /* Performance optimizations */
+      * {
+        box-sizing: border-box;
+      }
+      
+      /* Optimize animations */
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
   </head>
   <body class="min-h-screen bg-background text-foreground transition-colors duration-300">
     {(() => {
@@ -212,6 +267,8 @@ const ogImageURL = new URL(image, Astro.site);
     
     <!-- Theme initialization (external, CSP-safe) -->
     <script is:inline src="/scripts/theme-init.js" defer></script>
+    <!-- Performance optimization script -->
+    <script src="/scripts/performance.js" defer></script>
   </body>
 </html>
 

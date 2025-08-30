@@ -5,47 +5,43 @@ import SocialLink from './SocialLink.astro';
 import { getAllSocialProfiles } from '../lib/social-config';
 
 const socialProfiles = getAllSocialProfiles();
+const currentYear = new Date().getFullYear();
 ---
 
 <footer class="mt-auto">
-  <!-- Neon lime gradient divider -->
-  <div class="h-px w-full bg-gradient-to-r from-primary via-secondary to-neon-cyan opacity-60"></div>
-  
-  <!-- Matrix glyphs texture layer -->
-  <div class="absolute inset-0 opacity-[0.02] pointer-events-none">
-    <div class="absolute inset-0 bg-matrix-pattern"></div>
-  </div>
+  <!-- Tiny glow divider above footer -->
+  <div class="h-px w-full bg-gradient-to-r from-transparent via-neon-lime/40 to-transparent opacity-60"></div>
 
-  <div class="relative bg-matrix-black border-t border-border">
+  <div class="relative bg-matrix-black">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col sm:flex-row justify-between items-center gap-4 py-4 min-h-[60px]">
+      <div class="flex flex-col sm:flex-row justify-between items-center gap-3 py-3 min-h-[50px]">
         <!-- Left: VP monogram logo with subtle glow -->
-        <a href="/" class="flex items-center gap-3 group" aria-label="Go to homepage">
+        <a href="/" class="flex items-center gap-2 group" aria-label="Go to homepage">
           <div class="relative">
             <Image
               src={vpLogo}
               alt="Vasileios Politeiadis logo"
-              width={28}
-              height={28}
-              class="w-7 h-7 rounded-md transition-all duration-300 group-hover:scale-110"
+              width={24}
+              height={24}
+              class="w-6 h-6 rounded-md transition-transform duration-200 group-hover:scale-105"
             />
             <!-- Subtle glow effect -->
-            <div class="absolute inset-0 rounded-md bg-primary opacity-20 blur-md group-hover:opacity-30 transition-opacity duration-300"></div>
+            <div class="absolute inset-0 rounded-md bg-neon-lime/15 blur-sm group-hover:bg-neon-lime/25 transition-opacity duration-200"></div>
           </div>
-          <span class="font-orbitron text-primary text-base tracking-wide transition-colors group-hover:text-secondary">
+          <span class="font-orbitron text-neon-lime text-sm tracking-wide transition-colors group-hover:text-neon-lime/90">
             VP
           </span>
         </a>
 
         <!-- Center: copyright text -->
-        <div class="flex items-center text-sm text-muted-foreground text-center">
-          <span>&copy; 2025 Vasileios Politeiadis. All rights reserved.</span>
+        <div class="flex items-center text-xs text-matrix-white/60 text-center">
+          <span>&copy; {currentYear} Vasileios Politeiadis</span>
         </div>
 
-        <!-- Right: social icons with neon hover glow -->
-        <nav class="flex items-center gap-3" aria-label="Social links">
+        <!-- Right: social icons with minimal styling -->
+        <nav class="flex items-center gap-2" aria-label="Social links">
           {socialProfiles.map((profile) => (
-            <SocialLink profile={profile} size="md" />
+            <SocialLink profile={profile} size="sm" />
           ))}
         </nav>
       </div>

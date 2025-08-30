@@ -1,5 +1,5 @@
 ---
-// Compact Matrix-inspired navbar with neon styling
+// Compact Matrix-inspired navbar with subtle neon styling
 import { Icon } from './icons/Icon';
 
 export interface Props {
@@ -19,14 +19,11 @@ const navItems = [
 ];
 ---
 
-<nav class="navbar-compact sticky top-0 z-50 w-full bg-matrix-black/95 backdrop-blur-md border-b border-neon-lime/20 transition-all duration-300" role="navigation" aria-label="Main navigation">
-  <!-- Optional background texture strip - can be enabled later -->
-  <!-- <div class="navbar-bg-texture absolute inset-0 opacity-5 pointer-events-none"></div> -->
-  
+<nav class="navbar-compact sticky top-0 z-50 w-full bg-matrix-black/80 backdrop-blur-sm border-b border-neon-lime/10 transition-all duration-200" role="navigation" aria-label="Main navigation">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-15 md:h-16">
+    <div class="flex justify-between items-center h-14 md:h-16">
       
-      <!-- Left: Neon-glowing VP logo -->
+      <!-- Left: VP logo with subtle glow -->
       <div class="flex-shrink-0">
         <a href="/" class="flex items-center space-x-3 group" aria-label="Vasileios Politeiadis - Home">
           <div class="logo-container relative">
@@ -36,18 +33,18 @@ const navItems = [
               <img 
                 src="/images/vp-logo-480.webp" 
                 alt="Vasileios Politeiadis logo"
-                class="w-8 h-8 md:w-10 md:h-10 rounded-lg object-contain transition-all duration-300 group-hover:scale-110"
-                width="40" height="40"
+                class="w-7 h-7 md:w-8 md:h-8 rounded-md object-contain transition-transform duration-200 group-hover:scale-105"
+                width="32" height="32"
                 loading="eager"
                 decoding="async"
-                fetchpriority="low"
-                sizes="(max-width: 768px) 32px, 40px"
+                fetchpriority="high"
+                sizes="(max-width: 768px) 28px, 32px"
               />
             </picture>
-            <!-- Neon glow effect -->
-            <div class="logo-glow absolute inset-0 rounded-lg bg-neon-lime/20 blur-md group-hover:bg-neon-lime/30 transition-all duration-300" aria-hidden="true"></div>
+            <!-- Subtle neon glow effect -->
+            <div class="logo-glow absolute inset-0 rounded-md bg-neon-lime/15 blur-sm group-hover:bg-neon-lime/25 transition-all duration-200" aria-hidden="true"></div>
           </div>
-          <span class="font-orbitron font-bold text-neon-lime text-lg md:text-xl hidden sm:block group-hover:text-neon-lime/80 transition-all duration-300">
+          <span class="font-orbitron font-bold text-neon-lime text-base md:text-lg hidden sm:block group-hover:text-neon-lime/90 transition-colors duration-200">
             Vasileios Politeiadis
           </span>
         </a>
@@ -55,26 +52,26 @@ const navItems = [
 
       <!-- Desktop Navigation: Horizontal with compact spacing -->
       <div class="hidden md:block">
-        <div class="flex items-center space-x-3 lg:space-x-4" role="menubar">
+        <div class="flex items-center space-x-2 lg:space-x-3" role="menubar">
           {navItems.map((item) => (
             <a
               href={item.href}
-              class={`nav-link-desktop px-3 py-2 text-sm font-medium transition-all duration-300 relative group font-orbitron ${
+              class={`nav-link-desktop px-3 py-2 text-sm font-medium transition-all duration-200 relative group font-orbitron ${
                 currentPath === item.href
                   ? 'text-neon-lime'
-                  : 'text-matrix-white/80 hover:text-neon-lime'
+                  : 'text-matrix-white/70 hover:text-neon-lime/90'
               }`}
               role="menuitem"
               aria-current={currentPath === item.href ? 'page' : undefined}
               aria-label={`${item.label}${currentPath === item.href ? ' (current page)' : ''}`}
             >
               {item.label}
-              {/* Active page glowing underline */}
+              {/* Active page neon underline */}
               {currentPath === item.href && (
-                <div class="nav-active-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-neon-lime shadow-neon transition-all duration-300" aria-hidden="true"></div>
+                <div class="nav-active-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-neon-lime shadow-neon transition-all duration-200" aria-hidden="true"></div>
               )}
-              {/* Hover glow effect */}
-              <div class="nav-hover-glow absolute inset-0 rounded-md bg-neon-lime/0 group-hover:bg-neon-lime/5 transition-all duration-300" aria-hidden="true"></div>
+              {/* Magnetic hover underline */}
+              <div class="nav-hover-underline absolute bottom-0 left-1/2 right-1/2 h-0.5 bg-neon-lime/60 transform -translate-x-1/2 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out" aria-hidden="true"></div>
             </a>
           ))}
         </div>
@@ -82,42 +79,64 @@ const navItems = [
 
       <!-- Right side: Mobile Menu Button -->
       <div class="flex items-center">
-        <!-- Mobile menu button with glowing cyan icon -->
+        <!-- Mobile menu button with subtle cyan border -->
         <button
           id="mobile-menu-button"
-          class="mobile-menu-btn md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-neon-cyan/30 bg-transparent text-neon-cyan hover:text-neon-cyan/80 hover:border-neon-cyan/50 hover:bg-neon-cyan/5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-cyan/60 focus-visible:ring-offset-2 focus-visible:ring-offset-matrix-black"
+          class="mobile-menu-btn md:hidden inline-flex h-9 w-9 items-center justify-center rounded-md border border-neon-cyan/20 bg-transparent text-neon-cyan hover:text-neon-cyan/80 hover:border-neon-cyan/40 hover:bg-neon-cyan/5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-cyan/40 focus-visible:ring-offset-2 focus-visible:ring-offset-matrix-black"
           aria-label="Toggle mobile navigation menu"
           aria-expanded="false"
           aria-controls="mobile-menu"
           aria-haspopup="menu"
         >
-          <!-- Hamburger icon with glow -->
-          <Icon name="Menu" size="md" className="text-current drop-shadow-neon-cyan" aria-hidden="true" />
-          <!-- Close icon with glow -->
-          <Icon name="X" size="md" className="text-current drop-shadow-neon-cyan" aria-hidden="true" />
+          <!-- Hamburger icon -->
+          <Icon name="Menu" size="sm" className="text-current" aria-hidden="true" />
+          <!-- Close icon -->
+          <Icon name="X" size="sm" className="text-current" aria-hidden="true" />
         </button>
       </div>
     </div>
 
-    <!-- Mobile Navigation Menu: Full black with neon accents -->
-    <div id="mobile-menu" class="mobile-menu hidden md:hidden absolute top-full left-0 right-0 bg-matrix-black/98 backdrop-blur-lg border-b border-neon-lime/20 z-50" role="menu" aria-labelledby="mobile-menu-button">
-      <div class="px-4 py-4 space-y-2">
-        {navItems.map((item) => (
-          <a
-            href={item.href}
-            class={`mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 font-orbitron ${
-              currentPath === item.href
-                ? 'text-neon-lime bg-neon-lime/10 border border-neon-lime/30'
-                : 'text-matrix-white/90 hover:text-neon-lime hover:bg-neon-lime/5'
-            }`}
-            role="menuitem"
-            aria-current={currentPath === item.href ? 'page' : undefined}
-            tabindex="0"
-            aria-label={`${item.label}${currentPath === item.href ? ' (current page)' : ''}`}
+    <!-- Mobile Navigation Menu: Full-height drawer with grid glow -->
+    <div id="mobile-menu" class="mobile-menu hidden md:hidden fixed top-0 left-0 right-0 bottom-0 bg-matrix-black/95 backdrop-blur-md z-50" role="menu" aria-labelledby="mobile-menu-button">
+      <div class="flex flex-col h-full">
+        <!-- Mobile menu header -->
+        <div class="flex justify-between items-center p-4 border-b border-neon-lime/10">
+          <span class="font-orbitron text-neon-lime text-lg">Menu</span>
+          <button
+            id="mobile-close-button"
+            class="p-2 text-neon-lime hover:text-neon-lime/80 transition-colors duration-200"
+            aria-label="Close menu"
           >
-            {item.label}
-          </a>
-        ))}
+            <Icon name="X" size="md" className="text-current" aria-hidden="true" />
+          </button>
+        </div>
+        
+        <!-- Mobile navigation links -->
+        <div class="flex-1 px-4 py-6 space-y-2">
+          {navItems.map((item) => (
+            <a
+              href={item.href}
+              class={`mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 font-orbitron ${
+                currentPath === item.href
+                  ? 'text-neon-lime bg-neon-lime/5 border border-neon-lime/20'
+                  : 'text-matrix-white/80 hover:text-neon-lime hover:bg-neon-lime/5'
+              }`}
+              role="menuitem"
+              aria-current={currentPath === item.href ? 'page' : undefined}
+              tabindex="0"
+              aria-label={`${item.label}${currentPath === item.href ? ' (current page)' : ''}`}
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
+        
+        <!-- Mobile menu footer -->
+        <div class="p-4 border-t border-neon-lime/10">
+          <div class="text-center text-matrix-white/60 text-sm">
+            <span class="font-orbitron">VP</span> • Matrix Network
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -131,55 +150,44 @@ const navItems = [
   #mobile-menu-button[aria-expanded="true"] [data-icon="menu"] { display: none; }
   #mobile-menu-button[aria-expanded="true"] [data-icon="close"] { display: inline; }
   
-  /* Custom navbar height */
+  /* Custom navbar height - more compact */
   .navbar-compact {
-    height: 60px;
+    height: 56px;
   }
   
   @media (max-width: 768px) {
     .navbar-compact {
-      height: 50px;
+      height: 48px;
     }
   }
   
-  /* Logo glow animation */
+  /* Logo glow - subtle and smooth */
   .logo-glow {
-    animation: logoPulse 3s ease-in-out infinite alternate;
+    animation: logoGlow 4s ease-in-out infinite alternate;
   }
   
-  @keyframes logoPulse {
-    0% { opacity: 0.3; }
-    100% { opacity: 0.6; }
+  @keyframes logoGlow {
+    0% { opacity: 0.15; }
+    100% { opacity: 0.25; }
   }
   
-  /* Active page indicator glow */
+  /* Active page indicator - subtle neon glow */
   .nav-active-indicator {
-    animation: activeGlow 2s ease-in-out infinite alternate;
+    box-shadow: 0 0 8px rgba(57, 255, 20, 0.3);
   }
   
-  @keyframes activeGlow {
-    0% { box-shadow: 0 0 8px rgba(57, 255, 20, 0.4); }
-    100% { box-shadow: 0 0 16px rgba(57, 255, 20, 0.7); }
-  }
-  
-  /* Mobile menu slide animation */
+  /* Mobile menu slide animation - smooth and Matrix-appropriate */
   .mobile-menu {
-    transform: translateY(-10px);
-    opacity: 0;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   .mobile-menu.show {
-    transform: translateY(0);
-    opacity: 1;
+    transform: translateX(0);
   }
   
-  /* Optional background texture styles for future use */
-  .navbar-bg-texture {
-    background-image: 
-      radial-gradient(circle at 25% 25%, rgba(57, 255, 20, 0.03) 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, rgba(0, 184, 107, 0.02) 0%, transparent 50%);
-    background-size: 200px 200px, 150px 150px;
-    background-position: 0 0, 100px 100px;
+  /* Hover underline animation - magnetic effect */
+  .nav-hover-underline {
+    transform-origin: center;
   }
 </style>

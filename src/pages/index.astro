@@ -10,13 +10,17 @@ import { Badge } from '@/components/ui/badge';
   description="Full-Stack Developer & AI Visionary specializing in modern web technologies, automation, and creative AI applications."
   currentPath="/"
 >
-  <!-- Enhanced Hero Section -->
+  <!-- Enhanced Hero Section - Above the fold, eager load -->
   <section class="relative min-h-screen overflow-hidden">
     <Hero />
   </section>
 
-  <!-- Featured Section -->
-  <section class="py-20 bg-muted/50 relative content-visibility-auto" aria-labelledby="what-i-do-title">
+  <!-- Featured Section - Below the fold, lazy load -->
+  <section 
+    class="py-20 bg-muted/50 relative content-visibility-auto" 
+    aria-labelledby="what-i-do-title"
+    data-lazy-section
+  >
     <div class="pointer-events-none absolute inset-0" aria-hidden="true">
       <picture>
         <source srcset="/images/bg-divider-1200.avif 1200w, /images/bg-divider-800.avif 800w, /images/bg-divider-480.avif 480w" type="image/avif" />
@@ -128,3 +132,36 @@ import { Badge } from '@/components/ui/badge';
     </div>
   </section>
 </MainLayout>
+
+<style>
+  /* Lazy loading animations for Matrix theme */
+  [data-lazy-section] {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  
+  [data-lazy-section].lazy-loaded {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Optimize animations for users who prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    [data-lazy-section] {
+      transition: none;
+    }
+  }
+  
+  /* Animation pause when tab is not visible */
+  .paused * {
+    animation-play-state: paused !important;
+  }
+  
+  /* Reduced motion support */
+  .reduced-motion * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+</style>
