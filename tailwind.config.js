@@ -23,7 +23,9 @@ export default {
     // Responsive aspect ratios for project cards
     'aspect-[16/10]','aspect-[16/9]','aspect-[16/8]',
     // Responsive grid layouts
-    'grid-cols-1','lg:grid-cols-2','gap-6','sm:gap-8','lg:gap-10','xl:gap-12'
+    'grid-cols-1','lg:grid-cols-2','gap-6','sm:gap-8','lg:gap-10','xl:gap-12',
+    // StarBorder component classes
+    'animate-star-movement-bottom','animate-star-movement-top'
   ],
   darkMode: ['class', 'class'],
   
@@ -137,19 +139,21 @@ export default {
   			'3/2': '3 / 2',
   			'2/1': '2 / 1'
   		},
-  		animation: {
-  			glow: 'glow 2s ease-in-out infinite alternate',
-  			'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-  			'fade-in': 'fadeIn 0.5s ease-in-out',
-  			'slide-up': 'slideUp 0.3s ease-out',
-  			'slide-up-delayed': 'slideUpDelayed 0.6s ease-out 1.5s both',
-  			'fade-in-delayed': 'fadeInDelayed 0.8s ease-out 2s both',
-  			'spin-slow': 'spin 8s linear infinite',
-  			'bounce-slow': 'bounce 2s infinite',
-  			float: 'float 6s ease-in-out infinite',
-  			'matrix-rain': 'matrixRain 20s linear infinite',
-  			'scale-smooth': 'scaleSmooth 0.7s cubic-bezier(0.4, 0, 0.2, 1)'
-  		},
+  				animation: {
+			glow: 'glow 2s ease-in-out infinite alternate',
+			'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+			'fade-in': 'fadeIn 0.5s ease-in-out',
+			'slide-up': 'slideUp 0.3s ease-out',
+			'slide-up-delayed': 'slideUpDelayed 0.6s ease-out 1.5s both',
+			'fade-in-delayed': 'fadeInDelayed 0.8s ease-out 2s both',
+			'spin-slow': 'spin 8s linear infinite',
+			'bounce-slow': 'bounce 2s infinite',
+			float: 'float 6s ease-in-out infinite',
+			'matrix-rain': 'matrixRain 20s linear infinite',
+			'scale-smooth': 'scaleSmooth 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
+			'star-movement-bottom': 'star-movement-bottom linear infinite alternate',
+			'star-movement-top': 'star-movement-top linear infinite alternate'
+		},
   		keyframes: {
   			glow: {
   				'0%': {
@@ -213,14 +217,34 @@ export default {
   					transform: 'translateY(100vh)'
   				}
   			},
-  			scaleSmooth: {
-  				'0%': {
-  					transform: 'scale(1)'
-  				},
-  				'100%': {
-  					transform: 'scale(1.05)'
-  				}
-  			}
+  						scaleSmooth: {
+				'0%': {
+					transform: 'scale(1)'
+				},
+				'100%': {
+					transform: 'scale(1.05)'
+				}
+			},
+			'star-movement-bottom': {
+				'0%': { 
+					transform: 'translate(0%, 0%)', 
+					opacity: '1' 
+				},
+				'100%': { 
+					transform: 'translate(-100%, 0%)', 
+					opacity: '0' 
+				}
+			},
+			'star-movement-top': {
+				'0%': { 
+					transform: 'translate(0%, 0%)', 
+					opacity: '1' 
+				},
+				'100%': { 
+					transform: 'translate(100%, 0%)', 
+					opacity: '0' 
+				}
+			}
   		},
   		backdropBlur: {
   			xs: '2px'
