@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import avatarSrc from '../assets/images/avatar.png';
 import bgSrc from '../assets/images/home-bg.png';
 import HeroAnimationController from './HeroAnimationController.tsx';
+import ElectricBorder from './ElectricBorder.tsx';
 
 // Hero component with Matrix-inspired animations and neon glow effects
 // Features: Animated background, VP logo, smooth text animations, and interactive CTA
@@ -23,20 +24,27 @@ import HeroAnimationController from './HeroAnimationController.tsx';
 <!-- Main Content Container -->
 <div class="relative z-10 flex flex-col items-center justify-center min-h-[calc(100svh-4rem)] md:min-h-[calc(100dvh-4rem)] px-4 sm:px-6 lg:px-8 py-8 text-center">
   
-  <!-- Avatar - No animations, just static display -->
-  <div class="mb-6 group mt-2 sm:mt-6 lg:mt-8">
-    <div class="relative">
+  <!-- Avatar with Electric Border Effect -->
+  <div class="mb-6 mt-2 sm:mt-6 lg:mt-8">
+    <ElectricBorder
+      color="#39FF14"
+      speed={1}
+      chaos={0.5}
+      thickness={3}
+      style={{ borderRadius: '80%' }}
+      client:load
+    >
       <Image 
         src={avatarSrc}
         alt="Portrait of Vasileios Politeiadis"
-        class="relative w-32 h-32 mx-auto rounded-full border-2 border-primary shadow-neon object-cover"
+        class="w-32 h-32 mx-auto rounded-full object-cover"
         widths={[128, 160, 192]}
         sizes="128px"
         format="webp"
         loading="eager"
         fetchpriority="high"
       />
-    </div>
+    </ElectricBorder>
   </div>
 
   <!-- Hero Animation Controller - Manages headline, subtitle, and TextType sequence -->
@@ -45,18 +53,17 @@ import HeroAnimationController from './HeroAnimationController.tsx';
       quotes={[
         "Certified bug hunter.",
         "Debugging reality.",
-        "I break things professionally.",
+        "I break code professionally.",
+        "Imagination is more important than knowledge. — AE",
+        "The computer was born to solve problems that did not exist before. — BG",
         "Automating workflows, amplifying humans.",
         "Human creativity, artificial brains.",
-        "I break code so you don't have to.",
         "Writing tests that test the limits.",
         "Partnering with AI to outpace time.",
         "Engineering the future, accelerated by AI.",
         "I write code that watches your code.",
         "The best way to predict the future is to invent it. — AK",
-        "Imagination is more important than knowledge. — AE",
         "Any sufficiently advanced technology is indistinguishable from magic. — AC",
-        "The computer was born to solve problems that did not exist before. — BG",
         "The future is already here — it's just not evenly distributed. — WG"
       ]}
       client:load
