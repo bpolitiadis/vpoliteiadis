@@ -72,7 +72,12 @@ vpoliteiadis/
 │   │   ├── Navbar.astro         # Navigation component
 │   │   ├── ProjectCard.astro    # Reusable project card component
 │   │   ├── CreativeCard.astro   # Creative portfolio card component
-│   │   └── CreativeModal.astro  # Modal for creative pieces
+│   │   ├── CreativeModal.astro  # Modal for creative pieces
+│   │   ├── SocialLink.astro     # Smart social media link component
+│   │   └── Footer.astro         # Footer with social links
+│   ├── lib/
+│   │   ├── social-config.ts     # Social media profiles configuration
+│   │   └── analytics.ts         # Analytics tracking utilities
 │   ├── content/
 │   │   ├── config.ts            # Content collections configuration
 │   │   ├── projects/            # Project case studies (MDX)

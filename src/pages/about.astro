@@ -103,7 +103,7 @@ import { GraduationIcon, AwardIcon, MonitorIcon, PaletteIcon } from '../componen
                   <h3 class="font-orbitron font-bold text-neon-lime mb-2 text-shadow-neon text-lg">Senior QA Automation Specialist</h3>
                   <p class="text-digital-emerald text-base mb-3">European Commission - DG DIGIT Directorate</p>
                   <p class="text-matrix-white/80 text-base leading-relaxed">
-                    Leading quality assurance and testing automation for European Commission projects, specializing in Java-based automation frameworks and modern testing tools.
+                    Leading testing automation in quality assurance for European Commission projects, specializing in Java-based automation frameworks and modern testing tools.
                   </p>
                 </div>
               </div>
@@ -316,7 +316,10 @@ import { GraduationIcon, AwardIcon, MonitorIcon, PaletteIcon } from '../componen
                       href="https://instagram.com/arte.imaginari" 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      class="clean-cta-btn secondary"
+                      class="clean-cta-btn secondary social-link"
+                      data-platform="instagram"
+                      data-deep-link="instagram://user?username=arte.imaginari"
+                      data-web-url="https://instagram.com/arte.imaginari"
                       aria-label="Follow @arte.imaginari on Instagram"
                     >
                       <svg class="instagram-icon" viewBox="0 0 24 24" fill="currentColor">
@@ -649,6 +652,137 @@ import { GraduationIcon, AwardIcon, MonitorIcon, PaletteIcon } from '../componen
     // Observe all fade-in cards
     document.querySelectorAll('.fade-in-card').forEach(card => {
       observer.observe(card);
+    });
+  });
+
+  // Social link deep-linking logic (same as in SocialLink component)
+  class SocialLinkHandler {
+    private static instance: SocialLinkHandler;
+    private isMobile: boolean;
+
+    private constructor() {
+      this.isMobile = this.detectMobile();
+    }
+
+    static getInstance(): SocialLinkHandler {
+      if (!SocialLinkHandler.instance) {
+        SocialLinkHandler.instance = new SocialLinkHandler();
+      }
+      return SocialLinkHandler.instance;
+    }
+
+    private detectMobile(): boolean {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    async handleSocialClick(event: Event, platform: string, deepLink: string, webUrl: string): Promise<void> {
+      event.preventDefault();
+      
+      try {
+        if (this.isMobile && this.shouldTryDeepLink(platform)) {
+          // Try deep link first
+          const deepLinkSuccess = await this.attemptDeepLink(deepLink);
+          
+          if (deepLinkSuccess) {
+            this.trackAnalytics(platform, 'deep-link');
+            return;
+          }
+        }
+        
+        // Fallback to web URL
+        this.trackAnalytics(platform, 'web-fallback');
+        window.open(webUrl, '_blank', 'noopener,noreferrer');
+        
+      } catch (error) {
+        console.warn(`Failed to handle social link for ${platform}:`, error);
+        // Always fallback to web URL on error
+        this.trackAnalytics(platform, 'web-fallback');
+        window.open(webUrl, '_blank', 'noopener,noreferrer');
+      }
+    }
+
+    private shouldTryDeepLink(platform: string): boolean {
+      return ['instagram', 'linkedin'].includes(platform);
+    }
+
+    private async attemptDeepLink(deepLink: string): Promise<boolean> {
+      return new Promise((resolve) => {
+        // Create a hidden iframe to test deep link
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = deepLink;
+        
+        let timeoutId: NodeJS.Timeout;
+        let hasNavigated = false;
+        
+        // Set a timeout to detect if deep link failed
+        timeoutId = setTimeout(() => {
+          if (!hasNavigated) {
+            resolve(false);
+          }
+        }, 1000);
+        
+        // Listen for page visibility change (indicates app opened)
+        const handleVisibilityChange = () => {
+          if (document.hidden) {
+            hasNavigated = true;
+            clearTimeout(timeoutId);
+            resolve(true);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+          }
+        };
+        
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        
+        // Clean up iframe
+        setTimeout(() => {
+          if (document.body.contains(iframe)) {
+            document.body.removeChild(iframe);
+          }
+          clearTimeout(timeoutId);
+          if (!hasNavigated) {
+            resolve(false);
+          }
+        }, 1000);
+        
+        document.body.appendChild(iframe);
+      });
+    }
+
+    private trackAnalytics(platform: string, route: 'deep-link' | 'web-fallback'): void {
+      // Send to Vercel Analytics if available
+      if (typeof window !== 'undefined' && (window as any).va) {
+        (window as any).va.track('social_click', {
+          platform,
+          route
+        });
+      }
+      
+      // Log to console in development
+      if (import.meta.env?.DEV) {
+        console.log('Social click tracked:', { platform, route, timestamp: Date.now() });
+      }
+    }
+  }
+
+  // Initialize social link handler
+  const socialHandler = SocialLinkHandler.getInstance();
+
+  // Add click handlers to social links on this page
+  document.addEventListener('DOMContentLoaded', () => {
+    const socialLinks = document.querySelectorAll('.social-link');
+    
+    socialLinks.forEach(link => {
+      link.addEventListener('click', (event) => {
+        const target = event.currentTarget as HTMLElement;
+        const platform = target.getAttribute('data-platform');
+        const deepLink = target.getAttribute('data-deep-link');
+        const webUrl = target.getAttribute('data-web-url');
+        
+        if (platform && deepLink && webUrl) {
+          socialHandler.handleSocialClick(event, platform, deepLink, webUrl);
+        }
+      });
     });
   });
 </script>

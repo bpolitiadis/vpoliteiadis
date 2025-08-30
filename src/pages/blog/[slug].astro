@@ -414,8 +414,8 @@ const modifiedDate = post.data.updatedAt ? new Date(post.data.updatedAt).toISOSt
     top: 0.5rem;
     right: 1rem;
     font-size: 0.75rem;
-    color: color-mix(in oklab, hsl(var(--foreground)) 60%, transparent);
-    background-color: color-mix(in oklab, hsl(var(--muted)) 50%, transparent);
+    color: color-mix(in oklab, var(--foreground) 60%, transparent);
+    background-color: color-mix(in oklab, var(--muted) 50%, transparent);
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;
   }
