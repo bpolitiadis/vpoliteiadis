@@ -26,7 +26,7 @@ What you'll learn: inventory, purpose, props, and dependencies.
 
 | Path | Purpose | Key props |
 |---|---|---|
-| `src/components/Hero.astro` | Home hero with matrix rain | — |
+| `src/components/Hero.astro` | Home hero with matrix rain and dynamic subtitle | — |
 | `src/components/PageHero.astro` | Page hero with optional background | `title` (req), `description?`, `bgSlug?`, `metaText?`, `eager?` |
 | `src/components/GlassCard.astro` | Glassmorphic container with neon accent | `accent?`, `ariaLabel?`, `class?` |
 | `src/components/HighlightBlock.astro` | Compact highlight tile for impact points | `title` (req), `description?`, `class?` |
@@ -48,6 +48,7 @@ What you'll learn: inventory, purpose, props, and dependencies.
 | `src/components/OptimizedImage.tsx` | React image helper (Vercel optimizer aware) | `src`, `width?`, `quality?`, plus `<img>` attrs |
 | `src/components/LightboxGallery.tsx` | React lightbox grid powered by `yet-another-react-lightbox` | `items: { thumbSrc, fullSrc, alt }[]`, `className?` |
 | `src/components/ScreenshotFrame.astro` | Premium framed screenshot with neon/scanlines | `src` (req), `alt` (req), `eager?`, `width?`, `height?`, `class?` |
+| `src/components/TextType.tsx` | Typing/erasing text rotator with cursor | `text` (string or string[]), `typingSpeed?`, `deletingSpeed?`, `pauseDuration?`, `showCursor?`, `cursorCharacter?`, `cursorClassName?`, `className?`, `startOnVisible?` |
 
 ### Modals
 
@@ -64,7 +65,7 @@ graph LR
   CreativeCard --> VercelImage
   FeaturedProjectCard --> OptimizedImage
   Navbar --> /public/scripts/navbar.js
-  Hero --> /public/scripts/matrix-rain.js
+  Hero --> /public/scripts/matrix-rain.js, TextType
 ```
 
 ## Usage examples
@@ -110,6 +111,21 @@ Minimal `PageHero`:
 import PageHero from '../components/PageHero.astro';
 ---
 <PageHero title="Projects" description="Selected work" bgSlug="projects-bg" eager />
+```
+
+Hero with dynamic subtitle:
+
+```astro
+---
+import Hero from '../components/Hero.astro';
+---
+<Hero />
+<!-- Automatically includes:
+- Matrix rain background
+- Avatar with neon glow
+- DecryptedText headline
+- Dynamic subtitle with TextType quotes
+- CTA buttons with animations -->
 ```
 
 Glass card + CTA snippet:

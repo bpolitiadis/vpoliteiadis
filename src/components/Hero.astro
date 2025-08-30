@@ -2,6 +2,8 @@
 import { Image } from 'astro:assets';
 import avatarSrc from '../assets/images/avatar.png';
 import bgSrc from '../assets/images/home-bg.png';
+import DecryptedText from './DecryptedText.tsx';
+import TextType from './TextType.tsx';
 
 // Hero component with Matrix-inspired animations and neon glow effects
 // Features: Animated background, VP logo, smooth text animations, and interactive CTA
@@ -38,24 +40,116 @@ import bgSrc from '../assets/images/home-bg.png';
     </div>
   </div>
 
-  <!-- Main Headline with Enhanced Typography -->
-  <h1 class="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl leading-tight font-orbitron font-bold mb-6 animate-fade-in">
-    <span class="block text-primary text-glow">Full-Stack Developer</span>
-    <div class="flex flex-col sm:flex-row sm:items-center sm:gap-2 mt-2 text-lg sm:text-xl lg:text-2xl xl:text-3xl">
-      <span class="text-secondary">QA Automation Engineer</span>
+  <!-- Main Headline with DecryptedText Effect -->
+  <h1 class="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl leading-tight font-orbitron font-bold mb-6 text-center">
+    <span class="block text-center">
+      <DecryptedText 
+        text="Full-Stack Developer"
+        speed={60}
+        maxIterations={20}
+        sequential={true}
+        revealDirection="start"
+        characters="01ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+{}[]|\:;'<>?,./~`"
+        className="text-primary text-glow text-center"
+        encryptedClassName="text-primary/40"
+        animateOn="view"
+
+        client:load
+      />
+    </span>
+    <div id="hero-subtitle" class="flex flex-col sm:flex-row sm:items-center sm:justify-center sm:gap-2 mt-2 text-lg sm:text-xl lg:text-2xl xl:text-3xl text-center">
+      <DecryptedText 
+        text="QA Automation Engineer"
+        speed={60}
+        maxIterations={20}
+        sequential={true}
+        revealDirection="center"
+        characters="01ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+{}[]|\:;'<>?,./~`"
+        className="text-secondary text-center"
+        encryptedClassName="text-secondary/40"
+        animateOn="view"
+        client:load
+      />
       <span class="hidden sm:inline text-secondary">·</span>
-      <span class="text-secondary">AI Powered Solutions</span>
+      <DecryptedText 
+        text="AI Powered Solutions"
+        speed={80}
+        maxIterations={20}
+        sequential={true}
+        revealDirection="center"
+        characters="01ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+{}[]|\:;'<>?,./~`"
+        className="text-secondary text-center"
+        encryptedClassName="text-secondary/40"
+        animateOn="view"
+        onComplete={() => {
+          console.log('🎯 Both subtitle texts decryption completed - starting animation sequence');
+          
+          // Trigger dynamic subtitle animation
+          setTimeout(() => {
+            const description = document.getElementById('hero-description');
+            if (description) {
+              description.classList.add('animate-description');
+              console.log('✅ Dynamic subtitle animation triggered');
+            }
+          }, 800);
+          
+          // Then trigger CTA after subtitle completes
+          setTimeout(() => {
+            const cta = document.getElementById('hero-cta');
+            if (cta) {
+              cta.classList.add('animate-cta');
+              console.log('✅ CTA animation triggered');
+            }
+          }, 1800);
+        }}
+        client:load
+      />
     </div>
   </h1>
 
-  <!-- Subtitle with Enhanced Styling -->
-  <p class="text-lg sm:text-2xl lg:text-3xl text-foreground/90 mb-8 max-w-3xl mx-auto font-inter leading-relaxed animate-slide-up">
-    Engineering the <span class="text-primary font-medium">future</span>,<br />
-    with <span class="text-secondary font-medium">precision</span>, <span class="text-secondary font-medium">creativity</span>, and <span class="text-secondary font-medium">AI</span>.
-  </p>
+  <!-- Dynamic Subtitle with TextType Component -->
+  <!-- Rotating quotes with typing animation - positioned between headline and CTA -->
+  <div id="hero-description" class="mb-8 max-w-4xl mx-auto text-center opacity-0">
+    <TextType 
+      text={[
+        "Certified bug hunter.",
+        "Breaking code so you don't have to.",
+        "Writing tests that test the limits.",
+        "Debugging reality.",
+        "Automating workflows, amplifying humans.",
+        "Partnering with AI to outpace time.",
+        "Engineering the future, accelerated by AI.",
+        "Precision, creativity, and artificial brains.",
+        "I break things professionally.",
+        "Stress-testing reality.",
+        "I automate therefore I am.",
+        "Writing code that watches your code.",
+        "Smarter code through artificial brains.",
+        "The best way to predict the future is to invent it. — Alan Kay",
+        "Imagination is more important than knowledge. — Albert Einstein",
+        "Any sufficiently advanced technology is indistinguishable from magic. — Arthur C. Clarke",
+        "The computer was born to solve problems that did not exist before. — Bill Gates",
+        "The true sign of intelligence is not knowledge but imagination. — Albert Einstein",
+        "Know thyself. — Socrates",
+        "The mind is everything. What you think you become. — Buddha",
+        "The future is already here — it's just not evenly distributed. — William Gibson"
+      ]}
+      typingSpeed={75}
+      pauseDuration={1500}
+      deletingSpeed={50}
+      loop={true}
+      showCursor={true}
+      cursorCharacter="|"
+      cursorClassName="text-primary text-glow"
+      cursorBlinkDuration={0.8}
+      className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-inter text-foreground/90 leading-relaxed"
+      startOnVisible={true}
+      client:load
+    />
+  </div>
 
-  <!-- CTA Buttons with Unified Design System -->
-  <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-up mb-0">
+  <!-- CTA Buttons with Enhanced Matrix Animation -->
+  <div id="hero-cta" class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-0 opacity-0">
     <!-- Primary CTA: Explore My Work -->
     <a 
       href="/projects" 
@@ -102,4 +196,77 @@ import bgSrc from '../assets/images/home-bg.png';
 <style>
   @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
   .animate-spin-slow { animation: spin-slow 8s linear infinite; }
+  
+  /* Enhanced sequential animations for hero elements */
+  .hero-animate-in {
+    animation-fill-mode: both;
+    animation-duration: 0.8s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Clean entrance animations */
+  .animate-description {
+    animation: cleanFadeIn 1s ease-out both;
+    opacity: 1 !important;
+  }
+  
+  .animate-cta {
+    animation: cleanFadeIn 1.2s ease-out both;
+    opacity: 1 !important;
+  }
+  
+  /* Clean fade-in */
+  @keyframes cleanFadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Respect reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-animate-in,
+    .animate-description,
+    .animate-cta {
+      animation: none;
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+  }
 </style>
+
+<script>
+  // Enhanced hero animation orchestration
+  document.addEventListener('DOMContentLoaded', () => {
+    // Initialize description and CTA as hidden
+    const heroDescription = document.getElementById('hero-description');
+    const heroCta = document.getElementById('hero-cta');
+    
+    // Ensure proper initial state
+    if (heroDescription) heroDescription.style.opacity = '0';
+    if (heroCta) heroCta.style.opacity = '0';
+    
+    // Fallback animation sequence in case callbacks fail
+    setTimeout(() => {
+      if (heroDescription && !heroDescription.classList.contains('animate-description')) {
+        heroDescription.classList.add('animate-description');
+        console.log('🔄 Fallback: Dynamic subtitle animation triggered');
+      }
+    }, 4000);
+    
+    setTimeout(() => {
+      if (heroCta && !heroCta.classList.contains('animate-cta')) {
+        heroCta.classList.add('animate-cta');
+        console.log('🔄 Fallback: CTA animation triggered');
+      }
+    }, 5000);
+    
+    // Animation sequence is now controlled by DecryptedText onComplete callbacks
+    // Subtitle texts are visible by default, dynamic subtitle and CTA animate in sequence
+  });
+</script>
