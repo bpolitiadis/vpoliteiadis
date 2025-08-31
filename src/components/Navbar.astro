@@ -88,9 +88,9 @@ const navItems = [
           aria-haspopup="menu"
         >
           <!-- Hamburger icon -->
-          <Icon name="Menu" size="sm" className="text-current" aria-hidden="true" />
+          <Icon name="Menu" size="sm" className="text-current icon-menu" aria-hidden="true" />
           <!-- Close icon -->
-          <Icon name="X" size="sm" className="text-current" aria-hidden="true" />
+          <Icon name="X" size="sm" className="text-current icon-close" aria-hidden="true" />
         </button>
       </div>
     </div>
@@ -145,9 +145,21 @@ const navItems = [
 
 <style>
   /* Toggle icons based on aria-expanded for the mobile menu button */
-  #mobile-menu-button [data-icon="close"] { display: none; }
-  #mobile-menu-button[aria-expanded="true"] [data-icon="menu"] { display: none; }
-  #mobile-menu-button[aria-expanded="true"] [data-icon="close"] { display: inline; }
+  .icon-menu { 
+    display: inline; 
+    transition: opacity 0.2s ease;
+  }
+  .icon-close { 
+    display: none; 
+    transition: opacity 0.2s ease;
+  }
+  
+  #mobile-menu-button[aria-expanded="true"] .icon-menu { 
+    display: none; 
+  }
+  #mobile-menu-button[aria-expanded="true"] .icon-close { 
+    display: inline; 
+  }
   
   /* Custom navbar height - more compact */
   .navbar-compact {
