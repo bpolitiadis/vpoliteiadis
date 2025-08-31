@@ -31,6 +31,7 @@
 **Note:** The Hero component now includes a curated array of 14 professional quotes that rotate through the TextType animation, including phrases like "Certified bug hunter", "Automating workflows, amplifying humans", and "Partnering with AI to outpace time". The avatar now features an ElectricBorder effect for enhanced visual appeal.
 | `DecryptedText.tsx` | `src/components/DecryptedText.tsx` | Matrix-style text decryption effect | `text: string`, `speed?: number`, `className?: string` | React, CSS animations |
 | `TextType.tsx` | `src/components/TextType.tsx` | Typing/erasing text rotator with cursor | `text: string \| string[]`, `typingSpeed?`, `deletingSpeed?`, `pauseDuration?`, `showCursor?`, `cursorCharacter?`, `cursorClassName?`, `className?`, `startOnVisible?` | React, CSS animations |
+| `FuzzyText.tsx` | `src/components/FuzzyText.tsx` | Canvas-based fuzzy text effect with hover interactions | `children`, `fontSize?`, `fontWeight?`, `fontFamily?`, `color?`, `enableHover?`, `baseIntensity?`, `hoverIntensity?` | React, Canvas API, requestAnimationFrame |
 
 ### Cards & Containers
 
@@ -79,6 +80,7 @@ graph TD
   G[Hero.astro] --> H[HeroAnimationController.tsx]
   H --> I[DecryptedText.tsx]
   H --> J[TextType.tsx]
+  H --> V[FuzzyText.tsx]
   G --> K[/public/scripts/matrix-rain.js]
   
   L[ProjectCard.astro] --> M[VercelImage.astro]
@@ -217,6 +219,23 @@ import ElectricBorder from '../components/ElectricBorder';
 >
   <img src="/avatar.png" alt="Avatar" />
 </ElectricBorder>
+```
+
+### Fuzzy Text Effect
+```tsx
+import FuzzyText from '../components/FuzzyText';
+
+<FuzzyText
+  fontSize="clamp(2rem, 8vw, 8rem)"
+  fontWeight={900}
+  fontFamily="Orbitron, sans-serif"
+  color="#39FF14"
+  enableHover={true}
+  baseIntensity={0.05}
+  hoverIntensity={0.2}
+>
+  Matrix Style Text
+</FuzzyText>
 ```
 
 ## 🔧 Component Development

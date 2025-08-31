@@ -5,6 +5,7 @@ export * from './ui';
 export { default as DecryptedText } from './DecryptedText';
 export { default as ElectricBorder } from './ElectricBorder';
 export { default as FeaturedProjectCard } from './FeaturedProjectCard';
+export { default as FuzzyText } from './FuzzyText';
 export { default as HeroAnimationController } from './HeroAnimationController';
 export { default as LightboxGallery } from './LightboxGallery';
 export { default as OptimizedImage } from './OptimizedImage';

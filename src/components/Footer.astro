@@ -1,6 +1,8 @@
 ---
 import SocialLink from './SocialLink.astro';
 import { getAllSocialProfiles } from '../lib/social-config';
+import { Image } from 'astro:assets';
+import vpLogo from '../assets/images/vp-logo.png';
 
 const socialProfiles = getAllSocialProfiles();
 const currentYear = new Date().getFullYear();
@@ -16,11 +18,11 @@ const currentYear = new Date().getFullYear();
         <!-- Left: VP monogram logo with subtle glow -->
         <a href="/" class="flex items-center gap-2 group" aria-label="Go to homepage">
           <div class="relative">
-            <img
-              src="/src/assets/images/vp-logo.png"
+            <Image
+              src={vpLogo}
               alt="Vasileios Politeiadis logo"
-              width="24"
-              height="24"
+              width={24}
+              height={24}
               class="w-6 h-6 rounded-md transition-transform duration-200 group-hover:scale-105"
             />
             <!-- Subtle glow effect -->
