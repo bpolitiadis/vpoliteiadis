@@ -2,7 +2,7 @@
 title: 'Casa Capoeira'
 description: 'Focused CMS for capoeira academies with scheduling, enrollment, payments, and community.'
 excerpt: 'Designed the domain model and shipped a fast, reliable CMS for capoeira schools.'
-coverImage: '/src/assets/images/casa-capoeira-cover.png'
+coverImage: '/images/casa-capoeira-cover.webp'
 coverVideo: '/videos/casa-capoeira-preview.mp4'
 tags: ['CMS', 'Education', 'Community', 'Full-Stack', 'SaaS']
 techStack:
@@ -48,12 +48,12 @@ learnings:
 liveUrl: 'https://casa-capoeira-portal.vercel.app/en'
 githubUrl: 'https://github.com/bpolitiadis/casa-capoeira'
 status: 'completed'
-featuredImage: '/images/projects/casa-capoeira-hero.jpg'
+featuredImage: '/images/casa-capoeira-cover.webp'
 gallery:
   [
-    '/images/projects/casa-capoeira-dashboard.jpg',
-    '/images/projects/casa-capoeira-scheduling.jpg',
-    '/images/projects/casa-capoeira-mobile.jpg',
+    '/images/casa-capoeira-cover.webp',
+    '/images/casa-capoeira-cover.webp',
+    '/images/casa-capoeira-cover.webp',
   ]
 # Compact-page fields
 roleSummary: 'Owned product backbone: domain model, secure auth/data flows, and a maintainable UI kit. Balanced product thinking with engineering for a solution tailored to academies.'

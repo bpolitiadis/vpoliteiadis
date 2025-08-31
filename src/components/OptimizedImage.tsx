@@ -7,31 +7,17 @@ type OptimizedImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
 };
 
 /**
- * 2025 Best Practice: Uses Vercel's Image Optimization API for instant optimization
- * Eliminates build-time processing and provides automatic format/size optimization
+ * 2025 Best Practice: Uses pre-optimized images from build process
+ * Provides consistent image loading across all environments
  */
 export function OptimizedImage(props: OptimizedImageProps) {
   const { src, width = 1200, quality = 75, ...rest } = props;
 
-  // Build absolute URL for Vercel's optimizer
-  const toAbsolute = (maybeRelative: string) => {
-    if (/^https?:\/\//.test(maybeRelative)) return maybeRelative;
-    const site = (globalThis as any).Astro?.site || (typeof document !== 'undefined' ? `${location.protocol}//${location.host}` : '');
-    return `${String(site).replace(/\/$/, '')}${maybeRelative}`;
-  };
-
-  // Use Vercel's Image Optimization API in production
-  const isProduction = typeof window === 'undefined' 
-    ? process.env.NODE_ENV === 'production'
-    : import.meta.env.MODE === 'production';
-
-  const optimizedSrc = isProduction
-    ? `/_vercel/image?url=${encodeURIComponent(toAbsolute(src))}&w=${width}&q=${quality}`
-    : src;
-
+  // Use the src directly since we have pre-optimized images
+  // The images are already optimized during build time
   return (
     <img
-      src={optimizedSrc}
+      src={src}
       loading={rest.loading ?? 'lazy'}
       decoding={rest.decoding ?? 'async'}
       {...rest}
