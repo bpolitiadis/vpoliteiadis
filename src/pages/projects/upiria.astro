@@ -22,7 +22,7 @@ const data = project.data;
   publishedAt={new Date(data.publishedAt).toISOString()}
   updatedAt={data.updatedAt ? new Date(data.updatedAt).toISOString() : undefined}
   author="Vasileios Politeiadis"
-  image={data.coverImage || '/images/vp-logo-800.webp'}
+  image={data.coverImage || '/src/assets/images/vp-logo.png'}
 >
   <!-- SEO Structured Data (external, CSP-safe) -->
   <script is:inline type="application/ld+json" src="/structured/project/upiria.json"></script>
