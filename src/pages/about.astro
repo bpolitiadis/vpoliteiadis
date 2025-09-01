@@ -1,12 +1,12 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import { Image } from 'astro:assets';
-import avatarSrc from '../assets/images/avatar.webp';
 import arteImaginariAvatar from '../assets/images/arte-imaginari-avatar.png';
 import { GraduationIcon, AwardIcon, MonitorIcon, PaletteIcon } from '../components/icons/Icon';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
+import AboutHero from '../components/AboutHero.tsx';
 
 // Enhanced structured data for About page
 const aboutStructuredData = {
@@ -75,13 +75,30 @@ const aboutStructuredData = {
 >
   
   <!-- Hero Section -->
-  <section class="relative isolate z-10 min-h-[40vh] flex items-center justify-center pt-16 md:pt-20 lg:pt-24" role="banner" aria-labelledby="hero-heading">
+  <section class="relative isolate z-10 min-h-[30vh] flex items-center justify-center pt-12 md:pt-16 lg:pt-20" role="banner" aria-labelledby="hero-heading">
     <div class="w-full">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 id="hero-heading" class="sr-only">Vasileios Politeiadis - Senior QA Automation Specialist & Full-Stack Developer</h1>
-        <div class="avatar-orb relative mb-6 md:mb-8" role="img" aria-label="Professional portrait of Vasileios Politeiadis, Senior QA Automation Specialist and Full-Stack Developer">
-          <Image src={avatarSrc} alt="Vasileios Politeiadis - Senior QA Automation Specialist and Full-Stack Developer professional portrait" class="holo-avatar block w-24 h-24 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full object-cover mx-auto" widths={[96,128,144]} sizes="(max-width: 768px) 96px, (max-width: 1024px) 128px, 144px" format="webp" loading="eager" />
-        </div>
+        <AboutHero 
+          quotes={[
+            "Certified bug hunter.",
+            "Debugging reality.",
+            "I break code professionally.",
+            "Automating workflows, amplifying humans.",
+            "Partnering with AI to outpace time.",
+            "The best way to predict the future is to invent it.",
+            "Human creativity, artificial brains.",
+            "The computer was born to solve problems that did not exist before.",
+            "Engineering the future, accelerated by AI.",
+            "Writing tests that test the limits.",
+            "Any sufficiently advanced technology is indistinguishable from magic.",
+            "I write code that watches your code.",
+            "Imagination is more important than knowledge.",
+            "The future is already here — it's just not evenly distributed.",
+            "If you don't believe me or don't get it, I don't have time to try to convince you."
+          ]}
+          client:load
+        />
       </div>
     </div>
   </section>
@@ -381,36 +398,6 @@ const aboutStructuredData = {
 </MainLayout>
 
 <style>
-  /* Holographic avatar effect */
-  .avatar-orb {
-    --glow-outer: rgba(57, 255, 20, 0.30);
-    --glow-inner: rgba(0, 184, 107, 0.35);
-    filter: drop-shadow(0 0 14px var(--glow-outer)) drop-shadow(0 0 26px var(--glow-inner));
-  }
-  .avatar-orb::before {
-    content: '';
-    position: absolute;
-    inset: -8px;
-    border-radius: 9999px;
-    background: conic-gradient(from 0deg, rgba(57,255,20,0.0), rgba(57,255,20,0.35), rgba(0,184,107,0.35), rgba(57,255,20,0.0));
-    mask: radial-gradient(farthest-side, transparent calc(100% - 3px), black calc(100% - 3px));
-    animation: rotateRing 28s linear infinite;
-    pointer-events: none;
-  }
-  .avatar-orb::after {
-    content: '';
-    position: absolute;
-    inset: -18px;
-    border-radius: 9999px;
-    box-shadow: 0 0 60px rgba(57,255,20,0.15), 0 0 90px rgba(0,184,107,0.12);
-    pointer-events: none;
-  }
-  .holo-avatar {
-    mix-blend-mode: screen;
-    filter: grayscale(10%) saturate(0.9);
-  }
-  @keyframes rotateRing { to { transform: rotate(360deg); } }
-
   /* Creative avatar effect */
   .creative-avatar-orb {
     position: relative;
@@ -435,12 +422,31 @@ const aboutStructuredData = {
     pointer-events: none;
   }
 
+  @keyframes rotateRing { to { transform: rotate(360deg); } }
+
   /* Accessibility */
   @media (prefers-reduced-motion: reduce) {
-    .avatar-orb::before,
     .creative-avatar-orb::before { 
       animation: none; 
     }
   }
 </style>
+
+<script>
+  // About page hero animation orchestration
+  document.addEventListener('DOMContentLoaded', () => {
+    // Initialize elements as hidden
+    const aboutHeroContent = document.getElementById('about-hero-content');
+    
+    // Ensure proper initial state
+    if (aboutHeroContent) aboutHeroContent.style.opacity = '0';
+    
+    // Start animation after a short delay
+    setTimeout(() => {
+      if (aboutHeroContent) {
+        aboutHeroContent.style.opacity = '1';
+      }
+    }, 500);
+  });
+</script>
 
