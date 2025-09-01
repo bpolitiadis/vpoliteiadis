@@ -23,10 +23,10 @@ export default function AboutHero({ quotes }: AboutHeroProps) {
   }, [headlineComplete]);
 
   return (
-    <div className="relative z-10 flex flex-col items-center justify-center py-4 text-center">
+    <div className="relative z-10 flex flex-col items-center justify-center py-2 text-center">
       
       {/* Avatar with Electric Border Effect */}
-      <div className="mb-4">
+      <div className="mb-3">
         <ElectricBorder
           color="#39FF14"
           speed={1}
@@ -46,7 +46,7 @@ export default function AboutHero({ quotes }: AboutHeroProps) {
 
       {/* Hero Animation Controller - Manages headline, subtitle, and TextType sequence */}
       <div id="about-hero-content" className="opacity-0 transition-opacity duration-1000">
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl leading-tight font-orbitron font-bold mb-4 text-center">
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl leading-tight font-orbitron font-bold mb-3 text-center">
           <span className="block text-center">
             <DecryptedText 
               text="Full-Stack Developer"
@@ -101,7 +101,7 @@ export default function AboutHero({ quotes }: AboutHeroProps) {
 
         {/* Dynamic Subtitle with TextType */}
         {startTextType && (
-          <div className="mb-6 max-w-3xl mx-auto text-center">
+          <div className="mb-4 max-w-3xl mx-auto text-center">
             <TextType 
               text={quotes}
               typingSpeed={45}
