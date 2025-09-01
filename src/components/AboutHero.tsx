@@ -49,7 +49,7 @@ export default function AboutHero({ quotes }: AboutHeroProps) {
         <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl leading-tight font-orbitron font-bold mb-3 text-center">
           <span className="block text-center">
             <DecryptedText 
-              text="Full-Stack Developer"
+              text="Vasileios Politeiadis"
               speed={80}
               maxIterations={20}
               sequential={true}
@@ -83,7 +83,7 @@ export default function AboutHero({ quotes }: AboutHeroProps) {
             />
             <span className="hidden sm:inline text-digital-emerald">·</span>
             <DecryptedText 
-              text="AI Powered Solutions"
+              text="Full-Stack Developer"
               speed={80}
               maxIterations={20}
               sequential={true}
