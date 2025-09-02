@@ -16,17 +16,14 @@ export function OptimizedImage(props: OptimizedImageProps) {
   // For production, use Vercel's Image Optimization API for static assets
   let optimizedSrc = src;
   
-  if (typeof window !== 'undefined' && import.meta.env.MODE === 'production') {
-    // Check if it's a static asset (starts with /images/)
-    if (src.startsWith('/images/')) {
-      const params = new URLSearchParams({
-        url: `${window.location.origin}${src}`,
-        w: width.toString(),
-        q: quality.toString(),
-        f: 'auto',
-      });
-      optimizedSrc = `/_vercel/image?${params.toString()}`;
-    }
+  if (typeof window !== 'undefined' && import.meta.env.MODE === 'production' && src.startsWith('/images/')) {
+    const params = new URLSearchParams({
+      url: `${window.location.origin}${src}`,
+      w: width.toString(),
+      q: quality.toString(),
+      f: 'webp',
+    });
+    optimizedSrc = `/_vercel/image?${params.toString()}`;
   }
 
   return (

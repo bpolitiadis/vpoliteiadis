@@ -40,12 +40,12 @@ learnings:
 liveUrl: 'https://www.upiria.com'
 githubUrl: 'https://github.com/upiria/upiria-frontend'
 status: 'completed'
-featuredImage: '/images/upiria-cover.webp'
+featuredImage: '/images/projects/upiria-cover.png'
 gallery:
   [
-    '/images/upiria-cover.webp',
-    '/images/upiria-cover.webp',
-    '/images/upiria-cover.webp',
+    '/images/projects/upiria-cover.png',
+    '/images/projects/upiria-cover.png',
+    '/images/projects/upiria-cover.png',
   ]
 # Compact-page fields
 roleSummary: 'Led front-end quality and delivery: built accessible React components, introduced modern testing (Playwright + Jest + Testing Library), and wired CI checks that gated releases. My focus was maintainability and reliability so the team could ship fast without regressions.'

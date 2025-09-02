@@ -32,35 +32,26 @@ const {
   blurDataURL = '',
 } = props;
 
-// 2025 Best Practice: Use Vercel's Image Optimization API for all images
-// This eliminates build-time processing and provides instant optimization
+// 2025 Best Practice: Use Vercel's Image Optimization API for static assets
+// For development, serve directly; for production, use optimization when beneficial
 let optimizedURL = src;
 
-// For production, use Vercel's Image Optimization API
-if (import.meta.env.MODE === 'production') {
-  const isAbsolute = /^https?:\/\//.test(src);
-  const site = typeof Astro !== 'undefined' && Astro.site ? String(Astro.site) : '';
+// Only apply Vercel Image Optimization for production static assets
+if (import.meta.env.MODE === 'production' && src.startsWith('/images/')) {
+  const site = typeof Astro !== 'undefined' && Astro.site ? String(Astro.site) : 'https://vpoliteiadis.com';
   
   // Build absolute URL for Vercel's optimizer
-  const absoluteSrc = isAbsolute ? src : `${site.replace(/\/$/, '')}${src}`;
+  const absoluteSrc = `${site.replace(/\/$/, '')}${src}`;
   
-  // Use Vercel's Image Optimization API
+  // Use Vercel's Image Optimization API for static assets
   const params = new URLSearchParams({
     url: absoluteSrc,
     w: width.toString(),
     q: quality.toString(),
-    f: format === 'auto' ? 'auto' : format,
+    f: format === 'auto' ? 'webp' : format,
   });
   
-  // Add placeholder support for better UX
-  if (placeholder !== 'none') {
-    params.append('placeholder', placeholder);
-  }
-  
   optimizedURL = `/_vercel/image?${params.toString()}`;
-} else {
-  // For development, use the src directly
-  optimizedURL = src;
 }
 
 const isDecorative = (alt || '').trim() === '';
