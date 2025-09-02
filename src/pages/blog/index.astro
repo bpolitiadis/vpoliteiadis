@@ -54,25 +54,14 @@ const description =
             >
               {post.data.coverImage && (
                  <div class="mb-4">
-                   {(() => {
-                     const cover = post.data.coverImage;
-                     const base = cover.replace(/\.(avif|webp|jpe?g|png)$/i, '');
-                     return (
-                       <picture>
-                         {/* Only include sizes we always generate to avoid 404s on high DPR screens */}
-                         <source srcset={`${base}-800.avif 800w, ${base}-480.avif 480w`} type="image/avif" />
-                         <source srcset={`${base}-800.webp 800w, ${base}-480.webp 480w`} type="image/webp" />
-                         <img 
-                           src={cover}
-                           alt={`Cover image for ${post.data.title}`}
-                           class="w-full h-40 object-cover rounded-lg"
-                           loading="lazy"
-                           decoding="async"
-                           sizes="(max-width: 768px) 100vw, 400px"
-                         />
-                       </picture>
-                     );
-                   })()}
+                   <img 
+                     src={post.data.coverImage}
+                     alt={`Cover image for ${post.data.title}`}
+                     class="w-full h-40 object-cover rounded-lg"
+                     loading="lazy"
+                     decoding="async"
+                     sizes="(max-width: 768px) 100vw, 400px"
+                   />
                  </div>
                )}
               <div class="space-y-3">
