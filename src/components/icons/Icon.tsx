@@ -1,6 +1,6 @@
 import {
 	Menu, X, ChevronRight, ArrowRight, ExternalLink, Mail, Phone,
-	Briefcase, Monitor, Code, Palette, LinkedinIcon, Instagram, Github,
+	Briefcase, Monitor, Code, Palette, 
 	Play, Image, Video, Check, Info, Clock, Calendar, GraduationCap, Award,
 	type LucideIcon,
 } from 'lucide-react';
@@ -35,9 +35,9 @@ export const iconMap: Record<string, LucideIcon> = {
 	monitor: Monitor,
 	code: Code,
 	palette: Palette,
-	linkedin: LinkedinIcon,
-	instagram: Instagram,
-	github: Github,
+	linkedin: ExternalLink, // Using ExternalLink as fallback for deprecated social icons
+	instagram: ExternalLink,
+	github: ExternalLink,
 	play: Play,
 	image: Image,
 	video: Video,
