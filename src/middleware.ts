@@ -15,32 +15,42 @@ import { isRateLimited } from './lib/http-utils.js';
 export const onRequest: MiddlewareHandler = async (context, next) => {
   const startTime = Date.now();
   
+  // Check if we're in a prerendering context (build time)
+  // During prerendering, clientAddress is undefined and request object is minimal
+  let isPrerendering = false;
+  try {
+    // Attempt to check clientAddress - this will be undefined during prerendering
+    isPrerendering = !context.clientAddress;
+  } catch (e) {
+    // If accessing clientAddress throws, we're definitely prerendering
+    isPrerendering = true;
+  }
+  
   // Extract request information
   const method = context.request.method;
   const route = context.url.pathname;
-  const userAgent = context.request.headers.get('user-agent') || 'unknown';
   
-  // During static prerendering, client information is not available
-  let clientIP = 'unknown';
-  try {
-    clientIP = context.clientAddress || 
-      context.request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
-      context.request.headers.get('x-real-ip') ||
-      'unknown';
-  } catch (e) {
-    // Expected during static prerendering
-    clientIP = 'prerender';
-  }
-
-  // Generate or extract correlation IDs
+  // Initialize with defaults for prerendering
+  let userAgent = 'prerender';
+  let clientIP = 'prerender';
   let existingRequestId: string | null = null;
   let traceparentHeader: string | null = null;
   
-  try {
-    existingRequestId = context.request.headers.get('x-request-id');
-    traceparentHeader = context.request.headers.get('traceparent');
-  } catch (e) {
-    // Expected during static prerendering
+  // Only access headers and client info during actual requests (not prerendering)
+  if (!isPrerendering) {
+    try {
+      userAgent = context.request.headers.get('user-agent') || 'unknown';
+      clientIP = context.clientAddress || 
+        context.request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+        context.request.headers.get('x-real-ip') ||
+        'unknown';
+      existingRequestId = context.request.headers.get('x-request-id');
+      traceparentHeader = context.request.headers.get('traceparent');
+    } catch (e) {
+      // Fallback to prerender values if headers aren't accessible
+      userAgent = 'unknown';
+      clientIP = 'unknown';
+    }
   }
   
   const requestId = existingRequestId || generateRequestId();
@@ -65,7 +75,6 @@ export const onRequest: MiddlewareHandler = async (context, next) => {
   const isLimited = isRateLimited(rateLimitKey, 100, 60000); // 100 requests per minute
 
   // Log request start (sample bot requests to reduce noise, skip during prerendering)
-  const isPrerendering = clientIP === 'prerender';
   const shouldLogRequest = !isPrerendering && (
     requestContext.userAgentCategory !== 'bot' || 
     !isLimited || 
