@@ -13,11 +13,25 @@ type OptimizedImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
 export function OptimizedImage(props: OptimizedImageProps) {
   const { src, width = 1200, quality = 75, ...rest } = props;
 
-  // Use the src directly since we have pre-optimized images
-  // The images are already optimized during build time
+  // For production, use Vercel's Image Optimization API for static assets
+  let optimizedSrc = src;
+  
+  if (typeof window !== 'undefined' && import.meta.env.MODE === 'production') {
+    // Check if it's a static asset (starts with /images/)
+    if (src.startsWith('/images/')) {
+      const params = new URLSearchParams({
+        url: `${window.location.origin}${src}`,
+        w: width.toString(),
+        q: quality.toString(),
+        f: 'auto',
+      });
+      optimizedSrc = `/_vercel/image?${params.toString()}`;
+    }
+  }
+
   return (
     <img
-      src={src}
+      src={optimizedSrc}
       loading={rest.loading ?? 'lazy'}
       decoding={rest.decoding ?? 'async'}
       {...rest}

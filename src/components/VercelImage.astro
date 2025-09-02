@@ -58,6 +58,9 @@ if (import.meta.env.MODE === 'production') {
   }
   
   optimizedURL = `/_vercel/image?${params.toString()}`;
+} else {
+  // For development, use the src directly
+  optimizedURL = src;
 }
 
 const isDecorative = (alt || '').trim() === '';

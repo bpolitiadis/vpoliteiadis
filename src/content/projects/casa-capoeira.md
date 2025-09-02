@@ -2,7 +2,7 @@
 title: 'Casa Capoeira'
 description: 'Focused CMS for capoeira academies with scheduling, enrollment, payments, and community.'
 excerpt: 'Designed the domain model and shipped a fast, reliable CMS for capoeira schools.'
-coverImage: '/src/assets/images/casa-capoeira-cover.png'
+coverImage: '/images/projects/casa-capoeira-cover.png'
 coverVideo: '/videos/casa-capoeira-preview.mp4'
 tags: ['CMS', 'Education', 'Community', 'Full-Stack', 'SaaS']
 techStack:

@@ -2,7 +2,7 @@
 title: 'Upiria'
 description: 'Building the foundation for a travel‑tech startup with reliable velocity.'
 excerpt: 'Joined early to bridge frontend development with a scalable testing infrastructure.'
-coverImage: '/src/assets/images/upiria-cover.png'
+coverImage: '/images/projects/upiria-cover.png'
 tags: ['Startup', 'Frontend', 'Testing', 'React', 'Automation']
 techStack:
   [
