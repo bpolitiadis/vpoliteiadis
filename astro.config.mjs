@@ -7,6 +7,10 @@ import react from '@astrojs/react';
 import rehypeExternalLinks from 'rehype-external-links';
 import rehypeSanitize from 'rehype-sanitize';
 
+// Initialize server-side logging and error handling
+// This must be imported at the top level to ensure global error handlers are set up
+import './src/lib/sentry.js';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://vpoliteiadis.com',

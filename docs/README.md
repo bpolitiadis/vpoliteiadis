@@ -38,6 +38,9 @@ pnpm preview      # Preview production build
 | **[SOCIAL_LINKS.md](./SOCIAL_LINKS.md)** | Social media integration, deep linking | Developers, marketers |
 | **[IMAGE_OPTIMIZATION.md](./IMAGE_OPTIMIZATION.md)** | Image pipeline, responsive variants, performance | Developers, designers |
 | **[STRUCTURED_DATA.md](./STRUCTURED_DATA.md)** | JSON-LD endpoints, schema.org compliance, SEO | Developers, SEO specialists |
+|| **[LOGGING.md](./LOGGING.md)** | Server-only logging, request correlation, Sentry integration | Developers, DevOps |
+
+|| **[ENVIRONMENT_VARIABLES.md](./ENVIRONMENT_VARIABLES.md)** | Complete environment variables reference and setup guide | Developers, DevOps |
 
 ## 🏗️ Architecture Overview
 

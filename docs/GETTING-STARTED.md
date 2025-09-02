@@ -66,23 +66,36 @@ Build script pipeline:
 
 ## Environment variables
 
-This project is mostly static. A helper in `src/lib/spotify.ts` expects the following when used:
+The project includes a comprehensive logging and observability system. For quick setup:
 
-| Name | Purpose |
-|---|---|
-| `SPOTIFY_CLIENT_ID` | Spotify app client ID (server-side requests) |
-| `SPOTIFY_CLIENT_SECRET` | Spotify app client secret |
+1. **Copy the example file:**
+   ```bash
+   cp .env.example .env.local
+   ```
 
-Setup a local `.env` (values are examples only):
+2. **Configure required variables:**
+   ```bash
+   # Basic logging (optional for development)
+   LOG_LEVEL=debug
+   
+   # Error tracking (optional but recommended)
+   SENTRY_DSN=https://your-key@sentry.io/project
+   PUBLIC_SENTRY_DSN=https://your-client-key@sentry.io/project
+   ```
 
-```dotenv
-SPOTIFY_CLIENT_ID=your_spotify_client_id
-SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
-```
+3. **Restart the dev server:**
+   ```bash
+   pnpm dev
+   ```
+
+**📚 For complete environment variables documentation, see:**
+- **[ENVIRONMENT_VARIABLES.md](./ENVIRONMENT_VARIABLES.md)** - Complete reference guide
+- **[LOGGING.md](./LOGGING.md)** - Logging system documentation
 
 Security:
-- Never commit real secrets. Use Vercel/host env manager for production.
-- Code never prints secrets. Do not expose them in client code.
+- Never commit real secrets (`.env.local` is gitignored)
+- Use Vercel environment variables for production
+- All sensitive data is automatically redacted from logs
 
 ## Project layout
 

@@ -235,12 +235,14 @@ pnpm type-check   # Run TypeScript checks
 
 ## 📚 Documentation
 
+- **[Getting Started](./docs/GETTING-STARTED.md)** - Development setup guide
+- **[Environment Variables](./docs/ENVIRONMENT_VARIABLES.md)** - Complete environment configuration reference
+- **[Logging](./docs/LOGGING.md)** - Server-only logging and observability system
 - **[Architecture](./docs/ARCHITECTURE.md)** - System overview and design decisions
 - **[SEO Guide](./docs/SEO.md)** - Complete SEO implementation and optimization
 - **[Image Optimization](./docs/IMAGE_OPTIMIZATION.md)** - 2025 best practices
 - **[Components](./docs/COMPONENTS_REFERENCE.md)** - Component library and usage
 - **[Performance](./docs/PERFORMANCE_OPTIMIZATIONS.md)** - Optimization strategies
-- **[Getting Started](./docs/GETTING-STARTED.md)** - Development setup guide
 
 ## 🌐 Deployment
 
@@ -253,15 +255,19 @@ pnpm type-check   # Run TypeScript checks
 
 ### Environment Variables
 
-```bash
-# Required for production
-PUBLIC_SITE_URL=https://vpoliteiadis.com
-PUBLIC_GOOGLE_ANALYTICS_ID=GA_MEASUREMENT_ID
+For quick setup:
 
-# Optional
-PUBLIC_SPOTIFY_CLIENT_ID=spotify_client_id
-PUBLIC_SPOTIFY_CLIENT_SECRET=spotify_client_secret
+```bash
+# Copy the example file
+cp .env.example .env.local
+
+# Configure logging and error tracking (optional)
+LOG_LEVEL=debug
+SENTRY_DSN=https://your-key@sentry.io/project
+PUBLIC_SENTRY_DSN=https://your-client-key@sentry.io/project
 ```
+
+**📚 Complete reference:** See [Environment Variables Guide](./docs/ENVIRONMENT_VARIABLES.md)
 
 ## 🤝 Contributing
 
