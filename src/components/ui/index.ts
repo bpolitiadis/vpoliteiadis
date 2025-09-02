@@ -10,3 +10,5 @@ export { Progress } from './progress';
 export { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './select';
 export { default as StarBorder } from './star-border';
 export { Textarea } from './textarea';
+export { Separator } from './separator';
+export { Form, FormControl, FormDescription, FormItem, FormLabel, FormMessage } from './form';

@@ -26,6 +26,9 @@
     "pnpm": "9.12.0"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
+    "react-hook-form": "^7.52.0",
+    "zod": "^3.23.8",
     "@appletosolutions/reactbits": "^1.0.3",
     "@astrojs/check": "^0.9.4",
     "@astrojs/mdx": "^4.3.3",
