@@ -142,7 +142,18 @@ export default {
 			'matrix-rain': 'matrixRain 20s linear infinite',
 			'scale-smooth': 'scaleSmooth 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
 			'star-movement-bottom': 'star-movement-bottom linear infinite alternate',
-			'star-movement-top': 'star-movement-top linear infinite alternate'
+			'star-movement-top': 'star-movement-top linear infinite alternate',
+			// 2025 Modern UX Animations - Slower and more elegant, synchronized with TextType
+			'reveal-up': 'revealUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) both',
+			'reveal-up-delayed-1': 'revealUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both',
+			'reveal-up-delayed-2': 'revealUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both',
+			'reveal-up-delayed-3': 'revealUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both',
+			'reveal-up-delayed-4': 'revealUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both',
+			'reveal-up-delayed-5': 'revealUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both',
+			'stagger-fade': 'staggerFade 1.0s cubic-bezier(0.16, 1, 0.3, 1) both',
+			'stagger-fade-delayed-1': 'staggerFade 1.0s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both',
+			'stagger-fade-delayed-2': 'staggerFade 1.0s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both',
+			'stagger-fade-delayed-3': 'staggerFade 1.0s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both'
 		},
   		keyframes: {
   			glow: {
@@ -233,6 +244,27 @@ export default {
 				'100%': { 
 					transform: 'translate(100%, 0%)', 
 					opacity: '0' 
+				}
+			},
+			// 2025 Modern UX Keyframes
+			revealUp: {
+				'0%': {
+					opacity: '0',
+					transform: 'translateY(30px) scale(0.95)'
+				},
+				'100%': {
+					opacity: '1',
+					transform: 'translateY(0) scale(1)'
+				}
+			},
+			staggerFade: {
+				'0%': {
+					opacity: '0',
+					transform: 'translateY(20px)'
+				},
+				'100%': {
+					opacity: '1',
+					transform: 'translateY(0)'
 				}
 			}
   		},

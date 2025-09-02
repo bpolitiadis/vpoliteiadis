@@ -544,6 +544,27 @@
     will-change: transform, opacity;
   }
 
+  /* 2025 Modern UX Animations - Synchronized with TextType */
+  .animate-reveal-up,
+  .animate-reveal-up-delayed-1,
+  .animate-reveal-up-delayed-2,
+  .animate-reveal-up-delayed-3,
+  .animate-reveal-up-delayed-4,
+  .animate-reveal-up-delayed-5 {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+
+  .animate-stagger-fade,
+  .animate-stagger-fade-delayed-1,
+  .animate-stagger-fade-delayed-2,
+  .animate-stagger-fade-delayed-3 {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+
 
 
   .animate-glow {
@@ -684,6 +705,29 @@
   }
 }
 
+/* 2025 Modern UX Keyframes */
+@keyframes revealUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes staggerFade {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* High contrast mode support - only override when explicitly needed */
 @media (prefers-contrast: high) {
   /* Remove conflicting overrides - let CSS variables handle colors */
@@ -748,7 +792,17 @@
   .animate-float,
   .animate-matrix-rain,
   .animate-slide-up-delayed,
-  .animate-fade-in-delayed {
+  .animate-fade-in-delayed,
+  .animate-reveal-up,
+  .animate-reveal-up-delayed-1,
+  .animate-reveal-up-delayed-2,
+  .animate-reveal-up-delayed-3,
+  .animate-reveal-up-delayed-4,
+  .animate-reveal-up-delayed-5,
+  .animate-stagger-fade,
+  .animate-stagger-fade-delayed-1,
+  .animate-stagger-fade-delayed-2,
+  .animate-stagger-fade-delayed-3 {
     animation: none;
     opacity: 1;
     transform: none;

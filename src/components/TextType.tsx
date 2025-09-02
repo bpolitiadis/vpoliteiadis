@@ -20,6 +20,7 @@ interface TextTypeProps {
   textColors?: string[];
   variableSpeed?: { min: number; max: number };
   onSentenceComplete?: (sentence: string, index: number) => void;
+  onStart?: () => void;
   startOnVisible?: boolean;
   reverseMode?: boolean;
 }
@@ -41,6 +42,7 @@ const TextType = ({
   textColors = [],
   variableSpeed,
   onSentenceComplete,
+  onStart,
   startOnVisible = false,
   reverseMode = false,
   ...props
@@ -129,6 +131,11 @@ const TextType = ({
         }
       } else {
         if (currentCharIndex < processedText.length) {
+          // Call onStart when typing begins (first character)
+          if (currentCharIndex === 0 && onStart) {
+            onStart();
+          }
+          
           timeout = setTimeout(
             () => {
               setDisplayedText(

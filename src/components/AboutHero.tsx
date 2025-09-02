@@ -9,11 +9,16 @@ import TextType from './TextType';
 
 interface AboutHeroProps {
   quotes: string[];
+  onTextTypeStart?: () => void;
 }
 
-export default function AboutHero({ quotes }: AboutHeroProps) {
+export default function AboutHero({ quotes, onTextTypeStart }: AboutHeroProps) {
   const [headlineComplete, setHeadlineComplete] = useState(false);
   const [startTextType, setStartTextType] = useState(false);
+  const [subtitle1Complete, setSubtitle1Complete] = useState(false);
+  const [subtitle2Complete, setSubtitle2Complete] = useState(false);
+  const [textTypeStarted, setTextTypeStarted] = useState(false);
+  const [heroCompleteDispatched, setHeroCompleteDispatched] = useState(false);
 
   // When headline completes, start TextType
   useEffect(() => {
@@ -21,6 +26,27 @@ export default function AboutHero({ quotes }: AboutHeroProps) {
       setStartTextType(true);
     }
   }, [headlineComplete]);
+
+  // Dispatch event when TextType actually starts (not just when component mounts)
+  const handleTextTypeStart = () => {
+    console.log('🎯 TextType component actually started typing');
+    setTextTypeStarted(true);
+    const event = new CustomEvent('textTypeStarted', {
+      detail: { timestamp: Date.now() }
+    });
+    window.dispatchEvent(event);
+  };
+
+  useEffect(() => {
+    if (!heroCompleteDispatched && headlineComplete && subtitle1Complete && subtitle2Complete && textTypeStarted) {
+      console.log('✅ AboutHero fully completed — dispatching aboutHeroComplete');
+      const completeEvent = new CustomEvent('aboutHeroComplete', {
+        detail: { timestamp: Date.now() }
+      });
+      window.dispatchEvent(completeEvent);
+      setHeroCompleteDispatched(true);
+    }
+  }, [headlineComplete, subtitle1Complete, subtitle2Complete, textTypeStarted, heroCompleteDispatched]);
 
   return (
     <div className="relative z-10 flex flex-col items-center justify-center py-2 text-center">
@@ -79,6 +105,7 @@ export default function AboutHero({ quotes }: AboutHeroProps) {
               animateOn="view"
               onComplete={() => {
                 console.log('🎯 About page first subtitle text completed');
+                setSubtitle1Complete(true);
               }}
             />
             <span className="hidden sm:inline text-digital-emerald">·</span>
@@ -94,14 +121,15 @@ export default function AboutHero({ quotes }: AboutHeroProps) {
               encryptedClassName="text-digital-emerald/40"
               onComplete={() => {
                 console.log('🎯 About page both subtitle texts decryption completed');
+                setSubtitle2Complete(true);
               }}
             />
           </div>
         </h1>
 
-        {/* Dynamic Subtitle with TextType */}
-        {startTextType && (
-          <div className="mb-4 max-w-3xl mx-auto text-center">
+        {/* Dynamic Subtitle with TextType - Always reserve space to prevent layout shift */}
+        <div className="mb-4 max-w-3xl mx-auto text-center min-h-[2.5rem] flex items-center justify-center">
+          {startTextType ? (
             <TextType 
               text={quotes}
               typingSpeed={45}
@@ -114,12 +142,18 @@ export default function AboutHero({ quotes }: AboutHeroProps) {
               cursorBlinkDuration={0.8}
               className="text-xs sm:text-sm lg:text-base xl:text-lg font-orbitron text-foreground/90 leading-relaxed tracking-wide"
               startOnVisible={false}
+              onStart={handleTextTypeStart}
               onSentenceComplete={(_, index) => {
                 console.log(`✅ About page quote ${index + 1} completed`);
               }}
             />
-          </div>
-        )}
+          ) : (
+            // Placeholder to maintain consistent height and prevent layout shift
+            <div className="text-xs sm:text-sm lg:text-base xl:text-lg font-orbitron text-foreground/30 leading-relaxed tracking-wide opacity-0">
+              Debugging reality.
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

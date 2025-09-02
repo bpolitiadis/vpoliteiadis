@@ -108,7 +108,7 @@ const aboutStructuredData = {
     <div class="max-w-5xl xl:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 md:space-y-10">
       
       <!-- Professional Summary -->
-      <Card className="border-neon-lime/20 bg-matrix-black/60 backdrop-blur-md">
+      <Card className="border-neon-lime/20 bg-matrix-black/60 backdrop-blur-md animate-reveal-up-delayed-1 opacity-0">
         <CardHeader>
           <CardTitle id="professional-summary-heading" className="text-2xl font-orbitron font-bold text-neon-lime text-shadow-neon flex items-center gap-3">
             <AwardIcon size="lg" className="text-neon-lime" aria-label="Professional identity icon" />
@@ -117,7 +117,7 @@ const aboutStructuredData = {
         </CardHeader>
         <CardContent>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-            <Card className="border-digital-emerald/20 bg-cyber-gray/20 hover:bg-cyber-gray/30 hover:border-digital-emerald/40 transition-all duration-300 hover:-translate-y-1">
+            <Card className="border-digital-emerald/20 bg-cyber-gray/20 hover:bg-cyber-gray/30 hover:border-digital-emerald/40 transition-all duration-300 hover:-translate-y-1 animate-stagger-fade-delayed-1 opacity-0">
               <CardContent className="p-4">
                 <h2 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald text-lg">🤖 QA Automation Specialist</h2>
                 <p class="text-sm text-matrix-white/80 mb-3 flex-grow">Leading test automation in quality assurance for European Commission projects with end-to-end QA processes.</p>
@@ -129,7 +129,7 @@ const aboutStructuredData = {
               </CardContent>
             </Card>
             
-            <Card className="border-digital-emerald/20 bg-cyber-gray/20 hover:bg-cyber-gray/30 hover:border-digital-emerald/40 transition-all duration-300 hover:-translate-y-1">
+            <Card className="border-digital-emerald/20 bg-cyber-gray/20 hover:bg-cyber-gray/30 hover:border-digital-emerald/40 transition-all duration-300 hover:-translate-y-1 animate-stagger-fade-delayed-2 opacity-0">
               <CardContent className="p-4">
                 <h2 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald text-lg">💻 Full-Stack Developer</h2>
                 <p class="text-sm text-matrix-white/80 mb-3 flex-grow">Building modern web applications with React, Next.js, TypeScript, and Supabase. Scalable solutions and cloud deployment.</p>
@@ -141,7 +141,7 @@ const aboutStructuredData = {
               </CardContent>
             </Card>
             
-            <Card className="border-digital-emerald/20 bg-cyber-gray/20 hover:bg-cyber-gray/30 hover:border-digital-emerald/40 transition-all duration-300 hover:-translate-y-1">
+            <Card className="border-digital-emerald/20 bg-cyber-gray/20 hover:bg-cyber-gray/30 hover:border-digital-emerald/40 transition-all duration-300 hover:-translate-y-1 animate-stagger-fade-delayed-3 opacity-0">
               <CardContent className="p-4">
                 <h2 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald text-lg">🔧 AI-Powered Solutions</h2>
                 <p class="text-sm text-matrix-white/80 mb-3 flex-grow">Developing AI tools and automation workflows for streamlined processes and smarter digital solutions.</p>
@@ -160,7 +160,7 @@ const aboutStructuredData = {
       <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 md:gap-10">
         
         <!-- Professional Timeline -->
-        <Card className="border-neon-lime/20 bg-matrix-black/60 backdrop-blur-md">
+        <Card className="border-neon-lime/20 bg-matrix-black/60 backdrop-blur-md animate-reveal-up-delayed-2 opacity-0">
           <CardHeader>
             <CardTitle className="text-2xl font-orbitron font-bold text-neon-lime text-shadow-neon flex items-center gap-3">
               <svg class="w-6 h-6 text-neon-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -246,7 +246,7 @@ const aboutStructuredData = {
         <div class="space-y-6 md:space-y-8">
           
           <!-- Skills -->
-          <Card className="border-neon-lime/20 bg-matrix-black/60 backdrop-blur-md">
+          <Card className="border-neon-lime/20 bg-matrix-black/60 backdrop-blur-md animate-reveal-up-delayed-3 opacity-0">
             <CardHeader>
               <CardTitle className="text-2xl font-orbitron font-bold text-neon-lime text-shadow-neon flex items-center gap-3">
                 <MonitorIcon size="lg" className="text-neon-lime" aria-label="Skills icon" />
@@ -294,7 +294,7 @@ const aboutStructuredData = {
           </Card>
 
                       <!-- Education & Certificates -->
-          <Card className="border-neon-lime/20 bg-matrix-black/60 backdrop-blur-md">
+          <Card className="border-neon-lime/20 bg-matrix-black/60 backdrop-blur-md animate-reveal-up-delayed-4 opacity-0">
             <!-- Education Section -->
             <CardHeader>
               <CardTitle className="text-2xl font-orbitron font-bold text-neon-lime text-shadow-neon flex items-center gap-3">
@@ -334,7 +334,7 @@ const aboutStructuredData = {
           
 
           <!-- Hobbies -->
-          <Card className="border-cyan-400/20 bg-matrix-black/60 backdrop-blur-md">
+          <Card className="border-cyan-400/20 bg-matrix-black/60 backdrop-blur-md animate-reveal-up-delayed-5 opacity-0">
             <CardHeader>
               <CardTitle className="text-2xl font-orbitron font-bold text-cyan-400 text-shadow-cyan flex items-center gap-3">
                 <PaletteIcon size="lg" className="text-cyan-400" aria-label="Hobbies icon" />
@@ -433,7 +433,7 @@ const aboutStructuredData = {
 </style>
 
 <script>
-  // About page hero animation orchestration
+  // About page animation orchestration - 2025 Modern UX Pattern
   document.addEventListener('DOMContentLoaded', () => {
     // Initialize elements as hidden
     const aboutHeroContent = document.getElementById('about-hero-content');
@@ -441,12 +441,31 @@ const aboutStructuredData = {
     // Ensure proper initial state
     if (aboutHeroContent) aboutHeroContent.style.opacity = '0';
     
-    // Start animation after a short delay
+    // Start hero animation after a short delay
     setTimeout(() => {
       if (aboutHeroContent) {
         aboutHeroContent.style.opacity = '1';
       }
     }, 500);
+
+    // Modern 2025 UX: Synchronized reveal animations with AboutHero completion
+    const revealPageContent = () => {
+      // Get all elements with reveal animations
+      const revealElements = document.querySelectorAll('[class*="animate-reveal-up-delayed"], [class*="animate-stagger-fade-delayed"]');
+      
+      // Trigger all animations simultaneously when TextType starts
+      revealElements.forEach((element) => {
+        element.classList.remove('opacity-0');
+      });
+    };
+
+    // Listen for AboutHero full completion before revealing content
+    window.addEventListener('aboutHeroComplete', () => {
+      console.log('✅ AboutHero complete — revealing page content');
+      setTimeout(revealPageContent, 50);
+    });
+
+    // Remove early fallback to avoid premature reveals
   });
 </script>
 
