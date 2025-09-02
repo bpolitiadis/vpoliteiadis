@@ -15,42 +15,40 @@ import { isRateLimited } from './lib/http-utils.js';
 export const onRequest: MiddlewareHandler = async (context, next) => {
   const startTime = Date.now();
   
-  // Check if we're in a prerendering context (build time)
-  // During prerendering, clientAddress is undefined and request object is minimal
-  let isPrerendering = false;
-  try {
-    // Attempt to check clientAddress - this will be undefined during prerendering
-    isPrerendering = !context.clientAddress;
-  } catch (e) {
-    // If accessing clientAddress throws, we're definitely prerendering
-    isPrerendering = true;
-  }
-  
   // Extract request information
   const method = context.request.method;
   const route = context.url.pathname;
   
-  // Initialize with defaults for prerendering
-  let userAgent = 'prerender';
-  let clientIP = 'prerender';
+  // During build/prerender, skip header access to avoid warnings
+  const isBuildTime = import.meta.env.PROD;
+  
+  let userAgent = 'unknown';
+  let clientIP = 'unknown';
   let existingRequestId: string | null = null;
   let traceparentHeader: string | null = null;
+  let isPrerendering = false;
   
-  // Only access headers and client info during actual requests (not prerendering)
-  if (!isPrerendering) {
+  if (!isBuildTime) {
+    // Only access headers during development/runtime
     try {
       userAgent = context.request.headers.get('user-agent') || 'unknown';
+      existingRequestId = context.request.headers.get('x-request-id');
+      traceparentHeader = context.request.headers.get('traceparent');
+      
       clientIP = context.clientAddress || 
         context.request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
         context.request.headers.get('x-real-ip') ||
         'unknown';
-      existingRequestId = context.request.headers.get('x-request-id');
-      traceparentHeader = context.request.headers.get('traceparent');
     } catch (e) {
-      // Fallback to prerender values if headers aren't accessible
+      // Fallback for any errors
       userAgent = 'unknown';
       clientIP = 'unknown';
     }
+  } else {
+    // Build time - use static values
+    isPrerendering = true;
+    userAgent = 'build';
+    clientIP = 'build';
   }
   
   const requestId = existingRequestId || generateRequestId();
