@@ -18,7 +18,7 @@ publishedAt: '2025-08-03'
 updatedAt: '2025-08-04'
 client: 'Upiria'
 duration: '8 months'
-role: 'Frontend Developer & QA Engineer'
+role: 'Frontend Developer + QA Engineer'
 team: ['Vasileios Politeiadis', 'Upiria Development Team']
 problem: 'Startup needed rapid front-end development with reliable testing infrastructure to ensure quality while maintaining fast iteration cycles.'
 solution: 'Developed React components and implemented comprehensive testing suite using Playwright and TypeScript, enabling confident deployments and rapid feature development.'

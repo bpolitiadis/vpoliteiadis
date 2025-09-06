@@ -26,7 +26,7 @@ publishedAt: '2025-08-01'
 updatedAt: '2025-08-02'
 client: 'Capoeira Community'
 duration: '6 months'
-role: 'Full-Stack Developer & Product Designer'
+role: 'Full-Stack Developer + Product Designer'
 team: ['Vasileios Politeiadis']
 problem: 'Capoeira schools struggle with manual class scheduling, student management, and community engagement. Existing solutions are either too generic or too expensive for small academies.'
 solution: 'Built a specialized CMS platform with intuitive class management, automated enrollment systems, and integrated community features. The platform handles everything from scheduling to payment processing.'
