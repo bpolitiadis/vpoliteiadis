@@ -190,17 +190,6 @@ const aboutStructuredData = {
                   </div>
                 </div>
 
-                <div class="relative flex items-start">
-                  <div class="absolute left-2 top-2 w-4 h-4 bg-digital-emerald rounded-full border-2 border-matrix-black"></div>
-                  <div class="ml-12">
-                    <span class="text-sm text-matrix-white/60">2025 - Present</span>
-                    <h3 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald text-lg">Full-Stack Developer - Project Lead</h3>
-                    <p class="text-neon-lime text-base mb-3">Casa Capoeira - Modern CMS Platform</p>
-                    <p class="text-matrix-white/80 text-base leading-relaxed">
-                      End-to-end development of a modern CMS platform for international capoeira schools, managing the complete development lifecycle from concept to deployment using React, Next.js, and Supabase.
-                    </p>
-                  </div>
-                </div>
 
                 <div class="relative flex items-start">
                   <div class="absolute left-2 top-2 w-4 h-4 bg-digital-emerald rounded-full border-2 border-matrix-black"></div>
@@ -453,19 +442,27 @@ const aboutStructuredData = {
       // Get all elements with reveal animations
       const revealElements = document.querySelectorAll('[class*="animate-reveal-up-delayed"], [class*="animate-stagger-fade-delayed"]');
       
-      // Trigger all animations simultaneously when TextType starts
-      revealElements.forEach((element) => {
-        element.classList.remove('opacity-0');
+      // Trigger all animations with staggered delay
+      revealElements.forEach((element, index) => {
+        setTimeout(() => {
+          element.classList.add('animate');
+        }, index * 150);
       });
     };
 
     // Listen for AboutHero full completion before revealing content
     window.addEventListener('aboutHeroComplete', () => {
       console.log('✅ AboutHero complete — revealing page content');
-      setTimeout(revealPageContent, 50);
+      setTimeout(revealPageContent, 100);
     });
 
-    // Remove early fallback to avoid premature reveals
+    // Fallback: Show content after 10 seconds if AboutHero doesn't complete
+    setTimeout(() => {
+      const revealElements = document.querySelectorAll('[class*="animate-reveal-up-delayed"], [class*="animate-stagger-fade-delayed"]');
+      revealElements.forEach((element) => {
+        element.classList.add('animate');
+      });
+    }, 10000);
   });
 </script>
 

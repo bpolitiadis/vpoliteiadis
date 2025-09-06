@@ -189,7 +189,8 @@ const LetterGlitch = ({
   const updateLetters = () => {
     if (!letters.current || letters.current.length === 0) return;
 
-    const updateCount = Math.max(1, Math.floor(letters.current.length * 0.05));
+    // Further reduce update frequency for better performance
+    const updateCount = Math.max(1, Math.floor(letters.current.length * 0.01));
 
     for (let i = 0; i < updateCount; i++) {
       const index = Math.floor(Math.random() * letters.current.length);

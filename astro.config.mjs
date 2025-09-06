@@ -9,7 +9,7 @@ import rehypeSanitize from 'rehype-sanitize';
 
 // Initialize server-side logging and error handling
 // This must be imported at the top level to ensure global error handlers are set up
-import './src/lib/sentry.js';
+// Sentry initialization is handled in app runtime; skip importing here to avoid config-time resolution issues.
 
 // https://astro.build/config
 export default defineConfig({

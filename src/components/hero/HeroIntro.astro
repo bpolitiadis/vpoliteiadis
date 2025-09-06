@@ -1,0 +1,69 @@
+---
+import AvatarBubble from './AvatarBubble.tsx';
+import MessageBubble from './MessageBubble.tsx';
+import NavigationButtons from './NavigationButtons.tsx';
+---
+
+<section
+  class="relative w-full h-full flex flex-col justify-between"
+  aria-label="Intro hero"
+  data-testid="hero-intro-section"
+>
+  <!-- Chat bubble layout - centered in upper area -->
+  <div class="relative z-10 w-full max-w-6xl px-4 sm:px-6 lg:px-8 mx-auto flex flex-col items-center justify-center flex-1">
+    <div id="chat-layout" class="flex flex-col items-center md:flex-row md:items-center gap-8 md:gap-10 lg:gap-12">
+      <div class="flex-shrink-0">
+        <AvatarBubble client:load />
+      </div>
+      <div class="flex-1 max-w-lg lg:max-w-xl">
+        <MessageBubble client:load />
+      </div>
+    </div>
+  </div>
+  
+  <!-- Navigation buttons - positioned near footer -->
+  <div id="nav-layout" class="hidden relative z-10 w-full max-w-6xl px-4 sm:px-6 lg:px-8 mx-auto pb-8 justify-center">
+    <NavigationButtons client:load />
+  </div>
+</section>
+
+<script>
+  // Orchestrate the hero sequence
+  document.addEventListener('DOMContentLoaded', () => {
+    const chatLayout = document.getElementById('chat-layout');
+    const navLayout = document.getElementById('nav-layout');
+    
+    if (!chatLayout || !navLayout) return;
+    
+    // Listen for message completion
+    const messageBubble = chatLayout.querySelector('[data-testid="message-bubble"]');
+    if (messageBubble) {
+      // Add event listener for when message sequence completes
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'data-complete') {
+            // Message sequence complete, show navigation buttons below
+            setTimeout(() => {
+              // Keep chat layout visible, just show navigation below
+              navLayout.classList.remove('hidden');
+              navLayout.classList.add('flex');
+              navLayout.style.opacity = '0';
+              navLayout.style.transform = 'translateY(20px)';
+              
+              // Animate in navigation
+              requestAnimationFrame(() => {
+                navLayout.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                navLayout.style.opacity = '1';
+                navLayout.style.transform = 'translateY(0)';
+              });
+            }, 500); // Reduced delay for faster response
+          }
+        });
+      });
+      
+      observer.observe(messageBubble, { attributes: true });
+    }
+  });
+</script>
+
+

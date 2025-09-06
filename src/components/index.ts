@@ -15,6 +15,7 @@ export { default as TextType } from './TextType';
 export { default as Footer } from './Footer.astro';
 export { default as GlassCard } from './GlassCard.astro';
 export { default as Hero } from './Hero.astro';
+export { default as HeroIntro } from './hero/HeroIntro.astro';
 export { default as Navbar } from './Navbar.astro';
 export { default as NeonCTA } from './NeonCTA.astro';
 export { default as PageHero } from './PageHero.astro';

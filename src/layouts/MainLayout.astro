@@ -334,10 +334,11 @@ const finalStructuredData = structuredData ? { ...baseStructuredData, ...structu
       <Navbar currentPath={currentPath} />
       
       <!-- Main Content -->
-      <main id="main-content" class="flex-1" role="main">
+      <main id="main-content" class="flex-1 flex flex-col" role="main">
         <slot />
       </main>
       
+      <!-- Footer - Always visible at bottom -->
       <Footer />
     </div>
     

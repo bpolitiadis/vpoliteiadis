@@ -103,6 +103,7 @@ vpoliteiadis/
 - **CSS Inlining** and code splitting
 - **Lazy Loading** and responsive images
 - **Long-term Caching** strategies
+- **Cinematic Intro Hero** with sticky quick‑nav and progressive panels (Astro islands; reduced-motion aware)
 
 ### Developer Experience
 - **TypeScript** strict mode with proper types

@@ -1,9 +1,5 @@
 ---
-import { Image } from 'astro:assets';
-import avatarSrc from '../assets/images/avatar.webp';
-import bgSrc from '../assets/images/home-bg.png';
-import HeroAnimationController from './HeroAnimationController.tsx';
-import ElectricBorder from './ElectricBorder.tsx';
+
 import LetterGlitch from './LetterGlitch.tsx';
 
 // Hero component with Matrix-inspired animations and neon glow effects
@@ -20,104 +16,21 @@ import LetterGlitch from './LetterGlitch.tsx';
   <LetterGlitch client:load />
 </div>
 
-<!-- Main Content Container -->
-<div class="relative z-10 flex flex-col items-center justify-center min-h-[calc(100svh-4rem)] md:min-h-[calc(100dvh-4rem)] px-4 sm:px-6 lg:px-8 py-8 text-center">
-  
-  <!-- Avatar with Electric Border Effect -->
-  <div class="mb-6 mt-2 sm:mt-6 lg:mt-8">
-    <ElectricBorder
-      color="#39FF14"
-      speed={1}
-      chaos={0.5}
-      thickness={3}
-      style={{ borderRadius: '80%' }}
-      client:load
-    >
-      <Image 
-        src={avatarSrc}
-        alt="Portrait of Vasileios Politeiadis"
-        class="w-32 h-32 mx-auto rounded-full object-cover"
-        widths={[128, 160, 192]}
-        sizes="128px"
-        format="webp"
-        loading="eager"
-        fetchpriority="high"
-      />
-    </ElectricBorder>
-  </div>
-
-  <!-- Hero Animation Controller - Manages headline, subtitle, and TextType sequence -->
-  <div id="hero-content" class="opacity-0 transition-opacity duration-1000">
-    <HeroAnimationController 
-      quotes={[
-        "Certified bug hunter.",
-        "Debugging reality.",
-        "I break code professionally.",
-        "Automating workflows, amplifying humans.",
-        "Partnering with AI to outpace time.",
-        "The best way to predict the future is to invent it.",
-        "Human creativity, artificial brains.",
-        "The computer was born to solve problems that did not exist before.",
-        "Engineering the future, accelerated by AI.",
-        "Writing tests that test the limits.",
-        "Any sufficiently advanced technology is indistinguishable from magic.",
-        "I write code that watches your code.",
-        "Imagination is more important than knowledge.",
-        "The future is already here — it's just not evenly distributed.",
-        "If you don’t believe me or don’t get it, I don’t have time to try to convince you."
-      ]}
-      client:load
-    />
-  </div>
-
- 
-</div>
 
 <!-- Matrix Code Rain Animation Script - Replaced with LetterGlitch component -->
 <!-- <script is:inline src="/scripts/matrix-rain.js"></script> -->
 
 <!-- Keep only component-specific extras not already in global Tailwind layers -->
 <style>
-  @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-  .animate-spin-slow { animation: spin-slow 8s linear infinite; }
-  
-  /* Respect reduced motion preferences */
+  /* Prefer CSS-only touches for sheen */
+  .panel-sheen::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent 60%);
+    pointer-events: none;
+  }
   @media (prefers-reduced-motion: reduce) {
-    .animate-spin-slow {
-      animation: none;
-      opacity: 1;
-      transform: none;
-      filter: none;
-    }
+    .animate-reveal-up { animation: none !important; opacity: 1 !important; transform: none !important; }
   }
 </style>
-
-<script>
-  // Simple hero animation orchestration
-  document.addEventListener('DOMContentLoaded', () => {
-    // Initialize elements as hidden
-    const heroContent = document.getElementById('hero-content');
-    const heroCta = document.getElementById('hero-cta');
-    
-    // Ensure proper initial state
-    if (heroContent) heroContent.style.opacity = '0';
-    if (heroCta) {
-      heroCta.style.opacity = '0';
-      heroCta.style.transform = 'translateY(20px)';
-    }
-    
-    // Start headline animation sequence after LetterGlitch loads
-    setTimeout(() => {
-      if (heroContent) {
-        heroContent.style.opacity = '1';
-      }
-    }, 1000); // Small delay for visual effect
-    
-    // Fallback: if LetterGlitch doesn't trigger within 3 seconds, start anyway
-    setTimeout(() => {
-      if (heroContent && heroContent.style.opacity === '0') {
-        heroContent.style.opacity = '1';
-      }
-    }, 3000);
-  });
-</script>

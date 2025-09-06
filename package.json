@@ -26,14 +26,11 @@
     "pnpm": "9.12.0"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.9.0",
-    "react-hook-form": "^7.52.0",
-    "zod": "^3.23.8",
-    "@appletosolutions/reactbits": "^1.0.3",
     "@astrojs/check": "^0.9.4",
     "@astrojs/mdx": "^4.3.3",
     "@astrojs/react": "^4.3.0",
     "@astrojs/sitemap": "^3.0.0",
+    "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
@@ -46,6 +43,7 @@
     "astro": "^5.12.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+
     "glightbox": "^3.3.0",
     "gsap": "^3.13.0",
     "lucide-astro": "^0.540.0",
@@ -54,12 +52,14 @@
     "pino": "^9.6.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-hook-form": "^7.52.0",
     "sharp": "^0.33.5",
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.9.2",
     "uuid": "^10.0.0",
-    "yet-another-react-lightbox": "^3.25.0"
+    "yet-another-react-lightbox": "^3.25.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^6.0.2",

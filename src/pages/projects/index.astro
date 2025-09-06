@@ -1,7 +1,8 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
-import PageHero from '../../components/PageHero.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
+import PageHero from '../../components/PageHero.astro';
+import { Card, CardContent, CardDescription, CardTitle } from '../../components/ui/card';
 import { getCollection } from 'astro:content';
 
 // Get all projects and sort by published date (newest first)
@@ -15,7 +16,7 @@ const featuredProjects = sortedProjects.filter(project => project.data.featured)
 ---
 
 <MainLayout 
-  title="Projects - Vasileios Politeiadis" 
+  title="Projects - Vasileios Politeiadis"
   description="Explore my latest projects and case studies in full-stack development, automation, and creative technology."
   currentPath="/projects"
   bgSlug="projects-bg"
@@ -29,21 +30,34 @@ const featuredProjects = sortedProjects.filter(project => project.data.featured)
     />
     <section class="px-4 sm:px-6 lg:px-8">
       <div class="max-w-7xl mx-auto">
-        <!-- Featured Projects Section - Responsive grid with optimal spacing -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 xl:gap-12">
+        
+        <!-- Featured Projects Section - Responsive Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
           {featuredProjects.map((project, idx) => (
             <ProjectCard project={project} index={idx} />
           ))}
         </div>
         
-        <!-- Future: Additional project categories or pagination can go here -->
+        <!-- No Projects State -->
         {featuredProjects.length === 0 && (
-          <div class="text-center py-16">
-            <p class="text-matrix-white/60 text-lg">No featured projects available at the moment.</p>
-            <p class="text-matrix-white/40 text-sm mt-2">Check back soon for new case studies!</p>
-          </div>
+          <Card className="glass-card glass-card-accent border-primary/20 backdrop-blur-md">
+            <CardContent className="text-center py-16">
+              <div class="space-y-4">
+                <div class="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center">
+                  <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  </svg>
+                </div>
+                <CardTitle className="text-xl text-matrix-white/80">No featured projects available</CardTitle>
+                <CardDescription className="text-matrix-white/60">
+                  Check back soon for new case studies and project showcases!
+                </CardDescription>
+              </div>
+            </CardContent>
+          </Card>
         )}
+
       </div>
     </section>
-  </section>
-</MainLayout> 
+  </div>
+</MainLayout>

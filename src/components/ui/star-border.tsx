@@ -1,83 +1,60 @@
-import React from "react";
-import { cn } from "../../lib/utils";
+import React from 'react';
 
-type StarBorderProps<T extends React.ElementType> =
-  React.ComponentPropsWithoutRef<T> & {
-    as?: T;
-    className?: string;
-    children?: React.ReactNode;
-    color?: string;
-    speed?: React.CSSProperties['animationDuration'];
-    thickness?: number;
-    variant?: 'default' | 'neon' | 'emerald' | 'cyan';
-  }
+type StarBorderProps<T extends React.ElementType> = React.ComponentPropsWithoutRef<T> & {
+  as?: T;
+  className?: string;
+  children?: React.ReactNode;
+  color?: string;
+  speed?: React.CSSProperties['animationDuration'];
+  thickness?: number;
+};
 
-const StarBorder = <T extends React.ElementType = "div">({
+const StarBorder = <T extends React.ElementType = 'button'>({
   as,
-  className = "",
-  color,
-  speed = "6s",
+  className = '',
+  color = 'white',
+  speed = '6s',
   thickness = 1,
-  variant = 'default',
   children,
   ...rest
 }: StarBorderProps<T>) => {
-  const Component = as || "div";
-
-  // Default colors based on variant
-  const getDefaultColor = () => {
-    switch (variant) {
-      case 'neon':
-        return '#39FF14'; // Neon Lime
-      case 'emerald':
-        return '#00B86B'; // Digital Emerald
-      case 'cyan':
-        return '#00FFFF'; // Neon Cyan
-      default:
-        return color || '#39FF14'; // Default to Neon Lime
-    }
-  };
-
-  const starColor = getDefaultColor();
+  const Component = as || 'button';
 
   return (
-    <Component 
-      className={cn(
-        "relative inline-block overflow-hidden rounded-[20px]",
-        className
-      )} 
+    <Component
+      className={`relative inline-block rounded-[20px] ${className}`}
       {...(rest as any)}
       style={{
         padding: `${thickness}px 0`,
-        ...(rest as any).style,
+        ...(rest as any).style
       }}
     >
-      {/* Bottom star movement */}
-      <div
-        className="absolute w-[300%] h-[50%] opacity-70 bottom-[-11px] right-[-250%] rounded-full animate-star-movement-bottom z-0"
+      {/* Border sparkle effects */}
+      <div 
+        className="absolute inset-0 rounded-[20px] opacity-60"
         style={{
-          background: `radial-gradient(circle, ${starColor}, transparent 10%)`,
-          animationDuration: speed,
+          background: `linear-gradient(45deg, transparent 30%, ${color}40 50%, transparent 70%)`,
+          animation: `sparkle-border ${speed} linear infinite`,
+          backgroundSize: '200% 200%'
+        }}
+      />
+      <div 
+        className="absolute inset-0 rounded-[20px] opacity-40"
+        style={{
+          background: `linear-gradient(-45deg, transparent 30%, ${color}60 50%, transparent 70%)`,
+          animation: `sparkle-border-reverse ${speed} linear infinite`,
+          backgroundSize: '200% 200%'
         }}
       />
       
-      {/* Top star movement */}
-      <div
-        className="absolute w-[300%] h-[50%] opacity-70 top-[-10px] left-[-250%] rounded-full animate-star-movement-top z-0"
+      {/* Main button content */}
+      <div 
+        className="relative z-10 bg-black/40 backdrop-blur-sm text-white text-center text-[16px] py-[16px] px-[26px] rounded-[20px] transition-all duration-300 hover:bg-black/60 hover:backdrop-blur-md group"
         style={{
-          background: `radial-gradient(circle, ${starColor}, transparent 10%)`,
-          animationDuration: speed,
+          border: `1px solid ${color}40`,
+          boxShadow: `0 0 15px ${color}20, inset 0 0 15px ${color}10`
         }}
-      />
-      
-      {/* Content container with brand styling */}
-      <div className={cn(
-        "relative z-10 bg-gradient-to-b from-matrix-black to-cyber-gray",
-        "border border-cyber-gray text-matrix-white text-center text-[16px]",
-        "py-[16px] px-[26px] rounded-[20px]",
-        "transition-all duration-300 hover:border-neon-lime/30",
-        "hover:shadow-neon/20"
-      )}>
+      >
         {children}
       </div>
     </Component>

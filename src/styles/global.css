@@ -73,6 +73,10 @@
     line-height: 1.2;
   }
 
+  /* Typography clamps for hero */
+  .hero-h1-clamp { font-size: clamp(28px, 5vw, 44px); }
+  .hero-body-clamp { font-size: clamp(14px, 2.2vw, 18px); }
+
   /* Unified focus styles for accessibility */
   *:focus-visible {
     outline: 2px solid var(--ring);
@@ -554,6 +558,24 @@
     will-change: transform, opacity;
     backface-visibility: hidden;
     transform: translateZ(0);
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+
+  /* Fallback: Show content after 2 seconds if animation doesn't trigger */
+  .animate-reveal-up:not(.animate) {
+    animation: fallbackReveal 0.5s ease-out 2s both;
+  }
+
+  @keyframes fallbackReveal {
+    0% {
+      opacity: 0;
+      transform: translateY(30px) scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
   }
 
   .animate-stagger-fade,
@@ -563,6 +585,43 @@
     will-change: transform, opacity;
     backface-visibility: hidden;
     transform: translateZ(0);
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  /* Animation trigger classes */
+  .animate-reveal-up,
+  .animate-reveal-up-delayed-1,
+  .animate-reveal-up-delayed-2,
+  .animate-reveal-up-delayed-3,
+  .animate-reveal-up-delayed-4,
+  .animate-reveal-up-delayed-5 {
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .animate-stagger-fade,
+  .animate-stagger-fade-delayed-1,
+  .animate-stagger-fade-delayed-2,
+  .animate-stagger-fade-delayed-3 {
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .animate-reveal-up.animate,
+  .animate-reveal-up-delayed-1.animate,
+  .animate-reveal-up-delayed-2.animate,
+  .animate-reveal-up-delayed-3.animate,
+  .animate-reveal-up-delayed-4.animate,
+  .animate-reveal-up-delayed-5.animate {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .animate-stagger-fade.animate,
+  .animate-stagger-fade-delayed-1.animate,
+  .animate-stagger-fade-delayed-2.animate,
+  .animate-stagger-fade-delayed-3.animate {
+    opacity: 1;
+    transform: translateY(0);
   }
 
 
@@ -599,8 +658,31 @@
     text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
   }
 
+  .text-shadow-neon {
+    text-shadow: 0 0 10px rgba(57, 255, 20, 0.8), 0 0 20px rgba(57, 255, 20, 0.4), 0 0 30px rgba(57, 255, 20, 0.2);
+  }
+
   .neon-glow {
     box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
+  }
+
+  /* Scanline sheen utility for glass panels */
+  .scanline-sheen {
+    position: relative;
+  }
+  .scanline-sheen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.06),
+      rgba(255,255,255,0.06) 1px,
+      transparent 3px,
+      transparent 6px
+    );
+    opacity: 0.08;
+    pointer-events: none;
   }
 
   .backdrop-blur-sm {
@@ -776,6 +858,49 @@
   .backdrop-blur-3xl {
     backdrop-filter: blur(8px);
   }
+
+  /* Mobile-specific project card optimizations */
+  .project-card {
+    margin-bottom: 1rem;
+  }
+
+  .project-card .aspect-video {
+    aspect-ratio: 16 / 10; /* Slightly taller on mobile for better visibility */
+  }
+
+  /* Enhanced touch targets for mobile */
+  .project-card a {
+    min-height: 48px;
+    padding: 0.75rem 1rem;
+  }
+
+  /* Reduce hover effects on mobile */
+  .project-card:hover {
+    transform: none;
+  }
+
+  .project-cover-image:hover {
+    transform: none;
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .project-card .aspect-video {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* Desktop optimizations */
+@media (min-width: 1025px) {
+  .project-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 25px 50px rgba(57, 255, 20, 0.2);
+  }
 }
 
 /* Performance optimizations */
@@ -806,6 +931,12 @@
     animation: none;
     opacity: 1;
     transform: none;
+  }
+  
+  /* Disable glitch effects for reduced motion */
+  .chat-bubble-glitch::before {
+    animation: none;
+    opacity: 0.3;
   }
 }
 
@@ -888,6 +1019,74 @@
     box-shadow: 0 0 0 3px rgba(57,255,20,0.6), 0 0 0 6px rgba(10,10,10,0.9);
   }
 
+  /* Project Card Button Styles - Enhanced Performance */
+  .btn-outline-neon {
+    background: transparent !important;
+    border: 2px solid rgba(57, 255, 20, 0.6) !important;
+    color: #39FF14 !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border-radius: 0.5rem !important;
+    will-change: transform, box-shadow;
+  }
+
+  .btn-outline-neon:hover {
+    background: rgba(57, 255, 20, 0.2) !important;
+    border-color: rgba(57, 255, 20, 0.8) !important;
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.3) !important;
+    transform: translateY(-1px) !important;
+  }
+
+  .btn-primary-neon {
+    background: linear-gradient(135deg, #39FF14, #00B86B) !important;
+    color: #0A0A0A !important;
+    border: none !important;
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.3) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border-radius: 0.5rem !important;
+    will-change: transform, box-shadow;
+  }
+
+  .btn-primary-neon:hover {
+    background: linear-gradient(135deg, rgba(57, 255, 20, 0.9), rgba(0, 184, 107, 0.9)) !important;
+    box-shadow: 0 0 30px rgba(57, 255, 20, 0.5) !important;
+    transform: translateY(-1px) !important;
+  }
+
+  /* Enhanced Project Card Performance */
+  .project-card {
+    contain: layout style paint;
+    will-change: transform, box-shadow;
+  }
+
+  .project-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px rgba(57, 255, 20, 0.15);
+  }
+
+  /* Aspect Ratio Utilities for Better Image Handling */
+  .aspect-video {
+    aspect-ratio: 16 / 9;
+  }
+
+  .aspect-square {
+    aspect-ratio: 1 / 1;
+  }
+
+  .aspect-4-3 {
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Performance Optimized Image Scaling */
+  .project-cover-image {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  .project-cover-image:hover {
+    transform: scale(1.05) translateZ(0);
+  }
+
   /* Holographic frame for media */
   .holo-frame {
     position: relative;
@@ -934,6 +1133,98 @@
   .holo-frame:hover img, .holo-frame:hover video {
     transform: scale(1.02);
   }
+
+  /* Chat bubble with glitch edges */
+  .chat-bubble-glitch {
+    position: relative;
+    overflow: hidden;
+  }
+  .chat-bubble-glitch::before {
+    /* Subtle glitch edge effect */
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(
+      45deg,
+      transparent 0%,
+      rgba(57,255,20,0.1) 25%,
+      transparent 50%,
+      rgba(0,184,107,0.1) 75%,
+      transparent 100%
+    );
+    opacity: 0.6;
+    animation: glitchEdge 4s ease-in-out infinite;
+  }
+  .chat-bubble-glitch::after {
+    /* Scanline effect for glassy appearance */
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.03),
+      rgba(255,255,255,0.03) 1px,
+      transparent 2px,
+      transparent 4px
+    );
+    opacity: 0.4;
+    mix-blend-mode: screen;
+  }
+
+  /* Enhanced typing indicator animation */
+  .typing-dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  .typing-dots span {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: currentColor;
+    animation: typingBounce 1.4s ease-in-out infinite both;
+  }
+  
+  .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+  .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+  .typing-dots span:nth-child(3) { animation-delay: 0s; }
+
+  /* Matrix-style text reveal */
+  .matrix-reveal {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .matrix-reveal::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(57,255,20,0.1) 50%,
+      transparent 100%
+    );
+    transform: translateX(-100%);
+    animation: matrixSweep 2s ease-out;
+  }
+
+  /* Neon pulse for interactive elements */
+  .neon-pulse {
+    animation: neonPulse 2s ease-in-out infinite;
+  }
+  
+  .neon-pulse:hover {
+    animation: neonPulseFast 0.5s ease-in-out infinite;
+  }
 }
 
 @layer utilities {
@@ -948,6 +1239,96 @@
 @keyframes scanLines {
   0% { background-position-y: 0; }
   100% { background-position-y: 200px; }
+}
+
+/* Glitch edge animation for chat bubbles */
+@keyframes glitchEdge {
+  0%, 100% {
+    opacity: 0.6;
+    transform: translateX(0);
+  }
+  25% {
+    opacity: 0.8;
+    transform: translateX(-1px);
+  }
+  50% {
+    opacity: 0.4;
+    transform: translateX(1px);
+  }
+  75% {
+    opacity: 0.7;
+    transform: translateX(-0.5px);
+  }
+}
+
+/* Typing dots animation */
+@keyframes typingBounce {
+  0%, 80%, 100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Matrix sweep effect */
+@keyframes matrixSweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Neon pulse animations */
+@keyframes neonPulse {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(57, 255, 20, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.6), 0 0 30px rgba(57, 255, 20, 0.4);
+  }
+}
+
+@keyframes neonPulseFast {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(57, 255, 20, 0.8), 0 0 40px rgba(57, 255, 20, 0.6);
+  }
+}
+
+/* Cursor blink animation for TextType component */
+@keyframes cursorBlink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Star border sparkle animations */
+@keyframes sparkle-border {
+  0% {
+    background-position: -200% -200%;
+  }
+  100% {
+    background-position: 200% 200%;
+  }
+}
+
+@keyframes sparkle-border-reverse {
+  0% {
+    background-position: 200% 200%;
+  }
+  100% {
+    background-position: -200% -200%;
+  }
 }
 
 @layer base {

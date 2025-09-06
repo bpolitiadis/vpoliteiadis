@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@appletosolutions/reactbits':
-        specifier: ^1.0.3
-        version: 1.0.3(framer-motion@12.23.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(gsap@3.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@astrojs/check':
         specifier: ^0.9.4
         version: 0.9.4(prettier@3.6.2)(typescript@5.9.2)
@@ -187,64 +184,6 @@ packages:
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
-
-  '@appletosolutions/reactbits@1.0.3':
-    resolution: {integrity: sha512-kdodwIrD1UN9C81OMIj9fgLM2vCS0eIIDJ2vUmkEgrI2v+DN16JgsjaGuWTfXrK9QQYh0wI7NiTT6tmbGqC9yw==}
-    peerDependencies:
-      '@chakra-ui/react': ^3.0.0
-      '@emotion/react': ^11.0.0
-      '@emotion/styled': ^11.0.0
-      '@motionone/types': ^10.0.0
-      '@react-three/drei': ^9.0.0 || ^10.0.0
-      '@react-three/fiber': ^8.0.0 || ^9.0.0
-      '@react-three/postprocessing': ^2.0.0 || ^3.0.0
-      '@react-three/rapier': ^1.0.0 || ^2.0.0
-      framer-motion: ^10.0.0 || ^11.0.0 || ^12.0.0
-      gl-matrix: ^3.0.0
-      gsap: ^3.0.0
-      matter-js: ^0.19.0 || ^0.20.0
-      meshline: ^3.0.0
-      ogl: ^1.0.0
-      postprocessing: ^6.0.0
-      react: ^17.0.0 || ^18.0.0 || ^19.0.0
-      react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
-      three: ^0.150.0
-      three-stdlib: ^2.0.0
-    peerDependenciesMeta:
-      '@chakra-ui/react':
-        optional: true
-      '@emotion/react':
-        optional: true
-      '@emotion/styled':
-        optional: true
-      '@motionone/types':
-        optional: true
-      '@react-three/drei':
-        optional: true
-      '@react-three/fiber':
-        optional: true
-      '@react-three/postprocessing':
-        optional: true
-      '@react-three/rapier':
-        optional: true
-      framer-motion:
-        optional: true
-      gl-matrix:
-        optional: true
-      gsap:
-        optional: true
-      matter-js:
-        optional: true
-      meshline:
-        optional: true
-      ogl:
-        optional: true
-      postprocessing:
-        optional: true
-      three:
-        optional: true
-      three-stdlib:
-        optional: true
 
   '@astrojs/check@0.9.4':
     resolution: {integrity: sha512-IOheHwCtpUfvogHHsvu0AbeRZEnjJg3MopdLddkJE70mULItS/Vh37BHcI00mcOJcH1vhD3odbpvWokpxam7xA==}
@@ -4065,11 +4004,6 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
 
-  react-icons@5.5.0:
-    resolution: {integrity: sha512-MEFcXdkP3dLo8uumGI5xN3lDFNsRtrjbOEKDLD7yv76v4wpnEq2Lt2qeHaQOr34I/wPN3s3+N08WkQ+CW37Xiw==}
-    peerDependencies:
-      react: '*'
-
   react-refresh@0.17.0:
     resolution: {integrity: sha512-z6F7K9bV85EfseRCp2bzrpyQ0Gkw1uLoCel9XBVWPg/TjRj94SkJzUTGfOa4bs7iJvBWtQG0Wq7wnI0syw3EBQ==}
     engines: {node: '>=0.10.0'}
@@ -5056,15 +4990,6 @@ snapshots:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.12
       '@jridgewell/trace-mapping': 0.3.29
-
-  '@appletosolutions/reactbits@1.0.3(framer-motion@12.23.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(gsap@3.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      react-icons: 5.5.0(react@18.3.1)
-    optionalDependencies:
-      framer-motion: 12.23.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      gsap: 3.13.0
 
   '@astrojs/check@0.9.4(prettier@3.6.2)(typescript@5.9.2)':
     dependencies:
@@ -9695,10 +9620,6 @@ snapshots:
       scheduler: 0.23.2
 
   react-hook-form@7.62.0(react@18.3.1):
-    dependencies:
-      react: 18.3.1
-
-  react-icons@5.5.0(react@18.3.1):
     dependencies:
       react: 18.3.1
 

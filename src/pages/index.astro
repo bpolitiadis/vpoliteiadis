@@ -1,8 +1,8 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import Hero from '../components/Hero.astro';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import HeroIntro from '../components/hero/HeroIntro.astro';
+import LetterGlitch from '../components/LetterGlitch.tsx';
+
 
 // Enhanced structured data for homepage
 const homeStructuredData = {
@@ -44,133 +44,74 @@ const homeStructuredData = {
   ]}
   structuredData={homeStructuredData}
 >
-  <!-- Enhanced Hero Section - Above the fold, eager load -->
-  <section class="relative min-h-screen overflow-hidden" role="banner" aria-labelledby="hero-heading">
+  <!-- Enhanced Hero Section - Full viewport height with better spacing distribution -->
+  <section class="relative h-[calc(100vh-120px)] overflow-hidden flex flex-col justify-between py-8" role="banner" aria-labelledby="hero-heading">
     <h1 id="hero-heading" class="sr-only">Vasileios Politeiadis - Senior QA Automation Specialist & Full-Stack Developer</h1>
-    <Hero />
-  </section>
-
-  <!-- Featured Section - Below the fold, lazy load -->
-  <section 
-    class="py-20 bg-muted/50 relative content-visibility-auto" 
-    aria-labelledby="what-i-do-title"
-    data-lazy-section
-    role="region"
-  >
-    {/* Background divider - removed to avoid 404s */}
-    {/* <div class="absolute inset-0 -z-10">
-      <picture>
-        <source srcset="/images/bg-divider-1200.avif 1200w, /images/bg-divider-800.avif 800w, /images/bg-divider-480.avif 480w" type="image/avif" />
-        <source srcset="/images/bg-divider-1200.webp 1200w, /images/bg-divider-800.webp 800w, /images/bg-divider-480.webp 480w" type="image/webp" />
-        <img src="/images/bg-divider.png" alt="" class="w-full h-full object-cover opacity-10" width="2400" height="400" loading="lazy" decoding="async" fetchpriority="low" sizes="100vw" />
-      </picture>
-    </div> */}
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 id="what-i-do-title" class="text-3xl sm:text-4xl font-orbitron font-bold text-primary mb-4">
-          Professional Expertise & Services
-        </h2>
-        <p class="text-xl text-foreground/80 max-w-3xl mx-auto">
-          Combining senior QA automation expertise with full-stack development skills to deliver high-quality, scalable solutions for European Commission projects and modern web applications
-        </p>
-      </div>
-      
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- QA Automation -->
-        <Card className="group border-primary/30 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:border-primary/60 hover:shadow-neon motion-safe:hover:-translate-y-1 motion-safe:hover:scale-[1.01]">
-          <CardHeader className="pb-3">
-            <div class="text-4xl mb-2" aria-hidden="true">
-              🤖
-            </div>
-            <CardTitle className="text-xl font-orbitron font-bold text-primary group-hover:text-shadow-neon transition-all duration-300">
-              Senior QA Automation Specialist
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <CardDescription className="text-foreground/80 mb-4 text-base">
-              Leading test automation in European Commission projects with Java, Selenium WebDriver, and Playwright testing frameworks. Specializing in end-to-end QA processes and custom automation solutions.
-            </CardDescription>
-            <div class="flex flex-wrap gap-2">
-              <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20">
-                Java
-              </Badge>
-              <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20">
-                Selenium
-              </Badge>
-              <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20">
-                Playwright
-              </Badge>
-              <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20">
-                TypeScript
-              </Badge>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <!-- Full-Stack Development -->
-        <Card className="group border-secondary/30 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:border-secondary/60 hover:shadow-emerald motion-safe:hover:-translate-y-1 motion-safe:hover:scale-[1.01]">
-          <CardHeader className="pb-3">
-            <div class="text-4xl mb-2" aria-hidden="true">
-              💻
-            </div>
-            <CardTitle className="text-xl font-orbitron font-bold text-secondary group-hover:text-shadow-emerald transition-all duration-300">
-              Full-Stack Developer
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <CardDescription className="text-foreground/80 mb-4 text-base">
-              Building modern web applications with React, Next.js, TypeScript, and Supabase. Complete development lifecycle from concept to deployment with focus on scalability and performance.
-            </CardDescription>
-            <div class="flex flex-wrap gap-2">
-              <Badge variant="secondary" className="bg-secondary/10 text-secondary border-secondary/20 hover:bg-secondary/20">
-                React
-              </Badge>
-              <Badge variant="secondary" className="bg-secondary/10 text-secondary border-secondary/20 hover:bg-secondary/20">
-                Next.js
-              </Badge>
-              <Badge variant="secondary" className="bg-secondary/10 text-secondary border-secondary/20 hover:bg-secondary/20">
-                TypeScript
-              </Badge>
-              <Badge variant="secondary" className="bg-secondary/10 text-secondary border-secondary/20 hover:bg-secondary/20">
-                Supabase
-              </Badge>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <!-- AI-Powered Solutions & Automation -->
-        <Card className="group border-primary/30 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:border-primary/60 hover:shadow-neon motion-safe:hover:-translate-y-1 motion-safe:hover:scale-[1.01]">
-          <CardHeader className="pb-3">
-            <div class="text-4xl mb-2" aria-hidden="true">
-              🔧
-            </div>
-            <CardTitle className="text-xl font-orbitron font-bold text-primary group-hover:text-shadow-neon transition-all duration-300">
-              AI-Powered Solutions
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <CardDescription className="text-foreground/80 mb-4 text-base">
-              Developing AI tools and automation workflows to streamline development processes and enhance productivity. Creating smarter digital solutions for modern development environments.
-            </CardDescription>
-            <div class="flex flex-wrap gap-2">
-              <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20">
-                AI Automation
-              </Badge>
-              <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20">
-                Workflow Optimization
-              </Badge>
-              <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20">
-                Dev Productivity
-              </Badge>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+    
+    <!-- Full-screen glitch background -->
+    <div class="absolute inset-0 pointer-events-none opacity-20 z-0" aria-hidden="true">
+      <LetterGlitch client:load />
+    </div>
+    
+    <!-- Hero content with better spacing -->
+    <div class="flex-1 flex items-center justify-center">
+      <HeroIntro />
     </div>
   </section>
+
 </MainLayout>
 
+<script>
+  // Simplified animation trigger script for main page
+  document.addEventListener('DOMContentLoaded', () => {
+    // Trigger animations after a short delay to ensure components are loaded
+    setTimeout(() => {
+      // Trigger animations for elements with animate-reveal-up class
+      const animatedElements = document.querySelectorAll('.animate-reveal-up');
+      
+      // Add animate class to trigger animations with staggered delay
+      animatedElements.forEach((element, index) => {
+        setTimeout(() => {
+          element.classList.add('animate');
+        }, index * 200);
+      });
+    }, 500); // Increased delay to ensure proper component hydration
+  });
+</script>
+
 <style>
+  /* Enhanced spacing for better visual hierarchy */
+  .hero-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: calc(100vh - 120px);
+    padding: 2rem 0;
+  }
+  
+  /* Chat bubble area with more breathing room */
+  .chat-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    padding: 2rem 0;
+  }
+  
+  /* Navigation area positioned near footer */
+  .nav-area {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 2rem;
+  }
+  
+  /* Enhanced spacing for better visual breathing room */
+  .spaced-content {
+    margin: 1.5rem 0;
+  }
+  
   /* Lazy loading animations for Matrix theme */
   [data-lazy-section] {
     opacity: 0;
@@ -200,5 +141,34 @@ const homeStructuredData = {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  
+  /* Responsive spacing adjustments */
+  @media (min-width: 768px) {
+    .hero-section {
+      padding: 3rem 0;
+    }
+    
+    .chat-area {
+      padding: 3rem 0;
+    }
+    
+    .nav-area {
+      padding-bottom: 3rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .hero-section {
+      padding: 4rem 0;
+    }
+    
+    .chat-area {
+      padding: 4rem 0;
+    }
+    
+    .nav-area {
+      padding-bottom: 4rem;
+    }
   }
 </style>

@@ -22,6 +22,10 @@ export default {
   theme: {
   	extend: {
   		colors: {
+  			matrix: { black: '#0A0A0A' },
+  			neon: { lime: '#39FF14' },
+  			emerald: { digital: '#00B86B' },
+  			'matrix-white': '#E8FFE8',
   			'matrix-black': '#0A0A0A',
   			'neon-lime': '#39FF14',
   			'digital-emerald': '#00B86B',
@@ -97,8 +101,8 @@ export default {
   			}
   		},
   		ringColor: ({ theme }) => ({
-        DEFAULT: theme('colors.primary'),
-      }),
+         DEFAULT: theme('colors.primary'),
+       }),
   		fontFamily: {
   			orbitron: [
   				'Orbitron',
@@ -115,12 +119,18 @@ export default {
   				'monospace'
   			]
   		},
-  		spacing: {
-  			'15': '3.75rem',
-  			'18': '4.5rem',
-  			'88': '22rem',
-  			'128': '32rem'
-  		},
+  				spacing: {
+			'15': '3.75rem',
+			'18': '4.5rem',
+			'88': '22rem',
+			'128': '32rem',
+			// Enhanced spacing for better visual hierarchy
+			'72': '18rem',
+			'80': '20rem',
+			'96': '24rem',
+			'112': '28rem',
+			'144': '36rem'
+		},
   		aspectRatio: {
   			'16/10': '16 / 10',
   			'16/9': '16 / 9',
@@ -272,6 +282,8 @@ export default {
   			xs: '2px'
   		},
   		boxShadow: {
+  			'neon': '0 0 24px rgba(57, 255, 20, 0.25)',
+  			'neon-strong': '0 0 42px rgba(57, 255, 20, 0.35)',
   			neon: '0 0 0 3px rgba(57, 255, 20, 0.5)',
   			'neon-lg': '0 0 0 4px rgba(57, 255, 20, 0.6)',
   			emerald: '0 0 20px rgba(0, 184, 107, 0.3)',
@@ -319,6 +331,7 @@ export default {
   			'2xl': '1536px'
   		},
   		borderRadius: {
+  			'bubble': '22px',
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'

@@ -9,10 +9,9 @@ import TextType from './TextType';
 
 interface AboutHeroProps {
   quotes: string[];
-  onTextTypeStart?: () => void;
 }
 
-export default function AboutHero({ quotes, onTextTypeStart }: AboutHeroProps) {
+export default function AboutHero({ quotes }: AboutHeroProps) {
   const [headlineComplete, setHeadlineComplete] = useState(false);
   const [startTextType, setStartTextType] = useState(false);
   const [subtitle1Complete, setSubtitle1Complete] = useState(false);
@@ -29,7 +28,6 @@ export default function AboutHero({ quotes, onTextTypeStart }: AboutHeroProps) {
 
   // Dispatch event when TextType actually starts (not just when component mounts)
   const handleTextTypeStart = () => {
-    console.log('🎯 TextType component actually started typing');
     setTextTypeStarted(true);
     const event = new CustomEvent('textTypeStarted', {
       detail: { timestamp: Date.now() }
