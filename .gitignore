@@ -112,3 +112,28 @@ public/images/*.jpeg
 
 # Keep source images committed
 !src/assets/images/
+
+# ===========================================
+# Playwright Test Artifacts
+# ===========================================
+# Test results and reports
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Test artifacts
+*.webm
+*.mp4
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+
+# Playwright trace files
+trace.zip
+trace/
+
+# Test screenshots and videos
+screenshots/
+videos/
