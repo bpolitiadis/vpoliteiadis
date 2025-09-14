@@ -128,18 +128,18 @@ export const onRequest: MiddlewareHandler = async (context, next) => {
   // Security headers (existing functionality preserved)
   const cspDirectives = [
     "default-src 'self'",
-    // Allow first-party scripts and inline scripts for public directory scripts
-    "script-src 'self' 'unsafe-inline'",
-    // Allow inline script elements for public directory scripts
-    "script-src-elem 'self' 'unsafe-inline'",
+    // Allow first-party scripts, inline scripts, and Vercel live feedback
+    "script-src 'self' 'unsafe-inline' https://vercel.live",
+    // Allow inline script elements and Vercel live feedback
+    "script-src-elem 'self' 'unsafe-inline' https://vercel.live",
     // Allow inline styles for framework-generated <style> tags; restrict to self + Google Fonts
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     // Images from self, data uris, and https for social/og
     "img-src 'self' data: https:",
     // Fonts only from self and Google Fonts
     "font-src 'self' https://fonts.gstatic.com",
-    // Restrict connections to self (no client-side APIs currently)
-    "connect-src 'self'",
+    // Allow connections to self and Vercel live feedback
+    "connect-src 'self' https://vercel.live",
     // Disallow embedding
     "frame-ancestors 'none'",
     // Disallow base tag changes
