@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import TextType from '../TextType';
+import clientLogger from '../../lib/logger-client';
 
 type MessageBubbleProps = {
   onComplete?: () => void;
@@ -21,11 +22,11 @@ export default function MessageBubble({ onComplete }: MessageBubbleProps) {
     'Welcome to my website.',
   ];
 
-  console.log('🎯 MessageBubble rendered, currentStep:', currentStep, 'displayText:', displayText);
+  clientLogger.animation('MessageBubble', `rendered, currentStep: ${currentStep}, displayText: ${displayText}`);
 
   // Typing animation for each step
   useEffect(() => {
-    console.log('🎯 MessageBubble useEffect triggered, currentStep:', currentStep);
+    clientLogger.animation('MessageBubble', `useEffect triggered, currentStep: ${currentStep}`);
     const message = messages[currentStep - 1];
     let index = 0;
     
@@ -41,7 +42,7 @@ export default function MessageBubble({ onComplete }: MessageBubbleProps) {
         
         // Special handling for "Access granted" - show then hide
         if (currentStep === 1) {
-          console.log('🎯 Showing Access Granted');
+          clientLogger.animation('MessageBubble', 'Showing Access Granted');
           setShowAccessGranted(true);
           setTimeout(() => {
             setShowAccessGranted(false);
@@ -61,7 +62,7 @@ export default function MessageBubble({ onComplete }: MessageBubbleProps) {
               const element = document.querySelector('[data-testid="message-bubble"]');
               if (element) {
                 element.setAttribute('data-complete', 'true');
-                console.log('✅ MessageBubble sequence completed');
+                clientLogger.animation('MessageBubble', 'sequence completed');
               }
             }, 800); // Reduced from 1000ms to 800ms
           }

@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from 'react';
 // Note: Image import removed as it's not available in React components
-import avatarSrc from '../assets/images/avatar.webp';
+// Import avatar as a static asset for proper Vercel production loading
 import ElectricBorder from './ElectricBorder';
 import DecryptedText from './DecryptedText';
 import TextType from './TextType';
+import clientLogger from '../lib/logger-client';
 
 interface AboutHeroProps {
   quotes: string[];
@@ -37,7 +38,7 @@ export default function AboutHero({ quotes }: AboutHeroProps) {
 
   useEffect(() => {
     if (!heroCompleteDispatched && headlineComplete && subtitle1Complete && subtitle2Complete && textTypeStarted) {
-      console.log('✅ AboutHero fully completed — dispatching aboutHeroComplete');
+      clientLogger.animation('AboutHero', 'fully completed — dispatching aboutHeroComplete');
       const completeEvent = new CustomEvent('aboutHeroComplete', {
         detail: { timestamp: Date.now() }
       });
@@ -59,7 +60,7 @@ export default function AboutHero({ quotes }: AboutHeroProps) {
           style={{ borderRadius: '80%' }}
         >
           <img 
-            src={avatarSrc.src}
+            src="/images/avatar.webp"
             alt="Portrait of Vasileios Politeiadis"
             className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 mx-auto rounded-full object-cover"
             loading="eager"
@@ -83,7 +84,7 @@ export default function AboutHero({ quotes }: AboutHeroProps) {
               encryptedClassName="text-primary/40"
               animateOn="view"
               onComplete={() => {
-                console.log('🎯 About page headline decryption completed');
+                clientLogger.animation('AboutHero', 'headline decryption completed');
                 setHeadlineComplete(true);
               }}
             />
@@ -102,7 +103,7 @@ export default function AboutHero({ quotes }: AboutHeroProps) {
               encryptedClassName="text-digital-emerald/40"
               animateOn="view"
               onComplete={() => {
-                console.log('🎯 About page first subtitle text completed');
+                clientLogger.animation('AboutHero', 'first subtitle text completed');
                 setSubtitle1Complete(true);
               }}
             />
@@ -118,7 +119,7 @@ export default function AboutHero({ quotes }: AboutHeroProps) {
               className="text-digital-emerald text-center"
               encryptedClassName="text-digital-emerald/40"
               onComplete={() => {
-                console.log('🎯 About page both subtitle texts decryption completed');
+                clientLogger.animation('AboutHero', 'both subtitle texts decryption completed');
                 setSubtitle2Complete(true);
               }}
             />
@@ -142,7 +143,7 @@ export default function AboutHero({ quotes }: AboutHeroProps) {
               startOnVisible={false}
               onStart={handleTextTypeStart}
               onSentenceComplete={(_, index) => {
-                console.log(`✅ About page quote ${index + 1} completed`);
+                clientLogger.animation('AboutHero', `quote ${index + 1} completed`);
               }}
             />
           ) : (

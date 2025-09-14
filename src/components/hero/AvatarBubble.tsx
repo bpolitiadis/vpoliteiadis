@@ -1,5 +1,5 @@
 
-import OptimizedImage from '../OptimizedImage';
+import React from 'react';
 
 type AvatarBubbleProps = {
   alt?: string;
@@ -7,6 +7,18 @@ type AvatarBubbleProps = {
 };
 
 export default function AvatarBubble({ alt = 'Vasileios Politeiadis portrait', size = 80 }: AvatarBubbleProps) {
+  // 2025 Best Practice: Use direct path for static assets in production
+  // This ensures the image loads properly in Vercel production
+  const getOptimizedAvatarSrc = () => {
+    // For production, use the static asset path that Vercel serves
+    if (typeof window !== 'undefined' && import.meta.env.MODE === 'production') {
+      // Use the direct static asset path
+      return '/images/avatar.webp';
+    }
+    // For development, use the same path
+    return '/images/avatar.webp';
+  };
+
   return (
     <div
       data-testid="avatar-bubble"
@@ -21,19 +33,17 @@ export default function AvatarBubble({ alt = 'Vasileios Politeiadis portrait', s
         </div>
         
         <div className="relative rounded-full overflow-hidden w-full h-full">
-          <OptimizedImage
-            src="/images/avatar.webp"
+          <img
+            src={getOptimizedAvatarSrc()}
             width={size}
             height={size}
             alt={alt}
-            loading="lazy"
+            loading="eager"
+            fetchPriority="high"
             decoding="async"
             className="w-full h-full object-cover rounded-full transition-transform duration-300 hover:scale-105"
-            quality={90}
           />
         </div>
-        
-
       </div>
     </div>
   );

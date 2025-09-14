@@ -24,7 +24,10 @@ export default function LightboxGallery({ items, className }: LightboxGalleryPro
   );
 
   const openAt = useCallback((index: number) => {
-    console.log('Opening lightbox at index:', index);
+    // Opening lightbox at index (development only)
+    if (import.meta.env.MODE === 'development') {
+      console.log('Opening lightbox at index:', index);
+    }
     setCurrentIndex(index);
     setIsOpen(true);
   }, []);

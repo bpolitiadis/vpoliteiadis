@@ -28,7 +28,10 @@ class Analytics {
 
     // Log to console in development
     if (import.meta.env.DEV) {
-      console.log('Social click tracked:', event);
+      // Social click tracked (development only)
+      if (import.meta.env.MODE === 'development') {
+        console.log('Social click tracked:', event);
+      }
     }
 
     // Send to analytics service if configured

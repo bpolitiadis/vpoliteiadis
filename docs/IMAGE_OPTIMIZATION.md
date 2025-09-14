@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project now uses **Vercel's built-in Image Optimization API** for instant, on-demand image optimization. This approach eliminates build-time processing and provides superior performance.
+This project uses **direct static asset serving** for production reliability combined with **Vercel's Image Optimization API** for dynamic optimization when needed. This hybrid approach ensures maximum compatibility and performance.
 
 ## Why This Approach is Superior
 
@@ -12,11 +12,12 @@ This project now uses **Vercel's built-in Image Optimization API** for instant, 
 - **Cost**: Expensive build minutes
 - **Flexibility**: Fixed sizes/formats
 
-### ✅ New Approach (Vercel Image Optimization)
+### ✅ New Approach (Hybrid Static + Dynamic)
 - **Build time**: <2 minutes
 - **Storage**: Only source images
 - **Cost**: Free with Vercel
-- **Flexibility**: Dynamic optimization
+- **Flexibility**: Direct serving + dynamic optimization
+- **Reliability**: Works consistently across all environments
 
 ## Architecture
 
@@ -26,21 +27,55 @@ This project now uses **Vercel's built-in Image Optimization API** for instant, 
 src/assets/images/          # Source images (COMMITTED)
 ├── casa-capoeira-cover.png # High-quality source images
 ├── upiria-cover.png        # Original images in any format
+├── avatar.webp            # Optimized avatar image
 └── ...                     # All source images
 
-public/images/               # DEPRECATED - No longer used
+public/images/               # Static assets served by Vercel
+├── avatar.webp            # Production-ready avatar
+├── blog/                  # Blog images
+├── creative/              # Creative portfolio images
+└── projects/              # Project images
 ```
 
 ### How It Works
 
 1. **Source images** stored in `src/assets/images/`
-2. **Vercel Image API** optimizes on-demand
-3. **Automatic caching** on Vercel's edge network
-4. **Zero build-time processing**
+2. **Static assets** copied to `public/images/` during build
+3. **Direct serving** for critical images (avatar, logos)
+4. **Vercel Image API** available for dynamic optimization when needed
+5. **Automatic caching** on Vercel's edge network
 
 ## Usage Examples
 
-### 1. Basic Image Usage
+### 1. Critical Images (Avatar, Logos) - Direct Serving
+
+```tsx
+// React component - Direct static asset serving
+<img
+  src="/images/avatar.webp"
+  alt="Profile avatar"
+  width={256}
+  height={256}
+  loading="eager"
+  fetchPriority="high"
+  className="rounded-full"
+/>
+```
+
+```astro
+<!-- Astro component - Direct static asset serving -->
+<img
+  src="/images/avatar.webp"
+  alt="Profile avatar"
+  width={256}
+  height={256}
+  loading="eager"
+  fetchPriority="high"
+  class="rounded-full"
+/>
+```
+
+### 2. Dynamic Images - Vercel Image Optimization
 
 ```astro
 ---
@@ -48,19 +83,21 @@ import VercelImage from '../components/VercelImage.astro';
 ---
 
 <VercelImage
-  src="/src/assets/images/avatar.png"
-  alt="Profile avatar"
-  width={256}
-  height={256}
-  class="rounded-full"
+  src="/images/casa-capoeira-cover.png"
+  alt="Casa Capoeira project"
+  width={1200}
+  height={800}
+  sizes="(max-width: 768px) 100vw, 50vw"
+  loading="lazy"
+  class="rounded-lg shadow-lg"
 />
 ```
 
-### 2. Hero Image with Responsive Sizing
+### 3. Hero Images with High Priority
 
 ```astro
 <VercelImage
-  src="/src/assets/images/hero-background.png"
+  src="/images/hero-background.png"
   alt="Hero background"
   width={1200}
   height={800}
@@ -68,20 +105,6 @@ import VercelImage from '../components/VercelImage.astro';
   loading="eager"
   fetchpriority="high"
   class="w-full h-auto"
-/>
-```
-
-### 3. Content Image with Lazy Loading
-
-```astro
-<VercelImage
-  src="/src/assets/images/content-illustration.png"
-  alt="Content illustration"
-  width={800}
-  height={600}
-  sizes="(max-width: 768px) 100vw, 50vw"
-  loading="lazy"
-  class="rounded-lg shadow-lg"
 />
 ```
 
@@ -154,10 +177,13 @@ import VercelImage from '../components/VercelImage.astro';
 ### ✅ Do
 
 - Store source images in `src/assets/images/`
-- Use VercelImage component for all images
+- Use direct static asset serving for critical images (avatar, logos)
+- Use VercelImage component for dynamic content images
 - Specify appropriate width/height attributes
 - Use meaningful alt text
 - Implement responsive sizing with `sizes` attribute
+- Use `loading="eager"` and `fetchPriority="high"` for above-the-fold images
+- Use `loading="lazy"` for below-the-fold images
 
 ### ❌ Don't
 
@@ -166,6 +192,8 @@ import VercelImage from '../components/VercelImage.astro';
 - Use hardcoded image paths
 - Skip alt text for accessibility
 - Ignore responsive sizing
+- Use complex image optimization for simple static assets
+- Mix different image serving strategies inconsistently
 
 ## Monitoring and Maintenance
 
@@ -183,9 +211,10 @@ import VercelImage from '../components/VercelImage.astro';
 
 ### Common Issues
 
-1. **Images not loading**: Check source path in `src/assets/images/`
-2. **Build errors**: Verify VercelImage component usage
-3. **Performance issues**: Review image dimensions and sizing
+1. **Images not loading in production**: Use direct static asset paths (`/images/filename.webp`)
+2. **Build errors**: Verify image paths and component usage
+3. **Performance issues**: Review image dimensions and loading attributes
+4. **Console pollution**: Use client-side logger for development-only logging
 
 ### Debug Commands
 
@@ -198,6 +227,43 @@ find src/assets/images -name "*.png" -o -name "*.webp" -o -name "*.jpg"
 
 # Check Vercel deployment
 vercel --prod
+
+# Test image loading
+curl -I https://your-domain.com/images/avatar.webp
+```
+
+## Console Logging Best Practices
+
+### Production-Safe Logging
+
+Use the client-side logger for development-only console output:
+
+```tsx
+import clientLogger from '../lib/logger-client';
+
+// Development-only logging
+clientLogger.animation('ComponentName', 'action completed');
+clientLogger.debug('Debug information', { context: 'value' });
+clientLogger.info('Info message');
+clientLogger.warn('Warning message');
+clientLogger.error('Error message'); // Always logged, even in production
+```
+
+### ❌ Avoid in Production
+
+```tsx
+// Don't use direct console.log in components
+console.log('Debug info'); // Visible in production
+console.warn('Warning'); // Visible in production
+```
+
+### ✅ Use Instead
+
+```tsx
+// Use client logger for production-safe logging
+clientLogger.debug('Debug info'); // Hidden in production
+clientLogger.warn('Warning'); // Hidden in production
+clientLogger.error('Error'); // Always visible (for debugging)
 ```
 
 ## Future Considerations

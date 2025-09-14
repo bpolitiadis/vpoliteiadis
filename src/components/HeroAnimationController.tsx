@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import DecryptedText from './DecryptedText';
 import TextType from './TextType';
+import clientLogger from '../lib/logger-client';
 
 interface HeroAnimationControllerProps {
   quotes: string[];
@@ -35,7 +36,7 @@ export default function HeroAnimationController({ quotes }: HeroAnimationControl
             encryptedClassName="text-primary/40"
             animateOn="view"
             onComplete={() => {
-              console.log('🎯 Main headline decryption completed');
+              clientLogger.animation('HeroAnimation', 'Main headline decryption completed');
               setHeadlineComplete(true);
             }}
           />
@@ -54,7 +55,7 @@ export default function HeroAnimationController({ quotes }: HeroAnimationControl
             encryptedClassName="text-digital-emerald/40"
             animateOn="view"
             onComplete={() => {
-              console.log('🎯 First subtitle text completed');
+              clientLogger.animation('HeroAnimation', 'First subtitle text completed');
             }}
           />
           <span className="hidden sm:inline text-digital-emerald">·</span>
@@ -69,7 +70,7 @@ export default function HeroAnimationController({ quotes }: HeroAnimationControl
             className="text-digital-emerald text-center"
             encryptedClassName="text-digital-emerald/40"
             onComplete={() => {
-              console.log('🎯 Both subtitle texts decryption completed');
+              clientLogger.animation('HeroAnimation', 'Both subtitle texts decryption completed');
             }}
           />
         </div>
@@ -98,7 +99,7 @@ export default function HeroAnimationController({ quotes }: HeroAnimationControl
                   if (cta) {
                     cta.style.opacity = '1';
                     cta.style.transform = 'translateY(0)';
-                    console.log('✅ CTA buttons revealed after first quote');
+                    clientLogger.animation('HeroAnimation', 'CTA buttons revealed after first quote');
                   }
                 }, 1000);
               }
