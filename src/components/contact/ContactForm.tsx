@@ -71,7 +71,7 @@ export default function ContactForm() {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <Form form={form} onSubmit={onSubmit} className="space-y-6" >
+        <Form form={form} onSubmit={onSubmit} className="space-y-6" data-testid="contact-form" >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <FormItem>
               <FormLabel htmlFor="firstName">First Name <span className="text-neon-lime" aria-label="required">*</span></FormLabel>
@@ -86,6 +86,7 @@ export default function ContactForm() {
                   aria-describedby="firstName-error"
                   aria-invalid={!!form.formState.errors.firstName}
                   disabled={form.formState.isSubmitting}
+                  data-testid="first-name-input"
                   {...form.register('firstName')}
                 />
               </FormControl>
@@ -105,6 +106,7 @@ export default function ContactForm() {
                   aria-describedby="lastName-error"
                   aria-invalid={!!form.formState.errors.lastName}
                   disabled={form.formState.isSubmitting}
+                  data-testid="last-name-input"
                   {...form.register('lastName')}
                 />
               </FormControl>
@@ -125,6 +127,7 @@ export default function ContactForm() {
                 aria-describedby="email-error"
                 aria-invalid={!!form.formState.errors.email}
                 disabled={form.formState.isSubmitting}
+                data-testid="email-input"
                 {...form.register('email')}
               />
             </FormControl>
@@ -144,6 +147,7 @@ export default function ContactForm() {
                 aria-invalid={!!form.formState.errors.message}
                 className="resize-none min-h-[180px]"
                 disabled={form.formState.isSubmitting}
+                data-testid="message-textarea"
                 {...form.register('message')}
               />
             </FormControl>
@@ -151,12 +155,12 @@ export default function ContactForm() {
           </FormItem>
 
           {/* Hidden honeypot field */}
-          <input type="hidden" aria-hidden="true" tabIndex={-1} {...form.register('honeypot')} />
+          <input type="hidden" aria-hidden="true" tabIndex={-1} data-testid="honeypot-input" {...form.register('honeypot')} />
 
           {/* Success/Error messages - keep exact copy */}
           <div role="alert" aria-live="polite" className="mt-2">
             {status === 'success' && (
-              <div className="text-digital-emerald bg-digital-emerald/10 border border-digital-emerald/20 p-4 rounded-lg">
+              <div className="text-digital-emerald bg-digital-emerald/10 border border-digital-emerald/20 p-4 rounded-lg" data-testid="form-success">
                 <div className="flex items-center space-x-2">
                   <span className="text-xl" role="img" aria-label="Success">✅</span>
                   <span>Message sent successfully! I'll get back to you within 24-48 hours.</span>
@@ -164,7 +168,7 @@ export default function ContactForm() {
               </div>
             )}
             {status === 'error' && (
-              <div className="text-destructive bg-destructive/10 border border-destructive/25 p-4 rounded-lg">
+              <div className="text-destructive bg-destructive/10 border border-destructive/25 p-4 rounded-lg" data-testid="form-error">
                 <div className="flex items-center space-x-2">
                   <span className="text-xl" role="img" aria-label="Error">❌</span>
                   <span>There was an error sending your message. Please try again or contact me directly.</span>
@@ -179,6 +183,7 @@ export default function ContactForm() {
             aria-label="Send message"
             aria-busy={form.formState.isSubmitting}
             disabled={form.formState.isSubmitting}
+            data-testid="submit-button"
           >
             <span className="relative z-10">🚀 Send Message</span>
             <div className="absolute inset-0 bg-gradient-to-r from-neon-lime to-digital-emerald opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true"></div>

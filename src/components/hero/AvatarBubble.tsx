@@ -1,4 +1,7 @@
 
+import { Image } from 'astro:assets';
+import avatarImage from '../../assets/images/avatar.webp';
+
 type AvatarBubbleProps = {
   alt?: string;
   size?: number; // pixels
@@ -19,14 +22,16 @@ export default function AvatarBubble({ alt = 'Vasileios Politeiadis portrait', s
         </div>
         
         <div className="relative rounded-full overflow-hidden w-full h-full">
-          <img
-            src="/images/avatar.webp"
+          <Image
+            src={avatarImage}
             width={size}
             height={size}
             alt={alt}
             loading="lazy"
             decoding="async"
-            className="w-full h-full object-cover rounded-full transition-transform duration-300 hover:scale-105"
+            class="w-full h-full object-cover rounded-full transition-transform duration-300 hover:scale-105"
+            format="webp"
+            quality={90}
           />
         </div>
         
