@@ -203,9 +203,8 @@ const finalStructuredData = structuredData ? { ...baseStructuredData, ...structu
     {updatedAt && <meta property="article:modified_time" content={updatedAt} />}
     {author && <meta property="article:author" content={author} />}
     
-    <!-- Security headers -->
+    <!-- Security headers (HTTP headers are set in vercel.json and middleware.ts) -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <meta http-equiv="X-Frame-Options" content="DENY" />
     <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
     

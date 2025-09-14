@@ -148,8 +148,8 @@ export const onRequest: MiddlewareHandler = async (context, next) => {
     "form-action 'self'",
     // Disallow Flash/Plugins
     "object-src 'none'",
-    // Allow only known embeds (Spotify player)
-    "frame-src https://open.spotify.com",
+    // Allow only known embeds (Spotify player and Vercel Live)
+    "frame-src https://open.spotify.com https://vercel.live",
     // Enforce HTTPS for subresources
     'upgrade-insecure-requests',
   ];
