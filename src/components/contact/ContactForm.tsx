@@ -59,7 +59,7 @@ export default function ContactForm() {
       // No client logs per requirements
       setStatus('error');
     }
-  });
+  };
 
   return (
     <Card className="border border-primary/30 bg-card/40 backdrop-blur-sm animate-fade-in">

@@ -1,8 +1,8 @@
-import { chromium, FullConfig } from '@playwright/test';
+import { type FullConfig } from '@playwright/test';
 import { config as loadDotenv } from 'dotenv';
 import { resolve } from 'path';
 
-async function globalSetup(config: FullConfig) {
+async function globalSetup(_config: FullConfig) {
   // Load environment variables from .env file
   const envPath = resolve(process.cwd(), '.env');
   loadDotenv({ path: envPath });

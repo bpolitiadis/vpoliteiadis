@@ -16,7 +16,6 @@ const contactFormSchema = z.object({
   honeypot: z.string().optional(),
 });
 
-type ContactFormData = z.infer<typeof contactFormSchema>;
 
 // Rate limiting store (in production, use Redis or similar)
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
