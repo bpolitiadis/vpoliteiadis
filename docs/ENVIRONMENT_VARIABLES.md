@@ -60,6 +60,30 @@ REDACTION_EXTRA_KEYS=custom_token,api_secret
 | `VERCEL_DEPLOYMENT_URL` | No | ✅ | Current deployment URL |
 | `VERCEL_URL` | No | ✅ | Public URL of the deployment |
 
+### 📧 **Email Service (Resend)**
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `RESEND_API_KEY` | Yes | - | Resend API key for sending emails |
+| `FROM_EMAIL` | Yes | - | Sender email address (must be verified in Resend) |
+| `CONTACT_EMAIL` | No | `FROM_EMAIL` | Email address to receive contact form submissions |
+| `REPLY_TO_EMAIL` | No | Form submitter's email | Reply-to address for contact form emails |
+| `SEND_CONFIRMATION_EMAIL` | No | `false` | Whether to send confirmation email to form submitter |
+| `RESEND_DEBUG` | No | `false` | Enable debug logging for email operations |
+
+**Example:**
+```bash
+# Required for email functionality
+RESEND_API_KEY=re_1234567890abcdef
+FROM_EMAIL=noreply@yourdomain.com
+CONTACT_EMAIL=contact@yourdomain.com
+
+# Optional configuration
+REPLY_TO_EMAIL=contact@yourdomain.com
+SEND_CONFIRMATION_EMAIL=true
+RESEND_DEBUG=true
+```
+
 ### 🏗️ **Custom Build & Deployment**
 
 | Variable | Required | Default | Description |
@@ -125,6 +149,11 @@ SENTRY_TRACES_SAMPLE_RATE=0.1
 # Client-side error tracking
 PUBLIC_SENTRY_DSN=https://your-prod-client-dsn@sentry.io/project
 
+# Email service (required for contact form)
+RESEND_API_KEY=re_1234567890abcdef
+FROM_EMAIL=noreply@yourdomain.com
+CONTACT_EMAIL=contact@yourdomain.com
+
 # Custom redaction (if needed)
 REDACTION_EXTRA_KEYS=internal_token,session_key
 ```
@@ -139,6 +168,11 @@ SENTRY_TRACES_SAMPLE_RATE=0.5
 
 # Higher sampling for staging
 PUBLIC_SENTRY_DSN=https://your-staging-client-dsn@sentry.io/project
+
+# Email service (use staging/test credentials)
+RESEND_API_KEY=re_staging_key_here
+FROM_EMAIL=test@yourdomain.com
+CONTACT_EMAIL=staging@yourdomain.com
 ```
 
 ## 📖 **Variable Usage in Code**

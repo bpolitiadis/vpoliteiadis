@@ -4,8 +4,14 @@ import { z } from 'zod';
 import { loggedOperation } from '../../lib/http-utils.js';
 import { createContactFormEmail, createConfirmationEmail } from '../../lib/email-templates.js';
 
-// Initialize Resend
-const resend = new Resend(import.meta.env.RESEND_API_KEY);
+// Lazy initialization of Resend to avoid build-time errors
+function getResend() {
+  const apiKey = import.meta.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error('RESEND_API_KEY environment variable is not set');
+  }
+  return new Resend(apiKey);
+}
 
 // Contact form validation schema
 const contactFormSchema = z.object({
@@ -127,6 +133,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const emailResult = await loggedOperation(
       'send-contact-emails',
       async () => {
+        const resend = getResend();
         const toEmail = import.meta.env.CONTACT_EMAIL || import.meta.env.FROM_EMAIL;
         const replyTo = import.meta.env.REPLY_TO_EMAIL || formData.email;
         
