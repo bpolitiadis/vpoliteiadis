@@ -69,6 +69,7 @@ export default function NavigationButtons({ onNavigate }: NavigationButtonsProps
             transitionDelay: `${index * 100}ms`,
           }}
           aria-label={`Navigate to ${item.label}`}
+          data-testid={`nav-button-${item.label.toLowerCase()}`}
         >
           <span className="relative z-10 text-[#E8FFE8] font-orbitron font-bold group-hover:text-white transition-colors duration-300">
             {item.label}

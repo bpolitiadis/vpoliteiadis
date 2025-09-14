@@ -28,6 +28,7 @@ import { Badge } from './ui/badge';
 <Card 
   className="group relative glass-card glass-card-accent rounded-xl overflow-hidden backdrop-blur-md transition-all duration-300 hover:shadow-neon-lg hover:border-primary/60 reveal border-primary/20 flex flex-col h-full project-card"
   style={{ transitionDelay: `${index * 80}ms` }}
+  data-testid={`project-card-${project.slug}`}
 >
   <!-- Project Cover - Proper Aspect Ratio Container -->
   <div class="relative w-full aspect-video overflow-hidden bg-gradient-to-br from-cyber-gray to-dark-slate">
@@ -134,6 +135,7 @@ import { Badge } from './ui/badge';
         href={`/projects/${project.slug}`}
         aria-label={`Read case study: ${project.data.title}`}
         class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium rounded-lg border-2 border-primary/60 text-primary hover:bg-primary/20 hover:border-primary/80 transition-all duration-300 group min-h-[44px]"
+        data-testid={`project-card-learn-more-${project.slug}`}
       >
         <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -147,6 +149,7 @@ import { Badge } from './ui/badge';
           href={project.data.liveUrl}
           aria-label={`Visit live project: ${project.data.title}`}
           class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium rounded-lg bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:from-primary/90 hover:to-secondary/90 shadow-neon transition-all duration-300 group min-h-[44px]"
+          data-testid={`project-card-view-live-${project.slug}`}
         >
           <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />

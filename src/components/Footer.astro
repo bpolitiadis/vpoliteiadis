@@ -8,7 +8,7 @@ const socialProfiles = getAllSocialProfiles();
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="mt-auto">
+<footer class="mt-auto" data-testid="footer">
   <!-- Tiny glow divider above footer -->
   <div class="h-px w-full bg-gradient-to-r from-transparent via-neon-lime/40 to-transparent opacity-60"></div>
 
@@ -16,7 +16,7 @@ const currentYear = new Date().getFullYear();
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col sm:flex-row justify-between items-center gap-3 py-3 min-h-[50px]">
         <!-- Left: VP monogram logo with subtle glow -->
-        <a href="/" class="flex items-center gap-2 group" aria-label="Go to homepage">
+        <a href="/" class="flex items-center gap-2 group" aria-label="Go to homepage" data-testid="footer-logo">
           <div class="relative">
             <Image
               src={vpLogo}
@@ -32,12 +32,12 @@ const currentYear = new Date().getFullYear();
         </a>
 
         <!-- Center: copyright text -->
-        <div class="flex items-center text-xs text-matrix-white/60 text-center">
+        <div class="flex items-center text-xs text-matrix-white/60 text-center" data-testid="footer-copyright">
           <span>&copy; {currentYear} Vasileios Politeiadis</span>
         </div>
 
         <!-- Right: social icons with minimal styling -->
-        <nav class="flex items-center gap-2" aria-label="Social links">
+        <nav class="flex items-center gap-2" aria-label="Social links" data-testid="footer-social-links">
           {socialProfiles.map((profile) => (
             <SocialLink profile={profile} size="sm" />
           ))}

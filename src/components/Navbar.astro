@@ -21,13 +21,13 @@ const navItems = [
 ];
 ---
 
-<nav class="navbar-compact sticky top-0 z-50 w-full bg-matrix-black/80 backdrop-blur-sm border-b border-neon-lime/10 transition-all duration-200" role="navigation" aria-label="Main navigation">
+<nav class="navbar-compact sticky top-0 z-50 w-full bg-matrix-black/80 backdrop-blur-sm border-b border-neon-lime/10 transition-all duration-200" role="navigation" aria-label="Main navigation" data-testid="navbar">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-14 md:h-16">
       
       <!-- Left: VP logo with subtle glow -->
       <div class="flex-shrink-0">
-        <a href="/" class="flex items-center space-x-3 group" aria-label="Vasileios Politeiadis - Home">
+        <a href="/" class="flex items-center space-x-3 group" aria-label="Vasileios Politeiadis - Home" data-testid="navbar-logo">
           <div class="logo-container relative">
             <Image 
               src={vpLogo}
@@ -50,7 +50,7 @@ const navItems = [
       </div>
 
       <!-- Desktop Navigation: Horizontal with compact spacing -->
-      <div class="hidden md:block">
+      <div class="hidden md:block" data-testid="navbar-desktop-menu">
         <div class="flex items-center space-x-2 lg:space-x-3" role="menubar">
           {navItems.map((item) => (
             <a
@@ -63,6 +63,7 @@ const navItems = [
               role="menuitem"
               aria-current={currentPath === item.href ? 'page' : undefined}
               aria-label={`${item.label}${currentPath === item.href ? ' (current page)' : ''}`}
+              data-testid={`navbar-link-${item.label.toLowerCase()}`}
             >
               {item.label}
               {/* Active page neon underline */}
@@ -86,6 +87,7 @@ const navItems = [
           aria-expanded="false"
           aria-controls="mobile-menu"
           aria-haspopup="menu"
+          data-testid="mobile-menu-button"
         >
           <!-- Hamburger icon -->
           <Icon name="Menu" size="sm" className="text-current icon-menu" aria-hidden="true" />
@@ -96,7 +98,7 @@ const navItems = [
     </div>
 
     <!-- Mobile Navigation Menu: Full-height drawer with grid glow -->
-    <div id="mobile-menu" class="mobile-menu hidden md:hidden fixed top-0 left-0 right-0 bottom-0 bg-matrix-black/95 backdrop-blur-md z-50" role="menu" aria-labelledby="mobile-menu-button">
+    <div id="mobile-menu" class="mobile-menu hidden md:hidden fixed top-0 left-0 right-0 bottom-0 bg-matrix-black/95 backdrop-blur-md z-50" role="menu" aria-labelledby="mobile-menu-button" data-testid="mobile-menu">
       <div class="flex flex-col h-full">
         <!-- Mobile menu header -->
         <div class="flex justify-between items-center p-4 border-b border-neon-lime/10">
@@ -105,13 +107,14 @@ const navItems = [
             id="mobile-close-button"
             class="p-2 text-neon-lime hover:text-neon-lime/80 transition-colors duration-200"
             aria-label="Close menu"
+            data-testid="mobile-menu-close"
           >
             <Icon name="X" size="md" className="text-current" aria-hidden="true" />
           </button>
         </div>
         
         <!-- Mobile navigation links -->
-        <div class="flex-1 px-4 py-6 space-y-2">
+        <div class="flex-1 px-4 py-6 space-y-2" data-testid="mobile-nav-links">
           {navItems.map((item) => (
             <a
               href={item.href}
@@ -124,6 +127,7 @@ const navItems = [
               aria-current={currentPath === item.href ? 'page' : undefined}
               tabindex="0"
               aria-label={`${item.label}${currentPath === item.href ? ' (current page)' : ''}`}
+              data-testid={`mobile-nav-link-${item.label.toLowerCase()}`}
             >
               {item.label}
             </a>

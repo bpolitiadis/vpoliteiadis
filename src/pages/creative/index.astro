@@ -68,7 +68,7 @@ const projects: Array<{
   bgSlug="creative-bg"
   bgEager={true}
 >
-  <section class="min-h-screen text-matrix-white">
+  <section class="min-h-screen text-matrix-white" data-testid="page-creative">
     <PageHero 
       title="Creative Lab"
       description="Exploring the intersection of AI, art, and technology through experimental digital creations, AI-generated imagery, and creative coding projects."
@@ -81,7 +81,7 @@ const projects: Array<{
           <h2 class="text-primary drop-shadow-neon text-xl md:text-2xl mb-6 uppercase tracking-widest text-center">
             Featured Works
           </h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch" data-testid="creative-projects-grid">
             {projects.map((p) => (
               <FeaturedProjectCard
                 client:visible

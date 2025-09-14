@@ -26,7 +26,7 @@ const description =
   bgSlug="blog-bg"
   bgEager={true}
 >
-  <div class="relative content-visibility-auto">
+  <div class="relative content-visibility-auto" data-testid="page-blog">
     <PageHero 
       title="Blog"
       description="Insights on technology, creativity, and the intersection of human and artificial intelligence."
@@ -45,12 +45,13 @@ const description =
            <h2 class="text-2xl font-orbitron font-bold text-secondary mb-8">
           📝 All Posts
         </h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="posts-grid">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="posts-grid" data-testid="blog-posts-grid">
           {posts.map(post => (
             <article class="card group hover:scale-[1.02] transition-transform duration-300 bg-card/80 backdrop-blur-md"
               data-title={post.data.title}
               data-excerpt={post.data.excerpt || post.data.description}
               data-tags={post.data.tags.join(',')}
+              data-testid={`blog-post-${post.slug}`}
             >
               {post.data.coverImage && (
                  <div class="mb-4">
@@ -87,7 +88,7 @@ const description =
                     <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded">{tag}</span>
                   ))}
                 </div>
-                <a href={`/blog/${post.slug}`} class="text-primary hover:text-glow transition-all duration-300">
+                <a href={`/blog/${post.slug}`} class="text-primary hover:text-glow transition-all duration-300" data-testid={`blog-post-link-${post.slug}`}>
                   Read More →
                 </a>
               </div>
@@ -108,7 +109,7 @@ const description =
       </div>
 
       <!-- Newsletter Signup -->
-      <div class="card">
+      <div class="card" data-testid="newsletter-signup">
         <div class="text-center">
           <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-4">
             📧 Stay Updated
@@ -123,8 +124,9 @@ const description =
               placeholder="Enter your email" 
               class="flex-1 px-4 py-3 bg-cyber-gray border border-neon-lime/20 rounded-lg text-matrix-white placeholder-matrix-white/50 focus:border-neon-lime/50 focus:outline-none"
               aria-label="Email address for newsletter subscription"
+              data-testid="newsletter-email-input"
             >
-            <button class="btn-primary whitespace-nowrap">
+            <button class="btn-primary whitespace-nowrap" data-testid="newsletter-subscribe-button">
               Subscribe
             </button>
           </div>

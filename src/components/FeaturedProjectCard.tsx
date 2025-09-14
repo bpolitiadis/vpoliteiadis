@@ -32,9 +32,10 @@ export default function FeaturedProjectCard({
       className="relative h-full flex flex-col rounded-2xl border border-border/40 bg-[rgba(10,10,10,0.6)] shadow-inner
                  backdrop-blur-md transition-transform duration-300 hover:border-primary hover:shadow-neon hover:scale-[1.02]
                  cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+      data-testid={`featured-project-card-${title.toLowerCase().replace(/\s+/g, '-')}`}
     >
       {/* Hero */}
-      <a href={detailUrl} className="relative overflow-hidden rounded-t-2xl aspect-video bg-dark-slate/60 block" aria-label={`Open ${title} details`}>
+      <a href={detailUrl} className="relative overflow-hidden rounded-t-2xl aspect-video bg-dark-slate/60 block" aria-label={`Open ${title} details`} data-testid={`featured-project-hero-${title.toLowerCase().replace(/\s+/g, '-')}`}>
         <OptimizedImage
           src={hero}
           alt={title}
@@ -106,6 +107,7 @@ export default function FeaturedProjectCard({
                        focus-visible:outline-2 focus-visible:outline-primary gap-2"
             onClick={(e) => e.stopPropagation()}
             aria-label={cta.label}
+            data-testid={`featured-project-cta-${title.toLowerCase().replace(/\s+/g, '-')}`}
           >
             {cta.label}
             <svg
