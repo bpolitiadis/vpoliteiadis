@@ -8,6 +8,7 @@ interface FormProps<TFieldValues extends FieldValues = FieldValues> {
   className?: string;
   onSubmit: (values: TFieldValues) => void | Promise<void>;
   children: React.ReactNode;
+  'data-testid'?: string;
 }
 
 export function Form<TFieldValues extends FieldValues = FieldValues>({
@@ -15,9 +16,10 @@ export function Form<TFieldValues extends FieldValues = FieldValues>({
   className = "",
   onSubmit,
   children,
+  'data-testid': dataTestId,
 }: FormProps<TFieldValues>) {
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className={className} noValidate>
+    <form onSubmit={form.handleSubmit(onSubmit)} className={className} noValidate data-testid={dataTestId}>
       {children}
     </form>
   );

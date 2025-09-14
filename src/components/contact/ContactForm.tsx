@@ -28,7 +28,7 @@ export default function ContactForm() {
     mode: 'onBlur',
   });
 
-  async function onSubmit(values: FormValues) {
+  const onSubmit = async (values: FormValues) => {
     // Honeypot: silently ignore
     if (values.honeypot && values.honeypot.trim().length > 0) {
       setStatus('success');
@@ -59,7 +59,7 @@ export default function ContactForm() {
       // No client logs per requirements
       setStatus('error');
     }
-  }
+  });
 
   return (
     <Card className="border border-primary/30 bg-card/40 backdrop-blur-sm animate-fade-in">
@@ -71,7 +71,7 @@ export default function ContactForm() {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <Form form={form} onSubmit={onSubmit} className="space-y-6" data-testid="contact-form" >
+        <Form form={form} onSubmit={onSubmit} className="space-y-6" data-testid="contact-form">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <FormItem>
               <FormLabel htmlFor="firstName">First Name <span className="text-neon-lime" aria-label="required">*</span></FormLabel>
@@ -90,7 +90,7 @@ export default function ContactForm() {
                   {...form.register('firstName')}
                 />
               </FormControl>
-              <FormMessage id="firstName-error">{form.formState.errors.firstName?.message}</FormMessage>
+              <FormMessage id="firstName-error" data-testid="form-field-first-name-error">{form.formState.errors.firstName?.message}</FormMessage>
             </FormItem>
 
             <FormItem>
@@ -110,7 +110,7 @@ export default function ContactForm() {
                   {...form.register('lastName')}
                 />
               </FormControl>
-              <FormMessage id="lastName-error">{form.formState.errors.lastName?.message}</FormMessage>
+              <FormMessage id="lastName-error" data-testid="form-field-last-name-error">{form.formState.errors.lastName?.message}</FormMessage>
             </FormItem>
           </div>
 
@@ -131,7 +131,7 @@ export default function ContactForm() {
                 {...form.register('email')}
               />
             </FormControl>
-            <FormMessage id="email-error">{form.formState.errors.email?.message}</FormMessage>
+            <FormMessage id="email-error" data-testid="form-field-email-error">{form.formState.errors.email?.message}</FormMessage>
           </FormItem>
 
           <FormItem>
@@ -151,7 +151,7 @@ export default function ContactForm() {
                 {...form.register('message')}
               />
             </FormControl>
-            <FormMessage id="message-error">{form.formState.errors.message?.message}</FormMessage>
+            <FormMessage id="message-error" data-testid="form-field-message-error">{form.formState.errors.message?.message}</FormMessage>
           </FormItem>
 
           {/* Hidden honeypot field */}
@@ -160,7 +160,7 @@ export default function ContactForm() {
           {/* Success/Error messages - keep exact copy */}
           <div role="alert" aria-live="polite" className="mt-2">
             {status === 'success' && (
-              <div className="text-digital-emerald bg-digital-emerald/10 border border-digital-emerald/20 p-4 rounded-lg" data-testid="form-success">
+              <div className="text-digital-emerald bg-digital-emerald/10 border border-digital-emerald/20 p-4 rounded-lg" data-testid="contact-success">
                 <div className="flex items-center space-x-2">
                   <span className="text-xl" role="img" aria-label="Success">✅</span>
                   <span>Message sent successfully! I'll get back to you within 24-48 hours.</span>
@@ -168,7 +168,7 @@ export default function ContactForm() {
               </div>
             )}
             {status === 'error' && (
-              <div className="text-destructive bg-destructive/10 border border-destructive/25 p-4 rounded-lg" data-testid="form-error">
+              <div className="text-destructive bg-destructive/10 border border-destructive/25 p-4 rounded-lg" data-testid="contact-error">
                 <div className="flex items-center space-x-2">
                   <span className="text-xl" role="img" aria-label="Error">❌</span>
                   <span>There was an error sending your message. Please try again or contact me directly.</span>
@@ -183,7 +183,7 @@ export default function ContactForm() {
             aria-label="Send message"
             aria-busy={form.formState.isSubmitting}
             disabled={form.formState.isSubmitting}
-            data-testid="submit-button"
+            data-testid="contact-submit"
           >
             <span className="relative z-10">🚀 Send Message</span>
             <div className="absolute inset-0 bg-gradient-to-r from-neon-lime to-digital-emerald opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true"></div>
