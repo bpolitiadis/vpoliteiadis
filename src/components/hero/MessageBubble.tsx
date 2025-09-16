@@ -12,6 +12,9 @@ export default function MessageBubble({ onComplete }: MessageBubbleProps) {
   const [currentStep, setCurrentStep] = useState(1);
   const [displayText, setDisplayText] = useState('');
   const [showAccessGranted, setShowAccessGranted] = useState(false);
+  const [accessGrantedComplete, setAccessGrantedComplete] = useState(false);
+  const [accessGrantedText, setAccessGrantedText] = useState('');
+  const [isDeletingAccessGranted, setIsDeletingAccessGranted] = useState(false);
   
   const messages = [
     'Access granted.',
@@ -24,8 +27,58 @@ export default function MessageBubble({ onComplete }: MessageBubbleProps) {
 
   clientLogger.animation('MessageBubble', `rendered, currentStep: ${currentStep}, displayText: ${displayText}`);
 
-  // Typing animation for each step
+  // Custom typewriter effect for Access Granted
   useEffect(() => {
+    if (currentStep !== 1 || !showAccessGranted) return;
+
+    const accessGrantedMessage = 'Access granted.';
+    let index = 0;
+    let isDeleting = false;
+
+    // Add initial delay before starting the typewriter effect
+    const startDelay = setTimeout(() => {
+      const typeTimer = setInterval(() => {
+        if (!isDeleting) {
+          // Typing phase
+          if (index < accessGrantedMessage.length) {
+            setAccessGrantedText(accessGrantedMessage.slice(0, index + 1));
+            index++;
+          } else {
+            // Finished typing, wait then start deleting
+            setTimeout(() => {
+              setIsDeletingAccessGranted(true);
+              isDeleting = true;
+              index = accessGrantedMessage.length - 1;
+            }, 1200); // Pause before deletion
+          }
+        } else {
+          // Deleting phase
+          if (index >= 0) {
+            setAccessGrantedText(accessGrantedMessage.slice(0, index));
+            index--;
+          } else {
+            // Finished deleting
+            clearInterval(typeTimer as any);
+            setAccessGrantedComplete(true);
+            setTimeout(() => {
+              setCurrentStep(2);
+            }, 500);
+          }
+        }
+      }, isDeleting ? 30 : 50); // Faster deletion than typing
+
+      return () => clearInterval(typeTimer as any);
+    }, 800); // Initial delay of 800ms
+
+    return () => {
+      clearTimeout(startDelay);
+    };
+  }, [currentStep, showAccessGranted]);
+
+  // Typing animation for each step (starting from step 2)
+  useEffect(() => {
+    if (currentStep === 1) return; // Skip for Access Granted (handled by TextType)
+    
     clientLogger.animation('MessageBubble', `useEffect triggered, currentStep: ${currentStep}`);
     const message = messages[currentStep - 1];
     let index = 0;
@@ -40,38 +93,35 @@ export default function MessageBubble({ onComplete }: MessageBubbleProps) {
       } else {
         clearInterval(typeTimer as any);
         
-        // Special handling for "Access granted" - show then hide
-        if (currentStep === 1) {
-          clientLogger.animation('MessageBubble', 'Showing Access Granted');
-          setShowAccessGranted(true);
+        // Move to next step after a delay
+        if (currentStep < messages.length) {
           setTimeout(() => {
-            setShowAccessGranted(false);
-            setCurrentStep(2); // Move to next message
-          }, 1500); // Reduced from 2000ms to 1500ms
+            setCurrentStep(prev => prev + 1);
+          }, 800);
         } else {
-          // Move to next step after a delay
-          if (currentStep < messages.length) {
-            setTimeout(() => {
-              setCurrentStep(prev => prev + 1);
-            }, 800); // Reduced from 1000ms to 800ms
-          } else {
-            // All messages complete, trigger navigation buttons
-            setTimeout(() => {
-              onComplete?.();
-              // Also set data attribute for Astro script to detect
-              const element = document.querySelector('[data-testid="message-bubble"]');
-              if (element) {
-                element.setAttribute('data-complete', 'true');
-                clientLogger.animation('MessageBubble', 'sequence completed');
-              }
-            }, 800); // Reduced from 1000ms to 800ms
-          }
+          // All messages complete, trigger navigation buttons
+          setTimeout(() => {
+            onComplete?.();
+            // Also set data attribute for Astro script to detect
+            const element = document.querySelector('[data-testid="message-bubble"]');
+            if (element) {
+              element.setAttribute('data-complete', 'true');
+              clientLogger.animation('MessageBubble', 'sequence completed');
+            }
+          }, 800);
         }
       }
-    }, 30); // Slightly faster typing speed
+    }, 30);
 
     return () => clearInterval(typeTimer as any);
   }, [currentStep, onComplete]);
+
+  // Show Access Granted typewriter effect on component mount
+  useEffect(() => {
+    if (currentStep === 1) {
+      setShowAccessGranted(true);
+    }
+  }, [currentStep]);
 
   return (
     <div
@@ -82,23 +132,15 @@ export default function MessageBubble({ onComplete }: MessageBubbleProps) {
       aria-label="Welcome message"
     >
       {/* Main chat bubble with thin border and glassmorphism */}
-      <div className="relative rounded-tl-none rounded-tr-[22px] rounded-br-[22px] rounded-bl-[22px] bg-black/30 backdrop-blur-lg border border-[#39FF14]/60 chat-bubble-glitch animate-reveal-up">
+      <div className="relative rounded-tl-none rounded-tr-[22px] rounded-br-[22px] rounded-bl-[22px] bg-black/30 backdrop-blur-lg border border-[#39FF14]/60 chat-bubble-glitch">
         <div className="p-6 md:p-8">
           <div className="space-y-3">
-            {/* Show "Access granted" with typewriter animation */}
-            {showAccessGranted && (
-              <TextType
-                text="Access granted."
-                className="text-[#39FF14] font-orbitron text-lg font-bold text-shadow-neon"
-                typingSpeed={35}
-                pauseDuration={1000}
-                deletingSpeed={25}
-                loop={false}
-                showCursor={true}
-                cursorCharacter="|"
-                cursorClassName="text-[#39FF14]"
-                cursorBlinkDuration={0.8}
-              />
+            {/* Show "Access granted" with custom typewriter animation */}
+            {showAccessGranted && !accessGrantedComplete && (
+              <p className="text-[#39FF14] font-orbitron text-lg font-bold text-shadow-neon">
+                {accessGrantedText}
+                <span className="ml-1 animate-pulse">|</span>
+              </p>
             )}
             
             {/* Show main messages as they appear */}
@@ -109,19 +151,19 @@ export default function MessageBubble({ onComplete }: MessageBubbleProps) {
             )}
             
             {currentStep >= 3 && (
-              <p className="text-[#E8FFE8] text-base leading-relaxed">
+              <p className="text-[#B5B5B5] font-inter text-base leading-relaxed">
                 {currentStep === 3 ? displayText : messages[2]}
               </p>
             )}
             
             {currentStep >= 4 && (
-              <p className="text-[#E8FFE8] text-base leading-relaxed">
+              <p className="text-[#B5B5B5] font-inter text-base leading-relaxed">
                 {currentStep === 4 ? displayText : messages[3]}
               </p>
             )}
             
             {currentStep >= 5 && (
-              <p className="text-[#E8FFE8] text-base leading-relaxed">
+              <p className="text-[#B5B5B5] font-inter text-base leading-relaxed">
                 {currentStep === 5 ? displayText : messages[4]}
               </p>
             )}

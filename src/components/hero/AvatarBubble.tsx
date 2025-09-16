@@ -22,7 +22,7 @@ export default function AvatarBubble({ alt = 'Vasileios Politeiadis portrait', s
   return (
     <div
       data-testid="avatar-bubble"
-      className="relative animate-reveal-up"
+      className="relative"
       style={{ width: size + 20, height: size + 20 }}
     >
       {/* Main avatar container with minimal border */}
