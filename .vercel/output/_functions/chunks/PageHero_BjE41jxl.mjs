@@ -1,4 +1,4 @@
-import { b as createAstro, c as createComponent, m as maybeRenderHead, f as renderSlot, a as renderTemplate } from './astro/server_DSPR3m_Y.mjs';
+import { b as createAstro, c as createComponent, m as maybeRenderHead, h as renderSlot, a as renderTemplate } from './astro/server_oRAxjIhj.mjs';
 import 'clsx';
 
 const $$Astro = createAstro("https://vpoliteiadis.com");

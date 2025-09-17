@@ -1,5 +1,5 @@
 async function getMod() {
-						return import('./prompt-engineering-mastery_KBE6phD-.mjs');
+						return import('./casa-capoeira-journey_l4lezp0x.mjs');
 					}
 					const collectedLinks = [];
 					const collectedStyles = [];

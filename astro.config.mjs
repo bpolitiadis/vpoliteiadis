@@ -18,6 +18,7 @@ export default defineConfig({
   output: 'server',
   adapter: vercel({
     webAnalytics: { enabled: true },
+    isr: false,
   }),
   // Performance optimizations
   build: {
@@ -37,7 +38,7 @@ export default defineConfig({
       },
     },
     ssr: {
-      noExternal: ['@radix-ui/*'],
+      noExternal: ['@radix-ui/*', 'resend', 'zod', 'pino', 'uuid'],
     },
   },
   integrations: [

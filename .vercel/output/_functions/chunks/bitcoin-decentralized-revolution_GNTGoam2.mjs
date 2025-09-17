@@ -1,5 +1,5 @@
 async function getMod() {
-						return import('./bitcoin-decentralized-revolution_D9qlBJUN.mjs');
+						return import('./bitcoin-decentralized-revolution_b0_tsD_G.mjs');
 					}
 					const collectedLinks = [];
 					const collectedStyles = [];

@@ -1,12 +1,12 @@
-import { t as ROUTE_TYPE_HEADER, v as REROUTE_DIRECTIVE_HEADER, D as DEFAULT_404_COMPONENT, A as AstroError, w as ActionNotFoundError, x as bold, y as red, z as yellow, B as dim, C as blue, E as clientAddressSymbol, L as LocalsNotAnObject, G as REROUTABLE_STATUS_CODES, H as responseSentSymbol, I as getAugmentedNamespace, J as commonjsGlobal } from './astro/server_DSPR3m_Y.mjs';
+import { C as ROUTE_TYPE_HEADER, D as REROUTE_DIRECTIVE_HEADER, E as DEFAULT_404_COMPONENT, A as AstroError, G as ActionNotFoundError, H as bold, I as red, J as yellow, K as dim, L as blue, M as clientAddressSymbol, N as LocalsNotAnObject, O as REROUTABLE_STATUS_CODES, P as responseSentSymbol, Q as getAugmentedNamespace, e as commonjsGlobal } from './astro/server_oRAxjIhj.mjs';
 import 'clsx';
-import { D as DEFAULT_404_ROUTE, d as default404Instance, e as ensure404Route } from './astro-designed-error-pages_B7Dei5QS.mjs';
+import { D as DEFAULT_404_ROUTE, d as default404Instance, e as ensure404Route } from './astro-designed-error-pages_C3fru74C.mjs';
 import buffer from 'node:buffer';
 import crypto$1 from 'node:crypto';
 import { Http2ServerResponse } from 'node:http2';
 import { f as fileExtension, j as joinPaths, s as slash, p as prependForwardSlash, a as removeTrailingForwardSlash, b as appendForwardSlash, c as isInternalPath, d as collapseDuplicateTrailingSlashes, h as hasFileExtension } from './path_aMDqWP_G.mjs';
-import { r as requestIs404Or500, i as isRequestServerIsland, n as notFound, a as redirectToFallback, b as redirectToDefaultLocale, c as requestHasLocale, d as normalizeTheLocale, e as defineMiddleware, S as SERVER_ISLAND_COMPONENT, f as SERVER_ISLAND_ROUTE, g as createEndpoint, R as RouteCache, s as sequence, h as findRouteToRewrite, m as matchRoute, j as RenderContext, P as PERSIST_SYMBOL, k as getSetCookiesFromResponse } from './index_B4H94xRU.mjs';
-import { N as NOOP_MIDDLEWARE_FN } from './noop-middleware_BDDDo4Eh.mjs';
+import { r as requestIs404Or500, i as isRequestServerIsland, n as notFound, a as redirectToFallback, b as redirectToDefaultLocale, c as requestHasLocale, d as normalizeTheLocale, e as defineMiddleware, S as SERVER_ISLAND_COMPONENT, f as SERVER_ISLAND_ROUTE, g as createEndpoint, R as RouteCache, s as sequence, h as findRouteToRewrite, m as matchRoute, j as RenderContext, P as PERSIST_SYMBOL, k as getSetCookiesFromResponse } from './index_DRxazUr5.mjs';
+import { N as NOOP_MIDDLEWARE_FN } from './noop-middleware_Du6siENz.mjs';
 import require$$0 from 'url';
 import './index_MaT6fT73.mjs';
 import nodePath from 'node:path';

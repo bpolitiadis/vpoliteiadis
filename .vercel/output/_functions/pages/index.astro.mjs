@@ -1,6 +1,6 @@
 /* empty css                                 */
-import { c as createComponent, m as maybeRenderHead, r as renderComponent, d as renderScript, a as renderTemplate } from '../chunks/astro/server_DSPR3m_Y.mjs';
-import { $ as $$MainLayout } from '../chunks/MainLayout_BB2MR9BH.mjs';
+import { c as createComponent, m as maybeRenderHead, r as renderComponent, d as renderScript, a as renderTemplate } from '../chunks/astro/server_oRAxjIhj.mjs';
+import { $ as $$MainLayout } from '../chunks/MainLayout_CQJIJsth.mjs';
 import { jsx, jsxs } from 'react/jsx-runtime';
 import { useState, useEffect } from 'react';
 import { c as clientLogger } from '../chunks/logger-client_B7l03hPb.mjs';

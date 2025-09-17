@@ -1,11 +1,10 @@
 /* empty css                                 */
-import { c as createComponent, r as renderComponent, a as renderTemplate, m as maybeRenderHead } from '../chunks/astro/server_DSPR3m_Y.mjs';
-import { L as LinkedInIcon, I as InstagramIcon, a as GitHubIcon, $ as $$MainLayout } from '../chunks/MainLayout_BB2MR9BH.mjs';
-import { $ as $$PageHero } from '../chunks/PageHero_-Sgjb316.mjs';
+import { o as objectType, s as stringType, c as createComponent, r as renderComponent, a as renderTemplate, m as maybeRenderHead } from '../chunks/astro/server_oRAxjIhj.mjs';
+import { L as LinkedInIcon, I as InstagramIcon, a as GitHubIcon, $ as $$MainLayout } from '../chunks/MainLayout_CQJIJsth.mjs';
+import { $ as $$PageHero } from '../chunks/PageHero_BjE41jxl.mjs';
 import { jsx, jsxs } from 'react/jsx-runtime';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { d as cn, C as Card, a as CardHeader, b as CardTitle, c as CardContent } from '../chunks/card_D2wKyJ59.mjs';
 import { B as Button } from '../chunks/button_BoVUnj8k.mjs';
@@ -90,12 +89,12 @@ function FormMessage({ className = "", ...props }) {
   );
 }
 
-const formSchema = z.object({
-  firstName: z.string().min(1, { message: "First Name is required" }).max(60),
-  lastName: z.string().min(1, { message: "Last Name is required" }).max(60),
-  email: z.string().email({ message: "Invalid email address" }).max(254),
-  message: z.string().min(1, { message: "Message is required" }).max(5e3),
-  honeypot: z.string().optional()
+const formSchema = objectType({
+  firstName: stringType().min(1, { message: "First Name is required" }).max(60),
+  lastName: stringType().min(1, { message: "Last Name is required" }).max(60),
+  email: stringType().email({ message: "Invalid email address" }).max(254),
+  message: stringType().min(1, { message: "Message is required" }).max(5e3),
+  honeypot: stringType().optional()
 });
 function ContactForm() {
   const [status, setStatus] = React.useState("idle");

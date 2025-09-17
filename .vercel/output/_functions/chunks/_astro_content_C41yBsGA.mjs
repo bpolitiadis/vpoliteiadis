@@ -1,5 +1,4 @@
-import { A as AstroError, U as UnknownContentCollectionError, c as createComponent, R as RenderUndefinedEntryError, u as unescapeHTML, a as renderTemplate, g as escape, h as renderUniqueStylesheet, i as renderScriptElement, j as createHeadAndContent, r as renderComponent } from './astro/server_DSPR3m_Y.mjs';
-import { z } from 'zod';
+import { o as objectType, j as dateType, n as numberType, k as arrayType, s as stringType, A as AstroError, U as UnknownContentCollectionError, c as createComponent, R as RenderUndefinedEntryError, u as unescapeHTML, a as renderTemplate, l as escape, p as renderUniqueStylesheet, q as renderScriptElement, t as createHeadAndContent, r as renderComponent } from './astro/server_oRAxjIhj.mjs';
 import { r as removeBase, i as isRemotePath, p as prependForwardSlash } from './path_aMDqWP_G.mjs';
 import { V as VALID_INPUT_FORMATS } from './consts_BmVDRGlB.mjs';
 import { u as unflatten } from './parse_BxWlCxqB.mjs';
@@ -293,10 +292,10 @@ function createCollectionToGlobResultMap({
   }
   return collectionToGlobResultMap;
 }
-z.object({
-  tags: z.array(z.string()).optional(),
-  maxAge: z.number().optional(),
-  lastModified: z.date().optional()
+objectType({
+  tags: arrayType(stringType()).optional(),
+  maxAge: numberType().optional(),
+  lastModified: dateType().optional()
 });
 function createGetCollection({
   contentCollectionToEntryMap,
@@ -404,7 +403,7 @@ const CONTENT_LAYER_IMAGE_REGEX = /__ASTRO_IMAGE_="([^"]+)"/g;
 async function updateImageReferencesInBody(html, fileName) {
   const { default: imageAssetMap } = await import('./content-assets_DleWbedO.mjs');
   const imageObjects = /* @__PURE__ */ new Map();
-  const { getImage } = await import('./_astro_assets_vMG0yTbF.mjs').then(n => n._);
+  const { getImage } = await import('./_astro_assets_CaKx1WID.mjs').then(n => n._);
   for (const [_full, imagePath] of html.matchAll(CONTENT_LAYER_IMAGE_REGEX)) {
     try {
       const decodedImagePath = JSON.parse(imagePath.replaceAll("&#x22;", '"'));
@@ -466,7 +465,7 @@ async function renderEntry(entry) {
   }
   if (entry.deferredRender) {
     try {
-      const { default: contentModules } = await import('./content-modules_BOF39JGi.mjs');
+      const { default: contentModules } = await import('./content-modules_Bro6MiXw.mjs');
       const renderEntryImport = contentModules.get(entry.filePath);
       return render({
         collection: "",
