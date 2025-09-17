@@ -1,0 +1,468 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { Image } from 'astro:assets';
+import arteImaginariAvatar from '../assets/images/arte-imaginari-avatar.png';
+import { GraduationIcon, AwardIcon, MonitorIcon, PaletteIcon } from '../components/icons/Icon';
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Badge } from '../components/ui/badge';
+import { Button } from '../components/ui/button';
+import AboutHero from '../components/AboutHero.tsx';
+
+// Enhanced structured data for About page
+const aboutStructuredData = {
+  "@type": "AboutPage",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "Vasileios Politeiadis",
+    "jobTitle": "Senior QA Automation Specialist & Full-Stack Developer",
+    "description": "Expert in European Commission projects, Java automation frameworks, React/Next.js development, and AI-powered solutions. Specializing in end-to-end QA processes and modern web applications.",
+    "knowsAbout": [
+      "QA Automation",
+      "Java Testing Frameworks",
+      "Selenium WebDriver", 
+      "Playwright Testing",
+      "React Development",
+      "Next.js Applications",
+      "TypeScript Development",
+      "Supabase Backend",
+      "AI Automation Tools",
+      "European Commission Projects"
+    ],
+    "hasOccupation": [
+      {
+        "@type": "Occupation",
+        "name": "Senior QA Automation Specialist",
+        "occupationLocation": {
+          "@type": "Place",
+          "name": "European Commission - DG DIGIT"
+        },
+        "description": "Leading test automation in quality assurance teams for European Commission projects"
+      },
+      {
+        "@type": "Occupation", 
+        "name": "Full-Stack Developer",
+        "description": "End-to-end development of modern web applications using React, Next.js, and Supabase"
+      }
+    ]
+  }
+};
+---
+
+<MainLayout 
+  title="About Vasileios Politeiadis - Senior QA Automation Specialist & Full-Stack Developer"
+  description="Vasileios Politeiadis is a Senior QA Automation Specialist at European Commission DG DIGIT and Full-Stack Developer specializing in Java automation frameworks, React/Next.js applications, and AI-powered solutions. View complete professional background, skills, and experience."
+  currentPath="/about"
+  bgSlug="about-bg"
+  bgEager={true}
+  bgOpacityClass="opacity-70 md:opacity-80"
+  bgOverlayClass="from-black/20 via-black/10 to-black/25"
+  keywords={[
+    'Vasileios Politeiadis',
+    'QA Automation Specialist',
+    'QA Automation Engineer',
+    'Full-Stack Developer',
+    'European Commission Projects',
+    'Java Selenium Testing',
+    'Playwright Testing',
+    'React Developer',
+    'Next.js Developer',
+    'TypeScript Developer',
+    'AI Automation',
+    'Professional Portfolio',
+    'Online CV'
+  ]}
+  structuredData={aboutStructuredData}
+>
+  
+  <!-- Hero Section -->
+  <section class="relative isolate z-10 min-h-[25vh] flex items-center justify-center pt-8 md:pt-10 lg:pt-12" role="banner" aria-labelledby="hero-heading" data-testid="page-about">
+    <div class="w-full">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 id="hero-heading" class="sr-only">Vasileios Politeiadis - Senior QA Automation Specialist & Full-Stack Developer</h1>
+        <AboutHero 
+          quotes={[
+            "Certified bug hunter.",
+            "Debugging reality.",
+            "I break code professionally.",
+            "Automating workflows, amplifying humans.",
+            "Partnering with AI to outpace time.",
+            "The best way to predict the future is to invent it.",
+            "Human creativity, artificial brains.",
+            "The computer was born to solve problems that did not exist before.",
+            "Engineering the future, accelerated by AI.",
+            "Writing tests that test the limits.",
+            "Any sufficiently advanced technology is indistinguishable from magic.",
+            "I write code that watches your code.",
+            "Imagination is more important than knowledge.",
+            "The future is already here — it's just not evenly distributed.",
+            "If you don't believe me or don't get it, I don't have time to try to convince you."
+          ]}
+          client:load
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section class="relative z-10 pt-4 md:pt-6 pb-16" role="main" aria-labelledby="professional-summary-heading" data-testid="about-main-content">
+    <div class="max-w-5xl xl:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 md:space-y-10">
+      
+      <!-- Professional Summary -->
+      <Card className="border-neon-lime/20 bg-matrix-black/60 backdrop-blur-md animate-reveal-up-delayed-1 opacity-0">
+        <CardHeader>
+          <CardTitle id="professional-summary-heading" className="text-2xl font-orbitron font-bold text-neon-lime text-shadow-neon flex items-center gap-3">
+            <AwardIcon size="lg" className="text-neon-lime" aria-label="Professional identity icon" />
+            Professional Summary
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            <Card className="border-digital-emerald/20 bg-cyber-gray/20 hover:bg-cyber-gray/30 hover:border-digital-emerald/40 transition-all duration-300 hover:-translate-y-1 animate-stagger-fade-delayed-1 opacity-0">
+              <CardContent className="p-4">
+                <h2 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald text-lg">🤖 QA Automation Specialist</h2>
+                <p class="text-sm text-matrix-white/80 mb-3 flex-grow">Leading test automation in quality assurance for European Commission projects with end-to-end QA processes.</p>
+                <div class="flex flex-wrap gap-2 mt-auto">
+                  <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">Java</Badge>
+                  <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">Selenium</Badge>
+                  <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">Playwright</Badge>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="border-digital-emerald/20 bg-cyber-gray/20 hover:bg-cyber-gray/30 hover:border-digital-emerald/40 transition-all duration-300 hover:-translate-y-1 animate-stagger-fade-delayed-2 opacity-0">
+              <CardContent className="p-4">
+                <h2 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald text-lg">💻 Full-Stack Developer</h2>
+                <p class="text-sm text-matrix-white/80 mb-3 flex-grow">Building modern web applications with React, Next.js, TypeScript, and Supabase. Scalable solutions and cloud deployment.</p>
+                <div class="flex flex-wrap gap-2 mt-auto">
+                  <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">React</Badge>
+                  <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">Next.js</Badge>
+                  <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">Supabase</Badge>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="border-digital-emerald/20 bg-cyber-gray/20 hover:bg-cyber-gray/30 hover:border-digital-emerald/40 transition-all duration-300 hover:-translate-y-1 animate-stagger-fade-delayed-3 opacity-0">
+              <CardContent className="p-4">
+                <h2 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald text-lg">🔧 AI-Powered Solutions</h2>
+                <p class="text-sm text-matrix-white/80 mb-3 flex-grow">Developing AI tools and automation workflows for streamlined processes and smarter digital solutions.</p>
+                <div class="flex flex-wrap gap-2 mt-auto">
+                  <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">AI Automation</Badge>
+                  <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">Productivity</Badge>
+                  <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">Innovation</Badge>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </CardContent>
+      </Card>
+
+      <!-- Two Column Layout -->
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 md:gap-10">
+        
+        <!-- Professional Timeline -->
+        <Card className="border-neon-lime/20 bg-matrix-black/60 backdrop-blur-md animate-reveal-up-delayed-2 opacity-0">
+          <CardHeader>
+            <CardTitle className="text-2xl font-orbitron font-bold text-neon-lime text-shadow-neon flex items-center gap-3">
+              <svg class="w-6 h-6 text-neon-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12,6 12,12 16,14" />
+              </svg>
+              Professional Timeline
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div class="relative">
+              <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-neon-lime/20"></div>
+              
+              <div class="space-y-8">
+                <div class="relative flex items-start">
+                  <div class="absolute left-2 top-2 w-4 h-4 bg-neon-lime rounded-full border-2 border-matrix-black"></div>
+                  <div class="ml-12">
+                    <div class="flex items-center gap-2 mb-3">
+                      <span class="text-sm text-matrix-white/60">2024 - Present</span>
+                      <Badge className="bg-neon-lime/10 text-neon-lime border-neon-lime/30">Current</Badge>
+                    </div>
+                    <h3 class="font-orbitron font-bold text-neon-lime mb-2 text-shadow-neon text-lg">Senior QA Automation Specialist</h3>
+                    <p class="text-digital-emerald text-base mb-3">European Commission - DG DIGIT</p>
+                    <p class="text-matrix-white/80 text-base leading-relaxed">
+                      Leading test automation in quality assurance teams for European Commission projects, specializing in custom Java-based automation frameworksusing Selenium WebDriver.
+                    </p>
+                  </div>
+                </div>
+
+
+                <div class="relative flex items-start">
+                  <div class="absolute left-2 top-2 w-4 h-4 bg-digital-emerald rounded-full border-2 border-matrix-black"></div>
+                  <div class="ml-12">
+                    <span class="text-sm text-matrix-white/60">2022 - Present</span>
+                    <h3 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald text-lg">Full-Stack Developer - QA Lead</h3>
+                    <p class="text-neon-lime text-base mb-3">Upiria (Freelance)</p>
+                    <p class="text-matrix-white/80 text-base leading-relaxed">
+                      Full-stack development and leading QA processes for Upiria startup, delivering scalable solutions with fast delivery cycles and high quality using modern web technologies.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="relative flex items-start">
+                  <div class="absolute left-2 top-2 w-4 h-4 bg-digital-emerald rounded-full border-2 border-matrix-black"></div>
+                  <div class="ml-12">
+                    <span class="text-sm text-matrix-white/60">2018 - 2021</span>
+                    <h3 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald text-lg">Junior QA Automation Engineer</h3>
+                    <p class="text-neon-lime text-base mb-3">SWORD - European Commission Projects</p>
+                    <p class="text-matrix-white/80 text-base leading-relaxed">
+                      Quality assurance and testing automation for European Commission projects, establishing foundational testing practices and automation workflows using Java and Selenium.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="relative flex items-start">
+                  <div class="absolute left-2 top-2 w-4 h-4 bg-digital-emerald rounded-full border-2 border-matrix-black"></div>
+                  <div class="ml-12">
+                    <span class="text-sm text-matrix-white/60">2018</span>
+                    <h3 class="font-orbitron font-bold text-digital-emerald mb-2 text-shadow-emerald text-lg">Electrical Engineering and Computer Science</h3>
+                    <p class="text-neon-lime text-base mb-3">Aristotle University of Thessaloniki</p>
+                    <p class="text-matrix-white/80 text-base leading-relaxed">
+                      Foundation in engineering principles and computer science fundamentals, providing the theoretical and practical knowledge for modern software development and QA automation.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <!-- Right Column -->
+        <div class="space-y-6 md:space-y-8">
+          
+          <!-- Skills -->
+          <Card className="border-neon-lime/20 bg-matrix-black/60 backdrop-blur-md animate-reveal-up-delayed-3 opacity-0">
+            <CardHeader>
+              <CardTitle className="text-2xl font-orbitron font-bold text-neon-lime text-shadow-neon flex items-center gap-3">
+                <MonitorIcon size="lg" className="text-neon-lime" aria-label="Skills icon" />
+                Skills
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div class="space-y-6">
+                <div>
+                  <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-orbitron font-bold text-matrix-white text-base">QA Automation and Testing</h3>
+                  </div>
+                  <div class="flex flex-wrap gap-2">
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">Java</Badge>
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">Selenium</Badge>
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">Playwright</Badge>
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">TypeScript</Badge>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-orbitron font-bold text-matrix-white text-base">Full-Stack Development</h3>
+                  </div>
+                  <div class="flex flex-wrap gap-2">
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">React</Badge>
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">Next.js</Badge>
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">Node.js</Badge>
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">Supabase</Badge>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-orbitron font-bold text-matrix-white text-base">Modern Web Technologies</h3>
+                  </div>
+                  <div class="flex flex-wrap gap-2">
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">Astro</Badge>
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">Tailwind CSS</Badge>
+                    <Badge variant="outline" className="bg-digital-emerald/10 text-digital-emerald border-digital-emerald/30">TypeScript</Badge>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+                      <!-- Education & Certificates -->
+          <Card className="border-neon-lime/20 bg-matrix-black/60 backdrop-blur-md animate-reveal-up-delayed-4 opacity-0">
+            <!-- Education Section -->
+            <CardHeader>
+              <CardTitle className="text-2xl font-orbitron font-bold text-neon-lime text-shadow-neon flex items-center gap-3">
+                <GraduationIcon size="lg" className="text-neon-lime" aria-label="Education icon" />
+                Education
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <h3 class="font-orbitron font-bold text-matrix-white text-lg">Electrical Engineering and Computer Science</h3>
+              <p class="text-digital-emerald text-base">Aristotle University of Thessaloniki</p>
+              <p class="text-sm text-matrix-white/70 mt-1">Graduated 2018</p>
+              <p class="text-sm text-matrix-white/80 mt-2">
+                Thesis: Automated test engine for RESTful Web Services -<br>
+                Foundation in engineering principles and computer science fundamentals for modern software development
+              </p>
+            </CardContent>
+            
+            <!-- Divider Line -->
+            <div class="border-t border-matrix-white/20 mx-6"></div>
+            
+            <!-- Certificates Section -->
+            <CardHeader className="pt-6">
+              <CardTitle className="text-2xl font-orbitron font-bold text-neon-lime text-shadow-neon flex items-center gap-3">
+                <AwardIcon size="lg" className="text-neon-lime" aria-label="Certificates icon" />
+                Professional Certifications
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <h3 class="font-orbitron font-bold text-matrix-white text-lg">Certified Tester Foundation Level (CTFL)</h3>
+              <p class="text-digital-emerald text-base">ISTQB® - International Software Testing Qualifications Board</p>
+              <p class="text-sm text-matrix-white/70 mt-1">Issued October 2018</p>
+              <p class="text-sm text-matrix-white/80 mt-2">
+                Foundation level certification in software testing principles and practices, validating expertise in QA methodologies
+              </p>
+            </CardContent>
+          </Card>
+          
+
+          <!-- Hobbies -->
+          <Card className="border-cyan-400/20 bg-matrix-black/60 backdrop-blur-md animate-reveal-up-delayed-5 opacity-0">
+            <CardHeader>
+              <CardTitle className="text-2xl font-orbitron font-bold text-cyan-400 text-shadow-cyan flex items-center gap-3">
+                <PaletteIcon size="lg" className="text-cyan-400" aria-label="Hobbies icon" />
+                Hobbies
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div class="flex items-start gap-4">
+                <div class="creative-avatar-orb flex-shrink-0">
+                  <Image 
+                    src={arteImaginariAvatar} 
+                    alt="Arte Imaginari AI creative avatar - Vasileios Politeiadis AI art portfolio" 
+                    class="w-16 h-16 rounded-full object-cover" 
+                    widths={[64]} 
+                    sizes="64px" 
+                    format="webp" 
+                    loading="lazy" 
+                  />
+                </div>
+                
+                <div class="flex-1">
+                  <h3 class="font-orbitron font-bold text-cyan-400 mb-2 text-shadow-cyan text-lg">
+                    AI-Artist
+                  </h3>
+                  <p class="text-matrix-white/80 mb-4 text-sm leading-relaxed">
+                    AI-driven image and video projects using Midjourney, Kling AI, and other generative tools. Creating digital art, fashion designs, and creative content for various clients and personal projects.
+                  </p>
+                  
+                  <div class="flex items-center gap-3">
+                    <Button asChild variant="outline" className="border-cyan-400/40 text-cyan-400 hover:bg-cyan-400/10 hover:border-cyan-400/60">
+                      <a href="/creative" aria-label="View AI creative portfolio and digital art projects">
+                        <span>View Portfolio</span>
+                        <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M9 18L15 12L9 6"/>
+                        </svg>
+                      </a>
+                    </Button>
+                    
+                    <Button asChild variant="outline" className="border-cyan-400/40 text-cyan-400 hover:bg-cyan-400/10 hover:border-cyan-400/60">
+                      <a 
+                        href="https://instagram.com/arte.imaginari" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        aria-label="Follow @arte.imaginari on Instagram for AI art and creative content"
+                      >
+                        <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                        <span>Follow</span>
+                      </a>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  /* Creative avatar effect */
+  .creative-avatar-orb {
+    position: relative;
+    filter: drop-shadow(0 0 20px rgba(0, 191, 255, 0.4));
+  }
+  .creative-avatar-orb::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 9999px;
+    background: conic-gradient(from 0deg, rgba(0,191,255,0.0), rgba(0,191,255,0.4), rgba(0,150,255,0.4), rgba(0,191,255,0.0));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 2px), black calc(100% - 2px));
+    animation: rotateRing 20s linear infinite;
+    pointer-events: none;
+  }
+  .creative-avatar-orb::after {
+    content: '';
+    position: absolute;
+    inset: -12px;
+    border-radius: 9999px;
+    box-shadow: 0 0 40px rgba(0, 191, 255, 0.2);
+    pointer-events: none;
+  }
+
+  @keyframes rotateRing { to { transform: rotate(360deg); } }
+
+  /* Accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .creative-avatar-orb::before { 
+      animation: none; 
+    }
+  }
+</style>
+
+<script>
+  // About page animation orchestration - 2025 Modern UX Pattern
+  document.addEventListener('DOMContentLoaded', () => {
+    // Initialize elements as hidden
+    const aboutHeroContent = document.getElementById('about-hero-content');
+    
+    // Ensure proper initial state
+    if (aboutHeroContent) aboutHeroContent.style.opacity = '0';
+    
+    // Start hero animation after a short delay
+    setTimeout(() => {
+      if (aboutHeroContent) {
+        aboutHeroContent.style.opacity = '1';
+      }
+    }, 500);
+
+    // Modern 2025 UX: Synchronized reveal animations with AboutHero completion
+    const revealPageContent = () => {
+      // Get all elements with reveal animations
+      const revealElements = document.querySelectorAll('[class*="animate-reveal-up-delayed"], [class*="animate-stagger-fade-delayed"]');
+      
+      // Trigger all animations with staggered delay
+      revealElements.forEach((element, index) => {
+        setTimeout(() => {
+          element.classList.add('animate');
+        }, index * 150);
+      });
+    };
+
+    // Listen for AboutHero full completion before revealing content
+    window.addEventListener('aboutHeroComplete', () => {
+      // AboutHero complete — revealing page content
+      setTimeout(revealPageContent, 100);
+    });
+
+    // Fallback: Show content after 10 seconds if AboutHero doesn't complete
+    setTimeout(() => {
+      const revealElements = document.querySelectorAll('[class*="animate-reveal-up-delayed"], [class*="animate-stagger-fade-delayed"]');
+      revealElements.forEach((element) => {
+        element.classList.add('animate');
+      });
+    }, 10000);
+  });
+</script>
+

@@ -1,0 +1,114 @@
+# Robots.txt for vpoliteiadis.com
+# Allow all major search engines and AI bots to crawl the site
+
+User-agent: *
+Allow: /
+
+# Allow AI and research bots
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Omgilibot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Block specific paths that shouldn't be indexed
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+Disallow: /_astro/
+Disallow: /dist/
+Disallow: /node_modules/
+Disallow: /scripts/
+Disallow: /src/
+
+# Allow important pages and assets
+Allow: /images/
+Allow: /favicon.ico
+Allow: /site.webmanifest
+Allow: /sitemap.xml
+
+# Sitemap location
+Sitemap: https://vpoliteiadis.com/sitemap.xml
+
+# Crawl delay (optional, for rate limiting)
+Crawl-delay: 1
+
+# Additional AI bot instructions
+User-agent: *
+Allow: /about
+Allow: /projects
+Allow: /blog
+Allow: /creative
+Allow: /contact
+
+# Block duplicate content
+Disallow: /*?*
+Disallow: /*&*
+
+# Allow social media bots
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+# Performance and monitoring bots
+User-agent: Pingdom
+Allow: /
+
+User-agent: UptimeRobot
+Allow: /
+
+User-agent: StatusCake
+Allow: /
+
+# Development and testing bots
+User-agent: AhrefsBot
+Allow: /
+
+User-agent: SemrushBot
+Allow: /
+
+User-agent: MJ12bot
+Allow: /
+
+User-agent: DotBot
+Allow: /
+
+# Block aggressive crawlers
+User-agent: *
+Disallow: /search?
+Disallow: /filter?
+Disallow: /sort?
+
+# Allow structured data and important content
+Allow: /structured/
+Allow: /ai.txt
+Allow: /robots.txt

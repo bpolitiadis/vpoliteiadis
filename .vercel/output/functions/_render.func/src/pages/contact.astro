@@ -1,0 +1,36 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ContactForm from '../components/contact/ContactForm';
+import ContactCards from '../components/contact/ContactCards';
+---
+
+<MainLayout 
+  title="Contact - Vasileios Politeiadis"
+  description="Get in touch with Vasileios Politeiadis for collaboration opportunities, project inquiries, or creative commissions."
+  currentPath="/contact"
+  bgSlug="contact-bg"
+  bgEager={true}
+>
+  <div class="relative" data-testid="page-contact">
+    <PageHero
+      title="Contact"
+      description="Let's collaborate on your next project or discuss creative opportunities"
+      eager={true}
+    />
+
+  <!-- Contact Content -->
+  <section class="pt-6 md:pt-8 pb-12 md:pb-16" data-testid="contact-main-content">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 mb-10">
+        <!-- shadcn/react form island -->
+        <ContactForm client:load />
+        <!-- Right column cards (static markup preserved) -->
+        <ContactCards />
+      </div>
+    </div>
+  </section>
+  </div>
+  
+  
+</MainLayout>

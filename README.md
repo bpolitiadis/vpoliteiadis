@@ -44,7 +44,7 @@ docs/                       # Project documentation
 ## 🛠️ Tech Stack
 
 ### Core Technologies
-- **Astro 4.0+** - Static site generator with SSR capabilities
+- **Astro 5.0+** - Static site generator with SSR capabilities
 - **TypeScript 5.0+** - Type-safe development
 - **Tailwind CSS 3.4+** - Utility-first CSS framework
 - **Vite** - Fast build tool and dev server
