@@ -6,7 +6,7 @@ type AvatarBubbleProps = {
   size?: number; // pixels
 };
 
-export default function AvatarBubble({ alt = 'Vasileios Politeiadis portrait', size = 80 }: AvatarBubbleProps) {
+export default function AvatarBubble({ alt = 'Vasileios Politeiadis portrait', size = 60 }: AvatarBubbleProps) {
   // 2025 Best Practice: Use direct path for static assets in production
   // This ensures the image loads properly in Vercel production
   const getOptimizedAvatarSrc = () => {

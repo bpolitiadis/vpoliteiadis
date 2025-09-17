@@ -131,7 +131,7 @@ export default function MessageBubble({ onComplete }: MessageBubbleProps) {
       aria-live="polite"
       aria-label="Welcome message"
     >
-      {/* Main chat bubble with thin border and glassmorphism */}
+      {/* Text message bubble with sharp top-left corner */}
       <div className="relative rounded-tl-none rounded-tr-[22px] rounded-br-[22px] rounded-bl-[22px] bg-black/30 backdrop-blur-lg border border-[#39FF14]/60 chat-bubble-glitch">
         <div className="p-6 md:p-8">
           <div className="space-y-3">
