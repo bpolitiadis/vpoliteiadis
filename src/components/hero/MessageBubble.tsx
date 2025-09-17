@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import TextType from '../TextType';
+// import TextType from '../TextType';
 import clientLogger from '../../lib/logger-client';
 
 type MessageBubbleProps = {
@@ -14,7 +14,7 @@ export default function MessageBubble({ onComplete }: MessageBubbleProps) {
   const [showAccessGranted, setShowAccessGranted] = useState(false);
   const [accessGrantedComplete, setAccessGrantedComplete] = useState(false);
   const [accessGrantedText, setAccessGrantedText] = useState('');
-  const [isDeletingAccessGranted, setIsDeletingAccessGranted] = useState(false);
+  // const [isDeletingAccessGranted, setIsDeletingAccessGranted] = useState(false);
   
   const messages = [
     'Access granted.',

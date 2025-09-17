@@ -8,26 +8,7 @@ import {
   createRequestLogger,
   type RequestContext 
 } from './lib/logger-serverless.js';
-
-// Simple rate limiting without external dependencies
-const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
-
-const isRateLimited = (key: string, maxRequests: number, windowMs: number): boolean => {
-  const now = Date.now();
-  const record = rateLimitMap.get(key);
-  
-  if (!record || now > record.resetTime) {
-    rateLimitMap.set(key, { count: 1, resetTime: now + windowMs });
-    return false;
-  }
-  
-  if (record.count >= maxRequests) {
-    return true;
-  }
-  
-  record.count++;
-  return false;
-};
+import { isRateLimited } from './lib/http-utils.js';
 
 // Lazy import for Sentry to avoid initialization issues
 let captureErrorWithContext: any = null;
@@ -71,7 +52,7 @@ export const onRequest: MiddlewareHandler = async (context, next) => {
         context.request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
         context.request.headers.get('x-real-ip') ||
         'unknown';
-    } catch {
+    } catch (_e) {
       // Fallback for any errors
       userAgent = 'unknown';
       clientIP = 'unknown';

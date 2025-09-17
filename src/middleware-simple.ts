@@ -7,41 +7,9 @@ import {
   categorizeUserAgent, 
   createRequestLogger,
   type RequestContext 
-} from './lib/logger-serverless.js';
-
-// Simple rate limiting without external dependencies
-const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
-
-const isRateLimited = (key: string, maxRequests: number, windowMs: number): boolean => {
-  const now = Date.now();
-  const record = rateLimitMap.get(key);
-  
-  if (!record || now > record.resetTime) {
-    rateLimitMap.set(key, { count: 1, resetTime: now + windowMs });
-    return false;
-  }
-  
-  if (record.count >= maxRequests) {
-    return true;
-  }
-  
-  record.count++;
-  return false;
-};
-
-// Lazy import for Sentry to avoid initialization issues
-let captureErrorWithContext: any = null;
-const initSentry = async () => {
-  if (!captureErrorWithContext) {
-    try {
-      const sentry = await import('./lib/sentry.js');
-      captureErrorWithContext = sentry.captureErrorWithContext;
-    } catch (error) {
-      console.warn('Failed to load Sentry:', error);
-      captureErrorWithContext = () => {}; // No-op fallback
-    }
-  }
-};
+} from './lib/logger.js';
+import { captureErrorWithContext } from './lib/sentry.js';
+import { isRateLimited } from './lib/http-utils.js';
 
 // Security headers fallback for non-Vercel deployments + Request correlation
 export const onRequest: MiddlewareHandler = async (context, next) => {
@@ -71,7 +39,7 @@ export const onRequest: MiddlewareHandler = async (context, next) => {
         context.request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
         context.request.headers.get('x-real-ip') ||
         'unknown';
-    } catch {
+    } catch (_e) {
       // Fallback for any errors
       userAgent = 'unknown';
       clientIP = 'unknown';
@@ -137,8 +105,6 @@ export const onRequest: MiddlewareHandler = async (context, next) => {
       durationMs: Date.now() - startTime,
     }, `Request processing error for ${method} ${route}`);
 
-    // Initialize Sentry if not already done
-    await initSentry();
     captureErrorWithContext(error, {
       ...requestContext,
       status: 500,
@@ -229,7 +195,6 @@ export const onRequest: MiddlewareHandler = async (context, next) => {
     
     if (shouldCapture) {
       const httpError = new Error(`HTTP ${status} response for ${method} ${route}`);
-      await initSentry();
       captureErrorWithContext(httpError, {
         ...requestContext,
         status,
@@ -239,3 +204,5 @@ export const onRequest: MiddlewareHandler = async (context, next) => {
 
   return response;
 };
+
+

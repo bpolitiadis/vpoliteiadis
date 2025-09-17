@@ -1,29 +1,28 @@
 import js from '@eslint/js';
-import typescript from '@typescript-eslint/eslint-plugin';
-import typescriptParser from '@typescript-eslint/parser';
+import tseslint from 'typescript-eslint';
 import astro from 'eslint-plugin-astro';
 import astroParser from 'astro-eslint-parser';
+import reactHooks from 'eslint-plugin-react-hooks';
 
 export default [
-  js.configs.recommended,
   {
-    files: ['src/**/*.{js,ts,tsx,astro}', 'tests/**/*.{js,ts,tsx}'],
     ignores: [
       'dist/**',
       'node_modules/**',
       '.vercel/**',
+      '.astro/**',
       'public/scripts/**',
       'scripts/**',
       '*.config.js',
       '*.config.mjs',
       'tailwind.config.js',
     ],
+  },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  {
+    files: ['src/**/*.{js,ts,tsx,astro}', 'tests/**/*.{js,ts,tsx}'],
     languageOptions: {
-      parser: typescriptParser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-      },
       globals: {
         // Browser globals
         window: 'readonly',
@@ -79,11 +78,9 @@ export default [
       },
     },
     plugins: {
-      '@typescript-eslint': typescript,
-      astro,
+      'react-hooks': reactHooks,
     },
     rules: {
-      ...typescript.configs.recommended.rules,
       'no-console': 'warn',
       'no-debugger': 'error',
       'prefer-const': 'error',
@@ -99,6 +96,8 @@ export default [
       'no-useless-escape': 'off',
       'no-unexpected-multiline': 'off',
       'no-dupe-keys': 'off',
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
     },
   },
   {
@@ -106,19 +105,12 @@ export default [
     languageOptions: {
       parser: astroParser,
       parserOptions: {
-        parser: typescriptParser,
+        parser: tseslint.parser,
         extraFileExtensions: ['.astro'],
       },
     },
     rules: {
       ...astro.configs.recommended.rules,
-    },
-  },
-  {
-    files: ['**/*.{ts,tsx}'],
-    rules: {
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-      '@typescript-eslint/no-explicit-any': 'warn',
     },
   },
 ];

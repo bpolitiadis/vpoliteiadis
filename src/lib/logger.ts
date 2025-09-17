@@ -1,5 +1,4 @@
 import pino from 'pino';
-import { createHash } from 'crypto';
 import { v4 as uuidv4 } from 'uuid';
 import type { Logger } from 'pino';
 
@@ -113,8 +112,12 @@ export const generateRequestId = (): string => uuidv4();
 
 export const generateTraceId = (): string => uuidv4().replace(/-/g, '');
 
-export const hashIP = (ip: string): string => {
-  return createHash('sha256').update(ip).digest('hex').substring(0, 16);
+export const hashIP = async (ip: string): Promise<string> => {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(ip);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 16);
 };
 
 export const categorizeUserAgent = (userAgent: string): string => {
