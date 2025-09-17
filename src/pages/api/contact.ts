@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import { z } from 'zod';
-import { loggedOperation } from '../../lib/http-utils.js';
 import { createContactFormEmail, createConfirmationEmail } from '../../lib/email-templates.js';
 
 // Ensure this API route runs server-side, not prerendered
@@ -133,54 +132,54 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
     
     // Send emails using Resend
-    const emailResult = await loggedOperation(
-      'send-contact-emails',
-      async () => {
-        const resend = getResend();
-        const toEmail = import.meta.env.CONTACT_EMAIL || import.meta.env.FROM_EMAIL;
-        const replyTo = import.meta.env.REPLY_TO_EMAIL || formData.email;
-        
-        // Send notification email to site owner
-        const notificationTemplate = createContactFormEmail(formData);
-        const notificationResult = await resend.emails.send({
+    let emailResult;
+    try {
+      const resend = getResend();
+      const toEmail = import.meta.env.CONTACT_EMAIL || import.meta.env.FROM_EMAIL;
+      const replyTo = import.meta.env.REPLY_TO_EMAIL || formData.email;
+      
+      // Send notification email to site owner
+      const notificationTemplate = createContactFormEmail(formData);
+      const notificationResult = await resend.emails.send({
+        from: import.meta.env.FROM_EMAIL,
+        to: [toEmail],
+        replyTo: replyTo,
+        subject: notificationTemplate.subject,
+        html: notificationTemplate.html,
+        text: notificationTemplate.text,
+      });
+      
+      // Send confirmation email to form submitter (optional)
+      let confirmationResult = null;
+      if (import.meta.env.SEND_CONFIRMATION_EMAIL === 'true') {
+        const confirmationTemplate = createConfirmationEmail(formData);
+        confirmationResult = await resend.emails.send({
           from: import.meta.env.FROM_EMAIL,
-          to: [toEmail],
-          replyTo: replyTo,
-          subject: notificationTemplate.subject,
-          html: notificationTemplate.html,
-          text: notificationTemplate.text,
+          to: [formData.email],
+          subject: confirmationTemplate.subject,
+          html: confirmationTemplate.html,
+          text: confirmationTemplate.text,
         });
-        
-        // Send confirmation email to form submitter (optional)
-        let confirmationResult = null;
-        if (import.meta.env.SEND_CONFIRMATION_EMAIL === 'true') {
-          const confirmationTemplate = createConfirmationEmail(formData);
-          confirmationResult = await resend.emails.send({
-            from: import.meta.env.FROM_EMAIL,
-            to: [formData.email],
-            subject: confirmationTemplate.subject,
-            html: confirmationTemplate.html,
-            text: confirmationTemplate.text,
-          });
-        }
-        
-        if (import.meta.env.RESEND_DEBUG === 'true') {
-          logger?.info({ 
-            notificationEmailId: notificationResult.data?.id,
-            confirmationEmailId: confirmationResult?.data?.id,
-            to: toEmail,
-            replyTo,
-            subject: notificationTemplate.subject 
-          }, 'Emails sent successfully');
-        }
-        
-        return { notification: notificationResult, confirmation: confirmationResult };
-      },
-      { requestId, traceId, logger }
-    );
+      }
+      
+      if (import.meta.env.RESEND_DEBUG === 'true') {
+        console.log('Emails sent successfully', { 
+          notificationEmailId: notificationResult.data?.id,
+          confirmationEmailId: confirmationResult?.data?.id,
+          to: toEmail,
+          replyTo,
+          subject: notificationTemplate.subject 
+        });
+      }
+      
+      emailResult = { notification: notificationResult, confirmation: confirmationResult };
+    } catch (error) {
+      console.error('Failed to send emails:', error);
+      throw error;
+    }
     
     if (emailResult.notification?.error) {
-      logger?.error({ error: emailResult.notification.error }, 'Failed to send notification email');
+      console.error('Failed to send notification email:', emailResult.notification.error);
       return new Response(JSON.stringify({ 
         error: 'Failed to send message. Please try again later.' 
       }), {
@@ -190,15 +189,15 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
     
     if (emailResult.confirmation?.error) {
-      logger?.warn({ error: emailResult.confirmation.error }, 'Failed to send confirmation email, but notification was sent');
+      console.warn('Failed to send confirmation email, but notification was sent:', emailResult.confirmation.error);
     }
     
-    logger?.info({ 
+    console.log('Contact form submitted successfully', { 
       notificationEmailId: emailResult.notification?.data?.id,
       confirmationEmailId: emailResult.confirmation?.data?.id,
       from: formData.email,
       name: `${formData.firstName} ${formData.lastName}`
-    }, 'Contact form submitted successfully');
+    });
     
     return new Response(JSON.stringify({ 
       success: true,
