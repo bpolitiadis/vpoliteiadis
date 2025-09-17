@@ -14,7 +14,7 @@ import rehypeSanitize from 'rehype-sanitize';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://vpoliteiadis.com',
-  output: 'static',
+  output: 'hybrid',
   // Performance optimizations
   build: {
     inlineStylesheets: 'auto',

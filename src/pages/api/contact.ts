@@ -4,6 +4,9 @@ import { z } from 'zod';
 import { loggedOperation } from '../../lib/http-utils.js';
 import { createContactFormEmail, createConfirmationEmail } from '../../lib/email-templates.js';
 
+// Ensure this API route runs server-side, not prerendered
+export const prerender = false;
+
 // Lazy initialization of Resend to avoid build-time errors
 function getResend() {
   const apiKey = import.meta.env.RESEND_API_KEY;

@@ -1,6 +1,9 @@
 import type { APIRoute } from 'astro';
 import { loggedOperation } from '../../lib/http-utils.js';
 
+// Ensure this API route runs server-side, not prerendered
+export const prerender = false;
+
 export const GET: APIRoute = async ({ locals }) => {
   const logger = locals.logger;
   const { requestId, traceId } = locals.requestContext || {};
