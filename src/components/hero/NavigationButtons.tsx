@@ -37,7 +37,7 @@ export default function NavigationButtons({ onNavigate }: NavigationButtonsProps
 
   return (
     <div 
-      className="flex flex-nowrap justify-center items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-12 animate-reveal-up overflow-x-auto w-full"
+      className="flex flex-wrap sm:flex-nowrap justify-center items-center gap-3 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-12 animate-reveal-up overflow-x-visible sm:overflow-x-visible w-full"
       data-testid="navigation-buttons"
       role="navigation"
       aria-label="Main navigation"
@@ -59,11 +59,10 @@ export default function NavigationButtons({ onNavigate }: NavigationButtonsProps
             hover:scale-105 hover:shadow-lg
             focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black
             group
-            min-w-[80px] sm:min-w-[90px] md:min-w-[100px] lg:min-w-[110px]
+            min-w-[44%] xs:min-w-[42%] sm:min-w-[90px] md:min-w-[100px] lg:min-w-[110px]
             px-3 sm:px-4 md:px-5 lg:px-6
             py-2 sm:py-3 md:py-4
             whitespace-nowrap
-            flex-shrink-0
           `}
           style={{
             transitionDelay: `${index * 100}ms`,
