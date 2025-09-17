@@ -21,7 +21,7 @@ const navItems = [
 ];
 ---
 
-<nav class="navbar-compact sticky top-0 z-50 w-full bg-matrix-black/80 backdrop-blur-sm border-b border-neon-lime/10 transition-all duration-200" role="navigation" aria-label="Main navigation" data-testid="navbar">
+<nav class="navbar-compact sticky top-0 z-50 w-full bg-matrix-black border-b border-neon-lime/10 transition-all duration-200" role="navigation" aria-label="Main navigation" data-testid="navbar">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-14 md:h-16">
       
@@ -82,7 +82,7 @@ const navItems = [
         <!-- Mobile menu button with subtle cyan border -->
         <button
           id="mobile-menu-button"
-          class="mobile-menu-btn md:hidden inline-flex h-9 w-9 items-center justify-center rounded-md border border-neon-cyan/20 bg-transparent text-neon-cyan hover:text-neon-cyan/80 hover:border-neon-cyan/40 hover:bg-neon-cyan/5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-cyan/40 focus-visible:ring-offset-2 focus-visible:ring-offset-matrix-black"
+          class="mobile-menu-btn md:hidden inline-flex h-9 w-9 items-center justify-center rounded-md bg-transparent text-neon-cyan hover:text-neon-cyan/80 hover:bg-neon-cyan/5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-cyan/40 focus-visible:ring-offset-2 focus-visible:ring-offset-matrix-black"
           aria-label="Toggle mobile navigation menu"
           aria-expanded="false"
           aria-controls="mobile-menu"
@@ -97,12 +97,11 @@ const navItems = [
       </div>
     </div>
 
-    <!-- Mobile Navigation Menu: Full-height drawer with grid glow -->
-    <div id="mobile-menu" class="mobile-menu hidden md:hidden fixed top-0 left-0 right-0 bottom-0 bg-matrix-black/95 backdrop-blur-md z-50" role="menu" aria-labelledby="mobile-menu-button" data-testid="mobile-menu">
-      <div class="flex flex-col h-full">
+    <!-- Mobile Navigation Menu: Compact dropdown covering only top portion -->
+    <div id="mobile-menu" class="mobile-menu hidden md:hidden fixed top-0 left-0 right-0 bg-matrix-black z-50 shadow-lg" role="menu" aria-labelledby="mobile-menu-button" data-testid="mobile-menu">
+      <div class="flex flex-col">
         <!-- Mobile menu header -->
-        <div class="flex justify-between items-center p-4 border-b border-neon-lime/10">
-          <span class="font-orbitron text-neon-lime text-lg">Menu</span>
+        <div class="flex justify-end items-center p-4 border-b border-neon-lime/10">
           <button
             id="mobile-close-button"
             class="p-2 text-neon-lime hover:text-neon-lime/80 transition-colors duration-200"
@@ -114,7 +113,7 @@ const navItems = [
         </div>
         
         <!-- Mobile navigation links -->
-        <div class="flex-1 px-4 py-6 space-y-2" data-testid="mobile-nav-links">
+        <div class="px-4 py-6 space-y-2" data-testid="mobile-nav-links">
           {navItems.map((item) => (
             <a
               href={item.href}
@@ -132,13 +131,6 @@ const navItems = [
               {item.label}
             </a>
           ))}
-        </div>
-        
-        <!-- Mobile menu footer -->
-        <div class="p-4 border-t border-neon-lime/10">
-          <div class="text-center text-matrix-white/60 text-sm">
-            <span class="font-orbitron">VP</span> • Matrix Network
-          </div>
         </div>
       </div>
     </div>
@@ -191,14 +183,16 @@ const navItems = [
     box-shadow: 0 0 8px rgba(57, 255, 20, 0.3);
   }
   
-  /* Mobile menu slide animation - smooth and Matrix-appropriate */
+  /* Mobile menu slide-down animation with subtle fade */
   .mobile-menu {
-    transform: translateX(-100%);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(-12px);
+    opacity: 0;
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  
+
   .mobile-menu.show {
-    transform: translateX(0);
+    transform: translateY(0);
+    opacity: 1;
   }
   
   /* Hover underline animation - magnetic effect */
