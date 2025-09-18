@@ -47,7 +47,6 @@ function MessageBubble({ onComplete }) {
   const [showAccessGranted, setShowAccessGranted] = useState(false);
   const [accessGrantedComplete, setAccessGrantedComplete] = useState(false);
   const [accessGrantedText, setAccessGrantedText] = useState("");
-  const [isDeletingAccessGranted, setIsDeletingAccessGranted] = useState(false);
   const messages = [
     "Access granted.",
     "Hello, I am Vasilis.",
@@ -70,7 +69,6 @@ function MessageBubble({ onComplete }) {
             index++;
           } else {
             setTimeout(() => {
-              setIsDeletingAccessGranted(true);
               isDeleting = true;
               index = accessGrantedMessage.length - 1;
             }, 1200);

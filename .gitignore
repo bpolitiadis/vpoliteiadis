@@ -142,3 +142,4 @@ trace/
 # Test screenshots and videos
 screenshots/
 videos/
+.vercel

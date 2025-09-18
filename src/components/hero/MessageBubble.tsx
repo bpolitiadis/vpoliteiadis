@@ -46,7 +46,6 @@ export default function MessageBubble({ onComplete }: MessageBubbleProps) {
           } else {
             // Finished typing, wait then start deleting
             setTimeout(() => {
-              setIsDeletingAccessGranted(true);
               isDeleting = true;
               index = accessGrantedMessage.length - 1;
             }, 1200); // Pause before deletion

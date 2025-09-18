@@ -1,4 +1,3 @@
-import { l as loggedOperation } from '../../chunks/http-utils_DzliQsYx.mjs';
 import { o as objectType, s as stringType } from '../../chunks/astro/server_oRAxjIhj.mjs';
 export { renderers } from '../../renderers.mjs';
 
@@ -786,139 +785,99 @@ function getResend() {
   return new Resend(apiKey);
 }
 const contactFormSchema = objectType({
-  firstName: stringType().min(1, { message: "First Name is required" }).max(60),
-  lastName: stringType().min(1, { message: "Last Name is required" }).max(60),
-  email: stringType().email({ message: "Invalid email address" }).max(254),
-  message: stringType().min(1, { message: "Message is required" }).max(5e3),
+  firstName: stringType().min(1, "First name is required"),
+  lastName: stringType().min(1, "Last name is required"),
+  email: stringType().email("Invalid email address"),
+  subject: stringType().min(1, "Subject is required"),
+  message: stringType().min(1, "Message is required"),
   honeypot: stringType().optional()
+  // Honeypot field for spam detection
 });
-const rateLimitStore = /* @__PURE__ */ new Map();
-function checkRateLimit(ip) {
-  const now = Date.now();
-  const windowMs = parseInt("60000");
-  const maxRequests = parseInt("10");
-  const key = ip;
-  const current = rateLimitStore.get(key);
-  if (!current || now > current.resetTime) {
-    rateLimitStore.set(key, { count: 1, resetTime: now + windowMs });
-    return true;
-  }
-  if (current.count >= maxRequests) {
-    return false;
-  }
-  current.count++;
-  return true;
-}
-function cleanupRateLimit() {
-  const now = Date.now();
-  for (const [key, value] of rateLimitStore.entries()) {
-    if (now > value.resetTime) {
-      rateLimitStore.delete(key);
-    }
-  }
-}
-const POST = async ({ request, locals }) => {
-  const logger = locals.logger;
-  const { requestId, traceId } = locals.requestContext || {};
-  try {
-    const clientIP = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "unknown";
-    cleanupRateLimit();
-    if (!checkRateLimit(clientIP)) {
-      logger?.warn({ clientIP }, "Rate limit exceeded");
-      return new Response(JSON.stringify({
-        error: "Too many requests. Please try again later."
-      }), {
-        status: 429,
-        headers: { "Content-Type": "application/json" }
-      });
-    }
-    const body = await request.json();
-    const validationResult = contactFormSchema.safeParse(body);
-    if (!validationResult.success) {
-      logger?.warn({ errors: validationResult.error.errors }, "Contact form validation failed");
-      return new Response(JSON.stringify({
-        error: "Invalid form data",
-        details: validationResult.error.errors
-      }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" }
-      });
-    }
-    const formData = validationResult.data;
-    if (formData.honeypot && formData.honeypot.trim().length > 0) {
-      logger?.info({ honeypot: formData.honeypot }, "Honeypot triggered - likely spam");
-      return new Response(JSON.stringify({ success: true }), {
-        status: 200,
-        headers: { "Content-Type": "application/json" }
-      });
-    }
-    if (false) ;
-    if (false) ;
-    const emailResult = await loggedOperation(
-      "send-contact-emails",
-      async () => {
-        const resend = getResend();
-        const toEmail = "b.politiadis@gmail.com";
-        const replyTo = "contact@yourdomain.com";
-        const notificationTemplate = createContactFormEmail(formData);
-        const notificationResult = await resend.emails.send({
-          from: "onboarding@resend.dev",
-          to: [toEmail],
-          replyTo,
-          subject: notificationTemplate.subject,
-          html: notificationTemplate.html,
-          text: notificationTemplate.text
-        });
-        let confirmationResult = null;
-        if (true) {
-          const confirmationTemplate = createConfirmationEmail(formData);
-          confirmationResult = await resend.emails.send({
-            from: "onboarding@resend.dev",
-            to: [formData.email],
-            subject: confirmationTemplate.subject,
-            html: confirmationTemplate.html,
-            text: confirmationTemplate.text
-          });
-        }
-        if (false) ;
-        return { notification: notificationResult, confirmation: confirmationResult };
-      },
-      { requestId, traceId, logger }
-    );
-    if (emailResult.notification?.error) {
-      logger?.error({ error: emailResult.notification.error }, "Failed to send notification email");
-      return new Response(JSON.stringify({
-        error: "Failed to send message. Please try again later."
-      }), {
-        status: 500,
-        headers: { "Content-Type": "application/json" }
-      });
-    }
-    if (emailResult.confirmation?.error) {
-      logger?.warn({ error: emailResult.confirmation.error }, "Failed to send confirmation email, but notification was sent");
-    }
-    logger?.info({
-      notificationEmailId: emailResult.notification?.data?.id,
-      confirmationEmailId: emailResult.confirmation?.data?.id,
-      from: formData.email,
-      name: `${formData.firstName} ${formData.lastName}`
-    }, "Contact form submitted successfully");
+const POST = async ({ request }) => {
+  const formDataRaw = await request.formData();
+  const honeypotField = formDataRaw.get("honeypot");
+  if (honeypotField) {
+    console.warn("Honeypot field detected, likely spam.");
     return new Response(JSON.stringify({
-      success: true,
-      message: "Message sent successfully"
+      error: "Spam detected. Message not sent."
     }), {
-      status: 200,
+      status: 400,
       headers: { "Content-Type": "application/json" }
     });
-  } catch (error) {
-    logger?.error({ err: error }, "Contact form submission failed");
+  }
+  const body = Object.fromEntries(formDataRaw);
+  const parseResult = contactFormSchema.safeParse(body);
+  if (!parseResult.success) {
+    const errors = parseResult.error.errors.map((err) => ({
+      path: err.path.join("."),
+      message: err.message
+    }));
+    console.error("Validation errors:", errors);
     return new Response(JSON.stringify({
-      error: "Internal server error. Please try again later."
+      error: "Validation failed",
+      details: errors
+    }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" }
+    });
+  }
+  const formData = parseResult.data;
+  let emailResult;
+  try {
+    const resend = getResend();
+    const toEmail = "b.politiadis@gmail.com";
+    const replyTo = "contact@yourdomain.com";
+    const notificationTemplate = createContactFormEmail(formData);
+    const notificationResult = await resend.emails.send({
+      from: "onboarding@resend.dev",
+      to: [toEmail],
+      replyTo,
+      subject: notificationTemplate.subject,
+      html: notificationTemplate.html,
+      text: notificationTemplate.text
+    });
+    let confirmationResult = null;
+    if (true) {
+      const confirmationTemplate = createConfirmationEmail(formData);
+      confirmationResult = await resend.emails.send({
+        from: "onboarding@resend.dev",
+        to: [formData.email],
+        subject: confirmationTemplate.subject,
+        html: confirmationTemplate.html,
+        text: confirmationTemplate.text
+      });
+    }
+    if (false) ;
+    emailResult = { notification: notificationResult, confirmation: confirmationResult };
+  } catch (error) {
+    console.error("Failed to send emails:", error);
+    throw error;
+  }
+  if (emailResult.notification?.error) {
+    console.error("Failed to send notification email:", emailResult.notification.error);
+    return new Response(JSON.stringify({
+      error: "Failed to send message. Please try again later."
     }), {
       status: 500,
       headers: { "Content-Type": "application/json" }
     });
   }
+  if (emailResult.confirmation?.error) {
+    console.warn("Failed to send confirmation email, but notification was sent:", emailResult.confirmation.error);
+  }
+  console.log("Contact form submitted successfully", {
+    notificationEmailId: emailResult.notification?.data?.id,
+    confirmationEmailId: emailResult.confirmation?.data?.id,
+    from: formData.email,
+    name: `${formData.firstName} ${formData.lastName}`
+  });
+  return new Response(JSON.stringify({
+    success: true,
+    message: "Message sent successfully"
+  }), {
+    status: 200,
+    headers: { "Content-Type": "application/json" }
+  });
 };
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
