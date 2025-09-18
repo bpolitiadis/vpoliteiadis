@@ -8,7 +8,40 @@ import {
   createRequestLogger,
   type RequestContext 
 } from './lib/logger-serverless.js';
-import { isRateLimited } from './lib/http-utils-serverless.js';
+
+// Simple rate limiting without external dependencies
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+
+const isRateLimited = (key: string, maxRequests: number, windowMs: number): boolean => {
+  const now = Date.now();
+  const record = rateLimitMap.get(key);
+  
+  if (!record || now > record.resetTime) {
+    rateLimitMap.set(key, { count: 1, resetTime: now + windowMs });
+    return false;
+  }
+  
+  if (record.count >= maxRequests) {
+    return true;
+  }
+  
+  record.count++;
+  return false;
+};
+
+// Lazy import for Sentry to avoid initialization issues
+let captureErrorWithContext: any = null;
+const initSentry = async () => {
+  if (!captureErrorWithContext) {
+    try {
+      const sentry = await import('./lib/sentry.js');
+      captureErrorWithContext = sentry.captureErrorWithContext;
+    } catch (error) {
+      console.warn('Failed to load Sentry:', error);
+      captureErrorWithContext = () => {}; // No-op fallback
+    }
+  }
+};
 
 // Security headers fallback for non-Vercel deployments + Request correlation
 export const onRequest: MiddlewareHandler = async (context, next) => {
@@ -98,11 +131,18 @@ export const onRequest: MiddlewareHandler = async (context, next) => {
   } catch (err) {
     error = err instanceof Error ? err : new Error(String(err));
     
-    // Log error
+    // Log error and capture to Sentry
     requestLogger.error({
       err: error,
       durationMs: Date.now() - startTime,
     }, `Request processing error for ${method} ${route}`);
+
+    // Initialize Sentry if not already done
+    await initSentry();
+    captureErrorWithContext(error, {
+      ...requestContext,
+      status: 500,
+    });
 
     // Return a clean error response
     response = new Response('Internal Server Error', { 
@@ -181,6 +221,20 @@ export const onRequest: MiddlewareHandler = async (context, next) => {
       method,
       route,
     }, `${method} ${route} completed with status ${status} in ${durationMs}ms`);
+  }
+
+  // Capture 4xx/5xx responses to Sentry (with sampling, skip during prerendering)
+  if (!isPrerendering && status >= 400 && !error) { // Don't double-capture if we already caught an error above
+    const shouldCapture = status >= 500 || (status >= 400 && requestContext.userAgentCategory !== 'bot');
+    
+    if (shouldCapture) {
+      const httpError = new Error(`HTTP ${status} response for ${method} ${route}`);
+      await initSentry();
+      captureErrorWithContext(httpError, {
+        ...requestContext,
+        status,
+      });
+    }
   }
 
   return response;

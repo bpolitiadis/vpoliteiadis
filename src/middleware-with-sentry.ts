@@ -7,9 +7,9 @@ import {
   categorizeUserAgent, 
   createRequestLogger,
   type RequestContext 
-} from './lib/logger.js';
+} from './lib/logger-serverless.js';
 import { captureErrorWithContext } from './lib/sentry.js';
-import { isRateLimited } from './lib/http-utils.js';
+import { isRateLimited } from './lib/http-utils-serverless.js';
 
 // Security headers fallback for non-Vercel deployments + Request correlation
 export const onRequest: MiddlewareHandler = async (context, next) => {
