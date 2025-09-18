@@ -17,204 +17,134 @@ function getResend() {
 
 // Contact form validation schema
 const contactFormSchema = z.object({
-  firstName: z.string().min(1, { message: 'First Name is required' }).max(60),
-  lastName: z.string().min(1, { message: 'Last Name is required' }).max(60),
-  email: z.string().email({ message: 'Invalid email address' }).max(254),
-  message: z.string().min(1, { message: 'Message is required' }).max(5000),
-  honeypot: z.string().optional(),
+  firstName: z.string().min(1, 'First name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
+  email: z.string().email('Invalid email address'),
+  subject: z.string().min(1, 'Subject is required'),
+  message: z.string().min(1, 'Message is required'),
+  honeypot: z.string().optional(), // Honeypot field for spam detection
 });
 
-
-// Rate limiting store (in production, use Redis or similar)
-const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
-
-// Rate limiting function
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now();
-  const windowMs = parseInt(import.meta.env.RATE_LIMIT_WINDOW || '60000');
-  const maxRequests = parseInt(import.meta.env.RATE_LIMIT_REQUESTS || '10');
-  
-  const key = ip;
-  const current = rateLimitStore.get(key);
-  
-  if (!current || now > current.resetTime) {
-    rateLimitStore.set(key, { count: 1, resetTime: now + windowMs });
-    return true;
-  }
-  
-  if (current.count >= maxRequests) {
-    return false;
-  }
-  
-  current.count++;
-  return true;
-}
-
-// Clean up old rate limit entries
-function cleanupRateLimit() {
-  const now = Date.now();
-  for (const [key, value] of rateLimitStore.entries()) {
-    if (now > value.resetTime) {
-      rateLimitStore.delete(key);
-    }
-  }
-}
-
-
-export const POST: APIRoute = async ({ request, locals }) => {
-  const logger = locals.logger;
-  const { requestId, traceId } = locals.requestContext || {};
-  
-  try {
-    // Get client IP for rate limiting
-    const clientIP = request.headers.get('x-forwarded-for') || 
-                    request.headers.get('x-real-ip') || 
-                    'unknown';
-    
-    // Check rate limiting
-    cleanupRateLimit();
-    if (!checkRateLimit(clientIP)) {
-      logger?.warn({ clientIP }, 'Rate limit exceeded');
-      return new Response(JSON.stringify({ 
-        error: 'Too many requests. Please try again later.' 
-      }), {
-        status: 429,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
-    
-    // Parse and validate request body
-    const body = await request.json();
-    const validationResult = contactFormSchema.safeParse(body);
-    
-    if (!validationResult.success) {
-      logger?.warn({ errors: validationResult.error.errors }, 'Contact form validation failed');
-      return new Response(JSON.stringify({ 
-        error: 'Invalid form data',
-        details: validationResult.error.errors 
-      }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
-    
-    const formData = validationResult.data;
-    
-    // Check honeypot (spam protection)
-    if (formData.honeypot && formData.honeypot.trim().length > 0) {
-      logger?.info({ honeypot: formData.honeypot }, 'Honeypot triggered - likely spam');
-      // Silently accept to avoid revealing the honeypot
-      return new Response(JSON.stringify({ success: true }), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
-    
-    // Validate required environment variables
-    if (!import.meta.env.RESEND_API_KEY) {
-      logger?.error('RESEND_API_KEY environment variable is not set');
-      return new Response(JSON.stringify({ 
-        error: 'Email service not configured' 
-      }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
-    
-    if (!import.meta.env.FROM_EMAIL) {
-      logger?.error('FROM_EMAIL environment variable is not set');
-      return new Response(JSON.stringify({ 
-        error: 'Email service not configured' 
-      }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
-    
-    // Send emails using Resend
-    let emailResult;
-    try {
-      const resend = getResend();
-      const toEmail = import.meta.env.CONTACT_EMAIL || import.meta.env.FROM_EMAIL;
-      const replyTo = import.meta.env.REPLY_TO_EMAIL || formData.email;
-      
-      // Send notification email to site owner
-      const notificationTemplate = createContactFormEmail(formData);
-      const notificationResult = await resend.emails.send({
-        from: import.meta.env.FROM_EMAIL,
-        to: [toEmail],
-        replyTo: replyTo,
-        subject: notificationTemplate.subject,
-        html: notificationTemplate.html,
-        text: notificationTemplate.text,
-      });
-      
-      // Send confirmation email to form submitter (optional)
-      let confirmationResult = null;
-      if (import.meta.env.SEND_CONFIRMATION_EMAIL === 'true') {
-        const confirmationTemplate = createConfirmationEmail(formData);
-        confirmationResult = await resend.emails.send({
-          from: import.meta.env.FROM_EMAIL,
-          to: [formData.email],
-          subject: confirmationTemplate.subject,
-          html: confirmationTemplate.html,
-          text: confirmationTemplate.text,
-        });
-      }
-      
-      if (import.meta.env.RESEND_DEBUG === 'true') {
-        console.log('Emails sent successfully', { 
-          notificationEmailId: notificationResult.data?.id,
-          confirmationEmailId: confirmationResult?.data?.id,
-          to: toEmail,
-          replyTo,
-          subject: notificationTemplate.subject 
-        });
-      }
-      
-      emailResult = { notification: notificationResult, confirmation: confirmationResult };
-    } catch (error) {
-      console.error('Failed to send emails:', error);
-      throw error;
-    }
-    
-    if (emailResult.notification?.error) {
-      console.error('Failed to send notification email:', emailResult.notification.error);
-      return new Response(JSON.stringify({ 
-        error: 'Failed to send message. Please try again later.' 
-      }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
-    
-    if (emailResult.confirmation?.error) {
-      console.warn('Failed to send confirmation email, but notification was sent:', emailResult.confirmation.error);
-    }
-    
-    console.log('Contact form submitted successfully', { 
-      notificationEmailId: emailResult.notification?.data?.id,
-      confirmationEmailId: emailResult.confirmation?.data?.id,
-      from: formData.email,
-      name: `${formData.firstName} ${formData.lastName}`
-    });
-    
+export const POST: APIRoute = async ({ request }) => {
+  // Honeypot check
+  const formDataRaw = await request.formData();
+  const honeypotField = formDataRaw.get('honeypot');
+  if (honeypotField) {
+    console.warn('Honeypot field detected, likely spam.');
     return new Response(JSON.stringify({ 
-      success: true,
-      message: 'Message sent successfully' 
+      error: 'Spam detected. Message not sent.' 
     }), {
-      status: 200,
+      status: 400,
       headers: { 'Content-Type': 'application/json' },
     });
-    
-  } catch (error) {
-    logger?.error({ err: error }, 'Contact form submission failed');
-    
+  }
+
+  const body = Object.fromEntries(formDataRaw);
+
+  const parseResult = contactFormSchema.safeParse(body);
+
+  if (!parseResult.success) {
+    const errors = parseResult.error.errors.map(err => ({
+      path: err.path.join('.'),
+      message: err.message,
+    }));
+    console.error('Validation errors:', errors);
     return new Response(JSON.stringify({ 
-      error: 'Internal server error. Please try again later.' 
+      error: 'Validation failed', 
+      details: errors 
+    }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  const formData = parseResult.data;
+
+  // Ensure environment variables are set
+  if (!import.meta.env.RESEND_API_KEY || !import.meta.env.FROM_EMAIL || !import.meta.env.CONTACT_EMAIL) {
+    console.error('Missing Resend API key or email environment variables.');
+    return new Response(JSON.stringify({ 
+      error: 'Server configuration error. Please try again later.' 
     }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
   }
+  
+  // Send emails using Resend
+  let emailResult;
+  try {
+    const resend = getResend();
+    const toEmail = import.meta.env.CONTACT_EMAIL || import.meta.env.FROM_EMAIL;
+    const replyTo = import.meta.env.REPLY_TO_EMAIL || formData.email;
+    
+    // Send notification email to site owner
+    const notificationTemplate = createContactFormEmail(formData);
+    const notificationResult = await resend.emails.send({
+      from: import.meta.env.FROM_EMAIL,
+      to: [toEmail],
+      replyTo: replyTo,
+      subject: notificationTemplate.subject,
+      html: notificationTemplate.html,
+      text: notificationTemplate.text,
+    });
+    
+    // Send confirmation email to form submitter (optional)
+    let confirmationResult = null;
+    if (import.meta.env.SEND_CONFIRMATION_EMAIL === 'true') {
+      const confirmationTemplate = createConfirmationEmail(formData);
+      confirmationResult = await resend.emails.send({
+        from: import.meta.env.FROM_EMAIL,
+        to: [formData.email],
+        subject: confirmationTemplate.subject,
+        html: confirmationTemplate.html,
+        text: confirmationTemplate.text,
+      });
+    }
+    
+    if (import.meta.env.RESEND_DEBUG === 'true') {
+      console.log('Emails sent successfully', { 
+        notificationEmailId: notificationResult.data?.id,
+        confirmationEmailId: confirmationResult?.data?.id,
+        to: toEmail,
+        replyTo,
+        subject: notificationTemplate.subject 
+      });
+    }
+    
+    emailResult = { notification: notificationResult, confirmation: confirmationResult };
+  } catch (error) {
+    console.error('Failed to send emails:', error);
+    throw error;
+  }
+  
+  if (emailResult.notification?.error) {
+    console.error('Failed to send notification email:', emailResult.notification.error);
+    return new Response(JSON.stringify({ 
+      error: 'Failed to send message. Please try again later.' 
+    }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+  
+  if (emailResult.confirmation?.error) {
+    console.warn('Failed to send confirmation email, but notification was sent:', emailResult.confirmation.error);
+  }
+  
+  console.log('Contact form submitted successfully', { 
+    notificationEmailId: emailResult.notification?.data?.id,
+    confirmationEmailId: emailResult.confirmation?.data?.id,
+    from: formData.email,
+    name: `${formData.firstName} ${formData.lastName}`
+  });
+  
+  return new Response(JSON.stringify({ 
+    success: true,
+    message: 'Message sent successfully' 
+  }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  });
+  
 };
