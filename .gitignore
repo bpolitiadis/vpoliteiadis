@@ -142,4 +142,56 @@ trace/
 # Test screenshots and videos
 screenshots/
 videos/
+
+# ===========================================
+# Vercel & Deployment Artifacts
+# ===========================================
 .vercel
+.vercel/output/
+.vercel/project.json
+
+# Build artifacts that Vercel generates
+.astro/
+dist/
+.output/
+
+# Vercel CLI cache
+.vercel/cache/
+
+# ===========================================
+# Performance & Security
+# ===========================================
+# Large files that shouldn't be in git
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Database files (if any)
+*.db
+*.sqlite
+*.sqlite3
+
+# Backup files
+*.bak
+*.backup
+*.orig
+
+# Source maps in production (optional - comment out if you need them)
+# *.map
+# *.map.js
+
+# ===========================================
+# Development Tools
+# ===========================================
+# Bundle analyzer outputs
+bundle-analyzer-report.html
+.bundle-analyzer/
+
+# Lighthouse reports
+lighthouse-report.html
+lighthouse/
+
+# Performance profiling
+profile/
+*.cpuprofile
