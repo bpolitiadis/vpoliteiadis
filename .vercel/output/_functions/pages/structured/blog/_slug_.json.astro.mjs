@@ -1,4 +1,4 @@
-import { g as getCollection } from '../../../chunks/_astro_content_DGsqosVy.mjs';
+import { g as getCollection } from '../../../chunks/_astro_content_BemCumoN.mjs';
 export { renderers } from '../../../renderers.mjs';
 
 async function getStaticPaths() {

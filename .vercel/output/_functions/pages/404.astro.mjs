@@ -1,5 +1,6 @@
-import { c as createComponent, r as renderComponent, a as renderTemplate, m as maybeRenderHead } from '../chunks/astro/server_CVZbsiOP.mjs';
-import { $ as $$MainLayout } from '../chunks/MainLayout_BQqTk3O_.mjs';
+/* empty css                                 */
+import { c as createComponent, r as renderComponent, a as renderTemplate, m as maybeRenderHead } from '../chunks/astro/server_oRAxjIhj.mjs';
+import { $ as $$MainLayout } from '../chunks/MainLayout_CQJIJsth.mjs';
 import { jsx } from 'react/jsx-runtime';
 import React__default, { useRef, useEffect } from 'react';
 /* empty css                               */

@@ -1,6 +1,7 @@
-import { b as createAstro, c as createComponent, r as renderComponent, a as renderTemplate, e as addAttribute, F as Fragment, m as maybeRenderHead } from '../../chunks/astro/server_CVZbsiOP.mjs';
-import { g as getCollection } from '../../chunks/_astro_content_DGsqosVy.mjs';
-import { $ as $$MainLayout } from '../../chunks/MainLayout_BQqTk3O_.mjs';
+/* empty css                                    */
+import { b as createAstro, c as createComponent, r as renderComponent, a as renderTemplate, f as addAttribute, F as Fragment, m as maybeRenderHead } from '../../chunks/astro/server_oRAxjIhj.mjs';
+import { g as getCollection } from '../../chunks/_astro_content_BemCumoN.mjs';
+import { $ as $$MainLayout } from '../../chunks/MainLayout_CQJIJsth.mjs';
 /* empty css                                     */
 export { renderers } from '../../renderers.mjs';
 
