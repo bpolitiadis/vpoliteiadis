@@ -1,8 +1,7 @@
-/* empty css                                    */
-import { c as createComponent, r as renderComponent, a as renderTemplate, m as maybeRenderHead } from '../../chunks/astro/server_oRAxjIhj.mjs';
-import { $ as $$MainLayout } from '../../chunks/MainLayout_CQJIJsth.mjs';
+import { c as createComponent, r as renderComponent, a as renderTemplate, m as maybeRenderHead } from '../../chunks/astro/server_CVZbsiOP.mjs';
+import { $ as $$MainLayout } from '../../chunks/MainLayout_BQqTk3O_.mjs';
 import '../../chunks/index_MaT6fT73.mjs';
-import { $ as $$Image } from '../../chunks/_astro_assets_CaKx1WID.mjs';
+import { $ as $$Image } from '../../chunks/_astro_assets_CHg-JfGd.mjs';
 export { renderers } from '../../renderers.mjs';
 
 const arteImaginariWide = new Proxy({"src":"/_astro/arte-imaginari-wide.DZsDrpp8.webp","width":4000,"height":2248,"format":"webp"}, {

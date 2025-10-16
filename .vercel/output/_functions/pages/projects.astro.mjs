@@ -1,12 +1,11 @@
-/* empty css                                 */
-import { b as createAstro, c as createComponent, m as maybeRenderHead, f as addAttribute, i as spreadAttributes, a as renderTemplate, r as renderComponent } from '../chunks/astro/server_oRAxjIhj.mjs';
-import { $ as $$MainLayout } from '../chunks/MainLayout_CQJIJsth.mjs';
+import { b as createAstro, c as createComponent, m as maybeRenderHead, e as addAttribute, s as spreadAttributes, a as renderTemplate, r as renderComponent } from '../chunks/astro/server_CVZbsiOP.mjs';
+import { $ as $$MainLayout } from '../chunks/MainLayout_BQqTk3O_.mjs';
 import 'clsx';
 import { C as Card, c as CardContent, b as CardTitle, e as CardDescription } from '../chunks/card_D2wKyJ59.mjs';
 import { B as Badge } from '../chunks/badge_BCuiEq3Z.mjs';
 /* empty css                                 */
-import { $ as $$PageHero } from '../chunks/PageHero_BjE41jxl.mjs';
-import { g as getCollection } from '../chunks/_astro_content_C41yBsGA.mjs';
+import { $ as $$PageHero } from '../chunks/PageHero_C7aH2BBJ.mjs';
+import { g as getCollection } from '../chunks/_astro_content_DGsqosVy.mjs';
 export { renderers } from '../renderers.mjs';
 
 const $$Astro$1 = createAstro("https://vpoliteiadis.com");

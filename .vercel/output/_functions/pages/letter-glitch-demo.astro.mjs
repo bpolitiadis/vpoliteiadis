@@ -1,6 +1,5 @@
-/* empty css                                 */
-import { c as createComponent, r as renderComponent, a as renderTemplate, m as maybeRenderHead } from '../chunks/astro/server_oRAxjIhj.mjs';
-import { $ as $$MainLayout } from '../chunks/MainLayout_CQJIJsth.mjs';
+import { c as createComponent, r as renderComponent, a as renderTemplate, m as maybeRenderHead } from '../chunks/astro/server_CVZbsiOP.mjs';
+import { $ as $$MainLayout } from '../chunks/MainLayout_BQqTk3O_.mjs';
 import { L as LetterGlitch } from '../chunks/LetterGlitch_McnhYqDE.mjs';
 export { renderers } from '../renderers.mjs';
 

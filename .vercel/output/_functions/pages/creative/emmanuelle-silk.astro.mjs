@@ -1,6 +1,5 @@
-/* empty css                                    */
-import { c as createComponent, r as renderComponent, a as renderTemplate, m as maybeRenderHead } from '../../chunks/astro/server_oRAxjIhj.mjs';
-import { $ as $$MainLayout } from '../../chunks/MainLayout_CQJIJsth.mjs';
+import { c as createComponent, r as renderComponent, a as renderTemplate, m as maybeRenderHead } from '../../chunks/astro/server_CVZbsiOP.mjs';
+import { $ as $$MainLayout } from '../../chunks/MainLayout_BQqTk3O_.mjs';
 import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
 import { useState, useMemo, useCallback } from 'react';
 import Lightbox from 'yet-another-react-lightbox';
