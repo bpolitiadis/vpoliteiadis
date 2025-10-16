@@ -20,14 +20,6 @@
 			"dest": "_render"
 		},
 		{
-			"src": "^/404/?$",
-			"dest": "_render"
-		},
-		{
-			"src": "^/ai\\.txt/?$",
-			"dest": "_render"
-		},
-		{
 			"src": "^/api/contact/?$",
 			"dest": "_render"
 		},
@@ -40,64 +32,8 @@
 			"dest": "_render"
 		},
 		{
-			"src": "^/blog/([^/]+?)/?$",
-			"dest": "_render"
-		},
-		{
-			"src": "^/blog/?$",
-			"dest": "_render"
-		},
-		{
-			"src": "^/creative/arte-imaginari/?$",
-			"dest": "_render"
-		},
-		{
-			"src": "^/creative/emmanuelle-silk/?$",
-			"dest": "_render"
-		},
-		{
-			"src": "^/creative/smoking-two/?$",
-			"dest": "_render"
-		},
-		{
-			"src": "^/creative/?$",
-			"dest": "_render"
-		},
-		{
-			"src": "^/letter-glitch-demo/?$",
-			"dest": "_render"
-		},
-		{
-			"src": "^/projects/casa-capoeira/?$",
-			"dest": "_render"
-		},
-		{
-			"src": "^/projects/upiria/?$",
-			"dest": "_render"
-		},
-		{
-			"src": "^/robots\\.txt/?$",
-			"dest": "_render"
-		},
-		{
-			"src": "^/structured/blog/([^/]+?)\\.json/?$",
-			"dest": "_render"
-		},
-		{
-			"src": "^/structured/person\\.json/?$",
-			"dest": "_render"
-		},
-		{
-			"src": "^/structured/project/([^/]+?)\\.json/?$",
-			"dest": "_render"
-		},
-		{
-			"src": "^/structured/website\\.json/?$",
-			"dest": "_render"
-		},
-		{
 			"src": "^/.*$",
-			"dest": "_render",
+			"dest": "/404.html",
 			"status": 404
 		}
 	]

@@ -15,7 +15,7 @@ import rehypeSanitize from 'rehype-sanitize';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://vpoliteiadis.com',
-  output: 'server',
+  output: 'static',
   adapter: vercel({
     webAnalytics: { enabled: true },
     isr: false,
