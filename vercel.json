@@ -1,14 +1,4 @@
 {
-  "functions": {
-    "src/pages/api/*.ts": {
-      "maxDuration": 30
-    }
-  },
-  "buildCommand": "pnpm run build",
-  "devCommand": "pnpm run dev",
-  "installCommand": "pnpm install",
-  "framework": "astro",
-  "outputDirectory": ".vercel/output",
   "headers": [
     {
       "source": "/_astro/(.*)",
