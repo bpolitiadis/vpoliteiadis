@@ -6,7 +6,7 @@ import { C as Card, c as CardContent, b as CardTitle, e as CardDescription } fro
 import { B as Badge } from '../chunks/badge_BCuiEq3Z.mjs';
 /* empty css                                 */
 import { $ as $$PageHero } from '../chunks/PageHero_BjE41jxl.mjs';
-import { g as getCollection } from '../chunks/_astro_content_DDGfzFtE.mjs';
+import { g as getCollection } from '../chunks/_astro_content_BYZWCMIG.mjs';
 export { renderers } from '../renderers.mjs';
 
 const $$Astro$1 = createAstro("https://vpoliteiadis.com");

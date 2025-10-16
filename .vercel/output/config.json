@@ -13,107 +13,107 @@
 		},
 		{
 			"src": "^/_server-islands/([^/]+?)/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/_image/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/404/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/about/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/ai\\.txt/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/api/contact/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/api/health/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/api/test-contact/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/blog/([^/]+?)/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/blog/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/contact/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/creative/arte-imaginari/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/creative/emmanuelle-silk/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/creative/smoking-two/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/creative/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/letter-glitch-demo/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/projects/casa-capoeira/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/projects/upiria/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/projects/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/robots\\.txt/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/structured/blog/([^/]+?)\\.json/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/structured/person\\.json/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/structured/project/([^/]+?)\\.json/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/structured/website\\.json/?$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/$",
-			"dest": "_render"
+			"dest": "_middleware"
 		},
 		{
 			"src": "^/.*$",
-			"dest": "_render",
+			"dest": "_middleware",
 			"status": 404
 		}
 	]
