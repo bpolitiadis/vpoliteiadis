@@ -23,6 +23,7 @@ export default defineConfig({
   // Performance optimizations
   build: {
     inlineStylesheets: 'auto',
+    assets: '_astro',
   },
   // Vite optimizations
   vite: {
@@ -39,6 +40,7 @@ export default defineConfig({
     },
     ssr: {
       noExternal: ['@radix-ui/*', 'resend', 'zod', 'pino', 'uuid'],
+      external: ['sharp'],
     },
   },
   integrations: [

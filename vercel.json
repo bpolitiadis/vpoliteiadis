@@ -1,4 +1,12 @@
 {
+  "functions": {
+    "src/pages/api/*.ts": {
+      "maxDuration": 30
+    }
+  },
+  "buildCommand": "pnpm run build",
+  "devCommand": "pnpm run dev",
+  "installCommand": "pnpm install",
   "headers": [
     {
       "source": "/_astro/(.*)",
