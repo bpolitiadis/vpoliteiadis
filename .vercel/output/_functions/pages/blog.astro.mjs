@@ -1,6 +1,6 @@
 /* empty css                                 */
 import { c as createComponent, a as renderTemplate, r as renderComponent, m as maybeRenderHead, f as addAttribute, F as Fragment } from '../chunks/astro/server_oRAxjIhj.mjs';
-import { g as getCollection } from '../chunks/_astro_content_BemCumoN.mjs';
+import { g as getCollection } from '../chunks/_astro_content_DDGfzFtE.mjs';
 import { $ as $$MainLayout } from '../chunks/MainLayout_CQJIJsth.mjs';
 import { $ as $$PageHero } from '../chunks/PageHero_BjE41jxl.mjs';
 export { renderers } from '../renderers.mjs';
