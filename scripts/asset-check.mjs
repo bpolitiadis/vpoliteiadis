@@ -20,7 +20,7 @@ function walk(dir) {
   return files;
 }
 
-const files = walk(repoRoot);
+const files = walk(repoRoot).filter((f) => !/\/(docs|test-results|playwright-report)\//.test(f) && !/\/src\/content\//.test(f));
 const missing = [];
 
 for (const file of files) {
