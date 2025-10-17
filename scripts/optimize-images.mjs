@@ -6,13 +6,12 @@ import sharp from 'sharp';
 const root = process.cwd();
 const sourceImagesDir = path.join(root, 'src', 'assets', 'images');
 const imagesDir = path.join(root, 'public', 'images');
-const creativeDir = path.join(root, 'public', 'creative');
 
 // 2025 Best Practices: Modern responsive breakpoints
-const sizes = [480, 800, 1200, 1600, 2400, 3840];
+const sizes = [480, 800, 1200, 1600, 2400];
 const formats = [
-  { ext: 'avif', options: { quality: 60, effort: 6 } }, // AVIF with higher effort for better compression
-  { ext: 'webp', options: { quality: 80, effort: 6 } }, // WebP with better quality
+  { ext: 'avif', options: { quality: 60, effort: 6 } },
+  { ext: 'webp', options: { quality: 80, effort: 6 } },
 ];
 
 // Modern responsive image configuration
@@ -30,6 +29,11 @@ async function processImage(filePath) {
 
   const dir = path.dirname(filePath);
   const base = path.basename(filePath, ext);
+
+  // Skip if already processed (has width suffix)
+  if (base.includes('-480w') || base.includes('-800w') || base.includes('-1200w') || base.includes('-1600w') || base.includes('-2400w')) {
+    return;
+  }
 
   // If processing source images, output to public/images
   let outputDir = dir;
@@ -124,17 +128,13 @@ function* walk(dir) {
   let processedCount = 0;
   let errorCount = 0;
   
-  for (const target of [sourceImagesDir, imagesDir, creativeDir]) {
-    if (!fs.existsSync(target)) continue;
-    
-    for (const file of walk(target)) {
-      try {
-        await processImage(file);
-        processedCount++;
-      } catch (error) {
-        console.warn(`⚠ Skip ${file}: ${error.message}`);
-        errorCount++;
-      }
+  for (const file of walk(sourceImagesDir)) {
+    try {
+      await processImage(file);
+      processedCount++;
+    } catch (error) {
+      console.warn(`⚠ Skip ${file}: ${error.message}`);
+      errorCount++;
     }
   }
   
