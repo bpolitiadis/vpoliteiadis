@@ -5,9 +5,7 @@
 node_modules
 dist/client/
 dist/server/
-public/images/
 .astro/
-scripts/
 docs/
 test-results/
 playwright-report/
