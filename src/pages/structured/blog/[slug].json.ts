@@ -1,6 +1,9 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 
+// Prerender these structured data endpoints
+export const prerender = true;
+
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts
