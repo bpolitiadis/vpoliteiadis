@@ -345,6 +345,16 @@ const finalStructuredData = structuredData ? { ...baseStructuredData, ...structu
     <script is:inline src="/scripts/theme-init.js" defer></script>
     <!-- Performance optimization script -->
     <script is:inline src="/scripts/performance.js" defer></script>
+    
+    <!-- Vercel Analytics -->
+    <script is:inline>
+      (function() {
+        var script = document.createElement('script');
+        script.src = '/_vercel/insights/script.js';
+        script.defer = true;
+        document.head.appendChild(script);
+      })();
+    </script>
   </body>
 </html>
 
