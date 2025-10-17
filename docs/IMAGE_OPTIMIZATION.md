@@ -194,7 +194,7 @@ import { Image } from 'astro:assets';
 
 ### ✅ Do
 
-- Use Astro's Image component in `.astro` files
+- Use Astro's Image component in `.astro` files or `AImage` wrapper
 - Store source images in `src/assets/images/` or `public/images/`
 - Specify appropriate width/height attributes
 - Use meaningful alt text
@@ -215,7 +215,7 @@ import { Image } from 'astro:assets';
 
 ## Component Usage
 
-### VercelImage.astro (Legacy Wrapper)
+### AImage.astro (Canonical Wrapper)
 
 ```astro
 ---
@@ -240,23 +240,10 @@ const { src, alt = '', width = 1200, height = 800, class: className = '', sizes 
 const isDecorative = decorative || (alt || '').trim() === '';
 ---
 
-<Image
-  src={src}
-  alt={alt}
-  width={width}
-  height={height}
-  class={className}
-  sizes={sizes}
-  loading={loading}
-  decoding={decoding}
-  fetchpriority={fetchpriority}
-  quality={quality}
-  aria-hidden={isDecorative ? 'true' : undefined}
-  role={isDecorative ? 'presentation' : undefined}
-/>
+<AImage src={myImportedImage} alt="..." preset="card" />
 ```
 
-### OptimizedImage.tsx (React Fallback)
+### React usage (Fallback in Astro context)
 
 ```tsx
 import React from 'react';
@@ -271,22 +258,7 @@ type OptimizedImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
 /**
  * @deprecated Use Astro's Image component directly in .astro files instead
  */
-export function OptimizedImage(props: OptimizedImageProps) {
-  const { src, width = 1200, quality = 75, decorative = false, ...rest } = props;
-  const isDecorative = decorative || (rest.alt || '').trim() === '';
-
-  return (
-    <img
-      src={src}
-      width={width}
-      loading={rest.loading ?? 'lazy'}
-      decoding={rest.decoding ?? 'async'}
-      aria-hidden={isDecorative ? 'true' : undefined}
-      role={isDecorative ? 'presentation' : undefined}
-      {...rest}
-    />
-  );
-}
+<img src="/images/..." alt="..." width={1280} height={720} loading="lazy" decoding="async" />
 ```
 
 ## Monitoring and Maintenance

@@ -1,4 +1,4 @@
-import OptimizedImage from './OptimizedImage';
+// Standardized: use plain <img> for static public assets
 
 type FeaturedProjectCardProps = {
   title: string;
@@ -36,7 +36,7 @@ export default function FeaturedProjectCard({
     >
       {/* Hero */}
       <a href={detailUrl} className="relative overflow-hidden rounded-t-2xl aspect-video bg-dark-slate/60 block" aria-label={`Open ${title} details`} data-testid={`featured-project-hero-${title.toLowerCase().replace(/\s+/g, '-')}`}>
-        <OptimizedImage
+        <img
           src={hero}
           alt={title}
           className={
@@ -44,6 +44,10 @@ export default function FeaturedProjectCard({
             'transition-transform duration-500 group-hover:scale-105 will-change-transform'
           }
           width={1280}
+          height={720}
+          loading="lazy"
+          decoding="async"
+          sizes="(max-width: 1024px) 100vw, 33vw"
         />
         {logoSrc && heroFit === 'cover' && (
           <img
@@ -52,6 +56,8 @@ export default function FeaturedProjectCard({
             className="absolute left-4 top-4 h-12 w-12 rounded-md border border-border/40 bg-background/70 p-1 shadow-neon backdrop-blur-xs"
             loading="lazy"
             decoding="async"
+            width={48}
+            height={48}
           />
         )}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/70 via-background/20 to-transparent" />

@@ -62,8 +62,11 @@ export default function AboutHero({ quotes }: AboutHeroProps) {
             src={avatarImage.src}
             alt="Portrait of Vasileios Politeiadis"
             className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 mx-auto rounded-full object-cover"
+            width={112}
+            height={112}
             loading="eager"
             fetchPriority="high"
+            decoding="async"
           />
         </ElectricBorder>
       </div>

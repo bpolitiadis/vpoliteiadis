@@ -94,6 +94,11 @@ test.describe('Contact Form - Focused Tests', () => {
 
   test.describe('Happy Path', () => {
     test('should submit form successfully and show success message', async ({ page }) => {
+      // Track console errors to catch 404/MIME issues
+      const consoleErrors: string[] = [];
+      page.on('console', (msg) => {
+        if (msg.type() === 'error') consoleErrors.push(msg.text());
+      });
       // Mock successful API response
       await ContactFormMocks.mockSuccessResponse(page);
       
@@ -114,6 +119,9 @@ test.describe('Contact Form - Focused Tests', () => {
       expect(formData.lastName).toBe('');
       expect(formData.email).toBe('');
       expect(formData.message).toBe('');
+
+      // No console errors (e.g., missing assets)
+      expect.soft(consoleErrors).toHaveLength(0);
     });
 
     test('should handle honeypot submission', async ({ page }) => {

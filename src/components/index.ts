@@ -7,7 +7,6 @@ export { default as ElectricBorder } from './ElectricBorder';
 export { default as FeaturedProjectCard } from './FeaturedProjectCard';
 export { default as FuzzyText } from './FuzzyText';
 export { default as LightboxGallery } from './LightboxGallery';
-export { default as OptimizedImage } from './OptimizedImage';
 export { default as TextType } from './TextType';
 
 // Astro Components
@@ -21,4 +20,5 @@ export { default as ProjectCard } from './ProjectCard.astro';
 export { default as ScreenshotFrame } from './ScreenshotFrame.astro';
 export { default as SocialLink } from './SocialLink.astro';
 export { default as SpotifyEmbed } from './SpotifyEmbed.astro';
-export { default as VercelImage } from './VercelImage.astro';
+export { default as AImage } from './media/AImage.astro';
+// Removed legacy image wrappers in favor of astro:assets or <img>

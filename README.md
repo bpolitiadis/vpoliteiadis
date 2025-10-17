@@ -34,12 +34,13 @@ scripts/                    # Build and optimization scripts
 docs/                       # Project documentation
 ```
 
-### Image Optimization Pipeline
+### Image Workflow (2025)
 
-- **Source**: High-quality images in `src/assets/images/`
-- **Build**: Automated optimization with responsive breakpoints
-- **Output**: AVIF/WebP variants for all devices
-- **Performance**: 99%+ size reduction achieved
+- **Source of truth**: `src/assets/images/` (imported) and `public/images/` (static URLs)
+- **Astro**: use `astro:assets` `<Image />` or `src/components/media/AImage.astro`
+- **React (within Astro)**: use static `/images/...` with explicit `width`/`height`, `loading`, `decoding`
+- **Responsive presets**: see `src/lib/image-presets.ts` (`hero`, `card`, `thumb`)
+- Legacy wrappers removed: `VercelImage`, `OptimizedImage`
 
 ## 🛠️ Tech Stack
 
@@ -121,7 +122,7 @@ pnpm run build
 - **GlassCard** - Modern glass morphism effect
 - **ElectricBorder** - Animated neon borders
 - **NeonCTA** - Glowing call-to-action buttons
-- **VercelImage** - Optimized image component
+-- **AImage** - Canonical image wrapper for astro:assets
 - **HeroAnimation** - Smooth scroll animations
 
 ### Color Palette
