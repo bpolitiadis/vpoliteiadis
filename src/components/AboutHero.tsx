@@ -1,12 +1,11 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-// Note: Image import removed as it's not available in React components
-// Import avatar as a static asset for proper Vercel production loading
 import ElectricBorder from './ElectricBorder';
 import DecryptedText from './DecryptedText';
 import TextType from './TextType';
 import clientLogger from '../lib/logger-client';
+import avatarImage from '../assets/images/avatar.webp';
 
 interface AboutHeroProps {
   quotes: string[];
@@ -60,7 +59,7 @@ export default function AboutHero({ quotes }: AboutHeroProps) {
           style={{ borderRadius: '80%' }}
         >
           <img 
-            src="/images/avatar.webp"
+            src={avatarImage.src}
             alt="Portrait of Vasileios Politeiadis"
             className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 mx-auto rounded-full object-cover"
             loading="eager"

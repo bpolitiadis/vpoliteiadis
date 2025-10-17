@@ -1,6 +1,4 @@
 ---
-import { Image } from 'astro:assets';
-
 export interface Props {
   src: string;
   alt?: string;
@@ -11,7 +9,6 @@ export interface Props {
   loading?: 'eager' | 'lazy';
   decoding?: 'auto' | 'sync' | 'async';
   fetchpriority?: 'high' | 'low' | 'auto';
-  quality?: number;
   /** Whether this image should be treated as decorative */
   decorative?: boolean;
 }
@@ -26,14 +23,13 @@ const {
   loading = 'lazy',
   decoding = 'async',
   fetchpriority = 'auto',
-  quality = 80,
   decorative = false,
 } = Astro.props;
 
 const isDecorative = decorative || (alt || '').trim() === '';
 ---
 
-<Image
+<img
   src={src}
   alt={alt}
   width={width}
@@ -43,7 +39,6 @@ const isDecorative = decorative || (alt || '').trim() === '';
   loading={loading}
   decoding={decoding}
   fetchpriority={fetchpriority}
-  quality={quality}
   aria-hidden={isDecorative ? 'true' : undefined}
   role={isDecorative ? 'presentation' : undefined}
 />

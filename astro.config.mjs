@@ -16,10 +16,10 @@ import rehypeSanitize from 'rehype-sanitize';
 export default defineConfig({
   site: 'https://vpoliteiadis.com',
   output: 'server',
-  adapter: vercel({
-    webAnalytics: { enabled: true },
-    imageService: true, // Enable Vercel's image optimization
-  }),
+      adapter: vercel({
+        webAnalytics: { enabled: true },
+        // Disable image service - use simple static serving
+      }),
   // Performance optimizations
   build: {
     inlineStylesheets: 'auto',
