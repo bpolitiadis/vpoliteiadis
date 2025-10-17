@@ -19,7 +19,7 @@
       ]
     },
     {
-      "source": "/((?!images|videos|_astro|favicon|apple-touch-icon|site.webmanifest).*)",
+      "source": "/(.*)",
       "headers": [
         { "key": "X-Frame-Options", "value": "DENY" },
         { "key": "X-Content-Type-Options", "value": "nosniff" },
