@@ -464,10 +464,10 @@ All pages follow mobile-first responsive design:
 - **SEO Optimized**: Content immediately available to crawlers
 
 ### Image Optimization
-- **Responsive Images**: Multiple sizes for different viewports
-- **Modern Formats**: WebP/AVIF with fallbacks
+- **Astro Image Component**: Built-in optimization with Vercel
+- **Modern Formats**: Automatic AVIF/WebP with fallbacks
 - **Lazy Loading**: Images load as they enter viewport
-- **Optimization**: Sharp pipeline during build
+- **Dynamic Optimization**: On-demand processing
 
 ### Code Splitting
 - **Automatic Splitting**: Astro handles code splitting automatically

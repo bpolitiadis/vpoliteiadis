@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+
 export interface Props {
   src: string;
   alt?: string;
@@ -28,59 +30,20 @@ const {
   decorative = false,
 } = Astro.props;
 
-// 2025 Best Practice: Use pre-optimized images with responsive srcset
-// This approach provides better performance than runtime optimization
-let optimizedSrc = src;
-let srcset = '';
-let srcsetAvif = '';
-
-// Extract base name and extension from src
-const pathParts = src.split('/');
-const filename = pathParts[pathParts.length - 1];
-const baseName = filename.split('.')[0];
-const extension = filename.split('.').pop() || 'webp';
-
-// Generate responsive srcset for WebP and AVIF formats
-const breakpoints = [480, 800, 1200, 1600, 2400];
-const webpSources: string[] = [];
-const avifSources: string[] = [];
-
-breakpoints.forEach((bp) => {
-  const webpPath = src.replace(filename, `${baseName}-${bp}w.webp`);
-  const avifPath = src.replace(filename, `${baseName}-${bp}w.avif`);
-  
-  webpSources.push(`${webpPath} ${bp}w`);
-  avifSources.push(`${avifPath} ${bp}w`);
-});
-
-srcset = webpSources.join(', ');
-srcsetAvif = avifSources.join(', ');
-
-// Use the base optimized image as fallback
-optimizedSrc = src.replace(filename, `${baseName}.webp`);
-
 const isDecorative = decorative || (alt || '').trim() === '';
 ---
 
-<picture>
-  <!-- AVIF sources for modern browsers -->
-  <source srcset={srcsetAvif} sizes={sizes} type="image/avif" />
-  
-  <!-- WebP sources for broader support -->
-  <source srcset={srcset} sizes={sizes} type="image/webp" />
-  
-  <!-- Fallback image -->
-  <img
-    src={optimizedSrc}
-    alt={alt}
-    width={width}
-    height={height}
-    class={className}
-    sizes={sizes}
-    loading={loading}
-    decoding={decoding}
-    fetchpriority={fetchpriority}
-    aria-hidden={isDecorative ? 'true' : undefined}
-    role={isDecorative ? 'presentation' : undefined}
-  />
-</picture> 
+<Image
+  src={src}
+  alt={alt}
+  width={width}
+  height={height}
+  class={className}
+  sizes={sizes}
+  loading={loading}
+  decoding={decoding}
+  fetchpriority={fetchpriority}
+  quality={quality}
+  aria-hidden={isDecorative ? 'true' : undefined}
+  role={isDecorative ? 'presentation' : undefined}
+/>

@@ -18,6 +18,7 @@ export default defineConfig({
   output: 'server',
   adapter: vercel({
     webAnalytics: { enabled: true },
+    imageService: true, // Enable Vercel's image optimization
   }),
   // Performance optimizations
   build: {

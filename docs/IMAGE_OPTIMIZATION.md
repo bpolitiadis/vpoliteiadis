@@ -1,8 +1,8 @@
-# Image Optimization Best Practices (2025)
+# Image Optimization with Astro's Built-in Solution (2025)
 
 ## Overview
 
-This project uses **direct static asset serving** for production reliability combined with **Vercel's Image Optimization API** for dynamic optimization when needed. This hybrid approach ensures maximum compatibility and performance.
+This project uses **Astro's built-in Image component** with **Vercel's Image Optimization API** for optimal performance, reliability, and developer experience. This approach eliminates the need for build-time image processing while providing automatic optimization, responsive images, and modern format support.
 
 ## Why This Approach is Superior
 
@@ -11,13 +11,15 @@ This project uses **direct static asset serving** for production reliability com
 - **Storage**: 140+ generated files
 - **Cost**: Expensive build minutes
 - **Flexibility**: Fixed sizes/formats
+- **Maintenance**: Complex optimization scripts
 
-### ✅ New Approach (Hybrid Static + Dynamic)
+### ✅ New Approach (Astro + Vercel)
 - **Build time**: <2 minutes
 - **Storage**: Only source images
 - **Cost**: Free with Vercel
-- **Flexibility**: Direct serving + dynamic optimization
+- **Flexibility**: Dynamic optimization
 - **Reliability**: Works consistently across all environments
+- **Maintenance**: Zero maintenance required
 
 ## Architecture
 
@@ -39,18 +41,57 @@ public/images/               # Static assets served by Vercel
 
 ### How It Works
 
-1. **Source images** stored in `src/assets/images/`
-2. **Static assets** copied to `public/images/` during build
-3. **Direct serving** for critical images (avatar, logos)
-4. **Vercel Image API** available for dynamic optimization when needed
-5. **Automatic caching** on Vercel's edge network
+1. **Source images** stored in `src/assets/images/` or `public/images/`
+2. **Astro Image component** handles optimization automatically
+3. **Vercel Image API** provides dynamic optimization
+4. **Automatic format selection**: AVIF → WebP → PNG fallback
+5. **Responsive sizing**: On-demand width optimization
+6. **Edge caching**: Global CDN distribution
 
 ## Usage Examples
 
-### 1. Critical Images (Avatar, Logos) - Direct Serving
+### 1. Astro Components - Direct Image Usage
+
+```astro
+---
+import { Image } from 'astro:assets';
+---
+
+<Image
+  src="/images/avatar.webp"
+  alt="Profile avatar"
+  width={256}
+  height={256}
+  loading="eager"
+  fetchpriority="high"
+  class="rounded-full"
+/>
+```
+
+### 2. Astro Components - Asset Imports
+
+```astro
+---
+import { Image } from 'astro:assets';
+import avatarImage from '../assets/images/avatar.webp';
+---
+
+<Image
+  src={avatarImage}
+  alt="Profile avatar"
+  width={256}
+  height={256}
+  loading="eager"
+  fetchpriority="high"
+  class="rounded-full"
+/>
+```
+
+### 3. React Components - Fallback Approach
 
 ```tsx
-// React component - Direct static asset serving
+// For React components, use regular img tags
+// Astro will optimize these at the page level
 <img
   src="/images/avatar.webp"
   alt="Profile avatar"
@@ -62,49 +103,23 @@ public/images/               # Static assets served by Vercel
 />
 ```
 
-```astro
-<!-- Astro component - Direct static asset serving -->
-<img
-  src="/images/avatar.webp"
-  alt="Profile avatar"
-  width={256}
-  height={256}
-  loading="eager"
-  fetchPriority="high"
-  class="rounded-full"
-/>
-```
-
-### 2. Dynamic Images - Vercel Image Optimization
+### 4. Project Cards with Responsive Images
 
 ```astro
 ---
-import VercelImage from '../components/VercelImage.astro';
+import { Image } from 'astro:assets';
 ---
 
-<VercelImage
-  src="/images/casa-capoeira-cover.png"
-  alt="Casa Capoeira project"
+<Image
+  src={project.data.coverImage}
+  alt={`${project.data.title} project cover image`}
   width={1200}
   height={800}
-  sizes="(max-width: 768px) 100vw, 50vw"
+  sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 50vw, 33vw"
   loading="lazy"
-  class="rounded-lg shadow-lg"
-/>
-```
-
-### 3. Hero Images with High Priority
-
-```astro
-<VercelImage
-  src="/images/hero-background.png"
-  alt="Hero background"
-  width={1200}
-  height={800}
-  sizes="100vw"
-  loading="eager"
-  fetchpriority="high"
-  class="w-full h-auto"
+  decoding="async"
+  fetchpriority="low"
+  class="w-full h-full object-cover"
 />
 ```
 
@@ -120,6 +135,7 @@ import VercelImage from '../components/VercelImage.astro';
 - **Responsive sizing**: On-demand width optimization
 - **Edge caching**: Global CDN distribution
 - **Lazy loading**: Built-in performance optimization
+- **Critical resource hints**: Automatic priority handling
 
 ### 3. Cost Benefits
 - **Build minutes**: Significantly reduced
@@ -136,10 +152,12 @@ import VercelImage from '../components/VercelImage.astro';
    rm -rf public/images/
    ```
 
-2. **Update image paths**:
+2. **Update image components**:
    ```diff
-   - coverImage: '/images/casa-capoeira-cover.webp'
-   + coverImage: '/src/assets/images/casa-capoeira-cover.png'
+   - import VercelImage from './VercelImage.astro';
+   - <VercelImage src="/images/image.png" alt="Description" />
+   + import { Image } from 'astro:assets';
+   + <Image src="/images/image.png" alt="Description" />
    ```
 
 3. **Remove build script**:
@@ -150,15 +168,15 @@ import VercelImage from '../components/VercelImage.astro';
 
 ### To New System
 
-1. **Use VercelImage component**:
+1. **Use Astro Image component**:
    ```astro
-   <VercelImage src="/src/assets/images/image.png" alt="Description" />
+   <Image src="/images/image.png" alt="Description" />
    ```
 
 2. **Specify dimensions**:
    ```astro
-   <VercelImage 
-     src="/src/assets/images/image.png" 
+   <Image 
+     src="/images/image.png" 
      width={800} 
      height={600} 
    />
@@ -166,8 +184,8 @@ import VercelImage from '../components/VercelImage.astro';
 
 3. **Add responsive sizing**:
    ```astro
-   <VercelImage 
-     src="/src/assets/images/image.png" 
+   <Image 
+     src="/images/image.png" 
      sizes="(max-width: 768px) 100vw, 50vw" 
    />
    ```
@@ -176,24 +194,100 @@ import VercelImage from '../components/VercelImage.astro';
 
 ### ✅ Do
 
-- Store source images in `src/assets/images/`
-- Use direct static asset serving for critical images (avatar, logos)
-- Use VercelImage component for dynamic content images
+- Use Astro's Image component in `.astro` files
+- Store source images in `src/assets/images/` or `public/images/`
 - Specify appropriate width/height attributes
 - Use meaningful alt text
 - Implement responsive sizing with `sizes` attribute
-- Use `loading="eager"` and `fetchPriority="high"` for above-the-fold images
+- Use `loading="eager"` and `fetchpriority="high"` for above-the-fold images
 - Use `loading="lazy"` for below-the-fold images
+- Use `decoding="async"` for non-critical images
 
 ### ❌ Don't
 
 - Process images during build time
 - Store generated images in git
-- Use hardcoded image paths
+- Use hardcoded image paths in React components
 - Skip alt text for accessibility
 - Ignore responsive sizing
 - Use complex image optimization for simple static assets
 - Mix different image serving strategies inconsistently
+
+## Component Usage
+
+### VercelImage.astro (Legacy Wrapper)
+
+```astro
+---
+import { Image } from 'astro:assets';
+
+export interface Props {
+  src: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+  class?: string;
+  sizes?: string;
+  loading?: 'eager' | 'lazy';
+  decoding?: 'auto' | 'sync' | 'async';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  quality?: number;
+  decorative?: boolean;
+}
+
+const { src, alt = '', width = 1200, height = 800, class: className = '', sizes = '100vw', loading = 'lazy', decoding = 'async', fetchpriority = 'auto', quality = 80, decorative = false } = Astro.props;
+
+const isDecorative = decorative || (alt || '').trim() === '';
+---
+
+<Image
+  src={src}
+  alt={alt}
+  width={width}
+  height={height}
+  class={className}
+  sizes={sizes}
+  loading={loading}
+  decoding={decoding}
+  fetchpriority={fetchpriority}
+  quality={quality}
+  aria-hidden={isDecorative ? 'true' : undefined}
+  role={isDecorative ? 'presentation' : undefined}
+/>
+```
+
+### OptimizedImage.tsx (React Fallback)
+
+```tsx
+import React from 'react';
+
+type OptimizedImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
+  src: string;
+  width?: number;
+  quality?: number;
+  decorative?: boolean;
+};
+
+/**
+ * @deprecated Use Astro's Image component directly in .astro files instead
+ */
+export function OptimizedImage(props: OptimizedImageProps) {
+  const { src, width = 1200, quality = 75, decorative = false, ...rest } = props;
+  const isDecorative = decorative || (rest.alt || '').trim() === '';
+
+  return (
+    <img
+      src={src}
+      width={width}
+      loading={rest.loading ?? 'lazy'}
+      decoding={rest.decoding ?? 'async'}
+      aria-hidden={isDecorative ? 'true' : undefined}
+      role={isDecorative ? 'presentation' : undefined}
+      {...rest}
+    />
+  );
+}
+```
 
 ## Monitoring and Maintenance
 
@@ -201,6 +295,7 @@ import VercelImage from '../components/VercelImage.astro';
 - **Build time**: Should be <2 minutes
 - **Image load time**: Vercel edge optimization
 - **Core Web Vitals**: Improved LCP, CLS
+- **Format adoption**: Automatic AVIF/WebP usage
 
 ### 2. Regular Updates
 - **Monthly**: Review image usage patterns
@@ -211,10 +306,10 @@ import VercelImage from '../components/VercelImage.astro';
 
 ### Common Issues
 
-1. **Images not loading in production**: Use direct static asset paths (`/images/filename.webp`)
-2. **Build errors**: Verify image paths and component usage
+1. **Images not loading in production**: Verify image paths and component usage
+2. **Build errors**: Check Astro Image component imports
 3. **Performance issues**: Review image dimensions and loading attributes
-4. **Console pollution**: Use client-side logger for development-only logging
+4. **Format issues**: Ensure source images are in supported formats
 
 ### Debug Commands
 
@@ -232,38 +327,33 @@ vercel --prod
 curl -I https://your-domain.com/images/avatar.webp
 ```
 
-## Console Logging Best Practices
+## Configuration
 
-### Production-Safe Logging
+### Astro Configuration
 
-Use the client-side logger for development-only console output:
-
-```tsx
-import clientLogger from '../lib/logger-client';
-
-// Development-only logging
-clientLogger.animation('ComponentName', 'action completed');
-clientLogger.debug('Debug information', { context: 'value' });
-clientLogger.info('Info message');
-clientLogger.warn('Warning message');
-clientLogger.error('Error message'); // Always logged, even in production
+```javascript
+// astro.config.mjs
+export default defineConfig({
+  adapter: vercel({
+    webAnalytics: { enabled: true },
+    imageService: true, // Enable Vercel's image optimization
+  }),
+});
 ```
 
-### ❌ Avoid in Production
+### Vercel Configuration
 
-```tsx
-// Don't use direct console.log in components
-console.log('Debug info'); // Visible in production
-console.warn('Warning'); // Visible in production
-```
-
-### ✅ Use Instead
-
-```tsx
-// Use client logger for production-safe logging
-clientLogger.debug('Debug info'); // Hidden in production
-clientLogger.warn('Warning'); // Hidden in production
-clientLogger.error('Error'); // Always visible (for debugging)
+```json
+{
+  "headers": [
+    {
+      "source": "/images/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, s-maxage=31536000, immutable" }
+      ]
+    }
+  ]
+}
 ```
 
 ## Future Considerations

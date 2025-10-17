@@ -1,4 +1,4 @@
-import { e as commonjsGlobal, g as getDefaultExportFromCjs } from '../../chunks/astro/server_cglaCLgn.mjs';
+import { e as commonjsGlobal, g as getDefaultExportFromCjs } from '../../chunks/astro/server_Bgp0AKMO.mjs';
 import require$$0$4 from 'node:os';
 import require$$0$3 from 'node:events';
 import nativeFs from 'fs';

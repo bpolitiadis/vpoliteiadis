@@ -46,8 +46,8 @@
 
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
-| `VercelImage.astro` | `src/components/VercelImage.astro` | Image helper using Vercel optimizer in production | `src`, `alt?`, `width?`, `quality?`, `class?` | Astro Image component |
-| `OptimizedImage.tsx` | `src/components/OptimizedImage.tsx` | React image helper (Vercel optimizer aware) | `src`, `width?`, `quality?`, plus `<img>` attrs | React, Vercel Image API |
+| `VercelImage.astro` | `src/components/VercelImage.astro` | Astro Image wrapper using built-in optimization | `src`, `alt?`, `width?`, `quality?`, `class?` | Astro Image component |
+| `OptimizedImage.tsx` | `src/components/OptimizedImage.tsx` | React image helper (deprecated) | `src`, `width?`, `quality?`, plus `<img>` attrs | React, deprecated |
 | `ScreenshotFrame.astro` | `src/components/ScreenshotFrame.astro` | Premium framed screenshot with neon/scanlines | `src` (req), `alt` (req), `eager?`, `width?`, `height?`, `class?` | global.css holo-frame styles |
 | `LightboxGallery.tsx` | `src/components/LightboxGallery.tsx` | React lightbox grid powered by `yet-another-react-lightbox` | `items: { thumbSrc, fullSrc, alt }[]`, `className?` | React, yet-another-react-lightbox |
 
