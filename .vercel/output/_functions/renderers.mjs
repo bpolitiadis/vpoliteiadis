@@ -1,6 +1,6 @@
 import React__default, { createElement } from 'react';
 import ReactDOM from 'react-dom/server';
-import { x as renderJSX, y as createVNode, z as AstroJSX, B as AstroUserError } from './chunks/astro/server_oRAxjIhj.mjs';
+import { w as renderJSX, x as createVNode, y as AstroJSX, z as AstroUserError } from './chunks/astro/server_cglaCLgn.mjs';
 import 'clsx';
 
 const opts = {

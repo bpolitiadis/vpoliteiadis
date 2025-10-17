@@ -2,7 +2,7 @@
 title: 'Upiria'
 description: 'Building the foundation for a travel‑tech startup with reliable velocity.'
 excerpt: 'Joined early to bridge frontend development with a scalable testing infrastructure.'
-coverImage: '/images/projects/upiria-cover.png'
+coverImage: '/images/upiria-cover.webp'
 tags: ['Startup', 'Frontend', 'Testing', 'React', 'Automation']
 techStack:
   [
@@ -40,12 +40,12 @@ learnings:
 liveUrl: 'https://www.upiria.com'
 githubUrl: 'https://github.com/upiria/upiria-frontend'
 status: 'completed'
-featuredImage: '/images/projects/upiria-cover.png'
+featuredImage: '/images/upiria-cover.webp'
 gallery:
   [
-    '/images/projects/upiria-cover.png',
-    '/images/projects/upiria-cover.png',
-    '/images/projects/upiria-cover.png',
+    '/images/upiria-cover.webp',
+    '/images/upiria-cover.webp',
+    '/images/upiria-cover.webp',
   ]
 # Compact-page fields
 roleSummary: 'Led front-end quality and delivery: built accessible React components, introduced modern testing (Playwright + Jest + Testing Library), and wired CI checks that gated releases. My focus was maintainability and reliability so the team could ship fast without regressions.'

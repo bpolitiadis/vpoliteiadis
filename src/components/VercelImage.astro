@@ -4,86 +4,83 @@ export interface Props {
   alt?: string;
   width?: number;
   height?: number;
-  quality?: number;
   class?: string;
   sizes?: string;
   loading?: 'eager' | 'lazy';
   decoding?: 'auto' | 'sync' | 'async';
   fetchpriority?: 'high' | 'low' | 'auto';
-  format?: 'auto' | 'webp' | 'avif' | 'png' | 'jpg';
-  placeholder?: 'blur' | 'dominantColor' | 'none';
-  blurDataURL?: string;
+  quality?: number;
+  /** Whether this image should be treated as decorative */
+  decorative?: boolean;
 }
 
-const props = Astro.props as Props;
 const {
   src,
   alt = '',
   width = 1200,
   height = 800,
-  quality = 80,
   class: className = '',
   sizes = '100vw',
   loading = 'lazy',
   decoding = 'async',
   fetchpriority = 'auto',
-  format = 'auto',
-  placeholder = 'none',
-  blurDataURL = '',
-} = props;
+  quality = 80,
+  decorative = false,
+} = Astro.props;
 
-// 2025 Best Practice: Use Vercel's Image Optimization API for static assets
-// For development, serve directly; for production, use optimization when beneficial
-let optimizedURL = src;
+// 2025 Best Practice: Use pre-optimized images with responsive srcset
+// This approach provides better performance than runtime optimization
+let optimizedSrc = src;
+let srcset = '';
+let srcsetAvif = '';
 
-// Only apply Vercel Image Optimization for production static assets
-if (import.meta.env.MODE === 'production' && src.startsWith('/images/')) {
-  const site = typeof Astro !== 'undefined' && Astro.site ? String(Astro.site) : 'https://vpoliteiadis.com';
+// Extract base name and extension from src
+const pathParts = src.split('/');
+const filename = pathParts[pathParts.length - 1];
+const baseName = filename.split('.')[0];
+const extension = filename.split('.').pop() || 'webp';
+
+// Generate responsive srcset for WebP and AVIF formats
+const breakpoints = [480, 800, 1200, 1600, 2400];
+const webpSources: string[] = [];
+const avifSources: string[] = [];
+
+breakpoints.forEach((bp) => {
+  const webpPath = src.replace(filename, `${baseName}-${bp}w.webp`);
+  const avifPath = src.replace(filename, `${baseName}-${bp}w.avif`);
   
-  // Build absolute URL for Vercel's optimizer
-  const absoluteSrc = `${site.replace(/\/$/, '')}${src}`;
-  
-  // Use Vercel's Image Optimization API for static assets
-  const params = new URLSearchParams({
-    url: absoluteSrc,
-    w: width.toString(),
-    q: quality.toString(),
-    f: format === 'auto' ? 'webp' : format,
-  });
-  
-  optimizedURL = `/_vercel/image?${params.toString()}`;
-}
+  webpSources.push(`${webpPath} ${bp}w`);
+  avifSources.push(`${avifPath} ${bp}w`);
+});
 
-const isDecorative = (alt || '').trim() === '';
+srcset = webpSources.join(', ');
+srcsetAvif = avifSources.join(', ');
 
-// 2025 Best Practices: Enhanced responsive image attributes
-const responsiveAttributes: Record<string, string> = {
-  // Modern responsive image attributes
-  'data-loading': loading,
-  'data-decoding': decoding,
-  'data-fetchpriority': fetchpriority,
-  // Performance optimizations
-  'data-format': format,
-  'data-placeholder': placeholder,
-};
+// Use the base optimized image as fallback
+optimizedSrc = src.replace(filename, `${baseName}.webp`);
 
-// Add blur data URL if provided for better loading experience
-if (blurDataURL) {
-  responsiveAttributes['data-blur'] = blurDataURL;
-}
+const isDecorative = decorative || (alt || '').trim() === '';
 ---
 
-<img
-  src={optimizedURL}
-  alt={alt}
-  width={width}
-  height={height}
-  class={className}
-  sizes={sizes}
-  loading={loading}
-  decoding={decoding}
-  fetchpriority={fetchpriority}
-  aria-hidden={isDecorative ? 'true' : undefined}
-  role={isDecorative ? 'presentation' : undefined}
-  {...responsiveAttributes}
-/> 
+<picture>
+  <!-- AVIF sources for modern browsers -->
+  <source srcset={srcsetAvif} sizes={sizes} type="image/avif" />
+  
+  <!-- WebP sources for broader support -->
+  <source srcset={srcset} sizes={sizes} type="image/webp" />
+  
+  <!-- Fallback image -->
+  <img
+    src={optimizedSrc}
+    alt={alt}
+    width={width}
+    height={height}
+    class={className}
+    sizes={sizes}
+    loading={loading}
+    decoding={decoding}
+    fetchpriority={fetchpriority}
+    aria-hidden={isDecorative ? 'true' : undefined}
+    role={isDecorative ? 'presentation' : undefined}
+  />
+</picture> 
