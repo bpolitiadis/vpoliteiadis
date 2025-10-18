@@ -63,9 +63,9 @@ const modifiedDate = post.data.updatedAt ? new Date(post.data.updatedAt).toISOSt
           const base = cover.replace(/\.(avif|webp|jpe?g|png)$/i, '');
           return (
             <picture>
-              {/* Only reference sizes that are guaranteed to exist to avoid 404s */}
-              <source srcset={`${base}-800.avif 800w, ${base}-480.avif 480w`} type="image/avif" />
-              <source srcset={`${base}-800.webp 800w, ${base}-480.webp 480w`} type="image/webp" />
+              {/* Match generated filenames in /public/images (-480w/-800w) */}
+              <source srcset={`${base}-800w.avif 800w, ${base}-480w.avif 480w`} type="image/avif" />
+              <source srcset={`${base}-800w.webp 800w, ${base}-480w.webp 480w`} type="image/webp" />
               <img 
                 src={cover}
                 alt=""

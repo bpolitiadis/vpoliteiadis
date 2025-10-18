@@ -21,11 +21,11 @@ export default function AvatarBubble({ alt = 'Vasileios Politeiadis portrait', s
   return (
     <div
       data-testid="avatar-bubble"
-      className="relative"
+      className="relative aspect-square"
       style={{ width: size + 20, height: size + 20 }}
     >
       {/* Main avatar container with minimal border */}
-      <div className="relative rounded-full bg-black/50 backdrop-blur-md border border-[#00B86B]">
+      <div className="relative w-full h-full aspect-square rounded-full bg-black/50 backdrop-blur-md border border-[#00B86B]">
         {/* Scanline overlay for cyberpunk effect */}
         <div className="absolute inset-0 rounded-full overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent opacity-30"></div>
