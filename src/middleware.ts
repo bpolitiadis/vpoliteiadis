@@ -34,8 +34,20 @@ export const onRequest: MiddlewareHandler = async (context, next) => {
   response.headers.set('X-Content-Type-Options', 'nosniff');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
 
-  // Basic CSP
-  response.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com;");
+  // Minimal, compatible CSP for this site (avoid over-restricting external fonts)
+  // - Allow Google Fonts stylesheets
+  // - Keep inline scripts/styles for Astro hydration
+  // - Allow images from HTTPS and data URIs
+  const csp = [
+    "default-src 'self'",
+    "script-src 'self' 'unsafe-inline'",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "img-src 'self' data: https:",
+    "font-src 'self' https://fonts.gstatic.com",
+    // Frame Spotify embeds
+    "frame-src https://open.spotify.com"
+  ].join('; ');
+  response.headers.set('Content-Security-Policy', csp);
 
   // Log request completion
   console.log(`${context.request.method} ${context.url.pathname} - ${status} - ${durationMs}ms`);
