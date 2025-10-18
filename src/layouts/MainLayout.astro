@@ -2,6 +2,7 @@
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro:assets';
 // Optional: map page background slugs to imported assets so Astro optimizes them
 import aboutBg from '../assets/images/about-bg.png';
 import blogBg from '../assets/images/blog-bg.png';
@@ -9,7 +10,7 @@ import projectsBg from '../assets/images/projects-bg.png';
 import creativeBg from '../assets/images/creative-bg.png';
 import contactBg from '../assets/images/contact-bg.png';
 
-const backgroundMap: Record<string, any> = {
+const backgroundMap: Record<string, ImageMetadata> = {
   'about-bg': aboutBg,
   'blog-bg': blogBg,
   'projects-bg': projectsBg,
@@ -36,7 +37,7 @@ export interface Props {
   /** Optional utility classes to control the gradient overlay strength */
   bgOverlayClass?: string;
   /** Additional structured data for the page */
-  structuredData?: any;
+  structuredData?: Record<string, unknown>;
 }
 
 const { 
