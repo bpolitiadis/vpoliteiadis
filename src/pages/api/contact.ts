@@ -20,26 +20,45 @@ const contactFormSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
   lastName: z.string().min(1, 'Last name is required'),
   email: z.string().email('Invalid email address'),
-  subject: z.string().min(1, 'Subject is required'),
   message: z.string().min(1, 'Message is required'),
   honeypot: z.string().optional(), // Honeypot field for spam detection
 });
 
 export const POST: APIRoute = async ({ request }) => {
-  // Honeypot check
-  const formDataRaw = await request.formData();
-  const honeypotField = formDataRaw.get('honeypot');
-  if (honeypotField) {
-    console.warn('Honeypot field detected, likely spam.');
-    return new Response(JSON.stringify({ 
-      error: 'Spam detected. Message not sent.' 
-    }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' },
-    });
+  let body;
+  
+  // Handle both JSON and form data requests
+  const contentType = request.headers.get('content-type') || '';
+  
+  if (contentType.includes('application/json')) {
+    // Handle JSON requests (from React form)
+    body = await request.json();
+    
+    // Honeypot check for JSON
+    if (body.honeypot && body.honeypot.trim().length > 0) {
+      console.warn('Honeypot field detected, likely spam.');
+      return new Response(JSON.stringify({ 
+        error: 'Spam detected. Message not sent.' 
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+  } else {
+    // Handle form data requests (fallback)
+    const formDataRaw = await request.formData();
+    const honeypotField = formDataRaw.get('honeypot');
+    if (honeypotField) {
+      console.warn('Honeypot field detected, likely spam.');
+      return new Response(JSON.stringify({ 
+        error: 'Spam detected. Message not sent.' 
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    body = Object.fromEntries(formDataRaw);
   }
-
-  const body = Object.fromEntries(formDataRaw);
 
   const parseResult = contactFormSchema.safeParse(body);
 

@@ -21,7 +21,9 @@ export interface EmailTemplate {
  */
 export function createContactFormEmail(data: ContactFormData): EmailTemplate {
   const subjectPrefix = (typeof import.meta !== 'undefined' && import.meta.env?.EMAIL_SUBJECT_PREFIX) || '[Contact Form]';
-  const subject = `${subjectPrefix} Message from ${data.firstName} ${data.lastName}`;
+  // Generate subject from message content (first 50 chars) or use default
+  const messagePreview = data.message.length > 50 ? data.message.substring(0, 50) + '...' : data.message;
+  const subject = `${subjectPrefix} Message from ${data.firstName} ${data.lastName}: ${messagePreview}`;
   
   const html = `
     <!DOCTYPE html>
