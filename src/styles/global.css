@@ -639,6 +639,22 @@
 
 /* Custom utility styles */
 @layer utilities {
+  /* Soft bottom fade mask utility for hero/background images */
+  .mask-fade-b {
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+
+  /* Soft vignette overlay helper (use on absolute overlay elements) */
+  .vignette-soft {
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0) 50%, rgba(0,0,0,0.35) 100%);
+    mix-blend-mode: multiply;
+  }
   /* Prefer balanced multi-line headings on narrow screens */
   .text-balance {
     text-wrap: balance;
