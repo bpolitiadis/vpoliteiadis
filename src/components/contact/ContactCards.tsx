@@ -54,23 +54,23 @@ export default function ContactCards() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <ServiceRow icon={<span className="text-lg" role="img" aria-label="QA Automation">🤖</span>} title="QA Automation" description="Java, Selenium, Playwright testing for European Commission projects" />
+          <ServiceRow icon={<span className="text-lg" role="img" aria-label="QA Automation">🤖</span>} title="QA Automation" description="Selenium/Java, Playwright/TypeScript" />
           <RowContainer>
             <div className="w-8 h-8 bg-digital-emerald/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1" aria-hidden="true">
               <span className="text-lg" role="img" aria-label="Full-Stack Development">💻</span>
             </div>
             <div>
               <h3 className="font-orbitron font-bold text-digital-emerald mb-1">Full-Stack Development</h3>
-              <p className="text-digital-emerald/60 text-sm">React, Next.js, Node.js applications and product development</p>
+              <p className="text-digital-emerald/60 text-sm">React, Next.js, Node.js with Prisma & Supabase</p>
             </div>
           </RowContainer>
           <RowContainer>
             <div className="w-8 h-8 bg-neon-lime/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1" aria-hidden="true">
-              <span className="text-lg" role="img" aria-label="Creative Commissions">🎨</span>
+              <span className="text-lg" role="img" aria-label="Website Development">🌐</span>
             </div>
             <div>
-              <h3 className="font-orbitron font-bold text-neon-lime mb-1">Creative Commissions</h3>
-              <p className="text-neon-lime/60 text-sm">AI-generated art, album covers, event posters, fashion designs</p>
+              <h3 className="font-orbitron font-bold text-neon-lime mb-1">Website Development</h3>
+              <p className="text-neon-lime/60 text-sm">Astro, TailwindCSS, React</p>
             </div>
           </RowContainer>
         </CardContent>
