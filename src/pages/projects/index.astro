@@ -5,6 +5,8 @@ export const prerender = true;
 import MainLayout from '../../layouts/MainLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import PageHero from '../../components/PageHero.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import SchemaOrg from '../../components/SchemaOrg.astro';
 import { Card, CardContent, CardDescription, CardTitle } from '../../components/ui/card';
 import { getCollection } from 'astro:content';
 
@@ -16,6 +18,36 @@ const sortedProjects = projects.sort((a, b) =>
 
 // Get featured projects only
 const featuredProjects = sortedProjects.filter(project => project.data.featured);
+
+// Build breadcrumb
+const breadcrumbItems = [
+  { name: 'Home', href: '/' },
+  { name: 'Projects', href: '/projects' },
+];
+
+// Build CollectionPage structured data
+const collectionSchema = {
+  '@type': 'CollectionPage',
+  'name': 'Projects - Vasileios Politeiadis',
+  'description': 'Explore my latest projects and case studies in full-stack development, automation, and creative technology.',
+  'url': new URL('/projects', Astro.site).toString(),
+  'mainEntity': {
+    '@type': 'ItemList',
+    'itemListElement': featuredProjects.map((project, index) => ({
+      '@type': 'ListItem',
+      'position': index + 1,
+      'item': {
+        '@type': 'CreativeWork',
+        'name': project.data.title,
+        'description': project.data.description,
+        'url': new URL(`/projects/${project.slug}`, Astro.site).toString(),
+        'image': project.data.coverImage
+          ? new URL(project.data.coverImage, Astro.site).toString()
+          : undefined,
+      },
+    })),
+  },
+};
 ---
 
 <MainLayout 
@@ -25,12 +57,19 @@ const featuredProjects = sortedProjects.filter(project => project.data.featured)
   bgSlug="projects-bg"
   bgEager={true}
 >
+  <!-- Structured Data -->
+  <SchemaOrg schema={collectionSchema} />
+
   <section class="min-h-screen text-matrix-white pb-16 sm:pb-20 md:pb-24" data-testid="page-projects">
     <PageHero
       title="Projects"
       description="Exploring the intersection of technology and creativity through full-stack development, automation engineering, and AI-driven solutions."
       eager={true}
     />
+
+    <!-- Breadcrumb (Hidden visually, visible to search engines) -->
+    <Breadcrumb items={breadcrumbItems} class="sr-only" />
+
     <section class="px-4 sm:px-6 lg:px-8">
       <div class="max-w-7xl mx-auto">
         
@@ -62,5 +101,5 @@ const featuredProjects = sortedProjects.filter(project => project.data.featured)
 
       </div>
     </section>
-  </div>
+  </section>
 </MainLayout>

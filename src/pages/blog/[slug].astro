@@ -4,6 +4,8 @@ export const prerender = true;
 
 import { getCollection } from 'astro:content';
 import MainLayout from '../../layouts/MainLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import SchemaOrg from '../../components/SchemaOrg.astro';
 
 // Generate static paths for all blog posts
 export async function getStaticPaths() {
@@ -38,6 +40,39 @@ const description = post.data.seo?.description || post.data.description;
 // const keywords = post.data.seo?.keywords || post.data.tags.join(', ');
 const publishedDate = new Date(post.data.publishedAt).toISOString();
 const modifiedDate = post.data.updatedAt ? new Date(post.data.updatedAt).toISOString() : publishedDate;
+
+// Build breadcrumb
+const breadcrumbItems = [
+  { name: 'Home', href: '/' },
+  { name: 'Blog', href: '/blog' },
+  { name: post.data.title, href: `/blog/${post.slug}` },
+];
+
+// Build inline structured data schema for blog post
+const blogPostSchema = {
+  '@type': 'BlogPosting',
+  'headline': post.data.title,
+  'description': post.data.description,
+  'author': {
+    '@type': 'Person',
+    'name': post.data.author,
+  },
+  'datePublished': publishedDate,
+  'dateModified': modifiedDate,
+  'publisher': {
+    '@type': 'Person',
+    'name': 'Vasileios Politeiadis',
+  },
+  'keywords': (post.data.seo?.keywords || post.data.tags).join(', '),
+  'image': post.data.coverImage
+    ? new URL(post.data.coverImage, Astro.site).toString()
+    : undefined,
+  'url': new URL(`/blog/${post.slug}`, Astro.site).toString(),
+  'mainEntityOfPage': {
+    '@type': 'WebPage',
+    '@id': new URL(`/blog/${post.slug}`, Astro.site).toString(),
+  },
+};
 ---
 
 <MainLayout 
@@ -50,8 +85,8 @@ const modifiedDate = post.data.updatedAt ? new Date(post.data.updatedAt).toISOSt
   author={post.data.author}
   image={post.data.coverImage || '/favicon.png'}
 >
-  <!-- SEO Structured Data (external, CSP-safe) -->
-  <script is:inline type="application/ld+json" src={`/structured/blog/${post.slug}.json`}></script>
+  <!-- Structured Data for Blog Post -->
+  <SchemaOrg schema={blogPostSchema} />
 
   <!-- Hero Section with background cover image -->
   <section class="relative overflow-hidden py-28 lg:py-36">
@@ -90,14 +125,8 @@ const modifiedDate = post.data.updatedAt ? new Date(post.data.updatedAt).toISOSt
 
     <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center">
-        <!-- Breadcrumb -->
-        <nav class="mb-8" aria-label="Breadcrumb">
-          <ol class="flex items-center justify-center space-x-2 text-sm text-matrix-white/70">
-            <li><a href="/blog" class="hover:text-neon-lime transition-colors">Blog</a></li>
-            <li class="text-matrix-white/40">/</li>
-            <li class="text-matrix-white/90">{post.data.category}</li>
-          </ol>
-        </nav>
+        <!-- Breadcrumb with Structured Data (Hidden visually, visible to search engines) -->
+        <Breadcrumb items={breadcrumbItems} class="sr-only" />
 
         <!-- Content (no box/border) -->
         <div class="mx-auto max-w-4xl">
