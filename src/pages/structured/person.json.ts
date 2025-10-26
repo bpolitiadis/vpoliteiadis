@@ -9,7 +9,7 @@ export const GET: APIRoute = async () => {
     // Use an existing small, optimized asset to avoid 404s
     image: 'https://vpoliteiadis.com/images/vp-logo-800.webp',
     sameAs: [
-      'https://linkedin.com/in/vpoliteiadis',
+      'https://www.linkedin.com/in/vasileios-politeiadis/',
       'https://github.com/bpolitiadis',
     ],
     jobTitle: 'Full-Stack Developer & AI Visionary',

@@ -95,7 +95,7 @@ export default function ContactCards() {
           <ContactRow
             icon={<LinkedInIcon size="sm" className="text-digital-emerald" />}
             label="LinkedIn"
-            href="https://linkedin.com/in/vpoliteiadis"
+            href="https://www.linkedin.com/in/vasileios-politeiadis/"
             className="text-digital-emerald hover:text-cyan-blue transition-all duration-300"
             titleClassName="text-digital-emerald/90"
           />
