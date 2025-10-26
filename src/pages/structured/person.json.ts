@@ -6,19 +6,15 @@ export const GET: APIRoute = async () => {
     '@type': 'Person',
     name: 'Vasileios Politeiadis',
     url: 'https://vpoliteiadis.com',
-    // Use an existing small, optimized asset to avoid 404s
-    image: 'https://vpoliteiadis.com/images/vp-logo-800.webp',
+    // VP logo for brand identity in structured data
+    image: 'https://vpoliteiadis.com/images/vp-logo-800w.webp',
     sameAs: [
       'https://www.linkedin.com/in/vasileios-politeiadis/',
       'https://github.com/bpolitiadis',
     ],
-    jobTitle: 'Full-Stack Developer & AI Visionary',
-    worksFor: {
-      '@type': 'Organization',
-      name: 'European Commission',
-    },
+    jobTitle: 'Freelance QA Automation Specialist & Full-Stack Developer',
     description:
-      'Full-Stack Developer & AI Visionary specializing in modern web technologies, automation, and creative AI applications.',
+      'Freelance Full-Stack Developer & QA Automation Specialist specializing in modern web technologies, test automation frameworks, and creative AI applications. Available for projects and consulting.',
     knowsAbout: [
       'Full-Stack Development',
       'QA Automation',
