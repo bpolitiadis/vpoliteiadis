@@ -12,19 +12,23 @@ export const GET: APIRoute = async () => {
       'https://www.linkedin.com/in/vasileios-politeiadis/',
       'https://github.com/bpolitiadis',
     ],
-    jobTitle: 'Freelance QA Automation Specialist & Full-Stack Developer',
+    jobTitle: 'QA Automation Specialist & Full-Stack Developer',
     description:
-      'Freelance Full-Stack Developer & QA Automation Specialist specializing in modern web technologies, test automation frameworks, and creative AI applications. Available for projects and consulting.',
+      'QA Automation Specialist & Full-Stack Developer specializing in Java automation frameworks, React/Next.js development, and AI-powered solutions for quality assurance and modern web applications.',
     knowsAbout: [
       'Full-Stack Development',
+      'Website Development',
       'QA Automation',
       'AI & Creative Technology',
       'React',
       'Next.js',
+      'Astro',
+      'TailwindCSS',
       'Node.js',
       'Java',
       'Selenium',
       'Playwright',
+      'European Commission Projects',
     ],
   } as const;
 
