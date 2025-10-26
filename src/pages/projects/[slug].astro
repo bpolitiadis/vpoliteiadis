@@ -1,0 +1,314 @@
+---
+/**
+ * Dynamic Project Page
+ * 
+ * Renders individual project pages from the projects content collection.
+ * Route: /projects/[slug]
+ */
+
+// Prerender this page for optimal performance
+export const prerender = true;
+
+import { getCollection } from 'astro:content';
+import MainLayout from '../../layouts/MainLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import SchemaOrg from '../../components/SchemaOrg.astro';
+
+// Generate static paths for all projects
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+// Get the current project
+const { project } = Astro.props;
+const { Content } = await project.render();
+
+// Build breadcrumb
+const breadcrumbItems = [
+  { name: 'Home', href: '/' },
+  { name: 'Projects', href: '/projects' },
+  { name: project.data.title, href: `/projects/${project.slug}` },
+];
+
+// SEO metadata
+const title = `${project.data.title} - Vasileios Politeiadis`;
+const description = project.data.description;
+const publishedDate = new Date(project.data.publishedAt).toISOString();
+const modifiedDate = project.data.updatedAt
+  ? new Date(project.data.updatedAt).toISOString()
+  : publishedDate;
+
+// Schema.org structured data for the project
+const projectSchema = {
+  '@type': 'CreativeWork',
+  'name': project.data.title,
+  'description': project.data.description,
+  'creator': {
+    '@type': 'Person',
+    'name': 'Vasileios Politeiadis',
+  },
+  'dateCreated': publishedDate,
+  'dateModified': modifiedDate,
+  'keywords': project.data.tags.join(', '),
+  'about': project.data.problem,
+  'abstract': project.data.solution,
+  'image': project.data.coverImage
+    ? new URL(project.data.coverImage, Astro.site).toString()
+    : undefined,
+  'url': new URL(`/projects/${project.slug}`, Astro.site).toString(),
+  ...(project.data.githubUrl && {
+    'codeRepository': project.data.githubUrl,
+  }),
+  ...(project.data.liveUrl && {
+    'url': project.data.liveUrl,
+  }),
+};
+---
+
+<MainLayout
+  title={title}
+  description={description}
+  currentPath={`/projects/${project.slug}`}
+  type="website"
+  publishedAt={publishedDate}
+  updatedAt={modifiedDate}
+  image={project.data.coverImage || '/images/vp-logo-800w.webp'}
+  keywords={project.data.tags}
+>
+  <!-- Structured Data -->
+  <SchemaOrg schema={projectSchema} />
+
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden py-28 lg:py-36">
+    <!-- Background Image -->
+    {project.data.coverImage && (
+      <>
+        <div class="absolute inset-0 z-0">
+          <img
+            src={project.data.coverImage}
+            alt=""
+            class="w-full h-full object-cover object-center opacity-50 md:opacity-60 scale-105"
+            aria-hidden="true"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
+        <div class="absolute inset-0 z-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80"></div>
+      </>
+    )}
+    {!project.data.coverImage && (
+      <div class="absolute inset-0 z-0 bg-gradient-to-br from-background via-muted to-background"></div>
+    )}
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumb (Hidden visually, visible to search engines) -->
+      <Breadcrumb items={breadcrumbItems} class="sr-only" />
+
+      <!-- Content -->
+      <div class="max-w-4xl mx-auto text-center">
+        <!-- Project Meta -->
+        <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-matrix-white/80 mb-4">
+          <span>
+            {new Date(project.data.publishedAt).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+            })}
+          </span>
+          {project.data.status && (
+            <>
+              <span aria-hidden="true">•</span>
+              <span class="capitalize">{project.data.status}</span>
+            </>
+          )}
+          {project.data.client && (
+            <>
+              <span aria-hidden="true">•</span>
+              <span>Client: {project.data.client}</span>
+            </>
+          )}
+        </div>
+
+        <!-- Title -->
+        <h1
+          class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-orbitron font-bold text-neon-lime tracking-tight leading-[1.15] md:leading-tight text-balance mb-4"
+        >
+          {project.data.title}
+        </h1>
+
+        <!-- Description -->
+        <p class="text-lg sm:text-xl text-matrix-white/90 max-w-3xl mx-auto mb-6">
+          {project.data.description}
+        </p>
+
+        <!-- Tags & Tech Stack -->
+        <div class="flex flex-wrap justify-center gap-2 mb-6">
+          {project.data.tags.map((tag) => (
+            <span class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full border border-primary/20">
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <!-- Links -->
+        {(project.data.liveUrl || project.data.githubUrl) && (
+          <div class="flex flex-wrap justify-center gap-4">
+            {project.data.liveUrl && (
+              <a
+                href={project.data.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-primary"
+              >
+                View Live Project →
+              </a>
+            )}
+            {project.data.githubUrl && (
+              <a
+                href={project.data.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-secondary"
+              >
+                View on GitHub →
+              </a>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Project Content -->
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Key Information Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <!-- Problem -->
+        <div class="card">
+          <h2 class="text-xl font-orbitron font-bold text-neon-lime mb-4">
+            🎯 Problem
+          </h2>
+          <p class="text-matrix-white/90">{project.data.problem}</p>
+        </div>
+
+        <!-- Solution -->
+        <div class="card">
+          <h2 class="text-xl font-orbitron font-bold text-secondary mb-4">
+            💡 Solution
+          </h2>
+          <p class="text-matrix-white/90">{project.data.solution}</p>
+        </div>
+
+        <!-- Impact -->
+        <div class="card">
+          <h2 class="text-xl font-orbitron font-bold text-cyan-blue mb-4">
+            📊 Impact
+          </h2>
+          <p class="text-matrix-white/90">{project.data.impact}</p>
+        </div>
+      </div>
+
+      <!-- Tech Stack -->
+      {project.data.techStack && project.data.techStack.length > 0 && (
+        <div class="card mb-16">
+          <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-6">
+            🛠️ Tech Stack
+          </h2>
+          <div class="flex flex-wrap gap-3">
+            {project.data.techStack.map((tech) => (
+              <span class="px-4 py-2 bg-cyber-gray/50 border border-neon-lime/20 text-matrix-white rounded-lg">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- Full Project Content -->
+      <article class="prose prose-invert prose-lg max-w-none">
+        <div class="card">
+          <Content />
+        </div>
+      </article>
+
+      <!-- Gallery -->
+      {project.data.gallery && project.data.gallery.length > 0 && (
+        <div class="mt-16">
+          <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-8 text-center">
+            📸 Gallery
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {project.data.gallery.map((image) => (
+              <div class="card overflow-hidden">
+                <img
+                  src={image}
+                  alt={`${project.data.title} screenshot`}
+                  class="w-full h-auto"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Back to Projects -->
+  <section class="py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <a href="/projects" class="btn-primary"> ← Back to Projects </a>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  /* Custom styles for MDX content */
+  .prose {
+    color: var(--foreground);
+  }
+
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  .prose p {
+    color: color-mix(in oklab, var(--foreground) 90%, transparent);
+    line-height: 1.625;
+    margin-bottom: 1.5rem;
+  }
+
+  .prose ul,
+  .prose ol {
+    color: color-mix(in oklab, var(--foreground) 90%, transparent);
+  }
+
+  .prose strong {
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  .prose a {
+    color: var(--primary);
+    text-decoration: underline;
+    transition: all 0.3s;
+  }
+
+  .prose a:hover {
+    color: var(--foreground);
+  }
+</style>
+
