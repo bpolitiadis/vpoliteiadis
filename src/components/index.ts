@@ -22,3 +22,8 @@ export { default as SocialLink } from './SocialLink.astro';
 export { default as SpotifyEmbed } from './SpotifyEmbed.astro';
 export { default as AImage } from './media/AImage.astro';
 // Removed legacy image wrappers in favor of astro:assets or <img>
+
+// SEO Components (2025)
+export { default as Seo } from './Seo.astro';
+export { default as SchemaOrg } from './SchemaOrg.astro';
+export { default as Breadcrumb } from './Breadcrumb.astro';

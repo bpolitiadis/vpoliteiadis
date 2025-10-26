@@ -1,0 +1,46 @@
+---
+/**
+ * Schema.org Structured Data Component
+ * @component SchemaOrg
+ * 
+ * Renders JSON-LD structured data for SEO and rich snippets.
+ * Accepts any valid Schema.org type.
+ * 
+ * @example
+ * ```astro
+ * <SchemaOrg schema={{
+ *   "@type": "Person",
+ *   "name": "Vasileios Politeiadis",
+ *   "jobTitle": "Senior QA Automation Specialist"
+ * }} />
+ * ```
+ */
+
+export interface Props {
+  /** Schema.org structured data object (will automatically add @context) */
+  schema: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { schema } = Astro.props;
+
+// Ensure @context is present
+const enrichSchema = (data: Record<string, unknown> | Record<string, unknown>[]) => {
+  if (Array.isArray(data)) {
+    return data.map(item => ({
+      '@context': 'https://schema.org',
+      ...item,
+    }));
+  }
+  
+  return {
+    '@context': 'https://schema.org',
+    ...data,
+  };
+};
+
+const finalSchema = enrichSchema(schema);
+const jsonLd = JSON.stringify(finalSchema, null, 0); // Minified for production
+---
+
+<script type="application/ld+json" set:html={jsonLd} />
+

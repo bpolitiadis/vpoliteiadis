@@ -1,0 +1,81 @@
+---
+/**
+ * Breadcrumb Navigation Component with JSON-LD structured data
+ * @component Breadcrumb
+ * 
+ * @example
+ * ```astro
+ * <Breadcrumb items={[
+ *   { name: 'Home', href: '/' },
+ *   { name: 'Blog', href: '/blog' },
+ *   { name: 'Article Title', href: '/blog/article' }
+ * ]} />
+ * ```
+ */
+
+import SchemaOrg from './SchemaOrg.astro';
+
+export interface BreadcrumbItem {
+  /** Display name of the breadcrumb */
+  name: string;
+  /** URL path (relative or absolute) */
+  href: string;
+}
+
+export interface Props {
+  /** Array of breadcrumb items (first to last) */
+  items: BreadcrumbItem[];
+  /** Additional CSS classes */
+  class?: string;
+}
+
+const { items, class: className = '' } = Astro.props;
+
+// Build Schema.org BreadcrumbList
+const breadcrumbSchema = {
+  '@type': 'BreadcrumbList',
+  'itemListElement': items.map((item, index) => ({
+    '@type': 'ListItem',
+    'position': index + 1,
+    'name': item.name,
+    'item': item.href.startsWith('http') 
+      ? item.href 
+      : new URL(item.href, Astro.site).toString(),
+  })),
+};
+---
+
+<!-- Structured Data -->
+<SchemaOrg schema={breadcrumbSchema} />
+
+<!-- Visible Breadcrumb Navigation -->
+<nav aria-label="Breadcrumb" class={`flex items-center space-x-2 text-sm ${className}`}>
+  <ol class="flex items-center space-x-2">
+    {items.map((item, index) => {
+      const isLast = index === items.length - 1;
+      return (
+        <li class="flex items-center space-x-2">
+          {!isLast ? (
+            <>
+              <a 
+                href={item.href}
+                class="text-matrix-white/70 hover:text-neon-lime transition-colors"
+              >
+                {item.name}
+              </a>
+              <span class="text-matrix-white/40" aria-hidden="true">/</span>
+            </>
+          ) : (
+            <span 
+              class="text-matrix-white/90 font-medium" 
+              aria-current="page"
+            >
+              {item.name}
+            </span>
+          )}
+        </li>
+      );
+    })}
+  </ol>
+</nav>
+

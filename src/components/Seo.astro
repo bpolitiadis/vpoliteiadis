@@ -1,0 +1,140 @@
+---
+/**
+ * Centralized SEO component for meta tags, Open Graph, and Twitter Cards
+ * @component Seo
+ * 
+ * @example
+ * ```astro
+ * <Seo 
+ *   title="Page Title - Site Name"
+ *   description="Page description under 160 characters"
+ *   canonical="/about"
+ *   image="/images/og-image.jpg"
+ *   type="article"
+ * />
+ * ```
+ */
+
+export interface Props {
+  /** Page title (will be used as-is, no suffix added) */
+  title: string;
+  /** Meta description (keep under 160 characters for optimal display) */
+  description?: string;
+  /** Canonical path or full URL */
+  canonical?: string;
+  /** Open Graph image (relative or absolute URL) */
+  image?: string;
+  /** Open Graph type (website, article, profile, etc.) */
+  type?: 'website' | 'article' | 'profile';
+  /** Keywords for the page (array or comma-separated string) */
+  keywords?: string | string[];
+  /** Article published date (ISO 8601 format) */
+  publishedAt?: string;
+  /** Article modified date (ISO 8601 format) */
+  updatedAt?: string;
+  /** Article author name */
+  author?: string;
+  /** Whether to prevent indexing (adds noindex,nofollow) */
+  noindex?: boolean;
+  /** Twitter handle (without @) */
+  twitterCreator?: string;
+  /** Twitter site handle (without @) */
+  twitterSite?: string;
+}
+
+const {
+  title,
+  description = "Vasileios Politeiadis - Freelance QA Automation Specialist & Full-Stack Developer | Available for Projects, React, Next.js, AI Automation",
+  canonical,
+  image = '/images/vp-logo-800w.webp',
+  type = 'website',
+  keywords = [
+    'QA Automation Specialist',
+    'QA Automation Engineer',
+    'Full-Stack Developer',
+    'Next.js Developer',
+    'Astro Developer',
+    'TailwindCSS Developer',
+    'AI Automation Workflows',
+    'Freelance Developer',
+    'Java Selenium Testing',
+    'Playwright Testing',
+    'React Developer',
+    'TypeScript Developer',
+    'Supabase Developer',
+    'Vasileios Politeiadis',
+    'Portfolio',
+    'Online CV'
+  ],
+  publishedAt,
+  updatedAt,
+  author = 'Vasileios Politeiadis',
+  noindex = false,
+  twitterCreator = 'arte_imaginari',
+  twitterSite = 'arte_imaginari',
+} = Astro.props;
+
+// Build canonical URL
+const canonicalURL = canonical 
+  ? (canonical.startsWith('http') ? canonical : new URL(canonical, Astro.site).toString())
+  : new URL(Astro.url.pathname, Astro.site).toString();
+
+// Build Open Graph image URL
+const ogImageURL = image.startsWith('http') 
+  ? image 
+  : new URL(image, Astro.site).toString();
+
+// Process keywords
+const keywordsString = Array.isArray(keywords) ? keywords.join(', ') : keywords;
+---
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<meta name="keywords" content={keywordsString} />
+<meta name="author" content={author} />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Robots directive -->
+{noindex && <meta name="robots" content="noindex,nofollow" />}
+
+<!-- Language alternates -->
+<link rel="alternate" hreflang="en" href={canonicalURL} />
+<link rel="alternate" hreflang="x-default" href={canonicalURL} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImageURL} />
+<meta property="og:image:alt" content={title} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content="Vasileios Politeiadis - Portfolio" />
+<meta property="og:locale" content="en_US" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageURL} />
+<meta name="twitter:image:alt" content={title} />
+<meta name="twitter:creator" content={`@${twitterCreator}`} />
+<meta name="twitter:site" content={`@${twitterSite}`} />
+
+<!-- Article specific meta tags -->
+{type === 'article' && publishedAt && (
+  <meta property="article:published_time" content={publishedAt} />
+)}
+{type === 'article' && updatedAt && (
+  <meta property="article:modified_time" content={updatedAt} />
+)}
+{type === 'article' && author && (
+  <meta property="article:author" content={author} />
+)}
+
