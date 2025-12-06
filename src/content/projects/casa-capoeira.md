@@ -45,7 +45,7 @@ learnings:
     'Complexity of recurring event management',
     'Benefits of TypeScript in large-scale applications',
   ]
-liveUrl: 'https://casa-capoeira-portal.vercel.app/en'
+liveUrl: 'https://www.casacapoeira.org'
 githubUrl: 'https://github.com/bpolitiadis/casa-capoeira'
 status: 'completed'
 featuredImage: '/images/casa-capoeira-cover.webp'
