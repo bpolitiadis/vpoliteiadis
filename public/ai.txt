@@ -25,7 +25,7 @@ Skills:
 Experience:
 - Senior QA Automation Specialist (2024-Present): European Commission DG DIGIT
 - Full-Stack Developer & Project Lead (2025-Present): Casa Capoeira CMS Platform
-- Full-Stack Developer & QA Lead (2022-Present): Upiria Startup
+- Full-Stack Developer & QA Lead (2022-2024): Upiria Startup
 - Junior QA Automation Engineer (2018-2021): SWORD - European Commission Projects
 
 # Education & Certifications
