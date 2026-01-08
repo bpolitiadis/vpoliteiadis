@@ -45,14 +45,14 @@ import AImage from './media/AImage.astro';
     </p>
 
     {/* Contact Content */}
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 items-stretch">
       {/* Left column - Contact Form */}
-      <div class="animate-reveal-up-delayed-1 opacity-0">
+      <div class="animate-reveal-up-delayed-1 opacity-0 flex flex-col">
         <ContactForm client:visible />
       </div>
 
       {/* Right column - Contact Cards */}
-      <div class="animate-reveal-up-delayed-2 opacity-0">
+      <div class="animate-reveal-up-delayed-2 opacity-0 flex flex-col">
         <ContactCards />
       </div>
     </div>

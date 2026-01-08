@@ -2,7 +2,7 @@ import {
 	Menu, X, ChevronRight, ArrowRight, ExternalLink, Mail, Phone,
 	Briefcase, Monitor, Code, Palette,
 	Play, Image, Video, Check, Info, Clock, Calendar, GraduationCap, Award,
-	Linkedin, Instagram, Github,
+	Linkedin, Instagram, Github, Globe, Bot,
 	type LucideIcon,
 } from 'lucide-react';
 
@@ -48,6 +48,8 @@ export const iconMap: Record<string, LucideIcon> = {
 	calendar: Calendar,
 	graduationcap: GraduationCap,
 	award: Award,
+	globe: Globe,
+	bot: Bot,
 };
 
 export function Icon({
@@ -104,3 +106,5 @@ export const ClockIcon = (props: Omit<IconProps, 'name'>) => <Icon name="clock" 
 export const CalendarIcon = (props: Omit<IconProps, 'name'>) => <Icon name="calendar" {...props} />;
 export const GraduationIcon = (props: Omit<IconProps, 'name'>) => <Icon name="graduationcap" {...props} />;
 export const AwardIcon = (props: Omit<IconProps, 'name'>) => <Icon name="award" {...props} />;
+export const GlobeIcon = (props: Omit<IconProps, 'name'>) => <Icon name="globe" {...props} />;
+export const BotIcon = (props: Omit<IconProps, 'name'>) => <Icon name="bot" {...props} />;

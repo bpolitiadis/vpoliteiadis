@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Mail, Send } from 'lucide-react';
 
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -62,16 +63,16 @@ export default function ContactForm() {
   };
 
   return (
-    <Card className="border border-primary/30 bg-card/40 backdrop-blur-sm animate-fade-in">
+    <Card className="border border-primary/30 bg-card/40 backdrop-blur-sm animate-fade-in h-full flex flex-col">
       <CardHeader className="pb-4">
-        <CardTitle className="text-2xl font-orbitron font-bold text-primary flex items-center gap-3">
-          <span className="text-2xl" role="img" aria-label="Email">✉️</span>
+        <CardTitle className="text-xl md:text-2xl font-orbitron font-bold text-neon-lime flex items-center gap-3" style={{ textShadow: '0 0 10px rgba(57, 255, 20, 0.6)' }}>
+          <Mail className="w-6 h-6 text-neon-lime" aria-label="Send message" />
           {/* Keep exact copy */}
           Send Message
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <Form form={form} onSubmit={onSubmit} className="space-y-6" data-testid="contact-form">
+      <CardContent className="flex-1 flex flex-col">
+        <Form form={form} onSubmit={onSubmit} className="space-y-6 flex-1 flex flex-col" data-testid="contact-form">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <FormItem>
               <FormLabel htmlFor="firstName">First Name <span className="text-neon-lime" aria-label="required">*</span></FormLabel>
@@ -179,14 +180,16 @@ export default function ContactForm() {
 
           <Button
             type="submit"
-            className="w-full text-lg py-4 relative overflow-hidden group bg-muted border border-primary/40 rounded-lg text-primary hover:border-primary hover:shadow-neon transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 mt-8"
+            variant="default"
+            size="lg"
+            className="w-full mt-auto"
             aria-label="Send message"
             aria-busy={form.formState.isSubmitting}
             disabled={form.formState.isSubmitting}
             data-testid="contact-submit"
           >
-            <span className="relative z-10">🚀 Send Message</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-neon-lime to-digital-emerald opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true"></div>
+            <Send className="w-4 h-4" aria-hidden="true" />
+            Send Message
           </Button>
         </Form>
       </CardContent>
