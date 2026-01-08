@@ -26,17 +26,28 @@
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
 | `Hero.astro` | `src/components/Hero.astro` | Home hero with matrix rain, ElectricBorder avatar, and dynamic subtitle | — | HeroAnimationController, ElectricBorder, `/public/scripts/matrix-rain.js` |
+| `HeroSection.tsx` | `src/components/hero/HeroSection.tsx` | GSAP-powered hero section with floating animations for illustrations and laptop graphics | — | React, GSAP, public folder images |
+| `HeroIntro.astro` | `src/components/hero/HeroIntro.astro` | Hero intro section with chat layout (uses HeroSection) | — | HeroSection |
 | `HeroAnimationController.tsx` | `src/components/HeroAnimationController.tsx` | React component managing hero animation sequence | `quotes: string[]` (14 professional quotes) | DecryptedText, TextType |
 
-**Note:** The Hero component now includes a curated array of 14 professional quotes that rotate through the TextType animation, including phrases like "Certified bug hunter", "Automating workflows, amplifying humans", and "Partnering with AI to outpace time". The avatar now features an ElectricBorder effect for enhanced visual appeal.
+**Note:** The Hero component now includes a curated array of 14 professional quotes that rotate through the TextType animation, including phrases like "Certified bug hunter", "Automating workflows, amplifying humans", and "Partnering with AI to outpace time". The avatar now features an ElectricBorder effect for enhanced visual appeal. The new HeroSection component uses GSAP for smooth floating animations with reduced motion support.
 | `DecryptedText.tsx` | `src/components/DecryptedText.tsx` | Matrix-style text decryption effect | `text: string`, `speed?: number`, `className?: string` | React, CSS animations |
 | `TextType.tsx` | `src/components/TextType.tsx` | Typing/erasing text rotator with cursor | `text: string \| string[]`, `typingSpeed?`, `deletingSpeed?`, `pauseDuration?`, `showCursor?`, `cursorCharacter?`, `cursorClassName?`, `className?`, `startOnVisible?` | React, CSS animations |
 | `FuzzyText.tsx` | `src/components/FuzzyText.tsx` | Canvas-based fuzzy text effect with hover interactions | `children`, `fontSize?`, `fontWeight?`, `fontFamily?`, `color?`, `enableHover?`, `baseIntensity?`, `hoverIntensity?` | React, Canvas API, requestAnimationFrame |
+
+### Sections & Page Layouts
+
+| Component | Path | Purpose | Key Props | Dependencies |
+|-----------|------|---------|-----------|--------------|
+| `AboutSection.astro` | `src/components/AboutSection.astro` | Comprehensive profile showcase with work experience, education, and certifications | `profileImageSrc: string` | ProfileCard, structured data |
+| `ProjectsSection.astro` | `src/components/ProjectsSection.astro` | Featured projects showcase with GSAP animations | — | GSAP animations, public images |
+| `CreativeLabSection.astro` | `src/components/CreativeLabSection.astro` | Creative portfolio showcase with category-based styling and animations | — | GSAP animations, category colors |
 
 ### Cards & Containers
 
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
+| `ProfileCard.tsx` | `src/components/ui/profile-card.tsx` | Interactive profile card with tilt effects, social links, and status indicators | `name: string`, `title: string`, `status?: 'Online' \| 'Offline' \| 'Away'`, `contactText?`, `avatarUrl: string`, `showUserInfo?`, `enableTilt?`, `enableMobileTilt?`, `onContactClick?`, `className?` | React, Button, Card, Icon components |
 | `GlassCard.astro` | `src/components/GlassCard.astro` | Glassmorphic container with neon accent | `accent?`, `ariaLabel?`, `class?` | global.css glass-card styles |
 | `HighlightBlock.astro` | `src/components/HighlightBlock.astro` | Compact highlight tile for impact points | `title: string`, `description?`, `class?` | global.css styling |
 | `ProjectCard.astro` | `src/components/ProjectCard.astro` | Project card from content collection | `project: { slug, data }` | VercelImage, global.css card styles |
@@ -82,6 +93,15 @@ graph TD
   H --> J[TextType.tsx]
   H --> V[FuzzyText.tsx]
   G --> K[/public/scripts/matrix-rain.js]
+  
+  AA[HeroSection.tsx] --> AB[GSAP]
+  AC[HeroIntro.astro] --> AA
+  
+  AD[AboutSection.astro] --> AE[ProfileCard.tsx]
+  AD --> AF[Structured Data]
+  
+  AG[ProjectsSection.astro] --> AB
+  AH[CreativeLabSection.astro] --> AB
   
   L[ProjectCard.astro] --> M[VercelImage.astro]
   N[FeaturedProjectCard.tsx] --> O[OptimizedImage.tsx]
@@ -165,6 +185,7 @@ import PageHero from '../components/PageHero.astro';
 ```astro
 ---
 import Hero from '../components/Hero.astro';
+import HeroIntro from '../components/hero/HeroIntro.astro';
 ---
 <Hero />
 <!-- Automatically includes:
@@ -175,6 +196,70 @@ import Hero from '../components/Hero.astro';
   - TextType subtitle with rotating quotes (starts immediately)
   - CTA buttons (animate after first quote completes)
 - Timing: Typing 45ms, deleting 25ms, pause 1500ms between quotes -->
+
+<!-- Or use new HeroSection with GSAP animations -->
+<HeroIntro />
+<!-- Uses HeroSection.tsx with:
+- GSAP floating animations for illustrations
+- Reduced motion support
+- Public folder image paths
+- Responsive animation adjustments -->
+```
+
+### Homepage Sections
+```astro
+---
+import AboutSection from '../components/AboutSection.astro';
+import ProjectsSection from '../components/ProjectsSection.astro';
+import CreativeLabSection from '../components/CreativeLabSection.astro';
+import { getImage } from 'astro:assets';
+import profileImage from '../assets/images/vasileios-profile.png';
+
+const profileImageSrc = (await getImage({src: profileImage, width: 800})).src;
+---
+<AboutSection profileImageSrc={profileImageSrc} />
+<!-- Features:
+- Work experience timeline with structured data
+- Education and certifications
+- ProfileCard integration
+- IntersectionObserver animations -->
+
+<ProjectsSection />
+<!-- Features:
+- Featured projects showcase
+- GSAP card animations
+- Responsive grid layout
+- Public folder image paths -->
+
+<CreativeLabSection />
+<!-- Features:
+- Creative portfolio showcase
+- Category-based styling (AI art, digital art, experiments)
+- GSAP animations with reduced motion support
+- Neon color scheme integration -->
+```
+
+### Profile Card
+```tsx
+import { ProfileCard } from '../components/ui/profile-card';
+
+<ProfileCard
+  name="Vasileios Politeiadis"
+  title="Senior QA Automation Specialist"
+  status="Online"
+  contactText="Contact Me"
+  avatarUrl="/images/avatar.png"
+  showUserInfo={true}
+  enableTilt={true}
+  enableMobileTilt={false}
+  onContactClick={() => window.location.href = '/contact'}
+/>
+<!-- Features:
+- Tilt effect on mouse move (desktop/mobile configurable)
+- Social links (GitHub, LinkedIn, Instagram)
+- Status indicator
+- Contact button with callback
+- Responsive design -->
 ```
 
 ### Glass Card with CTA

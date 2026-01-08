@@ -4,30 +4,55 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 
 ## [Unreleased]
 
+## [0.0.4] - 2026-01-08
+
 ### Added
-- ElectricBorder React component for animated avatar borders
-- Enhanced hero section with electric border effect
-- Improved avatar visual appeal with dynamic animations
-- Comprehensive documentation suite restructuring and enhancement
+- **AboutSection Component**: New Astro-based component showcasing personal profile, work experience, education, and certifications with structured data
+- **ProfileCard Component**: React component with tilt effects, social links, and status indicators for enhanced user representation
+- **HeroSection Component**: New GSAP-powered hero section with floating animations for illustrations and laptop graphics
+- **ProjectsSection Component**: Astro component for showcasing featured projects with GSAP animations and responsive design
+- **CreativeLabSection Component**: Astro component for creative portfolio showcase with category-based styling and animations
+- **Comprehensive Test Suite**: Full Playwright test coverage including:
+  - Navigation tests across all pages
+  - Page-level component tests (homepage, about, projects, blog, creative)
+  - Accessibility tests with axe-core integration
+  - Responsive design tests across breakpoints
+  - Performance and SEO validation tests
+  - Page Object Model implementation for maintainable tests
+- **Hero Animations Documentation**: Added `HERO_ANIMATIONS_EXPLAINED.md` and `HERO_ANIMATIONS_IMPROVEMENTS.md` for animation patterns and best practices
+- **Hero Images**: Added vasileios-illustration.png and laptop-illustration.png to public assets
+- **Blog Post**: Added "Vibe Coding: AI-Assisted Development" blog post (marked as draft)
+- **Component Registry**: Added registries in components.json for better resource management
 
 ### Changed
-- Updated Hero.astro to use ElectricBorder component
-- Removed static avatar styling in favor of animated borders
-- Enhanced brand consistency with neon-lime color scheme
-- Restructured documentation suite for better developer and AI agent experience
-- Fixed COMPONENTS_REFERENCE.md to accurately reflect actual script dependencies and usage
+- **Hero Architecture**: Refactored hero section to use new HeroSection component with GSAP animations, replacing old chat layout approach
+- **Image Handling**: Updated image imports to use public folder paths for better Astro compatibility
+- **Homepage Layout**: Restructured index.astro to include AboutSection, ProjectsSection, and CreativeLabSection for comprehensive homepage experience
+- **Profile Updates**: 
+  - Updated employment timeline for Upiria Startup (2022-2024 instead of 2022-Present)
+  - Enhanced profile presentation to emphasize senior expertise and freelance status
+- **About Page**: Enhanced about.astro with new AboutSection integration and improved layout
+- **Middleware**: Updated to allow scripts from Vercel Insights for improved performance tracking
+- **Fetch Priority**: Adjusted fetch priority attributes in image components to align with React type expectations
+- **Hero Height Calculations**: Improved hero section height calculations in index.astro for better layout
 
-### Changed
-- Updated Hero.astro to use ElectricBorder component
-- Removed static avatar styling in favor of animated borders
-- Enhanced brand consistency with neon-lime color scheme
-- Restructured documentation suite for better developer and AI agent experience
+### Removed
+- **NavigationButtons Component**: Removed navigation buttons from hero intro section to simplify hero focus
+- **Old Chat Layout**: Deprecated AvatarBubble and MessageBubble components in favor of new HeroSection approach
 
 ### Fixed
-- Resolved TypeScript import issues with type-only imports
-- Cleaned up unused imports and variables
-- Improved build process reliability
-- Eliminated documentation duplication and improved consistency
+- **Profile Card**: Updated Instagram link hover color for improved visibility
+- **Blog Content**: Updated Bitcoin price references and timeline references for accuracy
+- **Project URLs**: Updated Casa Capoeira live URL to official site
+- **SEO Component**: Updated SEO component example to use existing image path
+- **TypeScript Errors**: Fixed TypeScript errors in test utilities and components
+
+### Documentation
+- Added comprehensive hero animations documentation explaining GSAP animation patterns
+- Enhanced test documentation with best practices and Page Object Model guidelines
+- Updated component references to reflect new architecture
+
+## [0.0.3] - 2025-12-19
 
 ## [0.0.3] - 2025-12-19
 

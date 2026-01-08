@@ -103,13 +103,16 @@ vpoliteiadis/
 - **CSS Inlining** and code splitting
 - **Lazy Loading** and responsive images
 - **Long-term Caching** strategies
-- **Cinematic Intro Hero** with sticky quick‑nav and progressive panels (Astro islands; reduced-motion aware)
+- **Cinematic Intro Hero** with GSAP animations, floating illustrations, and progressive panels (Astro islands; reduced-motion aware)
+- **GSAP Animations** for smooth, performant hero and section animations
 
 ### Developer Experience
 - **TypeScript** strict mode with proper types
 - **ESLint + Prettier** for code quality
 - **Hot Module Replacement** in development
 - **Build-time validation** and optimization
+- **Comprehensive Test Suite** with Playwright for E2E, accessibility, responsive, and performance testing
+- **Page Object Model** architecture for maintainable test code
 
 ## 🚀 Deployment
 
