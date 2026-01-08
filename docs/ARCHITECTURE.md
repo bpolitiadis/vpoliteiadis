@@ -11,7 +11,7 @@
 - **Styling:** TailwindCSS 3.4.1 + custom utilities in `src/styles/global.css`
 - **Package Manager:** pnpm 9.12.0 with Node.js 20.10.0
 - **Components:** Astro components with React islands (`*.tsx`) for interactive elements
-- **Content:** Collections for `blog`, `projects`, `creative` with Zod schemas
+- **Content:** Collections for `blog` with Zod schemas
 - **Images:** Responsive assets under `public/images` with Sharp optimization pipeline
 - **Deployment:** Static hosting optimized for Vercel with CSP headers and caching
 
@@ -46,7 +46,7 @@ graph TD
 ## 🏗️ Project Layout
 
 ### Core Directories
-- **`src/pages/**`**: File-based routing (home, about, contact, blog, projects, creative)
+- **`src/pages/**`**: File-based routing (home, blog)
 - **`src/layouts/MainLayout.astro`**: Global shell, meta tags, fonts, background orchestration
 - **`src/components/**`**: Reusable UI components (cards, heroes, navbar/footer, images)
 - **`src/content/config.ts`**: Zod schemas + collection registration for type safety
@@ -98,8 +98,8 @@ graph TD
 ## 🛣️ Routing Model
 
 ### File-Based Routing
-- **Static Routes**: `/`, `/about`, `/contact`, `/projects`, `/blog`, `/creative`
-- **Dynamic Routes**: `[slug].astro` for blog posts and project case studies
+- **Static Routes**: `/`, `/blog`
+- **Dynamic Routes**: `[slug].astro` for blog posts
 - **Utility Endpoints**: `/robots.txt`, `/ai.txt` for crawler configuration
 - **Structured Data**: `/structured/*.json` for SEO consumers
 
@@ -107,17 +107,9 @@ graph TD
 ```
 src/pages/
 ├── index.astro              # Homepage with hero animation
-├── about.astro              # About page with compact hero
-├── contact.astro            # Contact form with validation
-├── projects/
-│   ├── index.astro          # Projects grid with filtering
-│   └── [slug].astro         # Dynamic project case study
 ├── blog/
 │   ├── index.astro          # Blog grid with search/filter
 │   └── [slug].astro         # Dynamic blog post
-├── creative/
-│   ├── index.astro          # Creative portfolio grid
-│   └── [slug].astro         # Creative piece detail
 ├── robots.txt.ts            # Dynamic robots.txt
 ├── ai.txt.ts                # AI crawling policy
 └── structured/               # JSON-LD endpoints

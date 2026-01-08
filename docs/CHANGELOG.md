@@ -4,6 +4,23 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 
 ## [Unreleased]
 
+### Major Refactoring - Homepage Consolidation
+- **Page Consolidation**: Merged `/about`, `/projects/*`, `/creative/*`, and `/contact` functionality into homepage sections
+- **Navigation Enhancement**: Added scroll-based active state detection and URL hash support for homepage sections (#about, #projects, #creative, #contact)
+- **Code Cleanup**: Removed unused components (`AboutHero.tsx`, `ProjectCard.astro`, `ProjectCard.legacy.astro`, `AvatarBubble.tsx`, `MessageBubble.tsx`, `HeroSection.tsx`)
+- **Route Simplification**: Eliminated 11 separate pages, reducing complexity while maintaining all functionality
+- **API Cleanup**: Removed unused test contact endpoint (`/api/test-contact.ts`)
+
+### Navigation Improvements
+- **Scroll Detection**: Navbar now highlights active section while scrolling through homepage
+- **URL Hash Support**: Direct links to sections work with smooth scrolling (e.g., `/vpoliteiadis.com/#projects`)
+- **Responsive Design**: Section navigation only appears on homepage, maintains clean mobile experience
+
+### Documentation Updates
+- **COMPONENTS_REFERENCE.md**: Removed references to deleted components and updated mermaid diagrams
+- **PAGES_ROUTES.md**: Updated route inventory and file structure to reflect consolidated architecture
+- **ARCHITECTURE.md**: Simplified routing model and updated content collection references
+
 ## [0.0.5] - 2026-01-08
 
 ### Fixed

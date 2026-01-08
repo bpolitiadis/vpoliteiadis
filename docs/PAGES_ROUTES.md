@@ -3,7 +3,7 @@
 **Who this is for:** Developers mapping URLs to code and data, SEO specialists, and content creators.  
 **What you'll learn:** Route inventory, data sources, page components, SEO implementation, and content relationships.
 
-> **TL;DR** - File-system routing with dynamic `[slug]` for blog/projects. Utility routes for robots/AI and structured data. All pages use MainLayout.astro with dynamic meta tags and background orchestration.
+> **TL;DR** - File-system routing with dynamic `[slug]` for blog. Utility routes for robots/AI and structured data. All pages use MainLayout.astro with dynamic meta tags and background orchestration.
 
 ## 🗺️ Route Map
 
@@ -12,26 +12,14 @@
 | Route | File | Data Source | Key Components | SEO Notes |
 |-------|------|-------------|----------------|-----------|
 | `/` | `src/pages/index.astro` | — | `Hero`, `MainLayout` | Home hero with immediate TextType animation, background via layout |
-| `/about` | `src/pages/about.astro` | — | `MainLayout` | Eager bg image, compact hero pattern |
-| `/contact` | `src/pages/contact.astro` | — | `PageHero` | Form markup + `/scripts/contact-form.js` |
 
 ### Dynamic Collection Routes
 
 | Route | File | Data Source | Key Components | SEO Notes |
 |-------|------|-------------|----------------|-----------|
-| `/projects` | `src/pages/projects/index.astro` | `getCollection('projects')` | `PageHero`, `ProjectCard` | Featured filter, bg `projects-bg`, search/filter functionality |
-| `/projects/[slug]` | `src/pages/projects/[slug].astro` | Content collections | Page-level components | Dynamic project case study, structured data endpoint |
 | `/blog` | `src/pages/blog/index.astro` | `getCollection('blog')` (non-draft) | `PageHero`, card grid | Search/filter via `/scripts/blog-index.js`, tag-based filtering |
 | `/blog/[slug]` | `src/pages/blog/[slug].astro` | Content collections | Page-level components | Dynamic blog post, structured data endpoint |
 
-### Creative Portfolio Routes
-
-| Route | File | Data Source | Key Components | SEO Notes |
-|-------|------|-------------|----------------|-----------|
-| `/creative` | `src/pages/creative/index.astro` | Custom data | Cards/modal | Gallery/lightbox patterns, featured pieces |
-| `/creative/arte-imaginari` | `src/pages/creative/arte-imaginari.astro` | — | Page-level | Static showcase page for AI art series |
-| `/creative/emmanuelle-silk` | `src/pages/creative/emmanuelle-silk.astro` | — | Page-level | Static showcase page for fashion project |
-| `/creative/smoking-two` | `src/pages/creative/smoking-two.astro` | — | Page-level | Static showcase page for creative piece |
 
 **Note:** Creative routes are set up but currently no content is published in the creative collection.
 
@@ -60,20 +48,10 @@
 ```
 src/pages/
 ├── index.astro                    # Homepage with hero animation
-├── about.astro                    # About page with compact hero
-├── contact.astro                  # Contact form with validation
 ├── 404.astro                     # Matrix-themed 404 error page
-├── projects/
-│   ├── index.astro               # Projects grid with filtering
-│   └── [slug].astro              # Dynamic project case study
 ├── blog/
 │   ├── index.astro               # Blog grid with search/filter
 │   └── [slug].astro              # Dynamic blog post
-├── creative/
-│   ├── index.astro               # Creative portfolio grid
-│   ├── arte-imaginari.astro      # AI art showcase
-│   ├── emmanuelle-silk.astro     # Fashion project showcase
-│   └── smoking-two.astro         # Creative piece showcase
 ├── robots.txt.ts                  # Dynamic robots.txt
 ├── ai.txt.ts                      # AI crawling policy
 └── structured/                    # JSON-LD endpoints
@@ -86,29 +64,6 @@ src/pages/
 ```
 
 ### Dynamic Route Generation
-
-#### Projects Route
-```typescript
-// src/pages/projects/[slug].astro
-export async function getStaticPaths() {
-  const projects = await getCollection('projects');
-  return projects.map((project) => ({
-    params: { slug: project.slug },
-    props: { project },
-  }));
-}
-
-// Generate structured data for each project
-export async function GET({ params, request }) {
-  const project = await getEntry('projects', params.slug);
-  if (!project) return new Response('Not found', { status: 404 });
-  
-  const structuredData = generateProjectStructuredData(project);
-  return new Response(JSON.stringify(structuredData), {
-    headers: { 'Content-Type': 'application/json' }
-  });
-}
-```
 
 #### Blog Route
 ```typescript

@@ -30,7 +30,7 @@
 | `HeroIntro.astro` | `src/components/hero/HeroIntro.astro` | Hero intro section with chat layout (uses HeroSection) | — | HeroSection |
 | `HeroAnimationController.tsx` | `src/components/HeroAnimationController.tsx` | React component managing hero animation sequence | `quotes: string[]` (14 professional quotes) | DecryptedText, TextType |
 
-**Note:** The Hero component now includes a curated array of 14 professional quotes that rotate through the TextType animation, including phrases like "Certified bug hunter", "Automating workflows, amplifying humans", and "Partnering with AI to outpace time". The avatar now features an ElectricBorder effect for enhanced visual appeal. The new HeroSection component uses GSAP for smooth floating animations with reduced motion support.
+**Note:** The Hero component now includes a curated array of 14 professional quotes that rotate through the TextType animation, including phrases like "Certified bug hunter", "Automating workflows, amplifying humans", and "Partnering with AI to outpace time". The avatar now features an ElectricBorder effect for enhanced visual appeal.
 | `DecryptedText.tsx` | `src/components/DecryptedText.tsx` | Matrix-style text decryption effect | `text: string`, `speed?: number`, `className?: string` | React, CSS animations |
 | `TextType.tsx` | `src/components/TextType.tsx` | Typing/erasing text rotator with cursor | `text: string \| string[]`, `typingSpeed?`, `deletingSpeed?`, `pauseDuration?`, `showCursor?`, `cursorCharacter?`, `cursorClassName?`, `className?`, `startOnVisible?` | React, CSS animations |
 | `FuzzyText.tsx` | `src/components/FuzzyText.tsx` | Canvas-based fuzzy text effect with hover interactions | `children`, `fontSize?`, `fontWeight?`, `fontFamily?`, `color?`, `enableHover?`, `baseIntensity?`, `hoverIntensity?` | React, Canvas API, requestAnimationFrame |
@@ -50,7 +50,6 @@
 | `ProfileCard.tsx` | `src/components/ui/profile-card.tsx` | Interactive profile card with tilt effects, social links, and status indicators | `name: string`, `title: string`, `status?: 'Online' \| 'Offline' \| 'Away'`, `contactText?`, `avatarUrl: string`, `showUserInfo?`, `enableTilt?`, `enableMobileTilt?`, `onContactClick?`, `className?` | React, Button, Card, Icon components |
 | `GlassCard.astro` | `src/components/GlassCard.astro` | Glassmorphic container with neon accent | `accent?`, `ariaLabel?`, `class?` | global.css glass-card styles |
 | `HighlightBlock.astro` | `src/components/HighlightBlock.astro` | Compact highlight tile for impact points | `title: string`, `description?`, `class?` | global.css styling |
-| `ProjectCard.astro` | `src/components/ProjectCard.astro` | Project card from content collection | `project: { slug, data }` | VercelImage, global.css card styles |
 | `FeaturedProjectCard.tsx` | `src/components/FeaturedProjectCard.tsx` | Featured, rich project card (React) | `title`, `role`, `description`, `hero`, `detailUrl`, `cta`, `techStack`, `tags` | OptimizedImage, React |
 
 ### Media & Images
@@ -103,7 +102,6 @@ graph TD
   AG[ProjectsSection.astro] --> AB
   AH[CreativeLabSection.astro] --> AB
   
-  L[ProjectCard.astro] --> M[VercelImage.astro]
   N[FeaturedProjectCard.tsx] --> O[OptimizedImage.tsx]
   
   P[Footer.astro] --> Q[SocialLink.astro]
@@ -274,21 +272,6 @@ import NeonCTA from '../components/NeonCTA.astro';
   </p>
 </GlassCard>
 <NeonCTA href="https://example.com">View Live Project</NeonCTA>
-```
-
-### Project Card with HUD Metadata
-```astro
----
-import ProjectCard from '../components/ProjectCard.astro';
----
-<ProjectCard project={project} />
-<!-- Features:
-- Glassmorphic neon panel with framed cover image
-- Concise blurb and HUD-style metadata block
-- Tech stack highlights (first three items)
-- Dual CTA layout: Learn More + View Live (when available)
-- Responsive: vertical stack on mobile, horizontal on desktop
-- Note: Projects page currently shows featured projects only, no filtering implemented -->
 ```
 
 ### Electric Border Avatar
