@@ -177,7 +177,8 @@ const projects: Project[] = [
                 const durations = [4, 3, 4, 3];
                 const cardTimeline = gsap.timeline({ repeat: -1 });
                 movements.forEach((movement, moveIndex) => {
-                  cardTimeline.to(cardRef, durations[moveIndex], {
+                  cardTimeline.to(cardRef, {
+                    duration: durations[moveIndex],
                     ...movement,
                     ease: 'power1.easeInOut',
                   });
