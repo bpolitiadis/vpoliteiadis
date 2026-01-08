@@ -114,6 +114,8 @@ public/images/*.jpeg
 !public/images/blog/
 !public/images/creative/
 !public/images/projects/
+!public/images/vasileios-illustration.png
+!public/images/laptop-illustration.png
 
 # Keep source images committed
 !src/assets/images/
