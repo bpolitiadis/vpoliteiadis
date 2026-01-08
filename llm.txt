@@ -1,0 +1,290 @@
+# vpoliteiadis Portfolio - LLM Context File
+# Technical context for AI agents working on this codebase
+
+## 🎯 Purpose
+This file provides technical context about the project structure, architecture, and conventions for LLMs working on the codebase. For personal/professional information, see the website content or `professional-identity.md`.
+
+---
+
+## 🏗️ Project Overview
+
+**Type:** Personal portfolio website  
+**Framework:** Astro 5.12.8 (Static Site Generator with SSR)  
+**Deployment:** Vercel (Edge deployment)  
+**Language:** TypeScript 5.9.2 (strict mode)  
+**Styling:** TailwindCSS 3.4.1  
+**Site URL:** https://vpoliteiadis.com
+
+---
+
+## 📁 Project Structure
+
+```
+vpoliteiadis/
+├── src/
+│   ├── assets/images/          # Source images (imported)
+│   ├── components/             # Astro + React components
+│   │   ├── ui/                 # ShadCN UI components
+│   │   ├── hero/               # Hero section components
+│   │   └── contact/            # Contact form components
+│   ├── content/                # Content collections (MDX/Markdown)
+│   │   ├── blog/               # Blog posts
+│   │   ├── projects/           # Project case studies
+│   │   └── creative/           # Creative portfolio pieces
+│   ├── layouts/                # MainLayout.astro
+│   ├── lib/                    # Utilities (analytics, social, logger)
+│   ├── pages/                  # File-based routing
+│   │   ├── api/                # API endpoints
+│   │   ├── structured/         # JSON-LD endpoints
+│   │   └── [routes].astro      # Page routes
+│   └── styles/                 # global.css + Tailwind
+├── public/                     # Static assets (served as-is)
+│   ├── images/                 # Optimized images (build output)
+│   └── scripts/                # Client-side JavaScript
+├── docs/                       # Project documentation
+└── tests/                      # Playwright E2E tests
+```
+
+---
+
+## 🛠️ Tech Stack
+
+### Core
+- **Astro 5.12.8** - Static site generator
+- **TypeScript 5.9.2** - Strict mode
+- **TailwindCSS 3.4.1** - Utility-first CSS
+- **Vite** - Build tool
+
+### Integrations
+- `@astrojs/mdx` - MDX content support
+- `@astrojs/react` - React islands for interactivity
+- `@astrojs/tailwind` - Tailwind integration
+- `@astrojs/sitemap` - Sitemap generation
+- `@astrojs/vercel` - Vercel adapter
+
+### UI Libraries
+- **ShadCN UI** - Component library (Radix UI primitives)
+- **Radix UI** - Accessible components
+- **Lucide Icons** - Icon library
+
+### Development Tools
+- **Playwright** - E2E testing
+- **ESLint + Prettier** - Code quality
+- **Sharp** - Image processing
+- **Pino** - Server-side logging
+- **Sentry** - Error tracking
+
+---
+
+## 🛣️ Routing & Pages
+
+### Static Routes
+- `/` - Homepage (HeroIntro component)
+- `/about` - About page (professional background)
+- `/contact` - Contact form (React component)
+- `/404` - Error page
+
+### Dynamic Collection Routes
+- `/projects` - Projects index (filtering/search)
+- `/projects/[slug]` - Project case study
+- `/blog` - Blog index (filtering/search)
+- `/blog/[slug]` - Blog post (MDX)
+- `/creative` - Creative portfolio index
+- `/creative/[slug]` - Creative piece detail
+
+### Utility Routes
+- `/robots.txt` - Dynamic crawler config (`src/pages/robots.txt.ts`)
+- `/ai.txt` - AI crawling policy (`src/pages/ai.txt.ts`)
+- `/sitemap.xml` - Auto-generated sitemap
+- `/structured/*.json` - JSON-LD endpoints for SEO
+
+**Note:** `public/ai.txt` exists but is unused (dynamic route takes precedence).
+
+---
+
+## 📦 Content Collections
+
+### Schema Location
+`src/content/config.ts` - Zod schemas for all collections
+
+### Collections
+1. **Projects** (`src/content/projects/`)
+   - Schema: title, description, techStack, tags, featured, etc.
+   - Format: Markdown with frontmatter
+
+2. **Blog** (`src/content/blog/`)
+   - Schema: title, description, category, tags, draft, etc.
+   - Format: MDX with frontmatter
+   - Categories: technology, ai, development, automation, creative, career, tutorial, finance
+
+3. **Creative** (`src/content/creative/`)
+   - Schema: title, description, mediaType, tools, category, etc.
+   - Format: Markdown with frontmatter
+   - Categories: ai-art, digital-art, experiment, commission
+
+### Usage Pattern
+```typescript
+import { getCollection } from 'astro:content';
+const projects = await getCollection('projects');
+const featured = projects.filter(p => p.data.featured);
+```
+
+---
+
+## 🎨 Design System
+
+### Theme
+**Matrix-inspired cyberpunk aesthetic**
+
+### Colors (Tailwind config)
+- `matrix-black` (#0A0A0A)
+- `neon-lime` (#39FF14)
+- `digital-emerald` (#00B86B)
+- `cyber-gray` (#222222)
+
+### Typography
+- Headings: `font-orbitron` (Orbitron)
+- Body: `font-inter` (Inter)
+
+### Key Components
+- `GlassCard` - Glass morphism effect
+- `ElectricBorder` - Animated neon borders
+- `NeonCTA` - Glowing buttons
+- `AImage` - Image wrapper (astro:assets)
+- `MainLayout` - Global layout wrapper
+
+---
+
+## 🖼️ Image Handling
+
+### Source of Truth
+- **Imported images:** `src/assets/images/` (use `astro:assets` Image component)
+- **Static images:** `public/images/` (use static URLs with explicit width/height)
+
+### Best Practices
+- Use `AImage` component for Astro pages
+- Use static URLs with `width`, `height`, `loading`, `decoding` for React components
+- Responsive presets: `src/lib/image-presets.ts` (hero, card, thumb)
+- Formats: AVIF (primary), WebP (fallback)
+
+---
+
+## 🔧 Development Workflow
+
+### Scripts
+```bash
+pnpm dev          # Development server (localhost:4321)
+pnpm build        # Production build
+pnpm preview      # Preview production build
+pnpm lint         # ESLint
+pnpm type-check   # TypeScript check
+pnpm test         # Playwright tests
+```
+
+### Code Quality Standards
+- TypeScript strict mode
+- ESLint + Prettier
+- WCAG 2.1 AA accessibility
+- Mobile-first responsive design
+- SEO optimization (structured data, meta tags)
+
+---
+
+## 📊 Performance Targets
+
+- **Lighthouse:** Performance 90+, Accessibility 95+, SEO 95+
+- **Core Web Vitals:**
+  - LCP: < 2.5s
+  - FID: < 100ms
+  - CLS: < 0.1
+
+### Optimization Strategies
+- Static site generation (pre-rendered HTML)
+- Image optimization (Sharp, AVIF/WebP)
+- CSS inlining and code splitting
+- Lazy loading with blur placeholders
+- Long-term caching strategies
+
+---
+
+## 🧪 Testing
+
+### Playwright E2E Tests
+- Location: `tests/`
+- Page objects: `tests/page-objects/`
+- Test helpers: `tests/utils/test-helpers.ts`
+
+### Test Coverage
+- Navigation
+- Contact form
+- Accessibility (axe-core)
+- Performance
+- Responsive design
+
+---
+
+## 📚 Key Documentation Files
+
+- `docs/ARCHITECTURE.md` - System architecture and design decisions
+- `docs/CONTENT_MODEL.md` - Content collections and schemas
+- `docs/COMPONENTS_REFERENCE.md` - Component library
+- `docs/PAGES_ROUTES.md` - Route mapping and SEO
+- `docs/IMAGE_OPTIMIZATION.md` - Image handling best practices
+- `docs/STYLEGUIDE_CODE.md` - Code conventions
+
+---
+
+## 🔑 Important Patterns
+
+### Astro Islands
+- Use `client:load` for above-the-fold interactive components
+- Use `client:visible` for lazy-loaded components
+- Minimize React usage (prefer Astro when possible)
+
+### Component Organization
+- Astro components: `.astro` files
+- React components: `.tsx` files (in `components/`)
+- UI primitives: `components/ui/` (ShadCN)
+
+### Styling Approach
+- Tailwind utility classes (preferred)
+- Custom CSS in `src/styles/global.css` when needed
+- Component-scoped styles in `<style>` blocks
+
+### SEO Implementation
+- Structured data: JSON-LD in `MainLayout` and `/structured/*.json`
+- Meta tags: Dynamic via `MainLayout` props
+- Sitemap: Auto-generated by `@astrojs/sitemap`
+
+---
+
+## 🚨 Common Gotchas
+
+1. **Image imports:** Use `astro:assets` for imported images, static URLs for public images
+2. **React hydration:** Only use React islands where interactivity is needed
+3. **Content collections:** Always validate with Zod schemas in `config.ts`
+4. **Build output:** Static files go to `dist/`, public files copied as-is
+5. **Dynamic routes:** Use `getStaticPaths()` for collection-based routes
+
+---
+
+## 📝 Notes for LLMs
+
+**This file focuses on technical context for codebase work.**
+
+For personal/professional information:
+- See website content at https://vpoliteiadis.com
+- See `professional-identity.md` for detailed background
+- See `public/ai.txt` for AI crawling policy (though `/ai.txt` route is preferred)
+
+**When working on this codebase:**
+1. Follow TypeScript strict mode conventions
+2. Use Tailwind utilities (avoid custom CSS when possible)
+3. Prefer Astro components over React (use React islands sparingly)
+4. Maintain accessibility standards (WCAG 2.1 AA)
+5. Follow existing patterns in `docs/` directory
+6. Run `pnpm lint` and `pnpm type-check` before committing
+
+---
+
+**Last Updated:** January 2025
