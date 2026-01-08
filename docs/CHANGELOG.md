@@ -4,6 +4,31 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 
 ## [Unreleased]
 
+### Documentation Suite Restructuring
+- **Consolidated Documentation**: Reorganized documentation into focused, maintainable structure
+  - Added: `COMPONENTS.md`, `CONTENT.md`, `CONTRIBUTING.md`, `DEPLOYMENT.md`, `DEVELOPMENT.md`, `TROUBLESHOOTING.md`
+  - Moved reference docs to `appendices/` directory (branding, motion library, social links, test IDs, hero animations)
+  - Removed: Fragmented documentation files (COMPONENTS_REFERENCE.md, CONTENT_MODEL.md, PAGES_ROUTES.md, and 20+ other files)
+- **SEO Documentation**: Comprehensive rewrite of `SEO.md` with updated best practices and implementation details
+- **README Updates**: Enhanced main documentation index with clear navigation and quick start guides
+- **Branding Documentation**: Updated `branding.md` with refined color system and design guidelines
+
+### Phase 3: Deep Architecture Overhaul (Design System + Performance)
+- **Design System Rationalization**: Cleaned up Tailwind config from 100+ color variants to 8 semantic colors, standardized spacing scale (xs-xl), removed duplicate color definitions
+- **Component Migration**: Updated all major components (Navbar, AboutSection, BlogPostCard, ContactSection, CreativeCard, CreativeLabSection, ProjectsSection, MainLayout) to use new semantic color system (primary/secondary/background/foreground)
+- **Image System Consolidation**: Enhanced AImage component to handle both imported and static images, updated all components to use unified image handling
+- **Critical CSS Inlining**: Added critical CSS extraction for above-the-fold content to improve initial page load performance
+- **Advanced Code Splitting**: Enhanced Astro config with intelligent chunking strategy:
+  - Route-specific chunks (home-page, blog-page, projects-page)
+  - Component-based chunks (hero-components, contact-components, ui-components)
+  - Vendor chunks (react-vendor, radix-ui-vendor, animation-vendor, icons-vendor, forms-vendor)
+- **Caching Strategy**: Added comprehensive cache headers in middleware:
+  - Static assets: 1 year immutable cache
+  - Images: 24h cache + 7 days stale-while-revalidate
+  - HTML pages: 1h cache + 24h stale-while-revalidate
+  - API routes: no-cache
+- **Performance Optimizations**: Reduced bundle sizes through better chunking, improved loading strategies with critical CSS and advanced caching
+
 ### Major Refactoring - Homepage Consolidation
 - **Page Consolidation**: Merged `/about`, `/projects/*`, `/creative/*`, and `/contact` functionality into homepage sections
 - **Navigation Enhancement**: Added scroll-based active state detection and URL hash support for homepage sections (#about, #projects, #creative, #contact)
