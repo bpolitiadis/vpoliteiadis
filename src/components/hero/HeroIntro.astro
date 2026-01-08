@@ -1,7 +1,6 @@
 ---
 import AvatarBubble from './AvatarBubble.tsx';
 import MessageBubble from './MessageBubble.tsx';
-import NavigationButtons from './NavigationButtons.tsx';
 ---
 
 <section
@@ -23,49 +22,7 @@ import NavigationButtons from './NavigationButtons.tsx';
     </div>
   </div>
   
-  <!-- Navigation buttons - positioned near footer -->
-  <div id="nav-layout" class="hidden relative z-10 w-full max-w-6xl px-4 sm:px-6 lg:px-8 mx-auto pb-8 justify-center" data-testid="hero-navigation-buttons">
-    <NavigationButtons client:load />
-  </div>
 </section>
 
-<script>
-  // Orchestrate the hero sequence
-  document.addEventListener('DOMContentLoaded', () => {
-    const chatLayout = document.getElementById('chat-layout');
-    const navLayout = document.getElementById('nav-layout');
-    
-    if (!chatLayout || !navLayout) return;
-    
-    // Listen for message completion
-    const messageBubble = chatLayout.querySelector('[data-testid="message-bubble"]');
-    if (messageBubble) {
-      // Add event listener for when message sequence completes
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (mutation.type === 'attributes' && mutation.attributeName === 'data-complete') {
-            // Message sequence complete, show navigation buttons below
-            setTimeout(() => {
-              // Keep chat layout visible, just show navigation below
-              navLayout.classList.remove('hidden');
-              navLayout.classList.add('flex');
-              navLayout.style.opacity = '0';
-              navLayout.style.transform = 'translateY(20px)';
-              
-              // Animate in navigation
-              requestAnimationFrame(() => {
-                navLayout.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-                navLayout.style.opacity = '1';
-                navLayout.style.transform = 'translateY(0)';
-              });
-            }, 500); // Reduced delay for faster response
-          }
-        });
-      });
-      
-      observer.observe(messageBubble, { attributes: true });
-    }
-  });
-</script>
 
 
