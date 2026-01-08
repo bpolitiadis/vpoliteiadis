@@ -67,14 +67,8 @@ const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
       setTilt({ x: 0, y: 0 });
     }, []);
 
-    const statusColors = {
-      Online: "bg-digital-emerald",
-      Offline: "bg-cyber-gray",
-      Away: "bg-matrix-gold",
-    };
-
     const statusGlow = {
-      Online: "shadow-[0_0_8px_rgba(0,184,107,0.5)]",
+      Online: "shadow-[0_0_8px_rgba(57,255,20,0.6)]",
       Offline: "",
       Away: "shadow-[0_0_8px_rgba(255,170,0,0.5)]",
     };
@@ -83,8 +77,9 @@ const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
       <Card
         ref={cardRef}
         className={cn(
-          "relative overflow-hidden border border-digital-emerald/30 transition-all duration-300",
-          "hover:border-digital-emerald/40 hover:shadow-[0_0_12px_rgba(0,184,107,0.2)]",
+          "relative overflow-hidden border-2 border-digital-emerald/60 transition-all duration-300",
+          "hover:border-digital-emerald hover:shadow-[0_0_16px_rgba(0,184,107,0.4)]",
+          "shadow-[0_0_8px_rgba(0,184,107,0.2)]",
           "w-full aspect-[4/5]",
           className
         )}
@@ -103,8 +98,8 @@ const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
           aria-hidden="true"
         />
         
-        {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-matrix-black/40 to-matrix-black/80" />
+        {/* Dark overlay for text readability - stronger gradient at bottom */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-matrix-black/30 to-matrix-black/95" />
         
         {/* Neon Accent Line */}
         <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-digital-emerald to-transparent opacity-50 z-10" />
@@ -112,16 +107,18 @@ const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
         {/* Content Overlay */}
         <div className="relative h-full flex flex-col justify-end p-6 z-10">
           {/* Status Indicator - Top Right */}
-          {status && (
-            <div
-              className={cn(
-                "absolute top-4 right-4 w-3 h-3 rounded-full border-2 border-matrix-black",
-                statusColors[status],
-                statusGlow[status]
-              )}
-              aria-label={`Status: ${status}`}
-            />
-          )}
+          <div
+            className={cn(
+              "absolute top-4 right-4 w-3.5 h-3.5 rounded-full border-2 border-matrix-black z-20",
+              statusGlow[status || "Online"]
+            )}
+            style={{ 
+              backgroundColor: (status || "Online") === "Online" ? "#39FF14" : 
+                             (status || "Online") === "Away" ? "#FFAA00" : 
+                             "#222222"
+            }}
+            aria-label={`Status: ${status || "Online"}`}
+          />
 
           {/* User Info - Bottom Section */}
           {showUserInfo && (
@@ -129,7 +126,7 @@ const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
               <h3 className="text-xl font-orbitron font-bold text-neon-lime leading-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                 {name}
               </h3>
-              <p className="text-sm text-digital-emerald font-medium leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+              <p className="text-sm text-secondary font-medium leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                 {title.includes('&') ? (
                   <>
                     {title.split('&')[0].trim()}
@@ -146,7 +143,7 @@ const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
                   href="https://github.com/bpolitiadis"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-matrix-white/80 hover:text-digital-emerald transition-colors duration-200 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                  className="text-matrix-white/80 hover:text-primary transition-colors duration-200 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
                   aria-label="GitHub profile"
                 >
                   <GitHubIcon size="sm" className="w-5 h-5" />
@@ -155,7 +152,7 @@ const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
                   href="https://www.linkedin.com/in/vasileios-politeiadis/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-matrix-white/80 hover:text-digital-emerald transition-colors duration-200 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                  className="text-matrix-white/80 hover:text-primary transition-colors duration-200 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
                   aria-label="LinkedIn profile"
                 >
                   <LinkedInIcon size="sm" className="w-5 h-5" />
@@ -164,7 +161,7 @@ const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
                   href="https://www.instagram.com/arte.imaginari/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-matrix-white/80 hover:text-digital-emerald transition-colors duration-200 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                  className="text-matrix-white/80 hover:text-primary transition-colors duration-200 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
                   aria-label="Instagram profile"
                 >
                   <InstagramIcon size="sm" className="w-5 h-5" />
