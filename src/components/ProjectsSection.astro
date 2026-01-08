@@ -1,4 +1,6 @@
 ---
+import AImage from './media/AImage.astro';
+
 interface Project {
   title: string;
   description: string;
@@ -34,16 +36,13 @@ const projects: Project[] = [
 >
   {/* Background image */}
   <div class="absolute inset-0 z-0 overflow-hidden">
-    <picture class="block absolute inset-0 w-full h-full">
-      <source srcset="/images/projects-bg.avif" type="image/avif" />
-      <source srcset="/images/projects-bg.webp" type="image/webp" />
-      <img
-        src="/images/projects-bg.webp"
-        alt=""
-        class="w-full h-full object-cover object-center"
-        aria-hidden="true"
-      />
-    </picture>
+    <AImage
+      src="/images/projects-bg.webp"
+      alt=""
+      preset="hero"
+      class="w-full h-full object-cover object-center"
+      aria-hidden="true"
+    />
     <div class="absolute inset-0 bg-matrix-black/50"></div>
   </div>
 
@@ -86,14 +85,13 @@ const projects: Project[] = [
               class="block w-full h-full"
               aria-label={`Visit ${project.title} website`}
             >
-              <img
+              <AImage
                 src={project.image}
                 alt={project.title}
+                preset="card"
                 class="w-full h-full object-cover rounded-lg"
                 loading="lazy"
                 decoding="async"
-                width={1280}
-                height={720}
               />
             </a>
           </div>

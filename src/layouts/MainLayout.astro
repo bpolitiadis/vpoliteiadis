@@ -1,6 +1,7 @@
 ---
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import Analytics from '@vercel/analytics/astro';
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 // Optional: map page background slugs to imported assets so Astro optimizes them
@@ -353,12 +354,8 @@ const finalStructuredData = structuredData ? { ...baseStructuredData, ...structu
     <!-- Performance optimization script -->
     <script is:inline src="/scripts/performance.js" defer></script>
     
-    <!-- Vercel Analytics: load only in production to avoid 404s in dev -->
-    {import.meta.env.PROD && (
-      <script is:inline>
-        {`(function(){var s=document.createElement('script');s.src='/_vercel/insights/script.js';s.defer=true;document.head.appendChild(s);})();`}
-      </script>
-    )}
+    <!-- Vercel Analytics: direct import implementation -->
+    {import.meta.env.PROD && <Analytics />}
   </body>
 </html>
 

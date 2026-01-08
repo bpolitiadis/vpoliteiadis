@@ -1,5 +1,6 @@
 ---
 import { ExternalLink } from 'lucide-astro';
+import AImage from './media/AImage.astro';
 
 export interface Props {
   project: {
@@ -29,14 +30,13 @@ const { project } = Astro.props;
       class="block w-full h-full"
       aria-label={`View ${project.title} details`}
     >
-      <img
+      <AImage
         src={project.hero}
         alt={project.title}
+        preset="card"
         class={`w-full h-full ${project.heroFit === 'contain' ? 'object-contain p-6' : 'object-cover'} rounded-lg transition-transform duration-700 group-hover:scale-110 will-change-transform`}
         loading="lazy"
         decoding="async"
-        width={1280}
-        height={720}
       />
       <!-- Purple gradient overlay -->
       <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-matrix-black/95 via-matrix-black/40 to-transparent opacity-90 group-hover:opacity-60 transition-opacity duration-500 rounded-lg" />

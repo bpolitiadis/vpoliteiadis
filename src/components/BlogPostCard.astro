@@ -1,4 +1,6 @@
 ---
+import AImage from './media/AImage.astro';
+
 export interface BlogPostMeta {
   slug: string;
   title: string;
@@ -30,12 +32,11 @@ const date = new Date(post.publishedAt).toLocaleDateString('en-US', {
 >
   {post.coverImage && (
     <div class="relative mb-4 overflow-hidden rounded-lg">
-      <img
+      <AImage
         src={post.coverImage}
         alt={`Cover image for ${post.title}`}
+        preset="thumb"
         class="h-44 w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-        width={800}
-        height={352}
         loading="lazy"
         decoding="async"
         sizes="(max-width: 768px) 100vw, 400px"
