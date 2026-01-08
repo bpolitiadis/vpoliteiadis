@@ -7,6 +7,7 @@ export { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 export { Input } from './input';
 export { Label } from './label';
 export { Progress } from './progress';
+export { ProfileCard } from './profile-card';
 export { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './select';
 export { default as StarBorder } from './star-border';
 export { Textarea } from './textarea';

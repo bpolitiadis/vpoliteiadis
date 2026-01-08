@@ -1,0 +1,401 @@
+---
+// import ElectricBorder from './ElectricBorder'; // Commented out - replaced with ProfileCard
+import { ProfileCard } from './ui/profile-card';
+
+interface Props {
+  profileImageSrc: string;
+}
+
+interface TimelineItem {
+  period: string;
+  title: string;
+  subtitle?: string;
+  url?: string;
+  description: string;
+  skills?: string[];
+  isCurrent?: boolean;
+}
+
+const { profileImageSrc } = Astro.props;
+
+const workExperience: TimelineItem[] = [
+  {
+    period: "2024 — PRESENT",
+    title: "Senior QA Automation Specialist",
+    subtitle: "VASS",
+    url: "https://vasscompany.com/greece/en/",
+    description: "Leading test automation in quality assurance teams for European Commission projects in DG DIGIT, specializing in custom Java-based automation frameworks using Selenium WebDriver.",
+    skills: ["Java", "Selenium", "Custom EU Frameworks"],
+    isCurrent: true,
+  },
+  {
+    period: "2022 — 2024",
+    title: "Full-Stack Developer - QA Lead",
+    subtitle: "Upiria",
+    url: "https://www.upiria.com",
+    description: "Full-stack development and leading QA processes for Upiria startup, delivering scalable solutions with fast delivery cycles and high quality using modern web technologies.",
+    skills: ["React", "PHP", "Playwright", "MySQL", "AWS"],
+  },
+  {
+    period: "2018 — 2021",
+    title: "Junior QA Automation Engineer",
+    subtitle: "SWORD",
+    url: "https://www.sword-group.com/greece/",
+    description: "Quality assurance and testing automation for European Commission projects, establishing foundational testing practices and automation workflows using Java and Selenium.",
+    skills: ["Java", "Selenium", "User Acceptance Testing"],
+  },
+];
+
+const education: TimelineItem[] = [
+  {
+    period: "2018",
+    title: "Electrical Engineering and Computer Science",
+    subtitle: "AUTh",
+    url: "https://www.auth.gr/en",
+    description: "Foundation in engineering principles and computer science fundamentals, providing the theoretical and practical knowledge for modern software development and QA automation. Thesis: Automated test engine for RESTful Web Services",
+  },
+];
+
+const certifications: TimelineItem[] = [
+  {
+    period: "2018",
+    title: "Certified Tester Foundation Level",
+    subtitle: "ISTQB",
+    url: "https://www.istqb.org/",
+    description: "Foundation level certification in software testing principles and practices, validating expertise in QA methodologies.",
+  },
+];
+
+// Helper function to get timeline item colors
+function getTimelineColors(isCurrent: boolean) {
+  return {
+    period: isCurrent ? "text-neon-lime" : "text-matrix-white/60",
+    title: isCurrent ? "text-neon-lime" : "text-digital-emerald",
+  };
+}
+---
+
+<section
+  id="whoami"
+  class="relative py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-matrix-black overflow-visible"
+  role="region"
+  aria-labelledby="about-heading"
+  data-about-section
+>
+  {/* Background image */}
+  <div class="absolute inset-0 z-0 overflow-hidden">
+    <picture>
+      <source srcset="/images/about-bg.avif" type="image/avif" />
+      <source srcset="/images/about-bg.webp" type="image/webp" />
+      <img
+        src="/images/about-bg.webp"
+        alt=""
+        class="w-full h-full object-cover"
+        aria-hidden="true"
+      />
+    </picture>
+    <div class="absolute inset-0 bg-matrix-black/60"></div>
+  </div>
+  
+  <div class="max-w-7xl mx-auto relative z-10">
+    {/* Section Headline */}
+    <h2
+      id="about-heading"
+      class="text-3xl md:text-4xl lg:text-5xl font-orbitron font-bold text-neon-lime text-center mb-12 md:mb-16 animate-reveal-up opacity-0"
+      style="text-shadow: 0 0 20px rgba(57, 255, 20, 0.8), 0 0 40px rgba(57, 255, 20, 0.4)"
+    >
+      Who am I?
+    </h2>
+
+    {/* Two Column Layout */}
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+      {/* Left Column - Profile Card (Sticky) */}
+      {/* 
+        ELECTRIC BORDER - Commented out for future use/debugging
+        Previously used ElectricBorder component with:
+        - color="#00B86B" (Digital Emerald)
+        - speed={0.2}
+        - chaos={0.3}
+        - thickness={2}
+        Can be restored if needed for testing or design iterations
+        
+        <ElectricBorder
+          client:load
+          color="#00B86B"
+          speed={0.2}
+          chaos={0.3}
+          thickness={2}
+          className="w-full rounded-lg"
+          style={{ borderRadius: '0.5rem' }}
+        >
+          <img
+            src={profileImageSrc}
+            alt="Vasileios Politeiadis - Senior QA Automation Specialist & Full-Stack Developer"
+            class="w-full rounded-lg object-cover relative z-0"
+            loading="lazy"
+          />
+        </ElectricBorder>
+      */}
+      <div class="flex items-start justify-center lg:justify-start animate-reveal-up-delayed-1 opacity-0 pt-8 md:pt-12 lg:sticky lg:top-20 lg:self-start">
+        <div class="w-full max-w-xs lg:max-w-sm">
+          <ProfileCard
+            client:load
+            name="Vasileios Politeiadis"
+            title="Senior QA Automation Engineer & Full-Stack Developer"
+            status="Online"
+            contactText="Contact Me"
+            avatarUrl={profileImageSrc}
+            showUserInfo={true}
+            enableTilt={true}
+            enableMobileTilt={false}
+            onContactClick={() => {
+              // Scroll to contact section
+              const contactSection = document.getElementById('contact');
+              if (contactSection) {
+                contactSection.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Right Column - Content */}
+      <div class="space-y-8">
+        {/* Introduction Paragraph */}
+        <div class="animate-reveal-up-delayed-2 opacity-0">
+          <p class="text-sm md:text-base text-matrix-white/90 leading-relaxed mb-6">
+            I'm a QA automation specialist and full-stack developer with 7+ years of experience building reliable software. I've worked on everything from enterprise-level European Commission projects to fast-moving startups, where I learned to take products from concept to production. As a freelancer, I've designed and built websites and applications for clients across various industries. This mix of corporate, startup, and freelance work has taught me that quality and reliability matter regardless of the environment.
+          </p>
+        </div>
+
+        {/* Work Experience Section */}
+        <div class="animate-reveal-up-delayed-3 opacity-0">
+          <h3 
+            class="text-xl md:text-2xl font-orbitron font-bold text-neon-lime mb-6"
+            style="text-shadow: 0 0 10px rgba(57, 255, 20, 0.6)"
+          >
+            Work Experience
+          </h3>
+          <div class="space-y-0">
+            {workExperience.map((job) => {
+              const colors = getTimelineColors(job.isCurrent ?? false);
+              const content = (
+                <div class="py-4 group">
+                  <div class="flex flex-col lg:grid lg:grid-cols-[140px_1fr] lg:gap-6">
+                    {/* Date column */}
+                    <div class="mb-2 lg:mb-0">
+                      <span class={`text-sm font-mono tracking-wide ${colors.period}`}>
+                        {job.period}
+                      </span>
+                    </div>
+
+                    {/* Content column */}
+                    <div class="space-y-2">
+                      <div class="flex flex-wrap items-baseline gap-2">
+                        <h3 class={`text-base font-semibold ${colors.title} group-hover:opacity-80 transition-opacity`}>
+                          {job.title}
+                        </h3>
+                        {job.subtitle && (
+                          <span class={`text-base font-semibold ${colors.title} inline-flex items-center gap-1.5`}>
+                            <span class="text-matrix-white/40">·</span>
+                            {job.subtitle}
+                            {job.url && <span class="text-xs opacity-70">↗</span>}
+                          </span>
+                        )}
+                      </div>
+
+                      <p class="text-sm text-matrix-white/70 leading-relaxed">
+                        {job.description}
+                      </p>
+
+                      {job.skills && job.skills.length > 0 && (
+                        <div class="flex flex-wrap gap-2 pt-1">
+                          {job.skills.map((skill) => (
+                            <div class="inline-flex items-center border border-digital-emerald/50 bg-transparent text-digital-emerald hover:border-digital-emerald/70 text-xs px-2.5 py-0.5 rounded-md transition-colors">
+                              {skill}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+
+              if (job.url) {
+                return (
+                  <a
+                    href={job.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="block rounded-md border border-transparent hover:border-digital-emerald/20 hover:bg-matrix-black/10 transition-all -mx-4 px-4"
+                    aria-label={`View ${job.subtitle || job.title} website`}
+                  >
+                    {content}
+                  </a>
+                );
+              }
+
+              return <div class="-mx-4 px-4">{content}</div>;
+            })}
+          </div>
+        </div>
+
+        {/* Education Section */}
+        <div class="animate-reveal-up-delayed-4 opacity-0">
+          <h3 
+            class="text-xl md:text-2xl font-orbitron font-bold text-neon-lime mb-6"
+            style="text-shadow: 0 0 10px rgba(57, 255, 20, 0.6)"
+          >
+            Education
+          </h3>
+          <div class="space-y-0">
+            {education.map((edu) => {
+              const colors = getTimelineColors(false);
+              const content = (
+                <div class="py-4 group">
+                  <div class="flex flex-col lg:grid lg:grid-cols-[140px_1fr] lg:gap-6">
+                    {/* Date column */}
+                    <div class="mb-2 lg:mb-0">
+                      <span class={`text-sm font-mono tracking-wide ${colors.period}`}>
+                        {edu.period}
+                      </span>
+                    </div>
+
+                    {/* Content column */}
+                    <div class="space-y-2">
+                      <div class="flex flex-wrap items-baseline gap-2">
+                        <h3 class={`text-base font-semibold ${colors.title} group-hover:opacity-80 transition-opacity`}>
+                          {edu.title}
+                        </h3>
+                        {edu.subtitle && (
+                          <span class={`text-base font-semibold ${colors.title} inline-flex items-center gap-1.5`}>
+                            <span class="text-matrix-white/40">·</span>
+                            {edu.subtitle}
+                            {edu.url && <span class="text-xs opacity-70">↗</span>}
+                          </span>
+                        )}
+                      </div>
+
+                      <p class="text-sm text-matrix-white/70 leading-relaxed">
+                        {edu.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+
+              if (edu.url) {
+                return (
+                  <a
+                    href={edu.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="block rounded-md border border-transparent hover:border-digital-emerald/20 hover:bg-matrix-black/10 transition-all -mx-4 px-4"
+                    aria-label={`View ${edu.subtitle || edu.title} website`}
+                  >
+                    {content}
+                  </a>
+                );
+              }
+
+              return <div class="-mx-4 px-4">{content}</div>;
+            })}
+          </div>
+        </div>
+
+        {/* Certifications Section */}
+        <div class="animate-reveal-up-delayed-5 opacity-0">
+          <h3 
+            class="text-xl md:text-2xl font-orbitron font-bold text-neon-lime mb-6"
+            style="text-shadow: 0 0 10px rgba(57, 255, 20, 0.6)"
+          >
+            Certifications
+          </h3>
+          <div class="space-y-0">
+            {certifications.map((cert) => {
+              const colors = getTimelineColors(false);
+              const content = (
+                <div class="py-4 group">
+                  <div class="flex flex-col lg:grid lg:grid-cols-[140px_1fr] lg:gap-6">
+                    {/* Date column */}
+                    <div class="mb-2 lg:mb-0">
+                      <span class={`text-sm font-mono tracking-wide ${colors.period}`}>
+                        {cert.period}
+                      </span>
+                    </div>
+
+                    {/* Content column */}
+                    <div class="space-y-2">
+                      <div class="flex flex-wrap items-baseline gap-2">
+                        <h3 class={`text-base font-semibold ${colors.title} group-hover:opacity-80 transition-opacity`}>
+                          {cert.title}
+                        </h3>
+                        {cert.subtitle && (
+                          <span class={`text-base font-semibold ${colors.title} inline-flex items-center gap-1.5`}>
+                            <span class="text-matrix-white/40">·</span>
+                            {cert.subtitle}
+                            {cert.url && <span class="text-xs opacity-70">↗</span>}
+                          </span>
+                        )}
+                      </div>
+
+                      <p class="text-sm text-matrix-white/70 leading-relaxed">
+                        {cert.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+
+              if (cert.url) {
+                return (
+                  <a
+                    href={cert.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="block rounded-md border border-transparent hover:border-digital-emerald/20 hover:bg-matrix-black/10 transition-all -mx-4 px-4"
+                    aria-label={`View ${cert.subtitle || cert.title} website`}
+                  >
+                    {content}
+                  </a>
+                );
+              }
+
+              return <div class="-mx-4 px-4">{content}</div>;
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // IntersectionObserver for reveal animations - vanilla JS implementation
+  document.addEventListener('DOMContentLoaded', () => {
+    const section = document.querySelector('[data-about-section]');
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const animatedElements = entry.target.querySelectorAll(
+              '.animate-reveal-up, .animate-stagger-fade'
+            );
+            animatedElements.forEach((element, index) => {
+              setTimeout(() => {
+                element.classList.add('animate');
+              }, index * 100);
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(section);
+  });
+</script>

@@ -5,7 +5,9 @@ export const prerender = true;
 import MainLayout from '../layouts/MainLayout.astro';
 import HeroIntro from '../components/hero/HeroIntro.astro';
 import LetterGlitch from '../components/LetterGlitch.tsx';
-import AboutSection from '../components/AboutSection.tsx';
+import AboutSection from '../components/AboutSection.astro';
+import ProjectsSection from '../components/ProjectsSection.astro';
+import CreativeLabSection from '../components/CreativeLabSection.astro';
 import { getImage } from 'astro:assets';
 import vasileiosProfile from '../assets/images/vasileios-profile.png';
 
@@ -71,8 +73,13 @@ const homeStructuredData = {
   <!-- About Section -->
   <AboutSection 
     profileImageSrc={profileImage.src}
-    client:load 
   />
+
+  <!-- Projects Section -->
+  <ProjectsSection />
+
+  <!-- Creative Lab Section -->
+  <CreativeLabSection />
 
 </MainLayout>
 

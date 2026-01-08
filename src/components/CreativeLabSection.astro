@@ -1,0 +1,343 @@
+---
+interface CreativeProject {
+  title: string;
+  description: string;
+  excerpt?: string;
+  image: string;
+  tools: string[];
+  category: string;
+  url?: string;
+  instagramUrl?: string;
+}
+
+const creativeProjects: CreativeProject[] = [
+  {
+    title: "Arte Imaginari",
+    description: "Personal experimental AI art lab exploring the intersection of technology and creativity.",
+    excerpt: "Testing AI tools and aesthetics to push creative boundaries.",
+    image: "/images/arte-imaginari-wide.webp",
+    tools: ["Midjourney", "DALL-E", "Stable Diffusion", "Photoshop"],
+    category: "ai-art",
+  },
+];
+
+// Animation configuration - more dynamic for creative projects
+const ANIMATION_CONFIG = {
+  card: {
+    durations: [5, 4, 5, 4],
+    movements: [
+      { y: '-=10', x: '+=8', rotation: '-=1' },
+      { y: '+=10', x: '-=8', rotation: '-=1' },
+      { y: '-=8', rotation: '+=1' },
+      { y: '+=8', rotation: '+=1' },
+    ],
+    movementsMobile: [
+      { y: '-=5', x: '+=4', rotation: '-=0.5' },
+      { y: '+=5', x: '-=4', rotation: '-=0.5' },
+      { y: '-=4', rotation: '+=0.5' },
+      { y: '+=4', rotation: '+=0.5' },
+    ],
+  },
+  easing: 'power1.easeInOut',
+} as const;
+
+// Helper function to get category colors
+function getCategoryColor(category: string) {
+  const colors: Record<string, { bg: string; text: string; border: string }> = {
+    'ai-art': {
+      bg: 'bg-neon-purple/15',
+      text: 'text-neon-purple',
+      border: 'border-neon-purple/40',
+    },
+    'digital-art': {
+      bg: 'bg-neon-pink/15',
+      text: 'text-neon-pink',
+      border: 'border-neon-pink/40',
+    },
+    experiment: {
+      bg: 'bg-neon-cyan/15',
+      text: 'text-neon-cyan',
+      border: 'border-neon-cyan/40',
+    },
+    commission: {
+      bg: 'bg-matrix-gold/15',
+      text: 'text-matrix-gold',
+      border: 'border-matrix-gold/40',
+    },
+  };
+  return colors[category] || colors['ai-art'];
+}
+---
+
+<section
+  id="creative"
+  class="relative py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-matrix-black overflow-visible"
+  role="region"
+  aria-labelledby="creative-heading"
+  data-creative-section
+>
+  {/* Background image */}
+  <div class="absolute inset-0 z-0 overflow-hidden">
+    <picture>
+      <source srcset="/images/creative-bg.avif" type="image/avif" />
+      <source srcset="/images/creative-bg.webp" type="image/webp" />
+      <img
+        src="/images/creative-bg.webp"
+        alt=""
+        class="w-full h-full object-cover"
+        aria-hidden="true"
+      />
+    </picture>
+    <div class="absolute inset-0 bg-matrix-black/60"></div>
+  </div>
+
+  {/* Background decorative elements - more artistic */}
+  <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-0 left-1/3 w-px h-40 bg-gradient-to-b from-neon-purple/20 via-neon-pink/10 to-transparent" />
+    <div class="absolute top-0 right-1/3 w-px h-40 bg-gradient-to-b from-neon-cyan/20 via-neon-purple/10 to-transparent" />
+    <div class="absolute bottom-0 left-1/2 w-32 h-px bg-gradient-to-r from-transparent via-neon-pink/10 to-transparent" />
+    {/* Floating particles effect */}
+    <div class="absolute top-1/4 left-1/4 w-1 h-1 bg-neon-purple/30 rounded-full animate-pulse" />
+    <div class="absolute top-1/3 right-1/4 w-1 h-1 bg-neon-pink/30 rounded-full animate-pulse" style="animation-delay: 1s" />
+    <div class="absolute bottom-1/4 left-1/3 w-1 h-1 bg-neon-cyan/30 rounded-full animate-pulse" style="animation-delay: 2s" />
+  </div>
+
+  <div class="max-w-7xl mx-auto relative z-10">
+    {/* Section Headline */}
+    <h2
+      id="creative-heading"
+      class="text-3xl md:text-4xl lg:text-5xl font-orbitron font-bold text-center mb-12 md:mb-16 animate-reveal-up opacity-0"
+      style="text-shadow: 0 0 20px rgba(138, 43, 226, 0.8), 0 0 40px rgba(255, 20, 147, 0.4); background: linear-gradient(135deg, #8A2BE2 0%, #FF1493 50%, #00FFFF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+    >
+      Creative Lab
+    </h2>
+
+    {/* Creative Projects Grid */}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      {creativeProjects.map((project, index) => {
+        const categoryColors = getCategoryColor(project.category);
+        const borderColor = categoryColors.text.includes('purple')
+          ? 'rgba(138, 43, 226, 0.4)'
+          : categoryColors.text.includes('pink')
+            ? 'rgba(255, 20, 147, 0.4)'
+            : 'rgba(0, 255, 255, 0.4)';
+        const shadowColor = categoryColors.text.includes('purple')
+          ? '0 0 20px rgba(138, 43, 226, 0.3)'
+          : categoryColors.text.includes('pink')
+            ? '0 0 20px rgba(255, 20, 147, 0.3)'
+            : '0 0 20px rgba(0, 255, 255, 0.3)';
+        const cornerColor = categoryColors.text.includes('purple')
+          ? 'rgba(138, 43, 226, 0.6)'
+          : categoryColors.text.includes('pink')
+            ? 'rgba(255, 20, 147, 0.6)'
+            : 'rgba(0, 255, 255, 0.6)';
+        const textShadow = categoryColors.text.includes('purple')
+          ? '0 0 10px rgba(138, 43, 226, 0.5)'
+          : categoryColors.text.includes('pink')
+            ? '0 0 10px rgba(255, 20, 147, 0.5)'
+            : '0 0 10px rgba(0, 255, 255, 0.5)';
+        const badgeShadow = categoryColors.text.includes('purple')
+          ? '0 0 8px rgba(138, 43, 226, 0.2)'
+          : categoryColors.text.includes('pink')
+            ? '0 0 8px rgba(255, 20, 147, 0.2)'
+            : '0 0 8px rgba(0, 255, 255, 0.2)';
+        const gradientColor = categoryColors.text.includes('purple')
+          ? 'rgba(138, 43, 226, 0.5)'
+          : categoryColors.text.includes('pink')
+            ? 'rgba(255, 20, 147, 0.5)'
+            : 'rgba(0, 255, 255, 0.5)';
+
+        return (
+          <div
+            data-creative-card={index}
+            class={`relative h-full flex flex-col rounded-2xl border ${categoryColors.border} shadow-inner backdrop-blur-md transition-all duration-500 overflow-hidden group hover:border-opacity-80 hover:shadow-lg hover:scale-[1.03] animate-reveal-up opacity-0 will-change-transform rounded-xl bg-card text-card-foreground shadow`}
+            style={`animation-delay: ${index * 150}ms; background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(34, 34, 34, 0.9) 100%);`}
+          >
+            {/* Glowing top accent - gradient based on category */}
+            <div
+              class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              style={`background: linear-gradient(90deg, transparent 0%, ${gradientColor} 50%, transparent 100%);`}
+            />
+
+            {/* Project Image */}
+            <div class="relative w-full overflow-hidden bg-dark-slate/60" style="aspect-ratio: 16 / 9">
+              {(project.url || project.instagramUrl) ? (
+                <a
+                  href={project.url || project.instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="block w-full h-full relative hover:bg-transparent"
+                  aria-label={`View ${project.title}${project.instagramUrl ? ' on Instagram' : ''}`}
+                >
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 will-change-transform"
+                    loading="lazy"
+                    decoding="async"
+                    width={1280}
+                    height={720}
+                    style="aspect-ratio: 16 / 9"
+                  />
+                  {/* Creative gradient overlay */}
+                  <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-matrix-black/95 via-matrix-black/40 to-transparent opacity-90 group-hover:opacity-60 transition-opacity duration-500" />
+                  {/* Colorful border effect on hover */}
+                  <div
+                    class="pointer-events-none absolute inset-0 border-2 border-transparent transition-all duration-500 rounded-t-2xl group-hover:border-opacity-60"
+                    style={`border-color: ${borderColor}; box-shadow: ${shadowColor};`}
+                  />
+                  {/* Corner accents */}
+                  <div
+                    class="pointer-events-none absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-transparent group-hover:border-opacity-60 transition-all duration-500"
+                    style={`border-color: ${cornerColor};`}
+                  />
+                  <div
+                    class="pointer-events-none top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-transparent group-hover:border-opacity-60 transition-all duration-500 absolute"
+                    style={`border-color: ${cornerColor};`}
+                  />
+                </a>
+              ) : (
+                <div class="block w-full h-full relative">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 will-change-transform"
+                    loading="lazy"
+                    decoding="async"
+                    width={1280}
+                    height={720}
+                    style="aspect-ratio: 16 / 9"
+                  />
+                  <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-matrix-black/95 via-matrix-black/40 to-transparent opacity-90 group-hover:opacity-60 transition-opacity duration-500" />
+                </div>
+              )}
+            </div>
+
+            <div class="flex flex-col space-y-1.5 p-4 md:p-5 pt-4 space-y-2">
+              <div class="flex items-start justify-between gap-2">
+                <div
+                  class={`font-semibold leading-none tracking-tight font-orbitron font-bold text-lg md:text-xl ${categoryColors.text} group-hover:opacity-90 transition-all duration-300`}
+                  style={`text-shadow: ${textShadow};`}
+                >
+                  {project.title}
+                </div>
+                {(project.url || project.instagramUrl) && (
+                  <a
+                    href={project.url || project.instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class={`inline-flex items-center gap-1 h-auto p-1 ${categoryColors.text} hover:opacity-80 transition-all duration-200 hover:bg-accent hover:text-accent-foreground`}
+                    aria-label={`View ${project.title}${project.instagramUrl ? ' on Instagram' : ''}`}
+                  >
+                    <span class="text-sm opacity-70 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-200">↗</span>
+                  </a>
+                )}
+              </div>
+              {project.excerpt && (
+                <p class="text-xs text-matrix-white/60 italic leading-relaxed">
+                  {project.excerpt}
+                </p>
+              )}
+              <div class="text-sm text-muted-foreground text-sm text-matrix-white/85 leading-relaxed group-hover:text-matrix-white/95 transition-colors duration-300">
+                {project.description}
+              </div>
+            </div>
+
+            <div class="flex items-center p-4 md:p-5 pt-2 gap-2 flex-col items-start">
+              <p class={`text-xs font-orbitron ${categoryColors.text}/70 uppercase tracking-wider w-full group-hover:opacity-90 transition-colors duration-300`}>
+                Tools & Techniques
+              </p>
+              <div class="flex flex-wrap gap-2 w-full">
+                {project.tools.map((tool, toolIndex) => (
+                  <div
+                    class={`inline-flex items-center rounded-full border ${categoryColors.bg} ${categoryColors.text} ${categoryColors.border} hover:border-opacity-70 hover:bg-opacity-25 hover:shadow-lg transition-all duration-300 text-xs font-medium px-2.5 py-1 shadow-sm group-hover:scale-105 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2`}
+                    style={`transition-delay: ${toolIndex * 20}ms; box-shadow: ${badgeShadow};`}
+                  >
+                    {tool}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<script>
+  import gsap from 'gsap';
+
+  // IntersectionObserver and GSAP animations - vanilla JS implementation
+  document.addEventListener('DOMContentLoaded', () => {
+    const section = document.querySelector('[data-creative-section]');
+    if (!section) return;
+
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+    const isMobile = window.innerWidth < 640;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const animatedElements = entry.target.querySelectorAll(
+              '.animate-reveal-up'
+            );
+            animatedElements.forEach((element, index) => {
+              setTimeout(() => {
+                element.classList.add('animate');
+              }, index * 150);
+            });
+
+            // Start GSAP floating animations for cards
+            if (!prefersReducedMotion) {
+              const cardElements = entry.target.querySelectorAll('[data-creative-card]');
+              cardElements.forEach((cardRef) => {
+                const movements = isMobile
+                  ? [
+                      { y: '-=5', x: '+=4', rotation: '-=0.5' },
+                      { y: '+=5', x: '-=4', rotation: '-=0.5' },
+                      { y: '-=4', rotation: '+=0.5' },
+                      { y: '+=4', rotation: '+=0.5' },
+                    ]
+                  : [
+                      { y: '-=10', x: '+=8', rotation: '-=1' },
+                      { y: '+=10', x: '-=8', rotation: '-=1' },
+                      { y: '-=8', rotation: '+=1' },
+                      { y: '+=8', rotation: '+=1' },
+                    ];
+
+                const durations = [5, 4, 5, 4];
+                const cardTimeline = gsap.timeline({ repeat: -1 });
+                movements.forEach((movement, moveIndex) => {
+                  cardTimeline.to(cardRef, durations[moveIndex], {
+                    ...movement,
+                    ease: 'power1.easeInOut',
+                  });
+                });
+              });
+            }
+
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(section);
+
+    // Cleanup function
+    return () => {
+      observer.unobserve(section);
+      const cardElements = section.querySelectorAll('[data-creative-card]');
+      cardElements.forEach((cardRef) => {
+        gsap.killTweensOf(cardRef);
+      });
+    };
+  });
+</script>
