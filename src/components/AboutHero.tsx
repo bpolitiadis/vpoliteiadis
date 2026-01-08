@@ -65,7 +65,8 @@ export default function AboutHero({ quotes }: AboutHeroProps) {
             width={112}
             height={112}
             loading="eager"
-            fetchPriority="high"
+            // @ts-expect-error - fetchpriority is valid HTML but not yet in React types
+            fetchpriority="high"
             decoding="async"
           />
         </ElectricBorder>

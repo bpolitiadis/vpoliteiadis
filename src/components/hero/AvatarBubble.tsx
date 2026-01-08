@@ -1,4 +1,7 @@
-
+/**
+ * @deprecated This component is deprecated. Use HeroSection instead.
+ * Kept for reference only.
+ */
 
 type AvatarBubbleProps = {
   alt?: string;
@@ -38,7 +41,8 @@ export default function AvatarBubble({ alt = 'Vasileios Politeiadis portrait', s
             height={size}
             alt={alt}
             loading="eager"
-            fetchPriority="high"
+            // @ts-expect-error - fetchpriority is valid HTML but not yet in React types
+            fetchpriority="high"
             decoding="async"
             className="w-full h-full object-cover rounded-full transition-transform duration-300 hover:scale-105"
           />

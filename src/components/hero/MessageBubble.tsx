@@ -1,3 +1,8 @@
+/**
+ * @deprecated This component is deprecated. Use HeroSection instead.
+ * Kept for reference only.
+ */
+
 'use client';
 
 import { useState, useEffect } from 'react';

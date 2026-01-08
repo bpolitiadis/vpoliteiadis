@@ -40,7 +40,7 @@ export const onRequest: MiddlewareHandler = async (context, next) => {
   // - Allow images from HTTPS and data URIs
   const csp = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline'",
+    "script-src 'self' 'unsafe-inline' https://cdn.vercel-insights.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "img-src 'self' data: https:",
     "font-src 'self' https://fonts.gstatic.com",
