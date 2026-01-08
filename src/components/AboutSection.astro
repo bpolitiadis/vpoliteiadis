@@ -192,11 +192,17 @@ function getTimelineColors(isCurrent: boolean) {
                     {/* Content column */}
                     <div class="space-y-2">
                       <div class="flex flex-wrap items-baseline gap-2">
-                        <h3 class={`text-base font-semibold ${colors.title} group-hover:opacity-80 transition-opacity`}>
+                        <h3 
+                          class={`text-base font-semibold ${colors.title} group-hover:opacity-80 transition-opacity`}
+                          style={job.isCurrent ? "color: #39FF14; text-shadow: 0 0 10px rgba(57, 255, 20, 0.6), 0 0 20px rgba(57, 255, 20, 0.3);" : ""}
+                        >
                           {job.title}
                         </h3>
                         {job.subtitle && (
-                          <span class={`text-base font-semibold ${colors.title} inline-flex items-center gap-1.5`}>
+                          <span 
+                            class={`text-base font-semibold ${colors.title} inline-flex items-center gap-1.5`}
+                            style={job.isCurrent ? "color: #39FF14; text-shadow: 0 0 10px rgba(57, 255, 20, 0.6), 0 0 20px rgba(57, 255, 20, 0.3);" : ""}
+                          >
                             <span class="text-matrix-white/40">·</span>
                             {job.subtitle}
                             {job.url && <span class="text-xs opacity-70">↗</span>}
