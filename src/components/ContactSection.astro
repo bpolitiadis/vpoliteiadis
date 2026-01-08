@@ -1,0 +1,92 @@
+---
+import ContactForm from './contact/ContactForm';
+import ContactCards from './contact/ContactCards.astro';
+---
+
+<section
+  id="contact"
+  class="relative py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-matrix-black overflow-visible"
+  role="region"
+  aria-labelledby="contact-heading"
+  data-contact-section
+>
+  {/* Background image */}
+  <div class="absolute inset-0 z-0 overflow-hidden">
+    <picture>
+      <source srcset="/images/contact-bg.avif" type="image/avif" />
+      <source srcset="/images/contact-bg.webp" type="image/webp" />
+      <img
+        src="/images/contact-bg.webp"
+        alt=""
+        class="w-full h-full object-cover"
+        aria-hidden="true"
+      />
+    </picture>
+    <div class="absolute inset-0 bg-matrix-black/60"></div>
+  </div>
+
+  {/* Background decorative elements */}
+  <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-0 left-1/4 w-px h-32 bg-gradient-to-b from-neon-lime/20 to-transparent" />
+    <div class="absolute top-0 right-1/4 w-px h-32 bg-gradient-to-b from-digital-emerald/20 to-transparent" />
+    <div class="absolute bottom-0 left-1/2 w-px h-24 bg-gradient-to-t from-neon-lime/10 to-transparent" />
+  </div>
+
+  <div class="max-w-7xl mx-auto relative z-10">
+    {/* Section Headline */}
+    <h2
+      id="contact-heading"
+      class="text-3xl md:text-4xl lg:text-5xl font-orbitron font-bold text-neon-lime text-center mb-6 md:mb-8 animate-reveal-up opacity-0"
+      style="text-shadow: 0 0 20px rgba(57, 255, 20, 0.8), 0 0 40px rgba(57, 255, 20, 0.4)"
+    >
+      Contact
+    </h2>
+    
+    {/* Section Description */}
+    <p class="text-center text-matrix-white/80 text-lg md:text-xl mb-12 md:mb-16 animate-reveal-up-delayed-1 opacity-0 max-w-2xl mx-auto">
+      Let's collaborate on your next project or discuss creative opportunities
+    </p>
+
+    {/* Contact Content */}
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
+      {/* Left column - Contact Form */}
+      <div class="animate-reveal-up-delayed-1 opacity-0">
+        <ContactForm client:visible />
+      </div>
+
+      {/* Right column - Contact Cards */}
+      <div class="animate-reveal-up-delayed-2 opacity-0">
+        <ContactCards />
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // IntersectionObserver for reveal animations - vanilla JS implementation
+  document.addEventListener('DOMContentLoaded', () => {
+    const section = document.querySelector('[data-contact-section]');
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const animatedElements = entry.target.querySelectorAll(
+              '.animate-reveal-up, .animate-reveal-up-delayed-1, .animate-reveal-up-delayed-2'
+            );
+            animatedElements.forEach((element, index) => {
+              setTimeout(() => {
+                element.classList.add('animate');
+              }, index * 100);
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(section);
+  });
+</script>

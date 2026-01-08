@@ -1,0 +1,133 @@
+---
+import { Linkedin, Instagram, Github } from 'lucide-astro';
+---
+
+<div class="space-y-8 h-full">
+  <!-- Services -->
+  <div class="rounded-xl border border-secondary/40 bg-card/40 backdrop-blur-sm shadow text-card-foreground">
+    <div class="flex flex-col space-y-1.5 p-6 pb-4">
+      <div class="text-2xl font-orbitron font-bold text-secondary flex items-center gap-3">
+        <span class="text-2xl" role="img" aria-label="Services">💼</span>
+        Services
+      </div>
+    </div>
+    <div class="p-6 pt-0 space-y-4">
+      <!-- QA Automation -->
+      <div class="flex items-start space-x-4">
+        <div class="w-8 h-8 bg-neon-lime/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1" aria-hidden="true">
+          <span class="text-lg" role="img" aria-label="QA Automation">🤖</span>
+        </div>
+        <div>
+          <h3 class="font-orbitron font-bold text-neon-lime mb-1">QA Automation</h3>
+          <p class="text-neon-lime/60 text-sm">Selenium/Java, Playwright/TypeScript</p>
+        </div>
+      </div>
+
+      <!-- Full-Stack Development -->
+      <div class="flex items-start space-x-4">
+        <div class="w-8 h-8 bg-digital-emerald/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1" aria-hidden="true">
+          <span class="text-lg" role="img" aria-label="Full-Stack Development">💻</span>
+        </div>
+        <div>
+          <h3 class="font-orbitron font-bold text-digital-emerald mb-1">Full-Stack Development</h3>
+          <p class="text-digital-emerald/60 text-sm">React, Next.js, Node.js with Prisma & Supabase</p>
+        </div>
+      </div>
+
+      <!-- Website Development -->
+      <div class="flex items-start space-x-4">
+        <div class="w-8 h-8 bg-neon-lime/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1" aria-hidden="true">
+          <span class="text-lg" role="img" aria-label="Website Development">🌐</span>
+        </div>
+        <div>
+          <h3 class="font-orbitron font-bold text-neon-lime mb-1">Website Development</h3>
+          <p class="text-neon-lime/60 text-sm">Astro, TailwindCSS, React</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Get In Touch -->
+  <div class="rounded-xl border border-primary/30 bg-card/40 backdrop-blur-sm shadow text-card-foreground">
+    <div class="flex flex-col space-y-1.5 p-6 pb-4">
+      <div class="text-2xl font-orbitron font-bold text-primary flex items-center gap-3">
+        <span class="text-2xl" role="img" aria-label="Get in touch">📞</span>
+        Get In Touch
+      </div>
+    </div>
+    <div class="p-6 pt-0 space-y-4">
+      <!-- Email -->
+      <div class="flex items-center space-x-4">
+        <div class="w-10 h-10 bg-neon-lime/20 rounded-lg flex items-center justify-center" aria-hidden="true">
+          <span class="text-xl" role="img" aria-label="Email">✉️</span>
+        </div>
+        <div>
+          <h3 class="font-orbitron font-bold text-neon-lime/90">Email</h3>
+          <a
+            href="mailto:b.politiadis@gmail.com"
+            class="text-neon-lime hover:text-cyan-blue transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-blue/60 rounded"
+          >
+            b.politiadis@gmail.com
+          </a>
+        </div>
+      </div>
+      
+      <!-- LinkedIn -->
+      <div class="flex items-center space-x-4">
+        <div class="w-10 h-10 bg-neon-lime/20 rounded-lg flex items-center justify-center" aria-hidden="true">
+          <Linkedin class="w-5 h-5 text-digital-emerald" aria-label="LinkedIn" />
+        </div>
+        <div>
+          <h3 class="font-orbitron font-bold text-digital-emerald/90">LinkedIn</h3>
+          <a
+            href="https://www.linkedin.com/in/vasileios-politeiadis/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-digital-emerald hover:text-cyan-blue transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-blue/60 rounded"
+          >
+            linkedin.com/in/vasileios-politeiadis
+            <span class="sr-only">(opens in new tab)</span>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Instagram -->
+      <div class="flex items-center space-x-4">
+        <div class="w-10 h-10 bg-neon-lime/20 rounded-lg flex items-center justify-center" aria-hidden="true">
+          <Instagram class="w-5 h-5 text-neon-lime" aria-label="Instagram" />
+        </div>
+        <div>
+          <h3 class="font-orbitron font-bold text-neon-lime/90">Instagram</h3>
+          <a
+            href="https://instagram.com/arte.imaginari"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-neon-lime hover:text-cyan-blue transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-blue/60 rounded"
+          >
+            instagram.com/arte.imaginari
+            <span class="sr-only">(opens in new tab)</span>
+          </a>
+        </div>
+      </div>
+      
+      <!-- GitHub -->
+      <div class="flex items-center space-x-4">
+        <div class="w-10 h-10 bg-neon-lime/20 rounded-lg flex items-center justify-center" aria-hidden="true">
+          <Github class="w-5 h-5 text-digital-emerald" aria-label="GitHub" />
+        </div>
+        <div>
+          <h3 class="font-orbitron font-bold text-digital-emerald/90">GitHub</h3>
+          <a
+            href="https://github.com/bpolitiadis"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-digital-emerald hover:text-cyan-blue transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-blue/60 rounded"
+          >
+            github.com/bpolitiadis
+            <span class="sr-only">(opens in new tab)</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
