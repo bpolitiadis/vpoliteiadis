@@ -110,6 +110,9 @@ public/images/*.jpg
 public/images/*.jpeg
 
 # Keep critical images committed for production deployment
+!public/images/about-bg.avif
+!public/images/creative-bg.avif
+!public/images/projects-bg.avif
 !public/images/avatar.webp
 !public/images/blog/
 !public/images/creative/
