@@ -18,7 +18,7 @@
 
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
-| `Navbar.astro` | `src/components/Navbar.astro` | Compact Matrix-inspired top nav with neon styling | `currentPath?` | `/public/scripts/navbar.js` (mobile menu), global styles |
+| `Navbar.astro` | `src/components/Navbar.astro` | Compact Matrix-inspired top nav with scroll spy and neon styling | `currentPath?` | `/public/scripts/navbar.js` (mobile menu), Intersection Observer API, global styles |
 | `Footer.astro` | `src/components/Footer.astro` | Footer with social links and branding | — | SocialLink components |
 
 ### Hero & Animation
@@ -117,6 +117,7 @@ graph TD
 
 ### Script Dependencies
 - **`/public/scripts/navbar.js`**: Mobile navigation toggle and compact navbar behavior (used in `Navbar.astro`)
+- **`Navbar.astro` inline script**: Scroll spy functionality using Intersection Observer API for active section detection (homepage only)
 - **`/public/scripts/matrix-rain.js`**: Matrix-style background animation (used in `Hero.astro`)
 - **`/public/scripts/contact-form.js`**: Contact form validation and submission (used in `contact.astro`)
 - **`/public/scripts/theme-init.js`**: Theme initialization and persistence (used in `MainLayout.astro`)
@@ -375,6 +376,96 @@ pnpm lint
 - **Tree Shaking**: Only used components included in bundle
 - **Code Splitting**: Automatic by Astro for optimal performance
 - **CSS Inlining**: Critical styles inlined for fast rendering
+
+## 🧭 Navbar Scroll Spy Implementation
+
+### Overview
+The `Navbar.astro` component implements a scroll spy system that dynamically updates the active navigation state based on the user's scroll position on the homepage. This provides visual feedback about which section is currently in view.
+
+### How It Works
+
+#### 1. **Intersection Observer API**
+Uses the modern `IntersectionObserver` API for efficient, performant scroll detection:
+
+```typescript
+const observerOptions = {
+  root: null,
+  rootMargin: `-${navbarHeight + 20}px 0px -60% 0px`, // Trigger when section enters top 40% of viewport
+  threshold: [0, 0.1, 0.5, 1]
+};
+```
+
+**Key Features:**
+- **Performance**: Uses native browser API instead of scroll event listeners
+- **Efficient**: Only triggers when sections enter/exit viewport
+- **Debounced**: Updates are debounced (100ms) to prevent excessive re-renders
+- **Smart Detection**: Uses intersection ratio to determine the most visible section
+
+#### 2. **Active State Management**
+
+The scroll spy manages active states for both desktop and mobile navigation:
+
+**Desktop Navigation:**
+- Active link gets `text-neon-lime` class (green color)
+- Active indicator (`nav-active-indicator` or `nav-section-indicator`) opacity set to `1`
+- Inactive links use `text-matrix-white/70` (70% opacity white)
+
+**Mobile Navigation:**
+- Active link gets `text-neon-lime`, `bg-neon-lime/5`, and `border border-neon-lime/20` classes
+- Inactive links use `text-matrix-white/80`
+
+#### 3. **Home Link Behavior**
+
+The "Home" link has special behavior:
+- **Active when**: User is at the top of the page (before any section) or scrolling above the first section
+- **Inactive when**: Any section is in view
+- **Scroll to top**: Clicking Home smoothly scrolls to the top of the page
+
+#### 4. **Data Attributes**
+
+Navigation items use `data-nav-item` attributes for JavaScript control:
+
+```astro
+<!-- Home link -->
+<a href="/" data-nav-item="home">Home</a>
+
+<!-- Section links -->
+<a href="/#about" data-section-id="about" data-nav-item="about">About</a>
+<a href="/#projects" data-section-id="projects" data-nav-item="projects">Projects</a>
+```
+
+**Purpose:**
+- `data-nav-item`: Used for active state updates (both Home and sections)
+- `data-section-id`: Used for smooth scrolling to sections
+
+#### 5. **Performance Optimizations**
+
+1. **Debouncing**: Updates are debounced with 100ms delay to prevent excessive DOM manipulation
+2. **Intersection Observer**: More efficient than scroll event listeners
+3. **Conditional Execution**: Only runs on homepage (`window.location.pathname === '/'`)
+4. **Lazy Initialization**: Waits for DOM ready and section elements to be rendered
+5. **Minimal DOM Queries**: Caches references to navbar and sections
+
+### Browser Compatibility
+
+- **Modern Browsers**: Full support (Chrome, Firefox, Safari, Edge)
+- **Intersection Observer**: Supported in all modern browsers (IE11 requires polyfill)
+- **Smooth Scrolling**: Native support in modern browsers
+
+### Testing
+
+The scroll spy functionality can be tested by:
+
+1. **Manual Testing**:
+   - Scroll through homepage sections
+   - Verify active state updates correctly
+   - Test clicking navigation links
+   - Test direct hash URLs (`/#about`, `/#projects`)
+
+2. **Automated Testing**:
+   - Use Playwright to simulate scroll events
+   - Verify active state classes are applied
+   - Test smooth scrolling behavior
 
 ## ♿ Accessibility Features
 

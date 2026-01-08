@@ -10,14 +10,14 @@ export interface Props {
 
 const { currentPath = '/' } = Astro.props;
 
-// Navigation items with proper routing
-const navItems = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/creative', label: 'Creative' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/contact', label: 'Contact' },
+// Navigation items are now rendered individually for proper ordering
+
+// Homepage section navigation for scroll-based active states
+const homeSections = [
+  { id: 'about', label: 'About', href: '/#about' },
+  { id: 'projects', label: 'Projects', href: '/#projects' },
+  { id: 'creative', label: 'Creative', href: '/#creative' },
+  { id: 'contact', label: 'Contact', href: '/#contact' },
 ];
 ---
 
@@ -52,28 +52,63 @@ const navItems = [
       <!-- Desktop Navigation: Horizontal with compact spacing, aligned to right edge -->
       <div class="hidden md:block flex-shrink-0 ml-auto" data-testid="navbar-desktop-menu">
         <div class="flex items-center space-x-2 lg:space-x-3" role="menubar">
-          {navItems.map((item) => (
+          {/* Home link */}
+          <a
+            href="/"
+            class={`nav-link-desktop px-3 py-2 text-sm font-medium transition-all duration-200 relative group font-orbitron text-matrix-white/70 hover:text-neon-lime/90`}
+            role="menuitem"
+            aria-current={currentPath === '/' ? 'page' : undefined}
+            aria-label={`Home${currentPath === '/' ? ' (current page)' : ''}`}
+            data-testid="navbar-link-home"
+            data-nav-item="home"
+          >
+            Home
+            {/* Active page neon underline - controlled by JavaScript */}
+            <div class="nav-active-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-neon-lime shadow-neon transition-all duration-200 opacity-0" aria-hidden="true"></div>
+            {/* Magnetic hover underline */}
+            <div class="nav-hover-underline absolute bottom-0 left-1/2 right-1/2 h-0.5 bg-neon-lime/60 transform -translate-x-1/2 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out" aria-hidden="true"></div>
+          </a>
+
+          {/* Homepage sections - only show on homepage */}
+          {currentPath === '/' && homeSections.map((section) => (
             <a
-              href={item.href}
-              class={`nav-link-desktop px-3 py-2 text-sm font-medium transition-all duration-200 relative group font-orbitron ${
-                currentPath === item.href
-                  ? 'text-neon-lime'
-                  : 'text-matrix-white/70 hover:text-neon-lime/90'
-              }`}
+              href={section.href}
+              class={`nav-link-desktop px-3 py-2 text-sm font-medium transition-all duration-200 relative group font-orbitron text-matrix-white/70 hover:text-neon-lime/90`}
               role="menuitem"
-              aria-current={currentPath === item.href ? 'page' : undefined}
-              aria-label={`${item.label}${currentPath === item.href ? ' (current page)' : ''}`}
-              data-testid={`navbar-link-${item.label.toLowerCase()}`}
+              aria-label={`Jump to ${section.label} section`}
+              data-testid={`navbar-link-${section.label.toLowerCase()}`}
+              data-section-id={section.id}
+              data-nav-item={section.id}
             >
-              {item.label}
-              {/* Active page neon underline */}
-              {currentPath === item.href && (
-                <div class="nav-active-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-neon-lime shadow-neon transition-all duration-200" aria-hidden="true"></div>
-              )}
+              {section.label}
+              {/* Active section neon underline - controlled by JavaScript */}
+              <div class="nav-section-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-neon-lime shadow-neon transition-all duration-200 opacity-0" aria-hidden="true"></div>
               {/* Magnetic hover underline */}
               <div class="nav-hover-underline absolute bottom-0 left-1/2 right-1/2 h-0.5 bg-neon-lime/60 transform -translate-x-1/2 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out" aria-hidden="true"></div>
             </a>
           ))}
+
+          {/* Blog link - last */}
+          <a
+            href="/blog"
+            class={`nav-link-desktop px-3 py-2 text-sm font-medium transition-all duration-200 relative group font-orbitron ${
+              currentPath === '/blog'
+                ? 'text-neon-lime'
+                : 'text-matrix-white/70 hover:text-neon-lime/90'
+            }`}
+            role="menuitem"
+            aria-current={currentPath === '/blog' ? 'page' : undefined}
+            aria-label={`Blog${currentPath === '/blog' ? ' (current page)' : ''}`}
+            data-testid="navbar-link-blog"
+          >
+            Blog
+            {/* Active page neon underline */}
+            {currentPath === '/blog' && (
+              <div class="nav-active-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-neon-lime shadow-neon transition-all duration-200" aria-hidden="true"></div>
+            )}
+            {/* Magnetic hover underline */}
+            <div class="nav-hover-underline absolute bottom-0 left-1/2 right-1/2 h-0.5 bg-neon-lime/60 transform -translate-x-1/2 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out" aria-hidden="true"></div>
+          </a>
         </div>
       </div>
 
@@ -114,23 +149,58 @@ const navItems = [
         
         <!-- Mobile navigation links -->
         <div class="px-4 py-6 space-y-2" data-testid="mobile-nav-links">
-          {navItems.map((item) => (
-            <a
-              href={item.href}
-              class={`mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 font-orbitron ${
-                currentPath === item.href
-                  ? 'text-neon-lime bg-neon-lime/5 border border-neon-lime/20'
-                  : 'text-matrix-white/80 hover:text-neon-lime hover:bg-neon-lime/5'
-              }`}
-              role="menuitem"
-              aria-current={currentPath === item.href ? 'page' : undefined}
-              tabindex="0"
-              aria-label={`${item.label}${currentPath === item.href ? ' (current page)' : ''}`}
-              data-testid={`mobile-nav-link-${item.label.toLowerCase()}`}
-            >
-              {item.label}
-            </a>
-          ))}
+          {/* Home link */}
+          <a
+            href="/"
+            class={`mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 font-orbitron text-matrix-white/80 hover:text-neon-lime hover:bg-neon-lime/5`}
+            role="menuitem"
+            aria-current={currentPath === '/' ? 'page' : undefined}
+            tabindex="0"
+            aria-label={`Home${currentPath === '/' ? ' (current page)' : ''}`}
+            data-testid="mobile-nav-link-home"
+            data-nav-item="home"
+          >
+            Home
+          </a>
+
+          {/* Homepage sections - only show on homepage */}
+          {currentPath === '/' && (
+            <>
+              <div class="border-t border-neon-lime/10 my-4"></div>
+              {homeSections.map((section) => (
+                <a
+                  href={section.href}
+                  class={`mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 font-orbitron text-matrix-white/80 hover:text-neon-lime hover:bg-neon-lime/5`}
+                  role="menuitem"
+                  tabindex="0"
+                  aria-label={`Jump to ${section.label} section`}
+                  data-testid={`mobile-nav-link-${section.label.toLowerCase()}`}
+                  data-section-id={section.id}
+                  data-nav-item={section.id}
+                >
+                  {section.label}
+                </a>
+              ))}
+              <div class="border-t border-neon-lime/10 my-4"></div>
+            </>
+          )}
+
+          {/* Blog link - last */}
+          <a
+            href="/blog"
+            class={`mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 font-orbitron ${
+              currentPath === '/blog'
+                ? 'text-neon-lime bg-neon-lime/5 border border-neon-lime/20'
+                : 'text-matrix-white/80 hover:text-neon-lime hover:bg-neon-lime/5'
+            }`}
+            role="menuitem"
+            aria-current={currentPath === '/blog' ? 'page' : undefined}
+            tabindex="0"
+            aria-label={`Blog${currentPath === '/blog' ? ' (current page)' : ''}`}
+            data-testid="mobile-nav-link-blog"
+          >
+            Blog
+          </a>
         </div>
       </div>
     </div>
@@ -138,6 +208,267 @@ const navItems = [
 </nav>
 
 <script is:inline src="/scripts/navbar.js" defer></script>
+
+<script>
+  // Enhanced navbar navigation with scroll spy - hydration-safe
+  function initNavbar() {
+    // Only run on homepage
+    if (window.location.pathname !== '/') return;
+
+    const sections: string[] = ['about', 'projects', 'creative', 'contact'];
+    const navLinks = document.querySelectorAll('[data-section-id]');
+    const navbar = document.querySelector('.navbar-compact') as HTMLElement;
+    const navbarHeight: number = navbar?.offsetHeight || 56;
+    const homeLink = document.querySelector('[data-nav-item="home"]') as HTMLElement;
+    let activeSection: string | null = null;
+    let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
+
+    // Smooth scroll to section
+    function scrollToSection(sectionId: string): void {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        const targetPosition = section.offsetTop - navbarHeight - 20;
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }
+
+    // Update active nav item based on scroll position
+    function updateActiveNavItem(sectionId: string | null): void {
+      // Remove active state from all nav items
+      const allNavItems = document.querySelectorAll('[data-nav-item]');
+      allNavItems.forEach(item => {
+        const navItem = item as HTMLElement;
+        const indicator = navItem.querySelector('.nav-active-indicator, .nav-section-indicator') as HTMLElement;
+        const link = navItem as HTMLElement;
+        
+        // Desktop: update text color and indicator opacity
+        if (link.classList.contains('nav-link-desktop')) {
+          link.classList.remove('text-neon-lime');
+          link.classList.add('text-matrix-white/70');
+          if (indicator) {
+            indicator.style.opacity = '0';
+          }
+        }
+        
+        // Mobile: update background and border
+        if (link.classList.contains('mobile-nav-link')) {
+          link.classList.remove('text-neon-lime', 'bg-neon-lime/5', 'border', 'border-neon-lime/20');
+          link.classList.add('text-matrix-white/80');
+        }
+      });
+
+      // Set active state for current section or home
+      if (sectionId) {
+        const activeNavItem = document.querySelector(`[data-nav-item="${sectionId}"]`) as HTMLElement;
+        if (activeNavItem) {
+          const indicator = activeNavItem.querySelector('.nav-active-indicator, .nav-section-indicator') as HTMLElement;
+          
+          // Desktop: update text color and indicator opacity
+          if (activeNavItem.classList.contains('nav-link-desktop')) {
+            activeNavItem.classList.remove('text-matrix-white/70');
+            activeNavItem.classList.add('text-neon-lime');
+            if (indicator) {
+              indicator.style.opacity = '1';
+            }
+          }
+          
+          // Mobile: update background and border
+          if (activeNavItem.classList.contains('mobile-nav-link')) {
+            activeNavItem.classList.remove('text-matrix-white/80');
+            activeNavItem.classList.add('text-neon-lime', 'bg-neon-lime/5', 'border', 'border-neon-lime/20');
+          }
+        }
+      } else if (homeLink) {
+        // Home is active when no section is in view
+        const indicator = homeLink.querySelector('.nav-active-indicator') as HTMLElement;
+        
+        // Desktop: update text color and indicator opacity
+        if (homeLink.classList.contains('nav-link-desktop')) {
+          homeLink.classList.remove('text-matrix-white/70');
+          homeLink.classList.add('text-neon-lime');
+          if (indicator) {
+            indicator.style.opacity = '1';
+          }
+        }
+        
+        // Mobile: update background and border
+        if (homeLink.classList.contains('mobile-nav-link')) {
+          homeLink.classList.remove('text-matrix-white/80');
+          homeLink.classList.add('text-neon-lime', 'bg-neon-lime/5', 'border', 'border-neon-lime/20');
+        }
+      }
+    }
+
+    // Detect which section is currently in view using Intersection Observer
+    function initScrollSpy(): void {
+      const sectionElements = sections.map(id => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+      
+      if (sectionElements.length === 0) return;
+
+      // Options for Intersection Observer
+      const observerOptions = {
+        root: null,
+        rootMargin: `-${navbarHeight + 20}px 0px -60% 0px`, // Trigger when section enters top 40% of viewport
+        threshold: [0, 0.1, 0.5, 1]
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        // Clear any pending scroll timeout
+        if (scrollTimeout) {
+          clearTimeout(scrollTimeout);
+        }
+
+        // Debounce updates to avoid excessive re-renders
+        scrollTimeout = setTimeout(() => {
+          // Find the section with highest intersection ratio that's in view
+          let maxRatio = 0;
+          let visibleSection: string | null = null;
+
+          entries.forEach(entry => {
+            if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
+              maxRatio = entry.intersectionRatio;
+              visibleSection = entry.target.id;
+            }
+          });
+
+          // If no section is visible, check scroll position for home
+          if (!visibleSection) {
+            const scrollY = window.scrollY || window.pageYOffset;
+            const firstSection = sectionElements[0];
+            
+            // Home is active if we're above the first section or at the very top
+            if (scrollY < (firstSection?.offsetTop || 0) - navbarHeight - 100) {
+              visibleSection = null; // Home
+            } else {
+              // Find the section we're closest to
+              let closestSection: string | null = null;
+              let minDistance = Infinity;
+
+              sectionElements.forEach(section => {
+                const distance = Math.abs(section.offsetTop - scrollY - navbarHeight);
+                if (distance < minDistance) {
+                  minDistance = distance;
+                  closestSection = section.id;
+                }
+              });
+              visibleSection = closestSection;
+            }
+          }
+
+          // Update active nav item if it changed
+          if (visibleSection !== activeSection) {
+            activeSection = visibleSection;
+            updateActiveNavItem(activeSection);
+          }
+        }, 100); // Debounce delay
+      }, observerOptions);
+
+      // Observe all sections
+      sectionElements.forEach(section => observer.observe(section));
+
+      // Initial check on page load
+      const checkInitialSection = () => {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const firstSection = sectionElements[0];
+        
+        if (scrollY < (firstSection?.offsetTop || 0) - navbarHeight - 100) {
+          updateActiveNavItem(null); // Home
+        } else {
+          // Find which section is currently in view
+          let currentSection: string | null = null;
+          let minDistance = Infinity;
+
+          sectionElements.forEach(section => {
+            const sectionTop = section.offsetTop - navbarHeight - 20;
+            const sectionBottom = sectionTop + section.offsetHeight;
+            
+            if (scrollY >= sectionTop && scrollY < sectionBottom) {
+              const distance = Math.abs(scrollY - sectionTop);
+              if (distance < minDistance) {
+                minDistance = distance;
+                currentSection = section.id;
+              }
+            }
+          });
+
+          updateActiveNavItem(currentSection || sections[0]);
+        }
+      };
+
+      // Run initial check after a short delay to ensure DOM is ready
+      setTimeout(checkInitialSection, 200);
+    }
+
+    // Handle navbar link clicks
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const sectionId = link.getAttribute('data-section-id');
+        if (sectionId) {
+          scrollToSection(sectionId);
+          // Update active state immediately
+          updateActiveNavItem(sectionId);
+        }
+      });
+    });
+
+    // Handle Home link click
+    if (homeLink) {
+      homeLink.addEventListener('click', (e) => {
+        // Only prevent default if we're already on homepage
+        if (window.location.pathname === '/') {
+          e.preventDefault();
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+          updateActiveNavItem(null);
+        }
+      });
+    }
+
+    // Handle initial URL hash
+    const initialHash = window.location.hash.substring(1);
+    if (sections.includes(initialHash)) {
+      setTimeout(() => {
+        scrollToSection(initialHash);
+        updateActiveNavItem(initialHash);
+      }, 100);
+    } else {
+      // Initialize scroll spy
+      initScrollSpy();
+    }
+
+    // Handle browser back/forward navigation
+    window.addEventListener('popstate', () => {
+      const hash = window.location.hash.substring(1);
+      if (sections.includes(hash)) {
+        setTimeout(() => {
+          scrollToSection(hash);
+          updateActiveNavItem(hash);
+        }, 100);
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        updateActiveNavItem(null);
+      }
+    });
+
+    // Initialize scroll spy after a delay to ensure all sections are rendered
+    setTimeout(() => {
+      initScrollSpy();
+    }, 300);
+  }
+
+  // Initialize after DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNavbar);
+  } else {
+    initNavbar();
+  }
+</script>
 
 <style>
   /* Toggle icons based on aria-expanded for the mobile menu button */
@@ -198,5 +529,27 @@ const navItems = [
   /* Hover underline animation - magnetic effect */
   .nav-hover-underline {
     transform-origin: center;
+  }
+  
+  /* Active nav item styles - smooth transitions */
+  .nav-link-desktop.text-neon-lime {
+    color: #39FF14;
+  }
+  
+  .nav-link-desktop.text-matrix-white\/70 {
+    color: rgba(228, 255, 228, 0.7);
+  }
+  
+  /* Mobile nav active state */
+  .mobile-nav-link.text-neon-lime {
+    color: #39FF14;
+  }
+  
+  .mobile-nav-link.bg-neon-lime\/5 {
+    background-color: rgba(57, 255, 20, 0.05);
+  }
+  
+  .mobile-nav-link.border-neon-lime\/20 {
+    border-color: rgba(57, 255, 20, 0.2);
   }
 </style>

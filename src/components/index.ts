@@ -16,7 +16,6 @@ export { default as HeroIntro } from './hero/HeroIntro.astro';
 export { default as Navbar } from './Navbar.astro';
 export { default as NeonCTA } from './NeonCTA.astro';
 export { default as PageHero } from './PageHero.astro';
-export { default as ProjectCard } from './ProjectCard.astro';
 export { default as ScreenshotFrame } from './ScreenshotFrame.astro';
 export { default as SocialLink } from './SocialLink.astro';
 export { default as SpotifyEmbed } from './SpotifyEmbed.astro';
