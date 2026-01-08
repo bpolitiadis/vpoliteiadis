@@ -71,20 +71,20 @@ function getCategoryColor(category: string) {
 
 <section
   id="creative"
-  class="relative py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-matrix-black overflow-visible"
+  class="relative py-24 md:py-32 lg:py-40 xl:py-48 px-4 sm:px-6 lg:px-8 bg-matrix-black overflow-visible min-h-[120vh] md:min-h-[100vh]"
   role="region"
   aria-labelledby="creative-heading"
   data-creative-section
 >
   {/* Background image */}
   <div class="absolute inset-0 z-0 overflow-hidden">
-    <picture>
+    <picture class="block absolute inset-0 w-full h-full">
       <source srcset="/images/creative-bg.avif" type="image/avif" />
       <source srcset="/images/creative-bg.webp" type="image/webp" />
       <img
         src="/images/creative-bg.webp"
         alt=""
-        class="w-full h-full object-cover"
+        class="w-full h-full object-cover object-center"
         aria-hidden="true"
       />
     </picture>
