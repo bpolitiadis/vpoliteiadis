@@ -1,0 +1,79 @@
+---
+import { ExternalLink } from 'lucide-astro';
+
+export interface Props {
+  project: {
+    slug: string;
+    title: string;
+    role?: string;
+    description: string;
+    hero: string;
+    heroFit?: 'cover' | 'contain';
+    detailUrl: string;
+    tools?: string[];
+    cta?: { label: string; href: string; external?: boolean };
+  };
+}
+
+const { project } = Astro.props;
+---
+
+<div 
+  class="group relative flex flex-col h-full w-full"
+  data-testid={`creative-card-${project.slug}`}
+>
+  <!-- Project Cover Image -->
+  <div class="relative w-full overflow-hidden rounded-lg" style="aspect-ratio: 16 / 9">
+    <a
+      href={project.detailUrl}
+      class="block w-full h-full"
+      aria-label={`View ${project.title} details`}
+    >
+      <img
+        src={project.hero}
+        alt={project.title}
+        class={`w-full h-full ${project.heroFit === 'contain' ? 'object-contain p-6' : 'object-cover'} rounded-lg transition-transform duration-700 group-hover:scale-110 will-change-transform`}
+        loading="lazy"
+        decoding="async"
+        width={1280}
+        height={720}
+      />
+      <!-- Purple gradient overlay -->
+      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-matrix-black/95 via-matrix-black/40 to-transparent opacity-90 group-hover:opacity-60 transition-opacity duration-500 rounded-lg" />
+    </a>
+  </div>
+
+  <div class="flex flex-col space-y-3 mt-4">
+    <!-- Title -->
+    <div class="font-bold leading-none tracking-tight font-orbitron text-lg md:text-xl">
+      <a
+        href={project.cta?.external ? project.cta.href : project.detailUrl}
+        target={project.cta?.external ? '_blank' : undefined}
+        rel={project.cta?.external ? 'noopener noreferrer' : undefined}
+        class="inline-flex items-center gap-2 text-neon-cyan hover:text-neon-cyan/90 transition-colors"
+        style="color: #00FFFF; text-shadow: 0 0 10px rgba(0, 255, 255, 0.6), 0 0 20px rgba(0, 255, 255, 0.3);"
+      >
+        {project.title}
+        {project.cta?.external && (
+          <ExternalLink class="w-4 h-4 opacity-60 hover:opacity-100 transition-opacity stroke-current" aria-hidden="true" />
+        )}
+      </a>
+    </div>
+
+    <!-- Description -->
+    <p class="text-sm text-matrix-white/85 leading-relaxed">
+      {project.description}
+    </p>
+
+    <!-- Tools Badges -->
+    {project.tools && project.tools.length > 0 && (
+      <div class="flex flex-wrap gap-2">
+        {project.tools.map((tool) => (
+          <div class="inline-flex items-center border border-neon-cyan/50 bg-transparent text-neon-cyan hover:border-neon-cyan/70 text-xs px-2.5 py-0.5 rounded-md transition-colors" style="box-shadow: 0 0 8px rgba(0, 255, 255, 0.2);">
+            {tool}
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</div>
