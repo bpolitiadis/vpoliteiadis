@@ -52,6 +52,9 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 - **Build Failure on Vercel**: Fixed "Missing static asset references" error by moving asset check to run after Astro build instead of before
 - **Asset Check Script**: Updated to skip `/images/` path validation since these are handled by Vercel's dynamic image optimization
 - **Build Order**: Changed build sequence from `astro check && node scripts/asset-check.mjs && astro build` to `astro check && astro build && node scripts/asset-check.mjs`
+- **TypeScript Errors**: Resolved conflicting type declarations for `window.va` in analytics.ts that clashed with Vercel Analytics types
+- **GSAP Deprecation Warnings**: Updated GSAP timeline.to() calls to use modern API syntax with duration property
+- **Lucide Icon Deprecation**: Fixed casing of deprecated Github, Instagram, and Linkedin icons to maintain compatibility
 
 ### Added
 - **Troubleshooting Documentation**: Comprehensive fixes directory (`docs/fixes/`) with:

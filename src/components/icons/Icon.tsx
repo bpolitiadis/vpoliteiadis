@@ -1,6 +1,6 @@
 import {
 	Menu, X, ChevronRight, ArrowRight, ExternalLink, Mail, Phone,
-	Briefcase, Monitor, Code, Palette, 
+	Briefcase, Monitor, Code, Palette,
 	Play, Image, Video, Check, Info, Clock, Calendar, GraduationCap, Award,
 	Linkedin, Instagram, Github,
 	type LucideIcon,

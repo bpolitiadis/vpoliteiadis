@@ -94,9 +94,10 @@ const HeroSection: React.FC = () => {
         ? ANIMATION_CONFIG.image.movementsMobile 
         : ANIMATION_CONFIG.image.movements;
       movements.forEach((movement, index) => {
-        imageTimeline.to(q(".image-animation"), ANIMATION_CONFIG.image.durations[index], {
+        imageTimeline.to(q(".image-animation"), {
           ...movement,
           ease: ANIMATION_CONFIG.easing,
+          duration: ANIMATION_CONFIG.image.durations[index],
         });
       });
     }
@@ -108,9 +109,10 @@ const HeroSection: React.FC = () => {
         ? ANIMATION_CONFIG.laptop.movementsMobile 
         : ANIMATION_CONFIG.laptop.movements;
       movements.forEach((movement, index) => {
-        laptopTimeline.to(q(".laptop"), ANIMATION_CONFIG.laptop.durations[index], {
+        laptopTimeline.to(q(".laptop"), {
           ...movement,
           ease: ANIMATION_CONFIG.easing,
+          duration: ANIMATION_CONFIG.laptop.durations[index],
         });
       });
     }
