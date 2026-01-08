@@ -21,7 +21,7 @@ const homeSections = [
 ];
 ---
 
-<nav class="navbar-compact sticky top-0 z-50 w-full bg-matrix-black border-b border-neon-lime/10 transition-all duration-200" role="navigation" aria-label="Main navigation" data-testid="navbar">
+<nav class="navbar-compact sticky top-0 z-50 w-full bg-background border-b border-primary/10 transition-all duration-200" role="navigation" aria-label="Main navigation" data-testid="navbar">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-14 md:h-16">
       
@@ -41,9 +41,9 @@ const homeSections = [
               sizes="(max-width: 768px) 28px, 32px"
             />
             <!-- Subtle neon glow effect -->
-            <div class="logo-glow absolute inset-0 rounded-md bg-neon-lime/15 blur-sm group-hover:bg-neon-lime/25 transition-all duration-200" aria-hidden="true"></div>
+            <div class="logo-glow absolute inset-0 rounded-md bg-primary/15 blur-sm group-hover:bg-primary/25 transition-all duration-200" aria-hidden="true"></div>
           </div>
-          <span class="font-orbitron font-bold text-neon-lime text-base md:text-lg hidden sm:block group-hover:text-neon-lime/90 transition-colors duration-200">
+          <span class="font-orbitron font-bold text-primary text-base md:text-lg hidden sm:block group-hover:text-primary/90 transition-colors duration-200">
             Vasileios Politeiadis
           </span>
         </a>
@@ -55,7 +55,7 @@ const homeSections = [
           {/* Home link */}
           <a
             href="/"
-            class={`nav-link-desktop px-3 py-2 text-sm font-medium transition-all duration-200 relative group font-orbitron text-matrix-white/70 hover:text-neon-lime/90`}
+            class={`nav-link-desktop px-3 py-2 text-sm font-medium transition-all duration-200 relative group font-orbitron text-foreground/70 hover:text-primary/90`}
             role="menuitem"
             aria-current={currentPath === '/' ? 'page' : undefined}
             aria-label={`Home${currentPath === '/' ? ' (current page)' : ''}`}
@@ -64,16 +64,16 @@ const homeSections = [
           >
             Home
             {/* Active page neon underline - controlled by JavaScript */}
-            <div class="nav-active-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-neon-lime shadow-neon transition-all duration-200 opacity-0" aria-hidden="true"></div>
+            <div class="nav-active-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-primary shadow-neon transition-all duration-200 opacity-0" aria-hidden="true"></div>
             {/* Magnetic hover underline */}
-            <div class="nav-hover-underline absolute bottom-0 left-1/2 right-1/2 h-0.5 bg-neon-lime/60 transform -translate-x-1/2 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out" aria-hidden="true"></div>
+            <div class="nav-hover-underline absolute bottom-0 left-1/2 right-1/2 h-0.5 bg-primary/60 transform -translate-x-1/2 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out" aria-hidden="true"></div>
           </a>
 
           {/* Homepage sections - only show on homepage */}
           {currentPath === '/' && homeSections.map((section) => (
             <a
               href={section.href}
-              class={`nav-link-desktop px-3 py-2 text-sm font-medium transition-all duration-200 relative group font-orbitron text-matrix-white/70 hover:text-neon-lime/90`}
+              class={`nav-link-desktop px-3 py-2 text-sm font-medium transition-all duration-200 relative group font-orbitron text-foreground/70 hover:text-primary/90`}
               role="menuitem"
               aria-label={`Jump to ${section.label} section`}
               data-testid={`navbar-link-${section.label.toLowerCase()}`}
@@ -82,9 +82,9 @@ const homeSections = [
             >
               {section.label}
               {/* Active section neon underline - controlled by JavaScript */}
-              <div class="nav-section-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-neon-lime shadow-neon transition-all duration-200 opacity-0" aria-hidden="true"></div>
+              <div class="nav-section-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-primary shadow-neon transition-all duration-200 opacity-0" aria-hidden="true"></div>
               {/* Magnetic hover underline */}
-              <div class="nav-hover-underline absolute bottom-0 left-1/2 right-1/2 h-0.5 bg-neon-lime/60 transform -translate-x-1/2 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out" aria-hidden="true"></div>
+              <div class="nav-hover-underline absolute bottom-0 left-1/2 right-1/2 h-0.5 bg-primary/60 transform -translate-x-1/2 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out" aria-hidden="true"></div>
             </a>
           ))}
 
@@ -94,7 +94,7 @@ const homeSections = [
             class={`nav-link-desktop px-3 py-2 text-sm font-medium transition-all duration-200 relative group font-orbitron ${
               currentPath === '/blog'
                 ? 'text-neon-lime'
-                : 'text-matrix-white/70 hover:text-neon-lime/90'
+                : 'text-foreground/70 hover:text-primary/90'
             }`}
             role="menuitem"
             aria-current={currentPath === '/blog' ? 'page' : undefined}
@@ -104,10 +104,10 @@ const homeSections = [
             Blog
             {/* Active page neon underline */}
             {currentPath === '/blog' && (
-              <div class="nav-active-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-neon-lime shadow-neon transition-all duration-200" aria-hidden="true"></div>
+              <div class="nav-active-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-primary shadow-neon transition-all duration-200" aria-hidden="true"></div>
             )}
             {/* Magnetic hover underline */}
-            <div class="nav-hover-underline absolute bottom-0 left-1/2 right-1/2 h-0.5 bg-neon-lime/60 transform -translate-x-1/2 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out" aria-hidden="true"></div>
+            <div class="nav-hover-underline absolute bottom-0 left-1/2 right-1/2 h-0.5 bg-primary/60 transform -translate-x-1/2 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out" aria-hidden="true"></div>
           </a>
         </div>
       </div>
@@ -117,7 +117,7 @@ const homeSections = [
         <!-- Mobile menu button with subtle cyan border -->
         <button
           id="mobile-menu-button"
-          class="mobile-menu-btn inline-flex h-9 w-9 items-center justify-center rounded-md bg-transparent text-neon-cyan hover:text-neon-cyan/80 hover:bg-neon-cyan/5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-cyan/40 focus-visible:ring-offset-2 focus-visible:ring-offset-matrix-black"
+          class="mobile-menu-btn inline-flex h-9 w-9 items-center justify-center rounded-md bg-transparent text-info hover:text-info/80 hover:bg-info/5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-info/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           aria-label="Toggle mobile navigation menu"
           aria-expanded="false"
           aria-controls="mobile-menu"
@@ -133,13 +133,13 @@ const homeSections = [
     </div>
 
     <!-- Mobile Navigation Menu: Compact dropdown covering only top portion -->
-    <div id="mobile-menu" class="mobile-menu hidden md:hidden fixed top-0 left-0 right-0 bg-matrix-black z-50 shadow-lg" role="menu" aria-labelledby="mobile-menu-button" data-testid="mobile-menu">
+    <div id="mobile-menu" class="mobile-menu hidden md:hidden fixed top-0 left-0 right-0 bg-background z-50 shadow-lg" role="menu" aria-labelledby="mobile-menu-button" data-testid="mobile-menu">
       <div class="flex flex-col">
         <!-- Mobile menu header -->
-        <div class="flex justify-end items-center p-4 border-b border-neon-lime/10">
+        <div class="flex justify-end items-center p-4 border-b border-primary/10">
           <button
             id="mobile-close-button"
-            class="p-2 text-neon-lime hover:text-neon-lime/80 transition-colors duration-200"
+            class="p-2 text-primary hover:text-primary/80 transition-colors duration-200"
             aria-label="Close menu"
             data-testid="mobile-menu-close"
           >
@@ -152,7 +152,7 @@ const homeSections = [
           {/* Home link */}
           <a
             href="/"
-            class={`mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 font-orbitron text-matrix-white/80 hover:text-neon-lime hover:bg-neon-lime/5`}
+            class={`mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 font-orbitron text-matrix-white/80 hover:text-primary hover:bg-primary/5`}
             role="menuitem"
             aria-current={currentPath === '/' ? 'page' : undefined}
             tabindex="0"
@@ -166,11 +166,11 @@ const homeSections = [
           {/* Homepage sections - only show on homepage */}
           {currentPath === '/' && (
             <>
-              <div class="border-t border-neon-lime/10 my-4"></div>
+              <div class="border-t border-primary/10 my-4"></div>
               {homeSections.map((section) => (
                 <a
                   href={section.href}
-                  class={`mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 font-orbitron text-matrix-white/80 hover:text-neon-lime hover:bg-neon-lime/5`}
+                  class={`mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 font-orbitron text-matrix-white/80 hover:text-primary hover:bg-primary/5`}
                   role="menuitem"
                   tabindex="0"
                   aria-label={`Jump to ${section.label} section`}
@@ -181,7 +181,7 @@ const homeSections = [
                   {section.label}
                 </a>
               ))}
-              <div class="border-t border-neon-lime/10 my-4"></div>
+              <div class="border-t border-primary/10 my-4"></div>
             </>
           )}
 
@@ -190,8 +190,8 @@ const homeSections = [
             href="/blog"
             class={`mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 font-orbitron ${
               currentPath === '/blog'
-                ? 'text-neon-lime bg-neon-lime/5 border border-neon-lime/20'
-                : 'text-matrix-white/80 hover:text-neon-lime hover:bg-neon-lime/5'
+                ? 'text-neon-lime bg-primary/5 border border-neon-lime/20'
+                : 'text-matrix-white/80 hover:text-primary hover:bg-primary/5'
             }`}
             role="menuitem"
             aria-current={currentPath === '/blog' ? 'page' : undefined}
@@ -255,7 +255,7 @@ const homeSections = [
         
         // Mobile: update background and border
         if (link.classList.contains('mobile-nav-link')) {
-          link.classList.remove('text-neon-lime', 'bg-neon-lime/5', 'border', 'border-neon-lime/20');
+          link.classList.remove('text-neon-lime', 'bg-primary/5', 'border', 'border-neon-lime/20');
           link.classList.add('text-matrix-white/80');
         }
       });
@@ -278,7 +278,7 @@ const homeSections = [
           // Mobile: update background and border
           if (activeNavItem.classList.contains('mobile-nav-link')) {
             activeNavItem.classList.remove('text-matrix-white/80');
-            activeNavItem.classList.add('text-neon-lime', 'bg-neon-lime/5', 'border', 'border-neon-lime/20');
+            activeNavItem.classList.add('text-neon-lime', 'bg-primary/5', 'border', 'border-neon-lime/20');
           }
         }
       } else if (homeLink) {
@@ -297,7 +297,7 @@ const homeSections = [
         // Mobile: update background and border
         if (homeLink.classList.contains('mobile-nav-link')) {
           homeLink.classList.remove('text-matrix-white/80');
-          homeLink.classList.add('text-neon-lime', 'bg-neon-lime/5', 'border', 'border-neon-lime/20');
+          homeLink.classList.add('text-neon-lime', 'bg-primary/5', 'border', 'border-neon-lime/20');
         }
       }
     }
@@ -545,7 +545,7 @@ const homeSections = [
     color: #39FF14;
   }
   
-  .mobile-nav-link.bg-neon-lime\/5 {
+  .mobile-nav-link.bg-primary\/5 {
     background-color: rgba(57, 255, 20, 0.05);
   }
   

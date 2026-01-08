@@ -39,7 +39,7 @@ const { project } = Astro.props;
         decoding="async"
       />
       <!-- Purple gradient overlay -->
-      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-matrix-black/95 via-matrix-black/40 to-transparent opacity-90 group-hover:opacity-60 transition-opacity duration-500 rounded-lg" />
+      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent opacity-90 group-hover:opacity-60 transition-opacity duration-500 rounded-lg" />
     </a>
   </div>
 
@@ -50,7 +50,7 @@ const { project } = Astro.props;
         href={project.cta?.external ? project.cta.href : project.detailUrl}
         target={project.cta?.external ? '_blank' : undefined}
         rel={project.cta?.external ? 'noopener noreferrer' : undefined}
-        class="inline-flex items-center gap-2 text-neon-cyan hover:text-neon-cyan/90 transition-colors"
+        class="inline-flex items-center gap-2 text-cyan hover:text-cyan/90 transition-colors"
         style="color: #00FFFF; text-shadow: 0 0 10px rgba(0, 255, 255, 0.6), 0 0 20px rgba(0, 255, 255, 0.3);"
       >
         {project.title}
@@ -69,7 +69,7 @@ const { project } = Astro.props;
     {project.tools && project.tools.length > 0 && (
       <div class="flex flex-wrap gap-2">
         {project.tools.map((tool) => (
-          <div class="inline-flex items-center border border-neon-cyan/50 bg-transparent text-neon-cyan hover:border-neon-cyan/70 text-xs px-2.5 py-0.5 rounded-md transition-colors" style="box-shadow: 0 0 8px rgba(0, 255, 255, 0.2);">
+          <div class="badge-cyan">
             {tool}
           </div>
         ))}

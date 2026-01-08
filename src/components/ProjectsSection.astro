@@ -29,7 +29,7 @@ const projects: Project[] = [
 
 <section
   id="projects"
-  class="relative py-24 md:py-32 lg:py-40 xl:py-48 px-4 sm:px-6 lg:px-8 bg-matrix-black overflow-visible min-h-[120vh] md:min-h-[100vh]"
+  class="relative py-24 md:py-32 lg:py-40 xl:py-48 px-4 sm:px-6 lg:px-8 bg-background overflow-visible min-h-[120vh] md:min-h-[100vh]"
   role="region"
   aria-labelledby="projects-heading"
   data-projects-section
@@ -43,14 +43,14 @@ const projects: Project[] = [
       class="w-full h-full object-cover object-center"
       aria-hidden="true"
     />
-    <div class="absolute inset-0 bg-matrix-black/50"></div>
+    <div class="absolute inset-0 bg-background/50"></div>
   </div>
 
   {/* Background decorative elements */}
   <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-    <div class="absolute top-0 left-1/4 w-px h-32 bg-gradient-to-b from-neon-lime/20 to-transparent" />
-    <div class="absolute top-0 right-1/4 w-px h-32 bg-gradient-to-b from-digital-emerald/20 to-transparent" />
-    <div class="absolute bottom-0 left-1/2 w-px h-24 bg-gradient-to-t from-neon-lime/10 to-transparent" />
+    <div class="absolute top-0 left-1/4 w-px h-32 bg-gradient-to-b from-primary/20 to-transparent" />
+    <div class="absolute top-0 right-1/4 w-px h-32 bg-gradient-to-b from-secondary/20 to-transparent" />
+    <div class="absolute bottom-0 left-1/2 w-px h-24 bg-gradient-to-t from-primary/10 to-transparent" />
   </div>
 
   <div class="max-w-7xl mx-auto relative z-10">
@@ -114,7 +114,7 @@ const projects: Project[] = [
             </div>
             <div class="flex flex-wrap gap-2">
               {project.technologies.map((tech) => (
-                <div class="inline-flex items-center border border-digital-emerald/50 bg-transparent text-digital-emerald hover:border-digital-emerald/70 text-xs px-2.5 py-0.5 rounded-md transition-colors">
+                <div class="badge-emerald">
                   {tech}
                 </div>
               ))}

@@ -33,6 +33,8 @@ export interface Props {
   bgSlug?: string;
   /** Eager-load background image for above-the-fold heavy pages */
   bgEager?: boolean;
+  /** Enable critical CSS inlining (default: true) */
+  criticalCSS?: boolean;
   /** Optional utility classes to control background image opacity (e.g., 'opacity-60 md:opacity-80') */
   bgOpacityClass?: string;
   /** Optional utility classes to control the gradient overlay strength */
@@ -79,7 +81,8 @@ const {
   bgEager = false,
   bgOpacityClass = 'opacity-40 md:opacity-50',
   bgOverlayClass = 'from-black/30 via-black/15 to-black/35',
-  structuredData
+  structuredData,
+  criticalCSS = true
 } = Astro.props;
 
 // Prefer actual request URL to avoid canonical mistakes; fall back to provided path
@@ -358,6 +361,37 @@ const finalStructuredData = structuredData ? { ...baseStructuredData, ...structu
     {import.meta.env.PROD && <Analytics />}
   </body>
 </html>
+
+{criticalCSS && (
+  <style is:inline set:html={`/* Critical CSS - Above the fold only */
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 0 0% 3.9%;
+      --primary: 57 100% 53%;
+      --secondary: 160 100% 36%;
+      --muted: 0 0% 96.1%;
+      --border: 0 0% 89.8%;
+      --ring: 57 100% 53%;
+      --radius: 0.5rem;
+    }
+    .dark {
+      --background: 10 10 10;
+      --foreground: 232 255 232;
+      --muted: 34 34 34;
+      --border: 34 34 34;
+    }
+    html { font-family: Inter, sans-serif; scroll-behavior: smooth; }
+    body { background: hsl(var(--background)); color: hsl(var(--foreground)); }
+    .navbar-compact { background: linear-gradient(180deg, rgba(10,10,10,0.98) 0%, rgba(10,10,10,0.95) 100%); border-bottom: 1px solid rgba(57,255,20,0.15); }
+    .nav-link-desktop { transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
+    .animate-reveal-up { opacity: 0; transform: translateY(30px) scale(0.95); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+    .animate-reveal-up.animate { opacity: 1; transform: translateY(0) scale(1); }
+    h1, h2, h3, h4, h5, h6 { font-family: Orbitron, sans-serif; line-height: 1.2; }
+    img { max-width: 100%; height: auto; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
+    @media (max-width: 768px) { .animate-reveal-up, .animate-reveal-up.animate { opacity: 1; transform: none; } }
+  `} />
+)}
 
 <style is:global>
   @import '../styles/global.css';
