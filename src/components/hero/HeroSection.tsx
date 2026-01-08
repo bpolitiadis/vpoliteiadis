@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { Send } from "lucide-react";
 
@@ -51,9 +51,14 @@ const ANIMATION_CONFIG = {
 
 const HeroSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    if (!sectionRef.current) return;
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted || !sectionRef.current) return;
 
     // Check for reduced motion preference (accessibility)
     const prefersReducedMotion = window.matchMedia(
@@ -124,7 +129,7 @@ const HeroSection: React.FC = () => {
       imageTimeline.kill();
       laptopTimeline.kill();
     };
-  }, []);
+  }, [isMounted]);
 
   return (
     <section
