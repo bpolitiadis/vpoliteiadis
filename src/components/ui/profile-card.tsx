@@ -164,7 +164,7 @@ const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
                   href="https://www.instagram.com/arte.imaginari/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-matrix-white/80 hover:text-neon-lime transition-colors duration-200 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                  className="text-matrix-white/80 hover:text-digital-emerald transition-colors duration-200 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
                   aria-label="Instagram profile"
                 >
                   <InstagramIcon size="sm" className="w-5 h-5" />
