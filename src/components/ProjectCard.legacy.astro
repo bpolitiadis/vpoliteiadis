@@ -1,0 +1,251 @@
+---
+export interface Props {
+  project: {
+    slug: string;
+    data: {
+      title: string;
+      description: string;
+      excerpt?: string;
+      coverImage: string;
+      coverVideo?: string;
+      tags: string[];
+      techStack: string[];
+      featured: boolean;
+      status: string;
+      role?: string;
+      liveUrl?: string;
+    };
+  };
+  index?: number;
+}
+
+const { project, index = 0 } = Astro.props;
+import { Card } from './ui/card';
+import { Badge } from './ui/badge';
+---
+
+<Card 
+  className="group relative glass-card glass-card-accent rounded-xl overflow-hidden backdrop-blur-md transition-all duration-300 hover:shadow-neon-lg hover:border-primary/60 reveal border-primary/20 flex flex-col h-full project-card"
+  style={{ transitionDelay: `${index * 80}ms` }}
+  data-testid={`project-card-${project.slug}`}
+>
+  <!-- Project Cover - Proper Aspect Ratio Container -->
+  <div class="relative w-full aspect-video overflow-hidden bg-gradient-to-br from-cyber-gray to-dark-slate">
+    <!-- Responsive background pattern for loading state -->
+    <div class="absolute inset-0 bg-matrix-pattern opacity-5"></div>
+    
+    <!-- Cover Image/Video with proper aspect ratio -->
+    {project.data.coverVideo ? (
+      <video
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        poster={project.data.coverImage}
+        aria-label={`${project.data.title} preview video`}
+      >
+        <source src={project.data.coverVideo} type="video/mp4" />
+        <!-- Fallback image if video fails -->
+        <img
+          src={project.data.coverImage}
+          alt={`${project.data.title} cover image`}
+          class="w-full h-full object-cover"
+          loading="lazy"
+          decoding="async"
+          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 50vw, 33vw"
+        />
+      </video>
+    ) : (
+      <img
+        src={project.data.coverImage}
+        alt={`${project.data.title} project cover image`}
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out motion-reduce:transition-none motion-reduce:group-hover:scale-100 project-cover-image"
+        width={1280}
+        height={720}
+        loading="lazy"
+        decoding="async"
+        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 50vw, 33vw"
+      />
+    )}
+    
+    <!-- Gradient overlay for better text readability -->
+    <div class="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-0 
+                group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+    
+    <!-- Subtle border glow effect -->
+    <div class="absolute inset-0 border border-primary/20 group-hover:border-primary/40 transition-colors duration-300 pointer-events-none"></div>
+  </div>
+
+  <!-- Card Content - Optimized Layout -->
+  <div class="flex-1 flex flex-col p-6">
+    <!-- Header -->
+    <div class="mb-4">
+      <h3 
+        id={`proj-${project.slug}-title`} 
+        class="text-xl font-orbitron neon-heading text-primary mb-3"
+      >
+        {project.data.title}
+      </h3>
+      
+      <p class="text-sm text-text-muted leading-relaxed line-clamp-3">
+        {project.slug === 'upiria'
+          ? 'Built a scalable frontend and testing foundation at an early stage of a fast-growing travel startup.'
+          : project.slug === 'casa-capoeira'
+          ? 'Created a fast, reliable CMS to help capoeira schools manage classes, payments, and community with ease.'
+          : (project.data.excerpt || project.data.description)}
+      </p>
+    </div>
+
+    <!-- Enhanced Metadata -->
+    <div class="rounded-lg border border-primary/30 bg-card/40 p-4 mb-6 backdrop-blur-sm flex-1">
+      <div class="text-xs font-mono text-matrix-white/80 tracking-tight">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="text-neon-lime/90 font-semibold">Focus:</span>
+          <Badge 
+            variant="outline" 
+            className="bg-primary/10 border-primary/30 text-primary hover:bg-primary/20 hover:border-primary/50 text-xs"
+          >
+            {project.data.role ?? (project.slug === 'upiria' ? 'Frontend + QA' : 'Full‑Stack + Product')}
+          </Badge>
+        </div>
+        <div class="h-px bg-primary/20 mb-3"></div>
+        <div class="flex items-center gap-2">
+          <span class="text-neon-lime/90 font-semibold">Tech:</span>
+          <div class="flex flex-wrap gap-1.5">
+            {project.data.techStack.slice(0,3).map((tech) => (
+              <Badge 
+                variant="secondary" 
+                className="bg-secondary/20 border-secondary/30 text-secondary hover:bg-secondary/30 hover:border-secondary/50 text-xs"
+              >
+                {tech}
+              </Badge>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enhanced Action Buttons -->
+    <div class="flex gap-3 mt-auto">
+      <!-- Learn More Button -->
+      <a
+        href={`/projects/${project.slug}`}
+        aria-label={`Read case study: ${project.data.title}`}
+        class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium rounded-lg border-2 border-primary/60 text-primary hover:bg-primary/20 hover:border-primary/80 transition-all duration-300 group min-h-[44px]"
+        data-testid={`project-card-learn-more-${project.slug}`}
+      >
+        <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        Learn More
+      </a>
+      
+      <!-- View Live Button -->
+      {project.data.liveUrl && (
+        <a
+          href={project.data.liveUrl}
+          aria-label={`Visit live project: ${project.data.title}`}
+          class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium rounded-lg bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:from-primary/90 hover:to-secondary/90 shadow-neon transition-all duration-300 group min-h-[44px]"
+          data-testid={`project-card-view-live-${project.slug}`}
+        >
+          <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+          View Live
+        </a>
+      )}
+    </div>
+  </div>
+</Card>
+
+<style>
+  /* Enhanced hover effects for better UX */
+  .group:hover .group-hover\:scale-105 {
+    transform: scale(1.05);
+  }
+
+  /* Smooth transitions for all interactive elements */
+  .transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Focus visible styles for accessibility */
+  .focus-visible\:outline-none:focus-visible {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+
+  .focus-visible\:ring-2:focus-visible {
+    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  }
+
+  .focus-visible\:ring-primary\/50:focus-visible {
+    --tw-ring-color: rgb(57 255 20 / 0.5);
+  }
+
+  .focus-visible\:ring-offset-2:focus-visible {
+    --tw-ring-offset-width: 2px;
+  }
+
+  .focus-visible\:ring-offset-background:focus-visible {
+    --tw-ring-offset-color: #0A0A0A;
+  }
+
+  /* Responsive text sizing */
+  @media (max-width: 640px) {
+    .text-2xl {
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .md\:text-\[1\.6rem\] {
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+  }
+
+  /* Enhanced backdrop blur for better readability */
+  .backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+  }
+
+  /* Smooth image scaling with hardware acceleration */
+  .group-hover\:scale-105 {
+    will-change: transform;
+    transform: translateZ(0);
+  }
+
+  /* Optimized transitions for reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .transition-transform,
+    .transition-all {
+      transition: none;
+    }
+    
+    .group-hover\:scale-105 {
+      transform: none;
+    }
+  }
+
+  /* Compact card styling */
+  .group {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .group:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px rgba(57, 255, 20, 0.15);
+  }
+
+  /* Button hover effects */
+  .group a:hover {
+    transform: translateY(-1px);
+  }
+</style> 

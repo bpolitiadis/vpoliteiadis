@@ -75,8 +75,8 @@ const collectionSchema = {
         
         <!-- Featured Projects Section - Responsive Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8" data-testid="projects-grid">
-          {featuredProjects.map((project, idx) => (
-            <ProjectCard project={project} index={idx} />
+          {featuredProjects.map((project) => (
+            <ProjectCard project={project} />
           ))}
         </div>
         

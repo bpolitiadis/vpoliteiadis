@@ -119,6 +119,7 @@ public/images/*.jpeg
 !public/images/projects/
 !public/images/vasileios-illustration.png
 !public/images/laptop-illustration.png
+!public/images/casacapoeira-cover.png
 
 # Keep source images committed
 !src/assets/images/
