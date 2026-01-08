@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
-// Import images from assets - Astro will handle optimization
-import vasileiosIllustration from "../../assets/images/vasileios-illustration.png";
-import laptop from "../../assets/images/laptop-illustration.png";
+// Use public folder paths for React components in Astro
+const vasileiosIllustration = "/images/vasileios-illustration.png";
+const laptop = "/images/laptop-illustration.png";
 
 // Animation constants - centralized for easy maintenance
 const ANIMATION_CONFIG = {
@@ -140,7 +140,7 @@ const HeroSection: React.FC = () => {
         <div className="relative w-56 xs:w-64 sm:w-72 md:w-80 h-56 xs:h-64 sm:h-80 flex items-center mx-auto">
           <div className="absolute pointer-events-none scale-75 xs:scale-85 sm:scale-90 mx-auto">
             <img
-              src={vasileiosIllustration.src}
+              src={vasileiosIllustration}
               width={1177}
               height={1374}
               id="character-illustration"
@@ -154,7 +154,7 @@ const HeroSection: React.FC = () => {
           </div>
           <div className="laptop absolute top-10 xs:top-12 sm:top-16 left-0 scale-[.32] xs:scale-[.38] sm:scale-[.41] pointer-events-none">
             <img
-              src={laptop.src}
+              src={laptop}
               width={559}
               height={386}
               aria-hidden="true"
