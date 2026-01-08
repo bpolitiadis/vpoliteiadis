@@ -4,6 +4,27 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 
 ## [Unreleased]
 
+## [0.0.5] - 2026-01-08
+
+### Fixed
+- **Build Failure on Vercel**: Fixed "Missing static asset references" error by moving asset check to run after Astro build instead of before
+- **Asset Check Script**: Updated to skip `/images/` path validation since these are handled by Vercel's dynamic image optimization
+- **Build Order**: Changed build sequence from `astro check && node scripts/asset-check.mjs && astro build` to `astro check && astro build && node scripts/asset-check.mjs`
+
+### Added
+- **Troubleshooting Documentation**: Comprehensive fixes directory (`docs/fixes/`) with:
+  - `BUILD_FAILURES.md`: Complete guide for common build issues and their solutions
+  - `README.md`: Index for troubleshooting resources
+- **Enhanced Documentation**:
+  - Added troubleshooting section to `docs/IMAGE_OPTIMIZATION.md` covering image loading and optimization issues
+  - Added troubleshooting section to `docs/README.md` with common Vercel deployment problems
+  - Updated main documentation index to reference the fixes directory
+
+### Documentation
+- Created `docs/fixes/` directory for common bug fixes and troubleshooting guidelines
+- Added comprehensive build failure solutions and prevention strategies
+- Enhanced documentation with debug commands and common mistake patterns
+
 ## [0.0.4] - 2026-01-08
 
 ### Added

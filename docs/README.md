@@ -41,6 +41,7 @@ pnpm preview      # Preview production build
 || **[LOGGING.md](./LOGGING.md)** | Server-only logging, request correlation, Sentry integration | Developers, DevOps |
 
 || **[ENVIRONMENT_VARIABLES.md](./ENVIRONMENT_VARIABLES.md)** | Complete environment variables reference and setup guide | Developers, DevOps |
+|| **[fixes/](./fixes/)** | Common bugs and troubleshooting guides | All developers |
 
 ## 🏗️ Architecture Overview
 
@@ -137,6 +138,58 @@ vercel
 5. **Test** with: `pnpm lint && pnpm build`
 6. **Commit** using [Conventional Commits](https://www.conventionalcommits.org/)
 7. **Submit** pull request
+
+## 🔧 Troubleshooting
+
+### Common Build Issues
+
+#### Vercel Deployment Failures
+
+**Missing Static Asset References:**
+- **Symptom:** Build fails with "Missing static asset references found"
+- **Cause:** Asset check runs before build completion on Vercel
+- **Fix:** Ensure asset check runs after `astro build` in package.json scripts
+- **Reference:** See `docs/IMAGE_OPTIMIZATION.md` for image-related issues
+
+**Node.js Version Warnings:**
+- **Symptom:** "engines": { "node": ">=20.0.0" } warning
+- **Cause:** Vercel uses latest Node.js despite project settings
+- **Fix:** Update Vercel project settings or accept the warning (Node 24.x is compatible)
+
+#### Image Optimization Issues
+
+**Images Not Loading:**
+- **Check:** Image paths use absolute paths (`/images/...`)
+- **Verify:** Files exist in `public/images/` or `src/assets/images/`
+- **Fix:** Use Astro's Image component for automatic optimization
+
+**Performance Issues:**
+- **Check:** Image dimensions specified
+- **Verify:** `sizes` attribute used for responsive images
+- **Fix:** Implement lazy loading for below-the-fold images
+
+### Debug Commands
+
+```bash
+# Test build locally
+pnpm run build
+
+# Check for linting errors
+pnpm run lint
+
+# Test contact form functionality
+pnpm test:contact
+
+# Run lighthouse audit
+pnpm seo:lighthouse
+```
+
+### Getting Help
+
+1. **Check existing documentation** in `docs/` directory
+2. **Review build logs** for specific error messages
+3. **Test locally** before deploying to Vercel
+4. **Check Vercel dashboard** for deployment-specific issues
 
 ## 📊 Quality Metrics
 

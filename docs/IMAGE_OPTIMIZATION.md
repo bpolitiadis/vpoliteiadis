@@ -328,6 +328,78 @@ export default defineConfig({
 }
 ```
 
+## Troubleshooting
+
+### Common Build Issues
+
+#### Vercel Build Fails: "Missing static asset references"
+
+**Symptoms:**
+```
+Missing static asset references found:
+- /images/contact-bg.avif referenced in src/components/ContactSection.astro
+- /images/casacapoeira-cover.png referenced in src/components/ProjectsSection.astro
+```
+
+**Cause:** The asset check script runs before the build completes, when image files may not be fully processed by Vercel.
+
+**Solutions:**
+1. **Ensure build order is correct**: Asset check should run after `astro build`
+2. **Verify image files exist**: Check that referenced images are in `public/images/`
+3. **Update .vercelignore**: Ensure image files aren't excluded during deployment
+
+#### Images Not Loading in Production
+
+**Symptoms:** Images work locally but fail to load on Vercel.
+
+**Cause:** Incorrect image paths or Vercel image optimization configuration.
+
+**Solutions:**
+1. **Check Astro configuration**:
+   ```javascript
+   // astro.config.mjs
+   export default defineConfig({
+     adapter: vercel({
+       imageService: true, // Ensure this is enabled
+     }),
+   });
+   ```
+
+2. **Verify image paths**: Use absolute paths from project root (`/images/...`)
+3. **Check Vercel deployment logs** for image processing errors
+
+#### Image Optimization Not Working
+
+**Symptoms:** Images load but aren't optimized (large file sizes, wrong formats).
+
+**Solutions:**
+1. **Verify Vercel adapter version**: Ensure `@astrojs/vercel` is up to date
+2. **Check image formats**: Source images should be in standard formats (JPEG, PNG, WebP)
+3. **Review image component usage**: Use Astro's Image component for automatic optimization
+
+### Debug Commands
+
+```bash
+# Check if images exist in public directory
+find public/images -name "*.avif" -o -name "*.webp" -o -name "*.png" | head -10
+
+# Test Vercel image optimization locally (if available)
+curl -I "https://your-domain.com/_vercel/image?url=/images/avatar.webp&w=256"
+
+# Check build output for image processing
+ls -la dist/client/_astro/ | grep -E '\.(avif|webp|png|jpg)$'
+
+# Verify Astro image processing
+pnpm astro build --verbose | grep -i image
+```
+
+### Common Mistakes
+
+1. **Using relative paths instead of absolute**: ❌ `../images/image.png` ✅ `/images/image.png`
+2. **Importing images incorrectly**: ❌ `<img src={image} />` ✅ `<Image src={image} />`
+3. **Missing image dimensions**: Always specify `width` and `height` for performance
+4. **Not using responsive images**: Add `sizes` attribute for different screen sizes
+
 ## Future Considerations
 
 ### 1. Vercel Features
