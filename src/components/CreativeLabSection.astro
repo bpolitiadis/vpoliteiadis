@@ -1,6 +1,7 @@
 ---
 import CreativeCard from './CreativeCard.astro';
 import AImage from './media/AImage.astro';
+import DecryptedText from './DecryptedText';
 import creativeBg from '../assets/images/creative-bg.webp';
 import emmanuelleSilkLogo from '../assets/images/emmanuelle-silk-logo.webp';
 import s2Logo from '../assets/images/s2-logo.webp';
@@ -83,13 +84,28 @@ const creativeProjects = [
 
   <div class="max-w-7xl mx-auto relative z-10">
     {/* Section Headline */}
-    <div class="text-center mb-12 md:mb-16 animate-reveal-up opacity-0">
+    <div class="text-center mb-12 md:mb-16">
       <h2
         id="creative-heading"
         class="text-3xl md:text-4xl lg:text-5xl font-orbitron font-bold mb-3"
-        style="text-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.4); background: linear-gradient(135deg, #00FFFF 0%, #00BFFF 50%, #00FFFF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
       >
-        Creative Lab
+        <DecryptedText
+          client:visible
+          text="Creative Lab"
+          speed={60}
+          sequential={true}
+          revealDirection="start"
+          className="text-cyan"
+          encryptedClassName="text-cyan/30"
+          parentClassName="block"
+          revealedStyle={{
+            textShadow: '0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.4)',
+            background: 'linear-gradient(135deg, #00FFFF 0%, #00BFFF 50%, #00FFFF 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+          }}
+        />
       </h2>
       <p class="text-base md:text-lg text-matrix-white/70 font-inter max-w-2xl mx-auto">
         AI-driven creative experiments
@@ -106,36 +122,6 @@ const creativeProjects = [
 </section>
 
 <script>
-  // Simple reveal animation for section heading
-  document.addEventListener('DOMContentLoaded', () => {
-    const section = document.querySelector('[data-creative-section]');
-    if (!section) return;
-
-    const prefersReducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
-
-    if (prefersReducedMotion) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const animatedElements = entry.target.querySelectorAll(
-              '.animate-reveal-up'
-            );
-            animatedElements.forEach((element, index) => {
-              setTimeout(() => {
-                element.classList.add('animate');
-              }, index * 150);
-            });
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(section);
-  });
+  // Note: Section heading animation is handled by DecryptedText component
+  // This script can be used for future content animations if needed
 </script>

@@ -2,6 +2,7 @@
 import ContactForm from './contact/ContactForm';
 import ContactCards from './contact/ContactCards.astro';
 import AImage from './media/AImage.astro';
+import DecryptedText from './DecryptedText';
 import contactBg from '../assets/images/contact-bg.webp';
 ---
 
@@ -35,9 +36,18 @@ import contactBg from '../assets/images/contact-bg.webp';
     {/* Section Headline */}
     <h2
       id="contact-heading"
-      class="text-3xl md:text-4xl lg:text-5xl font-orbitron font-bold text-neon-lime text-center mb-12 md:mb-16 animate-reveal-up opacity-0 text-shadow-neon"
+      class="text-3xl md:text-4xl lg:text-5xl font-orbitron font-bold text-center mb-12 md:mb-16"
     >
-      Contact
+      <DecryptedText
+        client:visible
+        text="Contact"
+        speed={60}
+        sequential={true}
+        revealDirection="start"
+        className="text-neon-lime text-shadow-neon"
+        encryptedClassName="text-primary/40"
+        parentClassName="block"
+      />
     </h2>
     
     {/* Section Description */}

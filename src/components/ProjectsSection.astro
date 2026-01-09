@@ -1,5 +1,6 @@
 ---
 import AImage from './media/AImage.astro';
+import DecryptedText from './DecryptedText';
 import upiriaCover from '../assets/images/upiria-cover.webp';
 import casacapoeiraCover from '../assets/images/casacapoeira-cover.webp';
 import projectsBg from '../assets/images/projects-bg.webp';
@@ -58,12 +59,21 @@ const projects: Project[] = [
 
   <div class="max-w-7xl mx-auto relative z-10">
     {/* Section Headline */}
-    <div class="text-center mb-12 md:mb-16 animate-reveal-up opacity-0">
+    <div class="text-center mb-12 md:mb-16">
       <h2
         id="projects-heading"
-        class="text-3xl md:text-4xl lg:text-5xl font-orbitron font-bold text-neon-lime mb-3 text-shadow-neon"
+        class="text-3xl md:text-4xl lg:text-5xl font-orbitron font-bold mb-3"
       >
-        Featured Projects
+        <DecryptedText
+          client:visible
+          text="Featured Projects"
+          speed={60}
+          sequential={true}
+          revealDirection="start"
+          className="text-neon-lime text-shadow-neon"
+          encryptedClassName="text-primary/40"
+          parentClassName="block"
+        />
       </h2>
       <p class="text-base md:text-lg text-matrix-white/70 font-inter max-w-2xl mx-auto">
         Projects worth exploring

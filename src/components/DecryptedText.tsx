@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 
 interface DecryptedTextProps {
   text: string
@@ -13,6 +13,13 @@ interface DecryptedTextProps {
   parentClassName?: string
   animateOn?: 'view' | 'hover'
   onComplete?: () => void
+  revealedStyle?: React.CSSProperties
+  /**
+   * Whether to re-animate when scrolling back into view.
+   * Default: false (one-time animation - recommended for section headings)
+   * Set to true for hero sections or CTAs where re-animation adds value
+   */
+  reAnimateOnView?: boolean
 }
 
 export default function DecryptedText({
@@ -28,6 +35,8 @@ export default function DecryptedText({
   encryptedClassName = 'text-primary/60',
   animateOn = 'view',
   onComplete,
+  revealedStyle,
+  reAnimateOnView = false, // Default: one-time animation (better UX for section headings)
   ...props
 }: DecryptedTextProps) {
   const [displayText, setDisplayText] = useState<string>(text)
@@ -167,9 +176,31 @@ export default function DecryptedText({
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting && !hasAnimated) {
-          setIsAnimating(true)
-          setHasAnimated(true)
+        if (entry.isIntersecting) {
+          // One-time animation (default): only animate if not already animated
+          if (!reAnimateOnView && !hasAnimated) {
+            setIsAnimating(true)
+            setHasAnimated(true)
+          }
+          // Re-animate on view: reset and animate every time element enters viewport
+          else if (reAnimateOnView) {
+            // Reset state for re-animation
+            setRevealedIndices(new Set())
+            setIsScrambling(false)
+            setIsAnimating(true)
+            // Generate initial scrambled text
+            const availableChars = useOriginalCharsOnly
+              ? Array.from(new Set(text.split(''))).filter((char) => char !== ' ')
+              : characters.split('')
+            const scrambledText = text
+              .split('')
+              .map((char) => {
+                if (char === ' ') return ' '
+                return availableChars[Math.floor(Math.random() * availableChars.length)]
+              })
+              .join('')
+            setDisplayText(scrambledText)
+          }
         }
       })
     }
@@ -189,7 +220,7 @@ export default function DecryptedText({
     return () => {
       if (currentRef) observer.unobserve(currentRef)
     }
-  }, [animateOn, hasAnimated])
+  }, [animateOn, hasAnimated, reAnimateOnView, text, useOriginalCharsOnly, characters])
 
   const hoverProps =
     animateOn === 'hover'
@@ -227,9 +258,10 @@ export default function DecryptedText({
                   : `${encryptedClassName} animate-pulse transition-all duration-100`
               }`}
               style={{
-                textShadow: isRevealedOrDone && className.includes('text-glow') 
-                  ? '0 0 10px rgba(57, 255, 20, 0.8), 0 0 20px rgba(57, 255, 20, 0.4)' 
-                  : undefined
+                ...(isRevealedOrDone && revealedStyle ? revealedStyle : {}),
+                ...(isRevealedOrDone && className.includes('text-glow') && !revealedStyle
+                  ? { textShadow: '0 0 10px rgba(57, 255, 20, 0.8), 0 0 20px rgba(57, 255, 20, 0.4)' }
+                  : {})
               }}
             >
               {char}

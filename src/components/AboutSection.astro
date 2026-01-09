@@ -2,6 +2,7 @@
 // import ElectricBorder from './ElectricBorder'; // Commented out - replaced with ProfileCard
 import { ProfileCard } from './ui/profile-card';
 import AImage from './media/AImage.astro';
+import DecryptedText from './DecryptedText';
 import aboutBg from '../assets/images/about-bg.webp';
 
 interface Props {
@@ -100,9 +101,18 @@ function getTimelineColors(isCurrent: boolean) {
     {/* Section Headline */}
     <h2
       id="about-heading"
-      class="text-3xl md:text-4xl lg:text-5xl font-orbitron font-bold text-neon-lime text-center mb-12 md:mb-16 animate-reveal-up opacity-0 text-shadow-neon"
+      class="text-3xl md:text-4xl lg:text-5xl font-orbitron font-bold text-center mb-12 md:mb-16"
     >
-      Who am I?
+      <DecryptedText
+        client:visible
+        text="Who am I?"
+        speed={60}
+        sequential={true}
+        revealDirection="start"
+        className="text-neon-lime text-shadow-neon"
+        encryptedClassName="text-primary/40"
+        parentClassName="block"
+      />
     </h2>
 
     {/* Two Column Layout */}
