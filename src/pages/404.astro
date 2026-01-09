@@ -3,7 +3,6 @@
 export const prerender = true;
 
 import MainLayout from '../layouts/MainLayout.astro';
-import FuzzyText from '../components/FuzzyText';
 
 // 404 page structured data for SEO
 const errorStructuredData = {
@@ -38,40 +37,44 @@ const errorStructuredData = {
   </div>
 
     <!-- Main 404 Content -->
-  <section class="relative flex-1 flex flex-col items-center justify-center px-4 z-10">
-    <div class="text-center">
+  <section class="relative flex-1 flex flex-col items-center justify-center px-4 z-10 min-h-screen">
+    <div class="text-center max-w-2xl mx-auto">
       
-      <!-- 404 Number with Fuzzy Effect -->
-      <div class="mb-6">
-        <FuzzyText
-          client:load
-          fontSize="clamp(4rem, 15vw, 12rem)"
-          fontWeight={900}
-          fontFamily="Orbitron, sans-serif"
-          color="#39FF14"
-          enableHover={true}
-          baseIntensity={0.05}
-          hoverIntensity={0.2}
-        >
-          404
-        </FuzzyText>
-      </div>
+      <!-- 404 Number with Glowing Effect -->
+      <h1 class="glow-404 mb-6">404</h1>
 
-      <!-- Error Message with Fuzzy Effect -->
-      <div class="mb-8">
-        <FuzzyText
-          client:load
-          fontSize="clamp(1.5rem, 5vw, 2.5rem)"
-          fontWeight={700}
-          fontFamily="Orbitron, sans-serif"
-          color="#E8FFE8"
-          enableHover={true}
-          baseIntensity={0.05}
-          hoverIntensity={0.2}
+      <!-- Error Message -->
+      <p class="text-white text-xl md:text-2xl mb-6 font-orbitron">ERROR: Page Not Found</p>
+
+      <!-- Matrix-inspired message -->
+      <p class="text-neon-lime/90 text-lg md:text-xl mb-8 font-mono leading-relaxed">
+        This page doesn't exist in the Matrix.
+        <br />
+        <span class="text-primary/70 text-base md:text-lg">Return to the source.</span>
+      </p>
+
+      <!-- Back to Home Button -->
+      <a
+        href="/"
+        class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-sm font-medium font-orbitron transition-all duration-200 bg-primary/10 hover:bg-primary/20 text-neon-lime border border-neon-lime/30 hover:border-neon-lime/50 hover:shadow-[0_0_12px_rgba(57,255,20,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-lime/50"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
         >
-          ERROR: Page Not Found
-        </FuzzyText>
-      </div>
+          <path d="m12 19-7-7 7-7"></path>
+          <path d="M19 12H5"></path>
+        </svg>
+        Back to the Matrix
+      </a>
 
     </div>
   </section>
@@ -91,13 +94,17 @@ const errorStructuredData = {
     z-index: -1;
   }
 
-  /* FuzzyText canvas styling */
-  canvas {
-    display: block !important;
-    width: auto !important;
-    height: auto !important;
-    max-width: 100%;
+  /* Glowing 404 effect */
+  .glow-404 {
+    font-size: clamp(6rem, 20vw, 16rem);
+    font-weight: 900;
+    font-family: 'Orbitron', sans-serif;
+    color: white;
+    line-height: 1;
+    margin: 0;
+    text-shadow: 0 0 20px rgba(57, 255, 20, 0.8),
+                 0 0 40px rgba(57, 255, 20, 0.6),
+                 0 0 60px rgba(57, 255, 20, 0.4);
   }
-
 
 </style> 
