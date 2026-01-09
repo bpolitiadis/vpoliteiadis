@@ -68,9 +68,9 @@ const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
     }, []);
 
     const statusGlow = {
-      Online: "shadow-[0_0_8px_rgba(57,255,20,0.6)]",
+      Online: "shadow-[0_0_8px_rgba(57,255,20,0.2)]",
       Offline: "",
-      Away: "shadow-[0_0_8px_rgba(255,170,0,0.5)]",
+      Away: "shadow-[0_0_8px_rgba(255,170,0,0.2)]",
     };
 
     return (
@@ -78,8 +78,8 @@ const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
         ref={cardRef}
         className={cn(
           "relative overflow-hidden border-2 border-digital-emerald/60 transition-all duration-300",
-          "hover:border-digital-emerald hover:shadow-[0_0_16px_rgba(0,184,107,0.4)]",
-          "shadow-[0_0_8px_rgba(0,184,107,0.2)]",
+          "hover:border-digital-emerald hover:shadow-[0_0_16px_rgba(0,184,107,0.6)]",
+          "shadow-[0_0_8px_rgba(0,184,107,0.6)]",
           "w-full aspect-[4/5]",
           className
         )}
@@ -106,19 +106,28 @@ const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
         
         {/* Content Overlay */}
         <div className="relative h-full flex flex-col justify-end p-6 z-10">
-          {/* Status Indicator - Top Right */}
+          {/* Status Badge - Top Right */}
           <div
             className={cn(
-              "absolute top-4 right-4 w-3.5 h-3.5 rounded-full border-2 border-matrix-black z-20",
+              "absolute top-4 right-4 flex items-center gap-2 px-3 py-1.5 rounded-full z-20",
+              "bg-matrix-black/80 backdrop-blur-sm border border-primary/30",
               statusGlow[status || "Online"]
             )}
-            style={{ 
-              backgroundColor: (status || "Online") === "Online" ? "#39FF14" : 
-                             (status || "Online") === "Away" ? "#FFAA00" : 
-                             "#222222"
-            }}
             aria-label={`Status: ${status || "Online"}`}
-          />
+          >
+            <span className="text-sm font-medium text-primary font-inter">
+              Online
+            </span>
+            <div
+              className="w-2 h-2 rounded-full"
+              style={{ 
+                backgroundColor: (status || "Online") === "Online" ? "#39FF14" : 
+                               (status || "Online") === "Away" ? "#FFAA00" : 
+                               "#222222"
+              }}
+              aria-hidden="true"
+            />
+          </div>
 
           {/* User Info - Bottom Section */}
           {showUserInfo && (

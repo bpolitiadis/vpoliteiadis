@@ -3,6 +3,7 @@
 import { ProfileCard } from './ui/profile-card';
 import AImage from './media/AImage.astro';
 import DecryptedText from './DecryptedText';
+import TextAnimation from './TextAnimation';
 import aboutBg from '../assets/images/about-bg.webp';
 
 interface Props {
@@ -84,7 +85,6 @@ function getTimelineColors(isCurrent: boolean) {
   role="region"
   aria-labelledby="about-heading"
   data-testid="page-about"
-  data-about-section
 >
   {/* Background image */}
   <div class="absolute inset-0 z-0 overflow-hidden">
@@ -169,20 +169,20 @@ function getTimelineColors(isCurrent: boolean) {
       </div>
 
       {/* Right Column - Content */}
-      <div class="space-y-8 flex flex-col items-center">
+      <div class="space-y-8 flex flex-col items-center" data-testid="about-main-content">
         <div class="w-full max-w-2xl">
         {/* Introduction Paragraph */}
-        <div class="animate-reveal-up-delayed-2 opacity-0">
-          <p class="text-sm md:text-base text-matrix-white/90 leading-relaxed mb-6">
+        <TextAnimation client:load>
+          <p class="text-animation text-sm md:text-base text-matrix-white/90 leading-relaxed mb-6" data-testid="about-hero-content">
             I'm a QA automation specialist and full-stack developer with 7+ years of experience building reliable software. I've worked on everything from enterprise-level European Commission projects to fast-moving startups, where I learned to take products from concept to production. As a freelancer, I've designed and built websites and applications for clients across various industries. This mix of corporate, startup, and freelance work has taught me that quality and reliability matter regardless of the environment.
           </p>
-        </div>
+        </TextAnimation>
 
         {/* Work Experience Section */}
-        <div class="animate-reveal-up-delayed-3 opacity-0">
+        <TextAnimation client:load>
+          <div>
           <h3 
-            class="text-xl md:text-2xl font-orbitron font-bold text-neon-lime mb-6"
-            style="text-shadow: 0 0 10px rgba(57, 255, 20, 0.6)"
+              class="text-animation text-xl md:text-2xl font-orbitron font-bold text-neon-lime mb-6 section-heading-neon"
           >
             Work Experience
           </h3>
@@ -190,7 +190,7 @@ function getTimelineColors(isCurrent: boolean) {
             {workExperience.map((job) => {
               const colors = getTimelineColors(job.isCurrent ?? false);
               const content = (
-                <div class="py-4 group">
+                  <div class="text-animation py-4 group">
                   <div class="flex flex-col lg:grid lg:grid-cols-[140px_1fr] lg:gap-6">
                     {/* Date column */}
                     <div class="mb-2 lg:mb-0">
@@ -203,19 +203,13 @@ function getTimelineColors(isCurrent: boolean) {
                     <div class="space-y-2">
                       <div class="flex flex-wrap items-baseline gap-2">
                         <h3 
-                          class={`text-base font-semibold ${colors.title} group-hover:opacity-80 transition-opacity`}
-                          style={job.isCurrent 
-                            ? "color: #39FF14; text-shadow: 0 0 10px rgba(57, 255, 20, 0.6), 0 0 20px rgba(57, 255, 20, 0.3);" 
-                            : "color: #00B86B; text-shadow: 0 0 10px rgba(0, 184, 107, 0.6), 0 0 20px rgba(0, 184, 107, 0.3);"}
+                          class={`text-base font-semibold ${colors.title} group-hover:opacity-80 transition-opacity ${job.isCurrent ? 'job-title-current' : 'job-title-past'}`}
                         >
                           {job.title}
                         </h3>
                         {job.subtitle && (
                           <span 
-                            class={`text-base font-semibold ${colors.title} inline-flex items-center gap-1.5`}
-                            style={job.isCurrent 
-                              ? "color: #39FF14; text-shadow: 0 0 10px rgba(57, 255, 20, 0.6), 0 0 20px rgba(57, 255, 20, 0.3);" 
-                              : "color: #00B86B; text-shadow: 0 0 10px rgba(0, 184, 107, 0.6), 0 0 20px rgba(0, 184, 107, 0.3);"}
+                            class={`text-base font-semibold ${colors.title} inline-flex items-center gap-1.5 ${job.isCurrent ? 'job-title-current' : 'job-title-past'}`}
                           >
                             <span class="text-matrix-white/40">·</span>
                             {job.subtitle}
@@ -260,12 +254,13 @@ function getTimelineColors(isCurrent: boolean) {
             })}
           </div>
         </div>
+        </TextAnimation>
 
         {/* Education Section */}
-        <div class="animate-reveal-up-delayed-4 opacity-0">
+        <TextAnimation client:load>
+          <div>
           <h3 
-            class="text-xl md:text-2xl font-orbitron font-bold text-neon-lime mb-6"
-            style="text-shadow: 0 0 10px rgba(57, 255, 20, 0.6)"
+              class="text-animation text-xl md:text-2xl font-orbitron font-bold text-neon-lime mb-6 section-heading-neon"
           >
             Education
           </h3>
@@ -273,7 +268,7 @@ function getTimelineColors(isCurrent: boolean) {
             {education.map((edu) => {
               const colors = getTimelineColors(false);
               const content = (
-                <div class="py-4 group">
+                  <div class="text-animation py-4 group">
                   <div class="flex flex-col lg:grid lg:grid-cols-[140px_1fr] lg:gap-6">
                     {/* Date column */}
                     <div class="mb-2 lg:mb-0">
@@ -286,15 +281,13 @@ function getTimelineColors(isCurrent: boolean) {
                     <div class="space-y-2">
                       <div class="flex flex-wrap items-baseline gap-2">
                         <h3 
-                          class={`text-base font-semibold ${colors.title} group-hover:opacity-80 transition-opacity`}
-                          style="color: #00B86B; text-shadow: 0 0 10px rgba(0, 184, 107, 0.6), 0 0 20px rgba(0, 184, 107, 0.3);"
+                            class={`text-base font-semibold ${colors.title} group-hover:opacity-80 transition-opacity job-title-past`}
                         >
                           {edu.title}
                         </h3>
                         {edu.subtitle && (
                           <span 
-                            class={`text-base font-semibold ${colors.title} inline-flex items-center gap-1.5`}
-                            style="color: #00B86B; text-shadow: 0 0 10px rgba(0, 184, 107, 0.6), 0 0 20px rgba(0, 184, 107, 0.3);"
+                              class={`text-base font-semibold ${colors.title} inline-flex items-center gap-1.5 job-title-past`}
                           >
                             <span class="text-matrix-white/40">·</span>
                             {edu.subtitle}
@@ -329,12 +322,13 @@ function getTimelineColors(isCurrent: boolean) {
             })}
           </div>
         </div>
+        </TextAnimation>
 
         {/* Certifications Section */}
-        <div class="animate-reveal-up-delayed-5 opacity-0">
+        <TextAnimation client:load>
+          <div>
           <h3 
-            class="text-xl md:text-2xl font-orbitron font-bold text-neon-lime mb-6"
-            style="text-shadow: 0 0 10px rgba(57, 255, 20, 0.6)"
+              class="text-animation text-xl md:text-2xl font-orbitron font-bold text-neon-lime mb-6 section-heading-neon"
           >
             Certifications
           </h3>
@@ -342,7 +336,7 @@ function getTimelineColors(isCurrent: boolean) {
             {certifications.map((cert) => {
               const colors = getTimelineColors(false);
               const content = (
-                <div class="py-4 group">
+                  <div class="text-animation py-4 group">
                   <div class="flex flex-col lg:grid lg:grid-cols-[140px_1fr] lg:gap-6">
                     {/* Date column */}
                     <div class="mb-2 lg:mb-0">
@@ -355,15 +349,13 @@ function getTimelineColors(isCurrent: boolean) {
                     <div class="space-y-2">
                       <div class="flex flex-wrap items-baseline gap-2">
                         <h3 
-                          class={`text-base font-semibold ${colors.title} group-hover:opacity-80 transition-opacity`}
-                          style="color: #00B86B; text-shadow: 0 0 10px rgba(0, 184, 107, 0.6), 0 0 20px rgba(0, 184, 107, 0.3);"
+                            class={`text-base font-semibold ${colors.title} group-hover:opacity-80 transition-opacity job-title-past`}
                         >
                           {cert.title}
                         </h3>
                         {cert.subtitle && (
                           <span 
-                            class={`text-base font-semibold ${colors.title} inline-flex items-center gap-1.5`}
-                            style="color: #00B86B; text-shadow: 0 0 10px rgba(0, 184, 107, 0.6), 0 0 20px rgba(0, 184, 107, 0.3);"
+                              class={`text-base font-semibold ${colors.title} inline-flex items-center gap-1.5 job-title-past`}
                           >
                             <span class="text-matrix-white/40">·</span>
                             {cert.subtitle}
@@ -398,6 +390,7 @@ function getTimelineColors(isCurrent: boolean) {
             })}
           </div>
         </div>
+        </TextAnimation>
         </div>
       </div>
     </div>
