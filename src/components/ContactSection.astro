@@ -2,6 +2,7 @@
 import ContactForm from './contact/ContactForm';
 import ContactCards from './contact/ContactCards.astro';
 import AImage from './media/AImage.astro';
+import contactBg from '../assets/images/contact-bg.png';
 ---
 
 <section
@@ -14,7 +15,7 @@ import AImage from './media/AImage.astro';
   {/* Background image */}
   <div class="absolute inset-0 z-0 overflow-hidden">
     <AImage
-      src="/images/contact-bg.webp"
+      src={contactBg}
       alt=""
       preset="hero"
       class="w-full h-full object-cover object-center"

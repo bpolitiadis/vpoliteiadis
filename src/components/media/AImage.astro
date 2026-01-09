@@ -1,26 +1,47 @@
 ---
+/**
+ * AImage - Unified Image Component
+ * 
+ * Golden Path: Always prefer imported ImageMetadata from src/assets/images/
+ * Legacy: Static paths from public/images/ are supported but deprecated
+ * 
+ * @see docs/IMAGE_STRATEGY.md for usage guidelines
+ */
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { imagePresets, defaultPreset } from '../../lib/image-presets';
 
 export interface Props {
+  /** ImageMetadata (preferred) or static path string (legacy) */
   src: ImageMetadata | string;
-  alt?: string;
+  /** Alt text - required for accessibility */
+  alt: string;
+  /** Explicit width - REQUIRED for above-the-fold images to prevent CLS */
   width?: number;
+  /** Explicit height - REQUIRED for above-the-fold images to prevent CLS */
   height?: number;
+  /** Additional CSS classes */
   class?: string;
+  /** Responsive preset (hero, card, thumb) */
   preset?: keyof typeof imagePresets;
+  /** Custom sizes attribute (overrides preset default) */
   sizes?: string;
+  /** Loading strategy - use 'eager' for LCP images */
   loading?: 'eager' | 'lazy';
+  /** Decoding strategy */
   decoding?: 'auto' | 'sync' | 'async';
+  /** Fetch priority - use 'high' for LCP images */
   fetchpriority?: 'high' | 'low' | 'auto';
-  /** Enable picture element with srcset for static images (default: true) */
+  /** 
+   * @deprecated Use imported ImageMetadata instead
+   * Enable picture element with srcset for static images (default: true)
+   */
   usePicture?: boolean;
 }
 
 const {
   src,
-  alt = '',
+  alt,
   width,
   height,
   class: className = '',
@@ -35,34 +56,35 @@ const {
 const selectedPreset = preset ? imagePresets[preset] : defaultPreset;
 const computedSizes = sizes ?? selectedPreset.sizes;
 
-// Check if src is an imported image (ImageMetadata) or static path (string)
+// Type guard: Check if src is an imported image (ImageMetadata) or static path (string)
 const isImportedImage = typeof src === 'object' && 'src' in src;
 
-// Helper function to generate srcset for static images
+// Legacy support: Helper function to generate srcset for static images
+// @deprecated - Migrate to imported ImageMetadata
 function generateSrcSet(basePath: string, widths: number[], format: 'webp' | 'avif'): string {
   return widths
     .map((w) => `${basePath}-${w}w.${format} ${w}w`)
     .join(', ');
 }
 
-// Extract base path and check for optimized variants
+// Legacy support: Extract base path and check for optimized variants
+// @deprecated - Migrate to imported ImageMetadata
 function getOptimizedImagePaths(staticPath: string, widths: number[]) {
-  // Remove leading slash and extract base name
   const basePath = staticPath.replace(/^\//, '').replace(/\.(png|jpg|jpeg|webp|avif)$/i, '');
   const fullBasePath = `/${basePath}`;
   
-  // Use the widths directly from preset (now aligned with actual optimized image widths)
   return {
     avifSrcSet: generateSrcSet(fullBasePath, widths, 'avif'),
     webpSrcSet: generateSrcSet(fullBasePath, widths, 'webp'),
-    fallbackSrc: staticPath, // Keep original as fallback
+    fallbackSrc: staticPath,
     basePath: fullBasePath,
   };
 }
 ---
 
 {isImportedImage ? (
-  // Use Astro's Image component for imported images
+  // ✅ PREFERRED: Use Astro's Image component for imported images
+  // Astro 5 automatically optimizes to AVIF/WebP and generates responsive srcset
   <Image
     src={src as ImageMetadata}
     alt={alt}
@@ -77,7 +99,8 @@ function getOptimizedImagePaths(staticPath: string, widths: number[]) {
     {...(height ? { height } : {})}
   />
 ) : usePicture ? (
-  // Use picture element with srcset for optimized static images
+  // ⚠️ LEGACY: Picture element for static images (deprecated)
+  // Migrate to imported ImageMetadata from src/assets/images/
   (() => {
     const staticPath = src as string;
     const paths = getOptimizedImagePaths(staticPath, selectedPreset.widths);
@@ -107,7 +130,8 @@ function getOptimizedImagePaths(staticPath: string, widths: number[]) {
     );
   })()
 ) : (
-  // Use regular img tag for static paths (fallback)
+  // ⚠️ LEGACY: Regular img tag fallback (deprecated)
+  // Migrate to imported ImageMetadata from src/assets/images/
   <img
     src={src as string}
     alt={alt}

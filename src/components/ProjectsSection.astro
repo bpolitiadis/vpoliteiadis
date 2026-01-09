@@ -1,11 +1,14 @@
 ---
 import AImage from './media/AImage.astro';
+import upiriaCover from '../assets/images/upiria-cover.png';
+import casacapoeiraCover from '../assets/images/casacapoeira-cover.png';
+import projectsBg from '../assets/images/projects-bg.png';
 
 interface Project {
   title: string;
   description: string;
   website: string;
-  image: string;
+  image: typeof upiriaCover | typeof casacapoeiraCover;
   technologies: string[];
 }
 
@@ -14,14 +17,14 @@ const projects: Project[] = [
     title: "Upiria",
     description: "Joined Upiria at a critical early stage and bridged frontend development with a scalable testing framework, enabling rapid product evolution with confidence.",
     website: "https://www.upiria.com",
-    image: "/images/upiria-cover.webp",
+    image: upiriaCover,
     technologies: ["ReactJS", "PHP", "Playwright", "MySQL", "AWS"],
   },
   {
     title: "Casa Capoeira",
     description: "Built a production-ready multilingual CMS for Capoeira academies, enabling seamless management of events, blog posts, and media galleries across global communities.",
     website: "https://www.casacapoeira.org",
-    image: "/images/casacapoeira-cover.webp",
+    image: casacapoeiraCover,
     technologies: ["NextJS", "Supabase", "TypeScript", "Playwright", "Prisma"],
   },
 ];
@@ -37,7 +40,7 @@ const projects: Project[] = [
   {/* Background image */}
   <div class="absolute inset-0 z-0 overflow-hidden">
     <AImage
-      src="/images/projects-bg.webp"
+      src={projectsBg}
       alt=""
       preset="hero"
       class="w-full h-full object-cover object-center"

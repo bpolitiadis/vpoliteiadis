@@ -1,6 +1,7 @@
 ---
 import { ExternalLink } from 'lucide-astro';
 import AImage from './media/AImage.astro';
+import type { ImageMetadata } from 'astro';
 
 export interface Props {
   project: {
@@ -8,7 +9,7 @@ export interface Props {
     title: string;
     role?: string;
     description: string;
-    hero: string;
+    hero: ImageMetadata | string; // Accept both ImageMetadata (preferred) and string (legacy)
     heroFit?: 'cover' | 'contain';
     detailUrl: string;
     tools?: string[];
