@@ -4,6 +4,26 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 
 ## [Unreleased]
 
+### Image Strategy Cleanup & Optimization
+- **Image Directory Cleanup**: Removed 242 redundant optimized image variants from `public/images/`
+  - Deleted all manually optimized variants (`*-480w.webp`, `*-800w.webp`, etc.) as Astro 5 handles optimization automatically
+  - Kept only essential files: logo for social sharing and article/blog cover images (needed for OG tags)
+  - Reduced `public/images/` from 262 files to 20 essential files (~92% reduction)
+- **Image Strategy Documentation**: Created comprehensive `docs/IMAGE_STRATEGY.md` with clear guidelines
+  - Clarified when to use `src/assets/images/` vs `public/images/`
+  - Explained why article covers must stay in `public/images/` for social sharing (OG tags require static URLs)
+  - Documented migration path from legacy static paths to imported ImageMetadata
+- **Blog Post Cover Images**: Fixed cover image display issues
+  - Updated `BlogPostCard.astro` to use base cover images directly (no variant lookup)
+  - Fixed `blog/[slug].astro` to display covers correctly without broken variant references
+  - Updated OG tag fallback from `/favicon.png` to `/images/vp-logo-800w.webp` for better social sharing
+- **Hero Section**: Removed fallback static paths, now uses imported images exclusively
+  - Updated `HeroSection.tsx` to require image data from `HeroIntro.astro` imports
+  - Eliminated redundant fallback code that referenced deleted optimized variants
+- **Legacy Cleanup**: Removed deprecated `scripts/optimize-images.mjs` and `docs/IMAGE_OPTIMIZATION.md`
+  - Astro 5's built-in image optimization makes manual scripts unnecessary
+  - Consolidated image strategy documentation into single authoritative source
+
 ### Image Optimization System
 - **Image Optimization Script**: Created `scripts/optimize-images.mjs` to convert PNG/JPG to optimized WebP and AVIF formats
 - **Responsive Image Variants**: Generated multiple width variants (320w, 480w, 800w, 1200w, etc.) for optimal loading
