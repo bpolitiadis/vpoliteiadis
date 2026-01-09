@@ -171,130 +171,123 @@ const vasileiosPreload = await getImage({ src: vasileiosIllustration, width: 800
 </section>
 
 <!-- GSAP animations script - loads after critical content -->
-<script>
-  // Wait for DOM, fonts, and GSAP to load
-  function initAnimations() {
-    // GSAP is loaded via CDN in MainLayout - check availability
-    // @ts-expect-error - GSAP is loaded via CDN and available on window
-    if (typeof window === 'undefined' || typeof window.gsap === 'undefined') {
-      // Retry after GSAP loads (max 20 attempts = 2 seconds)
-      // @ts-expect-error - Custom property for retry tracking
-      if (typeof window !== 'undefined' && (window.initAnimationAttempts || 0) < 20) {
-        // @ts-expect-error - Custom property for retry tracking
-        window.initAnimationAttempts = (window.initAnimationAttempts || 0) + 1;
-        setTimeout(initAnimations, 100);
+<script is:inline>
+  (function() {
+    // Wait for GSAP to be available (more robust than previous approach)
+    function waitForGSAP(callback, maxAttempts = 50, attempt = 0) {
+      // @ts-expect-error - GSAP is loaded via CDN and available on window
+      if (typeof window !== 'undefined' && typeof window.gsap !== 'undefined') {
+        // Small delay to ensure DOM is ready
+        setTimeout(callback, 50);
+      } else if (attempt < maxAttempts) {
+        setTimeout(() => {
+          waitForGSAP(callback, maxAttempts, attempt + 1);
+        }, 100);
+      } else {
+        console.warn('GSAP not loaded after waiting, hero animations may not work');
       }
-      return;
-    }
-    
-    // @ts-expect-error - GSAP is loaded via CDN and available on window
-    const gsap = window.gsap;
-    const section = document.querySelector('[data-testid="hero-section"]');
-    if (!section) return;
-
-    // Check for reduced motion preference
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isMobile = window.innerWidth < 640;
-
-    const q = gsap.utils.selector(section);
-
-    // Text slide-up animation
-    const textTimeline = gsap.timeline({
-      defaults: {
-        stagger: 0.2,
-        duration: 0.3,
-      },
-    });
-
-    if (!prefersReducedMotion) {
-      textTimeline.fromTo(
-        q('.text-animation'),
-        { y: 100, opacity: 0 },
-        { y: 0, opacity: 1, delay: 1 }
-      );
-    } else {
-      textTimeline.fromTo(
-        q('.text-animation'),
-        { opacity: 0 },
-        { opacity: 1, delay: 1 }
-      );
     }
 
-    // Illustration floating effect
-    const imageTimeline = gsap.timeline({ repeat: -1 });
-    if (!prefersReducedMotion) {
-      const movements = isMobile
-        ? [
-            { y: '-=15', x: '+=10', rotation: '-=1' },
-            { y: '+=15', x: '-=10', rotation: '-=1' },
-            { y: '-=10', rotation: '+=1' },
-            { y: '+=10', rotation: '+=1' },
-          ]
-        : [
-            { y: '-=30', x: '+=20', rotation: '-=2' },
-            { y: '+=30', x: '-=20', rotation: '-=2' },
-            { y: '-=20', rotation: '+=2' },
-            { y: '+=20', rotation: '+=2' },
-          ];
-      const durations = [3, 2, 3, 3];
-      movements.forEach((movement, index) => {
-        imageTimeline.to(q('.image-animation'), {
-          ...movement,
-          ease: 'power1.easeInOut',
-          duration: durations[index],
-        });
+    function initAnimations() {
+      // @ts-expect-error - GSAP is loaded via CDN and available on window
+      const gsap = window.gsap;
+      const section = document.querySelector('[data-testid="hero-section"]');
+      if (!section) {
+        console.warn('Hero section not found');
+        return;
+      }
+
+      // Check for reduced motion preference
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const isMobile = window.innerWidth < 640;
+
+      const q = gsap.utils.selector(section);
+
+      // Text slide-up animation
+      const textTimeline = gsap.timeline({
+        defaults: {
+          stagger: 0.2,
+          duration: 0.3,
+        },
       });
-    }
 
-    // Laptop floating effect
-    const laptopTimeline = gsap.timeline({ repeat: -1 });
-    if (!prefersReducedMotion) {
-      const movements = isMobile
-        ? [
-            { y: '-=5', x: '+=5', rotation: '-=0.5' },
-            { y: '+=5', x: '-=5', rotation: '-=0.5' },
-            { y: '-=5', rotation: '+=0.5' },
-            { y: '+=5', rotation: '+=0.5' },
-          ]
-        : [
-            { y: '-=10', x: '+=10', rotation: '-=1' },
-            { y: '+=10', x: '-=10', rotation: '-=1' },
-            { y: '-=10', rotation: '+=1' },
-            { y: '+=10', rotation: '+=1' },
-          ];
-      const durations = [3, 2, 3, 3];
-      movements.forEach((movement, index) => {
-        laptopTimeline.to(q('.laptop'), {
-          ...movement,
-          ease: 'power1.easeInOut',
-          duration: durations[index],
+      if (!prefersReducedMotion) {
+        textTimeline.fromTo(
+          q('.text-animation'),
+          { y: 100, opacity: 0 },
+          { y: 0, opacity: 1, delay: 1 }
+        );
+      } else {
+        textTimeline.fromTo(
+          q('.text-animation'),
+          { opacity: 0 },
+          { opacity: 1, delay: 1 }
+        );
+      }
+
+      // Illustration floating effect
+      const imageTimeline = gsap.timeline({ repeat: -1 });
+      if (!prefersReducedMotion) {
+        const movements = isMobile
+          ? [
+              { y: '-=15', x: '+=10', rotation: '-=1' },
+              { y: '+=15', x: '-=10', rotation: '-=1' },
+              { y: '-=10', rotation: '+=1' },
+              { y: '+=10', rotation: '+=1' },
+            ]
+          : [
+              { y: '-=30', x: '+=20', rotation: '-=2' },
+              { y: '+=30', x: '-=20', rotation: '-=2' },
+              { y: '-=20', rotation: '+=2' },
+              { y: '+=20', rotation: '+=2' },
+            ];
+        const durations = [3, 2, 3, 3];
+        movements.forEach((movement, index) => {
+          imageTimeline.to(q('.image-animation'), {
+            ...movement,
+            ease: 'power1.easeInOut',
+            duration: durations[index],
+          });
         });
-      });
-    }
-  }
+      }
 
-  // Initialize when DOM is ready and GSAP is loaded
-  if (typeof window !== 'undefined') {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initAnimations);
-    } else {
-      // Wait for GSAP to be available
-      // Using any to avoid type conflict between browser (number) and Node (Timer) types
-      const checkGSAP: any = setInterval(() => {
-        // @ts-expect-error - GSAP is loaded via CDN and available on window
-        if (typeof window.gsap !== 'undefined') {
-          clearInterval(checkGSAP);
-          initAnimations();
-        }
-      }, 50);
-      // Fallback timeout
-      setTimeout(() => {
-        clearInterval(checkGSAP);
-        // @ts-expect-error - GSAP is loaded via CDN and available on window
-        if (typeof window.gsap !== 'undefined') {
-          initAnimations();
-        }
-      }, 2000);
+      // Laptop floating effect
+      const laptopTimeline = gsap.timeline({ repeat: -1 });
+      if (!prefersReducedMotion) {
+        const movements = isMobile
+          ? [
+              { y: '-=5', x: '+=5', rotation: '-=0.5' },
+              { y: '+=5', x: '-=5', rotation: '-=0.5' },
+              { y: '-=5', rotation: '+=0.5' },
+              { y: '+=5', rotation: '+=0.5' },
+            ]
+          : [
+              { y: '-=10', x: '+=10', rotation: '-=1' },
+              { y: '+=10', x: '-=10', rotation: '-=1' },
+              { y: '-=10', rotation: '+=1' },
+              { y: '+=10', rotation: '+=1' },
+            ];
+        const durations = [3, 2, 3, 3];
+        movements.forEach((movement, index) => {
+          laptopTimeline.to(q('.laptop'), {
+            ...movement,
+            ease: 'power1.easeInOut',
+            duration: durations[index],
+          });
+        });
+      }
     }
-  }
+
+    // Initialize when DOM is ready
+    if (typeof window !== 'undefined') {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          waitForGSAP(initAnimations);
+        });
+      } else {
+        // DOM already ready, wait for GSAP
+        waitForGSAP(initAnimations);
+      }
+    }
+  })();
 </script>
