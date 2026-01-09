@@ -1,45 +1,5 @@
 ---
-import HeroSection from './HeroSection.tsx';
-import { getImage } from 'astro:assets';
-import vasileiosIllustration from '../../assets/images/vasileios-illustration.webp';
-import laptopIllustration from '../../assets/images/laptop-illustration.webp';
-
-// Generate optimized image data for React component
-const vasileiosImg = await getImage({
-  src: vasileiosIllustration,
-  widths: [480, 800, 1200],
-  format: 'webp',
-});
-
-const laptopImg = await getImage({
-  src: laptopIllustration,
-  widths: [480, 800, 1200],
-  format: 'webp',
-});
-
-// Generate AVIF srcsets manually (getImage doesn't return AVIF directly)
-const vasileiosAvif480 = await getImage({ src: vasileiosIllustration, width: 480, format: 'avif' });
-const vasileiosAvif800 = await getImage({ src: vasileiosIllustration, width: 800, format: 'avif' });
-const laptopAvif480 = await getImage({ src: laptopIllustration, width: 480, format: 'avif' });
-const laptopAvif800 = await getImage({ src: laptopIllustration, width: 800, format: 'avif' });
-const laptopAvif1200 = await getImage({ src: laptopIllustration, width: 1200, format: 'avif' });
-
-const heroImageData = {
-  vasileiosIllustration: {
-    src: vasileiosImg.src,
-    srcSet: `${vasileiosImg.src} 1177w`,
-    avifSrcSet: `${vasileiosAvif480.src} 480w, ${vasileiosAvif800.src} 800w`,
-    width: vasileiosIllustration.width || 1177,
-    height: vasileiosIllustration.height || 1374,
-  },
-  laptopIllustration: {
-    src: laptopImg.src,
-    srcSet: `${laptopImg.src} 559w`,
-    avifSrcSet: `${laptopAvif480.src} 480w, ${laptopAvif800.src} 800w, ${laptopAvif1200.src} 1200w`,
-    width: laptopIllustration.width || 559,
-    height: laptopIllustration.height || 386,
-  },
-};
+import HeroSection from './HeroSection.astro';
 ---
 
 <section
@@ -47,11 +7,6 @@ const heroImageData = {
   aria-label="Intro hero"
   data-testid="hero-intro-section"
 >
-  <!-- New HeroSection with GSAP animations -->
-  <HeroSection 
-    client:load 
-    vasileiosIllustration={heroImageData.vasileiosIllustration}
-    laptopIllustration={heroImageData.laptopIllustration}
-  />
-  
+  <!-- Static HeroSection with GSAP animations (no React hydration) -->
+  <HeroSection />
 </section>

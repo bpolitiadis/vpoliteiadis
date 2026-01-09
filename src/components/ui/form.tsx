@@ -57,17 +57,22 @@ export function FormControl({ className = "", ...props }: FormControlProps) {
 export interface FormMessageProps
   extends React.HTMLAttributes<HTMLParagraphElement> {}
 
-export function FormMessage({ className = "", ...props }: FormMessageProps) {
+export function FormMessage({ className = "", children, ...props }: FormMessageProps) {
+  // Reserve space to prevent layout shift when error messages appear/disappear
+  const hasContent = Boolean(children);
   return (
     <p
       className={cn(
-        "text-sm text-destructive mt-1",
+        "text-sm text-destructive mt-1 min-h-[1.25rem]",
+        !hasContent && "invisible",
         className
       )}
-      role="alert"
-      aria-live="polite"
+      role={hasContent ? "alert" : undefined}
+      aria-live={hasContent ? "polite" : undefined}
       {...props}
-    />
+    >
+      {children || "\u00A0"}
+    </p>
   );
 }
 

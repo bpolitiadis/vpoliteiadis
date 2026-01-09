@@ -490,6 +490,52 @@ curl -I https://yourdomain.com/images/hero.webp
 </div>
 ```
 
+## Performance Incidents
+
+### CLS Score 0.309 - Hero Section Layout Shift (2025-01-XX)
+
+**Incident:** PageSpeed Insights reported CLS score of 0.309 (poor), primarily caused by hero section image container and font loading.
+
+**Root Cause:**
+1. **Hero Image Container**: React component (`HeroSection.tsx`) with `client:load` caused hydration delays and layout shifts. Image container used responsive classes without explicit `aspect-ratio`, causing reflows when images loaded.
+2. **Font Loading**: Google Fonts loaded with `font-display: swap` causing FOUT (Flash of Unstyled Text) and layout shifts when fonts swapped in.
+3. **React Hydration**: Hero section was unnecessarily a React island, delaying LCP and causing CLS during hydration.
+
+**Fix Applied:**
+1. **Converted HeroSection to Static Astro Component** (`src/components/hero/HeroSection.astro`):
+   - Removed React dependency and `client:load` directive
+   - Added explicit `aspect-ratio` CSS to image containers using calculated ratios
+   - Preloaded critical LCP image with `<link rel="preload">`
+   - Moved GSAP animations to inline `<script>` tag (no hydration delay)
+
+2. **Optimized Font Loading** (`src/layouts/MainLayout.astro`):
+   - Changed `font-display: swap` to `font-display: optional` to prevent FOUT
+   - Added async font loading with `media="print"` trick for non-blocking load
+   - Added fallback `<noscript>` tag for users without JavaScript
+
+3. **Reduced React Islands** (`src/pages/index.astro`):
+   - Changed `LetterGlitch` from `client:load` to `client:visible` (lazy load when visible)
+   - Removed unnecessary React hydration from hero section
+
+4. **Image Optimization**:
+   - Added explicit `width` and `height` attributes to all images
+   - Used inline `style="aspect-ratio: X/Y"` on containers
+   - Ensured LCP image has `fetchpriority="high"` and `loading="eager"`
+
+**Files Changed:**
+- `src/components/hero/HeroSection.astro` (new static component)
+- `src/components/hero/HeroIntro.astro` (updated to use static component)
+- `src/pages/index.astro` (changed LetterGlitch to `client:visible`)
+- `src/layouts/MainLayout.astro` (optimized font loading)
+
+**Prevention:**
+1. **Always use explicit dimensions**: Every image must have `width`, `height`, and container `aspect-ratio`
+2. **Prefer static Astro components**: Only use React islands when interactivity is required
+3. **Use `font-display: optional`**: Prevents layout shifts from font loading
+4. **Lazy load non-critical components**: Use `client:visible` instead of `client:load` for below-the-fold content
+5. **Preload LCP images**: Add `<link rel="preload" as="image">` for above-the-fold images
+6. **Test CLS regularly**: Run PageSpeed Insights after major changes to catch layout shifts early
+
 ## 🔍 SEO & Content Issues
 
 ### Structured Data Errors

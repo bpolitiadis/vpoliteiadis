@@ -1,3 +1,19 @@
+/**
+ * @deprecated This component has been replaced by `HeroSection.astro` for better performance.
+ * 
+ * **Migration:** Use `src/components/hero/HeroSection.astro` instead.
+ * 
+ * **Reason for deprecation:**
+ * - React hydration (`client:load`) caused CLS (Cumulative Layout Shift) of 0.309
+ * - Delayed LCP (Largest Contentful Paint) due to React island hydration
+ * - Static Astro component eliminates hydration delay and improves Core Web Vitals
+ * 
+ * **Removal date:** After performance verification (TBD)
+ * 
+ * This file is kept temporarily for reference and will be removed once the new
+ * Astro component is confirmed stable in production.
+ */
+
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { Send } from "lucide-react";
@@ -58,10 +74,22 @@ const ANIMATION_CONFIG = {
   easing: "power1.easeInOut" as const,
 } as const;
 
+/**
+ * @deprecated Use HeroSection.astro instead
+ * This component is deprecated and will be removed after migration verification.
+ */
 const HeroSection: React.FC<HeroSectionProps> = ({ 
   vasileiosIllustration, 
   laptopIllustration 
 }) => {
+  // Deprecation warning in development
+  if (typeof window !== 'undefined' && import.meta.env.DEV) {
+    console.warn(
+      '[DEPRECATED] HeroSection.tsx is deprecated. ' +
+      'Use HeroSection.astro instead for better performance. ' +
+      'This component will be removed in a future update.'
+    );
+  }
   const sectionRef = useRef<HTMLElement>(null);
   const [isMounted, setIsMounted] = useState(false);
   
