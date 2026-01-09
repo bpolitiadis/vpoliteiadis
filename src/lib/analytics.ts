@@ -48,13 +48,8 @@ class Analytics {
       });
     }
 
-    // Send to Vercel Analytics if available
-    if (typeof window !== 'undefined' && window.va) {
-      window.va.track('social_click', {
-        platform: event.platform,
-        route: event.route
-      });
-    }
+    // Note: Vercel Analytics is handled automatically by the Astro integration
+    // in MainLayout.astro - no need to call it manually here
   }
 
   getEvents(): SocialClickEvent[] {
@@ -72,8 +67,5 @@ export const analytics = Analytics.getInstance();
 declare global {
   interface Window {
     gtag?: (...args: any[]) => void;
-    va?: {
-      track: (event: string, properties?: Record<string, any>) => void;
-    };
   }
 }

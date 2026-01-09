@@ -20,27 +20,29 @@ pnpm preview      # Preview production build
 
 ### For AI Agents
 - **Entry Points:** Start with `docs/ARCHITECTURE.md` for system overview
-- **Content Model:** See `docs/CONTENT_MODEL.md` for data structures
-- **Routes:** Check `docs/PAGES_ROUTES.md` for URL mapping
-- **Components:** Reference `docs/COMPONENTS_REFERENCE.md` for UI inventory
+- **Development:** See `docs/DEVELOPMENT.md` for setup and workflow
+- **Content:** Check `docs/CONTENT.md` for data structures and schemas
+- **Components:** Reference `docs/COMPONENTS.md` for UI inventory
+- **Specialized:** Explore `docs/appendices/` for reference docs
 
 ## 📚 Documentation Map
 
 | Document | Purpose | Audience |
 |----------|---------|----------|
 | **[ARCHITECTURE.md](./ARCHITECTURE.md)** | System boundaries, rendering model, data flow | Engineers, architects |
-| **[BRANDING.md](./BRANDING.md)** | Brand identity, design tokens, visual guidelines | Designers, developers |
-| **[COMPONENTS_REFERENCE.md](./COMPONENTS_REFERENCE.md)** | Component inventory, props, dependencies | Frontend developers |
-| **[CONTENT_MODEL.md](./CONTENT_MODEL.md)** | Content collections, schemas, data flow | Content creators, developers |
-| **[PAGES_ROUTES.md](./PAGES_ROUTES.md)** | Route mapping, page components, SEO | Developers, SEO specialists |
-| **[STACK-DECISIONS_ADRs.md](./STACK-DECISIONS_ADRs.md)** | Architectural decisions, trade-offs | Maintainers, contributors |
-| **[STYLEGUIDE_CODE.md](./STYLEGUIDE_CODE.md)** | Code conventions, linting, accessibility | Contributors, developers |
-| **[SOCIAL_LINKS.md](./SOCIAL_LINKS.md)** | Social media integration, deep linking | Developers, marketers |
-| **[IMAGE_OPTIMIZATION.md](./IMAGE_OPTIMIZATION.md)** | Image pipeline, responsive variants, performance | Developers, designers |
-| **[STRUCTURED_DATA.md](./STRUCTURED_DATA.md)** | JSON-LD endpoints, schema.org compliance, SEO | Developers, SEO specialists |
+| **[DEVELOPMENT.md](./DEVELOPMENT.md)** | Setup, workflow, coding standards, environment config | New developers, contributors |
+| **[CONTENT.md](./CONTENT.md)** | Content collections, schemas, creation workflows | Content creators, developers |
+| **[COMPONENTS.md](./COMPONENTS.md)** | Component inventory, usage patterns, styling | Frontend developers |
+| **[SEO.md](./SEO.md)** | Search optimization, structured data, performance | Developers, SEO specialists |
+| **[DEPLOYMENT.md](./DEPLOYMENT.md)** | Hosting, monitoring, operations, performance | DevOps, maintainers |
+| **[CHANGELOG.md](./CHANGELOG.md)** | Version history, breaking changes | All users, contributors |
+| **[TROUBLESHOOTING.md](./TROUBLESHOOTING.md)** | Common issues, build failures, debug procedures | Developers, support |
+| **[CONTRIBUTING.md](./CONTRIBUTING.md)** | Contribution process, code standards, testing | Contributors, maintainers |
+| **[appendices/](./appendices/)** | Reference docs (branding, motion, social, testing) | Specialized use cases |
 || **[LOGGING.md](./LOGGING.md)** | Server-only logging, request correlation, Sentry integration | Developers, DevOps |
 
 || **[ENVIRONMENT_VARIABLES.md](./ENVIRONMENT_VARIABLES.md)** | Complete environment variables reference and setup guide | Developers, DevOps |
+|| **[fixes/](./fixes/)** | Common bugs and troubleshooting guides | All developers |
 
 ## 🏗️ Architecture Overview
 
@@ -103,13 +105,16 @@ vpoliteiadis/
 - **CSS Inlining** and code splitting
 - **Lazy Loading** and responsive images
 - **Long-term Caching** strategies
-- **Cinematic Intro Hero** with sticky quick‑nav and progressive panels (Astro islands; reduced-motion aware)
+- **Cinematic Intro Hero** with GSAP animations, floating illustrations, and progressive panels (Astro islands; reduced-motion aware)
+- **GSAP Animations** for smooth, performant hero and section animations
 
 ### Developer Experience
 - **TypeScript** strict mode with proper types
 - **ESLint + Prettier** for code quality
 - **Hot Module Replacement** in development
 - **Build-time validation** and optimization
+- **Comprehensive Test Suite** with Playwright for E2E, accessibility, responsive, and performance testing
+- **Page Object Model** architecture for maintainable test code
 
 ## 🚀 Deployment
 
@@ -130,10 +135,62 @@ vercel
 1. **Fork** the repository
 2. **Create** feature branch: `git checkout -b feature/amazing-feature`
 3. **Install** dependencies: `pnpm install`
-4. **Make** changes following [STYLEGUIDE_CODE.md](./STYLEGUIDE_CODE.md)
+4. **Make** changes following [DEVELOPMENT.md](./DEVELOPMENT.md)
 5. **Test** with: `pnpm lint && pnpm build`
 6. **Commit** using [Conventional Commits](https://www.conventionalcommits.org/)
 7. **Submit** pull request
+
+## 🔧 Troubleshooting
+
+### Common Build Issues
+
+#### Vercel Deployment Failures
+
+**Missing Static Asset References:**
+- **Symptom:** Build fails with "Missing static asset references found"
+- **Cause:** Asset check runs before build completion on Vercel
+- **Fix:** Ensure asset check runs after `astro build` in package.json scripts
+- **Reference:** See [CONTENT.md](./CONTENT.md) for image management and [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) for image issues
+
+**Node.js Version Warnings:**
+- **Symptom:** "engines": { "node": ">=20.0.0" } warning
+- **Cause:** Vercel uses latest Node.js despite project settings
+- **Fix:** Update Vercel project settings or accept the warning (Node 24.x is compatible)
+
+#### Image Optimization Issues
+
+**Images Not Loading:**
+- **Check:** Image paths use absolute paths (`/images/...`)
+- **Verify:** Files exist in `public/images/` or `src/assets/images/`
+- **Fix:** Use Astro's Image component for automatic optimization
+
+**Performance Issues:**
+- **Check:** Image dimensions specified
+- **Verify:** `sizes` attribute used for responsive images
+- **Fix:** Implement lazy loading for below-the-fold images
+
+### Debug Commands
+
+```bash
+# Test build locally
+pnpm run build
+
+# Check for linting errors
+pnpm run lint
+
+# Test contact form functionality
+pnpm test:contact
+
+# Run lighthouse audit
+pnpm seo:lighthouse
+```
+
+### Getting Help
+
+1. **Check existing documentation** in `docs/` directory
+2. **Review build logs** for specific error messages
+3. **Test locally** before deploying to Vercel
+4. **Check Vercel dashboard** for deployment-specific issues
 
 ## 📊 Quality Metrics
 

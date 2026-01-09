@@ -7,7 +7,9 @@ export type ImagePreset = {
 
 export const imagePresets: Record<string, ImagePreset> = {
   hero: {
-    widths: [640, 960, 1280, 1920, 2560],
+    // Match actual optimized image widths: most have 480w, 800w, 1200w
+    // Some (like about-bg) only have 480w, 800w - browser will gracefully skip missing widths
+    widths: [480, 800, 1200],
     sizes: '100vw',
   },
   card: {

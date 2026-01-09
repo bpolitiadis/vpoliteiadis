@@ -30,10 +30,47 @@ export default defineConfig({
     build: {
       rollupOptions: {
         output: {
-          manualChunks: {
-            'react-vendor': ['react', 'react-dom'],
-            'ui-vendor': ['@radix-ui/react-avatar', '@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-label', '@radix-ui/react-progress', '@radix-ui/react-select', '@radix-ui/react-slot'],
-            'animation-vendor': ['gsap', 'motion'],
+          manualChunks: (id) => {
+            // Vendor chunks
+            if (id.includes('node_modules')) {
+              if (id.includes('react') || id.includes('react-dom')) {
+                return 'react-vendor';
+              }
+              if (id.includes('@radix-ui')) {
+                return 'radix-ui-vendor';
+              }
+              if (id.includes('gsap') || id.includes('motion')) {
+                return 'animation-vendor';
+              }
+              if (id.includes('lucide')) {
+                return 'icons-vendor';
+              }
+              if (id.includes('zod') || id.includes('react-hook-form')) {
+                return 'forms-vendor';
+              }
+            }
+
+            // Route-specific chunks
+            if (id.includes('/src/pages/index.astro')) {
+              return 'home-page';
+            }
+            if (id.includes('/src/pages/blog/')) {
+              return 'blog-page';
+            }
+            if (id.includes('/src/pages/projects/')) {
+              return 'projects-page';
+            }
+
+            // Component chunks
+            if (id.includes('/src/components/hero/')) {
+              return 'hero-components';
+            }
+            if (id.includes('/src/components/contact/')) {
+              return 'contact-components';
+            }
+            if (id.includes('/src/components/ui/')) {
+              return 'ui-components';
+            }
           },
         },
       },

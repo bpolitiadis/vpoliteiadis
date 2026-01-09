@@ -1,10 +1,10 @@
 {
   "name": "vpoliteiadis",
   "type": "module",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && node scripts/asset-check.mjs && astro build",
+    "build": "astro check && astro build && node scripts/asset-check.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint . --ext .js,.ts,.astro",

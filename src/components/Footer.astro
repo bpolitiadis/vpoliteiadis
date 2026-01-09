@@ -2,19 +2,16 @@
 import SocialLink from './SocialLink.astro';
 import { getAllSocialProfiles } from '../lib/social-config';
 import { Image } from 'astro:assets';
-import vpLogo from '../assets/images/vp-logo.png';
+import vpLogo from '../assets/images/vp-logo.webp';
 
 const socialProfiles = getAllSocialProfiles();
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="mt-auto" data-testid="footer">
-  <!-- Tiny glow divider above footer -->
-  <div class="h-px w-full bg-gradient-to-r from-transparent via-neon-lime/40 to-transparent opacity-60"></div>
-
+<footer class="mt-auto border-t border-primary/10 transition-all duration-200" data-testid="footer">
   <div class="relative bg-matrix-black">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col sm:flex-row justify-between items-center gap-3 py-3 min-h-[50px]">
+      <div class="flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-3 py-2 sm:py-3 min-h-[44px] sm:min-h-[50px]">
         <!-- Left: VP monogram logo with subtle glow -->
         <a href="/" class="flex items-center gap-2 group" aria-label="Go to homepage" data-testid="footer-logo">
           <div class="relative">

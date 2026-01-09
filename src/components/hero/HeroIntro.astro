@@ -1,7 +1,45 @@
 ---
-import AvatarBubble from './AvatarBubble.tsx';
-import MessageBubble from './MessageBubble.tsx';
-import NavigationButtons from './NavigationButtons.tsx';
+import HeroSection from './HeroSection.tsx';
+import { getImage } from 'astro:assets';
+import vasileiosIllustration from '../../assets/images/vasileios-illustration.webp';
+import laptopIllustration from '../../assets/images/laptop-illustration.webp';
+
+// Generate optimized image data for React component
+const vasileiosImg = await getImage({
+  src: vasileiosIllustration,
+  widths: [480, 800, 1200],
+  format: 'webp',
+});
+
+const laptopImg = await getImage({
+  src: laptopIllustration,
+  widths: [480, 800, 1200],
+  format: 'webp',
+});
+
+// Generate AVIF srcsets manually (getImage doesn't return AVIF directly)
+const vasileiosAvif480 = await getImage({ src: vasileiosIllustration, width: 480, format: 'avif' });
+const vasileiosAvif800 = await getImage({ src: vasileiosIllustration, width: 800, format: 'avif' });
+const laptopAvif480 = await getImage({ src: laptopIllustration, width: 480, format: 'avif' });
+const laptopAvif800 = await getImage({ src: laptopIllustration, width: 800, format: 'avif' });
+const laptopAvif1200 = await getImage({ src: laptopIllustration, width: 1200, format: 'avif' });
+
+const heroImageData = {
+  vasileiosIllustration: {
+    src: vasileiosImg.src,
+    srcSet: `${vasileiosImg.src} 1177w`,
+    avifSrcSet: `${vasileiosAvif480.src} 480w, ${vasileiosAvif800.src} 800w`,
+    width: vasileiosIllustration.width || 1177,
+    height: vasileiosIllustration.height || 1374,
+  },
+  laptopIllustration: {
+    src: laptopImg.src,
+    srcSet: `${laptopImg.src} 559w`,
+    avifSrcSet: `${laptopAvif480.src} 480w, ${laptopAvif800.src} 800w, ${laptopAvif1200.src} 1200w`,
+    width: laptopIllustration.width || 559,
+    height: laptopIllustration.height || 386,
+  },
+};
 ---
 
 <section
@@ -9,63 +47,11 @@ import NavigationButtons from './NavigationButtons.tsx';
   aria-label="Intro hero"
   data-testid="hero-intro-section"
 >
-  <!-- Chat bubble layout - centered -->
-  <div class="relative z-10 w-full max-w-6xl px-4 sm:px-6 lg:px-8 mx-auto flex items-center justify-center flex-1" data-testid="hero-chat-layout">
-    <div id="chat-layout" class="flex items-start gap-4 md:gap-6 justify-center">
-      <!-- Avatar -->
-      <div class="flex-shrink-0">
-        <AvatarBubble client:load />
-      </div>
-      <!-- Message bubble -->
-      <div class="max-w-lg lg:max-w-xl">
-        <MessageBubble client:load />
-      </div>
-    </div>
-  </div>
+  <!-- New HeroSection with GSAP animations -->
+  <HeroSection 
+    client:load 
+    vasileiosIllustration={heroImageData.vasileiosIllustration}
+    laptopIllustration={heroImageData.laptopIllustration}
+  />
   
-  <!-- Navigation buttons - positioned near footer -->
-  <div id="nav-layout" class="hidden relative z-10 w-full max-w-6xl px-4 sm:px-6 lg:px-8 mx-auto pb-8 justify-center" data-testid="hero-navigation-buttons">
-    <NavigationButtons client:load />
-  </div>
 </section>
-
-<script>
-  // Orchestrate the hero sequence
-  document.addEventListener('DOMContentLoaded', () => {
-    const chatLayout = document.getElementById('chat-layout');
-    const navLayout = document.getElementById('nav-layout');
-    
-    if (!chatLayout || !navLayout) return;
-    
-    // Listen for message completion
-    const messageBubble = chatLayout.querySelector('[data-testid="message-bubble"]');
-    if (messageBubble) {
-      // Add event listener for when message sequence completes
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (mutation.type === 'attributes' && mutation.attributeName === 'data-complete') {
-            // Message sequence complete, show navigation buttons below
-            setTimeout(() => {
-              // Keep chat layout visible, just show navigation below
-              navLayout.classList.remove('hidden');
-              navLayout.classList.add('flex');
-              navLayout.style.opacity = '0';
-              navLayout.style.transform = 'translateY(20px)';
-              
-              // Animate in navigation
-              requestAnimationFrame(() => {
-                navLayout.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-                navLayout.style.opacity = '1';
-                navLayout.style.transform = 'translateY(0)';
-              });
-            }, 500); // Reduced delay for faster response
-          }
-        });
-      });
-      
-      observer.observe(messageBubble, { attributes: true });
-    }
-  });
-</script>
-
-

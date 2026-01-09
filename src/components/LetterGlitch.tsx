@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 const LetterGlitch = ({
   glitchColors = ['#2b4539', '#61dca3', '#61b3dc'],
@@ -13,6 +13,7 @@ const LetterGlitch = ({
   outerVignette?: boolean;
   smooth?: boolean;
 }) => {
+  const [isMounted, setIsMounted] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const animationRef = useRef<number | null>(null);
   const letters = useRef<
@@ -245,6 +246,11 @@ const LetterGlitch = ({
   };
 
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -270,7 +276,7 @@ const LetterGlitch = ({
       window.removeEventListener('resize', handleResize);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [glitchSpeed, smooth]);
+  }, [isMounted, glitchSpeed, smooth]);
 
   return (
     <div className="relative w-full h-full bg-black overflow-hidden">

@@ -13,15 +13,6 @@ export class HomePage {
   readonly heroSection: Locator;
   readonly heroIntroSection: Locator;
   readonly heroChatLayout: Locator;
-  readonly heroNavigationButtons: Locator;
-
-  // Navigation buttons
-  readonly navigationButtons: Locator;
-  readonly aboutButton: Locator;
-  readonly projectsButton: Locator;
-  readonly creativeButton: Locator;
-  readonly blogButton: Locator;
-  readonly contactButton: Locator;
 
   // Chat elements
   readonly messageBubbles: Locator;
@@ -38,15 +29,6 @@ export class HomePage {
     this.heroSection = page.getByTestId('hero-intro-section');
     this.heroIntroSection = page.getByTestId('hero-intro-section');
     this.heroChatLayout = page.getByTestId('hero-chat-layout');
-    this.heroNavigationButtons = page.getByTestId('hero-navigation-buttons');
-
-    // Navigation buttons
-    this.navigationButtons = page.getByTestId('navigation-buttons');
-    this.aboutButton = page.getByTestId('nav-button-about');
-    this.projectsButton = page.getByTestId('nav-button-projects');
-    this.creativeButton = page.getByTestId('nav-button-creative');
-    this.blogButton = page.getByTestId('nav-button-blog');
-    this.contactButton = page.getByTestId('nav-button-contact');
 
     // Chat elements
     this.messageBubbles = page.getByTestId('message-bubble');
@@ -81,43 +63,9 @@ export class HomePage {
   async verifyHeroSection() {
     await expect(this.heroIntroSection).toBeVisible();
     await expect(this.heroChatLayout).toBeVisible();
-    await expect(this.heroNavigationButtons).toBeVisible();
   }
 
-  /**
-   * Verify navigation buttons are present and functional
-   */
-  async verifyNavigationButtons() {
-    // Navigation buttons appear after message sequence completes, so wait for them
-    await expect(this.navigationButtons).toBeVisible({ timeout: 15000 });
-    await expect(this.aboutButton).toBeVisible();
-    await expect(this.projectsButton).toBeVisible();
-    await expect(this.creativeButton).toBeVisible();
-    await expect(this.blogButton).toBeVisible();
-    await expect(this.contactButton).toBeVisible();
-  }
 
-  /**
-   * Click navigation button and verify navigation
-   */
-  async clickNavigationButton(buttonName: 'about' | 'projects' | 'creative' | 'blog' | 'contact') {
-    const buttonMap = {
-      about: this.aboutButton,
-      projects: this.projectsButton,
-      creative: this.creativeButton,
-      blog: this.blogButton,
-      contact: this.contactButton,
-    };
-
-    const button = buttonMap[buttonName];
-    const expectedUrl = buttonName === 'about' ? '/about' :
-                       buttonName === 'projects' ? '/projects' :
-                       buttonName === 'creative' ? '/creative' :
-                       buttonName === 'blog' ? '/blog' : '/contact';
-
-    await button.click();
-    await this.page.waitForURL(expectedUrl);
-  }
 
   /**
    * Verify chat layout contains message and avatar bubbles
@@ -138,22 +86,9 @@ export class HomePage {
    * Test keyboard navigation through hero elements
    */
   async testKeyboardNavigation() {
-    // Focus the first navigation button directly (since Tab order may vary)
-    await this.aboutButton.focus();
-    await expect(this.aboutButton).toBeFocused();
-
-    // Tab through all navigation buttons
-    await this.page.keyboard.press('Tab');
-    await expect(this.projectsButton).toBeFocused();
-
-    await this.page.keyboard.press('Tab');
-    await expect(this.creativeButton).toBeFocused();
-
-    await this.page.keyboard.press('Tab');
-    await expect(this.blogButton).toBeFocused();
-
-    await this.page.keyboard.press('Tab');
-    await expect(this.contactButton).toBeFocused();
+    // Test that hero section elements are focusable
+    await this.heroSection.focus();
+    await expect(this.heroSection).toBeFocused();
   }
 
   /**
@@ -176,7 +111,6 @@ export class HomePage {
   async verifyPageStructure() {
     // Check basic page structure
     await this.verifyHeroSection();
-    await this.verifyNavigationButtons();
     await this.verifyChatLayout();
 
     // Check meta tags
@@ -199,11 +133,6 @@ export class HomePage {
 
     // Verify hero section adapts to viewport
     await expect(this.heroSection).toBeVisible();
-
-    // On mobile, check that navigation buttons are still accessible
-    if (viewportSize.width < 768) {
-      await expect(this.navigationButtons).toBeVisible();
-    }
   }
 
   /**

@@ -35,9 +35,6 @@ test.describe('Homepage', () => {
       await expect(homePage.heroChatLayout).toBeVisible();
     });
 
-    test('should display navigation buttons section', async () => {
-      await expect(homePage.heroNavigationButtons).toBeVisible();
-    });
 
     test('should contain message bubbles in chat layout', async () => {
       await homePage.verifyChatLayout();
@@ -52,67 +49,18 @@ test.describe('Homepage', () => {
     });
   });
 
-  test.describe('Navigation Buttons', () => {
-    test('should display all navigation buttons', async () => {
-      await homePage.verifyNavigationButtons();
-    });
-
-    test('should navigate to about page when about button is clicked', async () => {
-      await homePage.clickNavigationButton('about');
-      await expect(homePage.page).toHaveURL('/about');
-    });
-
-    test('should navigate to projects page when projects button is clicked', async () => {
-      await homePage.clickNavigationButton('projects');
-      await expect(homePage.page).toHaveURL('/projects');
-    });
-
-    test('should navigate to creative page when creative button is clicked', async () => {
-      await homePage.clickNavigationButton('creative');
-      await expect(homePage.page).toHaveURL('/creative');
-    });
-
-    test('should navigate to blog page when blog button is clicked', async () => {
-      await homePage.clickNavigationButton('blog');
-      await expect(homePage.page).toHaveURL('/blog');
-    });
-
-    test('should navigate to contact page when contact button is clicked', async () => {
-      await homePage.clickNavigationButton('contact');
-      await expect(homePage.page).toHaveURL('/contact');
-    });
-  });
 
   test.describe('Keyboard Navigation', () => {
-    test.skip('should support keyboard navigation through navigation buttons', async () => {
-      // TODO: Implement keyboard navigation test once StarBorder component focus behavior is clarified
+    test('should support keyboard navigation through hero elements', async () => {
       await homePage.testKeyboardNavigation();
-    });
-
-    test('should allow Enter key activation on navigation buttons', async () => {
-      await homePage.aboutButton.focus();
-      await homePage.page.keyboard.press('Enter');
-      await homePage.page.waitForURL('/about');
-    });
-
-    test('should allow Space key activation on navigation buttons', async () => {
-      await homePage.projectsButton.focus();
-      await homePage.page.keyboard.press('Space');
-      await homePage.page.waitForURL('/projects');
     });
   });
 
   test.describe('Animations and Interactions', () => {
     test('should complete animations before allowing interactions', async () => {
       await homePage.waitForAnimationsToComplete();
-      // Verify buttons are still clickable after animations
-      await expect(homePage.aboutButton).toBeEnabled();
-    });
-
-    test('should handle hover effects on navigation buttons', async () => {
-      // Test hover on about button
-      await homePage.aboutButton.hover();
-      await expect(homePage.aboutButton).toBeVisible(); // Button should remain visible on hover
+      // Verify hero section is still interactive after animations
+      await expect(homePage.heroSection).toBeVisible();
     });
   });
 
@@ -142,19 +90,16 @@ test.describe('Homepage', () => {
     test('should work on mobile viewport', async () => {
       await homePage.testResponsiveBehavior({ width: 375, height: 667 });
       await expect(homePage.heroSection).toBeVisible();
-      await expect(homePage.navigationButtons).toBeVisible();
     });
 
     test('should work on tablet viewport', async () => {
       await homePage.testResponsiveBehavior({ width: 768, height: 1024 });
       await expect(homePage.heroSection).toBeVisible();
-      await expect(homePage.navigationButtons).toBeVisible();
     });
 
     test('should work on desktop viewport', async () => {
       await homePage.testResponsiveBehavior({ width: 1920, height: 1080 });
       await expect(homePage.heroSection).toBeVisible();
-      await expect(homePage.navigationButtons).toBeVisible();
     });
   });
 

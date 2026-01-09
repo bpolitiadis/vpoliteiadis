@@ -110,10 +110,23 @@ public/images/*.jpg
 public/images/*.jpeg
 
 # Keep critical images committed for production deployment
+!public/images/about-bg.avif
+!public/images/creative-bg.avif
+!public/images/projects-bg.avif
 !public/images/avatar.webp
 !public/images/blog/
 !public/images/creative/
 !public/images/projects/
+# Keep optimized image variants (WebP/AVIF) for performance
+# Allow all WebP files (optimized format)
+!public/images/*.webp
+# Allow all AVIF files (optimized format with width variants and base)
+!public/images/*.avif
+# Keep source PNGs that are directly referenced
+!public/images/vasileios-illustration.png
+!public/images/laptop-illustration.png
+!public/images/casacapoeira-cover.png
+!public/images/vibe-coding.png
 
 # Keep source images committed
 !src/assets/images/
@@ -134,6 +147,9 @@ playwright/.cache/
 *.jpeg
 *.gif
 *.svg
+
+# Keep source images committed (exception after *.png rule)
+!src/assets/images/*.png
 
 # Playwright trace files
 trace.zip
@@ -195,3 +211,9 @@ lighthouse/
 # Performance profiling
 profile/
 *.cpuprofile
+
+# ===========================================
+# Backup Assets (Local Only)
+# ===========================================
+# Keep backup files locally but exclude from git to reduce repo size
+backup/

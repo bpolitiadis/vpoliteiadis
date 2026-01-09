@@ -2,7 +2,7 @@
 title: 'Casa Capoeira'
 description: 'Focused CMS for capoeira academies with scheduling, enrollment, payments, and community.'
 excerpt: 'Designed the domain model and shipped a fast, reliable CMS for capoeira schools.'
-coverImage: '/images/casa-capoeira-cover.webp'
+coverImage: '/images/casacapoeira-cover.webp'
 coverVideo: '/videos/casa-capoeira-preview.mp4'
 tags: ['CMS', 'Education', 'Community', 'Full-Stack', 'SaaS']
 techStack:
@@ -48,12 +48,12 @@ learnings:
 liveUrl: 'https://www.casacapoeira.org'
 githubUrl: 'https://github.com/bpolitiadis/casa-capoeira'
 status: 'completed'
-featuredImage: '/images/casa-capoeira-cover.webp'
+featuredImage: '/images/casacapoeira-cover.webp'
 gallery:
   [
-    '/images/casa-capoeira-cover.webp',
-    '/images/casa-capoeira-cover.webp',
-    '/images/casa-capoeira-cover.webp',
+    '/images/casacapoeira-cover.webp',
+    '/images/casacapoeira-cover.webp',
+    '/images/casacapoeira-cover.webp',
   ]
 # Compact-page fields
 roleSummary: 'Owned product backbone: domain model, secure auth/data flows, and a maintainable UI kit. Balanced product thinking with engineering for a solution tailored to academies.'

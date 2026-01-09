@@ -34,13 +34,35 @@ export const onRequest: MiddlewareHandler = async (context, next) => {
   response.headers.set('X-Content-Type-Options', 'nosniff');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
 
+  // Advanced caching strategy
+  const pathname = context.url.pathname;
+
+  // Static assets - long-term cache (1 year)
+  if (pathname.startsWith('/_astro/') || pathname.match(/\.(css|js|woff2?|png|jpg|jpeg|webp|avif|svg)$/)) {
+    response.headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+  }
+  // Images - medium cache with revalidation (24 hours + stale-while-revalidate)
+  else if (pathname.startsWith('/images/') || pathname.match(/\.(png|jpg|jpeg|webp|avif|svg)$/)) {
+    response.headers.set('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
+  }
+  // API routes - no cache
+  else if (pathname.startsWith('/api/')) {
+    response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+  }
+  // HTML pages - short cache for content updates
+  else if (!pathname.includes('.')) {
+    response.headers.set('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
+  }
+
   // Minimal, compatible CSP for this site (avoid over-restricting external fonts)
   // - Allow Google Fonts stylesheets
   // - Keep inline scripts/styles for Astro hydration
   // - Allow images from HTTPS and data URIs
   const csp = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline'",
+    "script-src 'self' 'unsafe-inline' https://cdn.vercel-insights.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "img-src 'self' data: https:",
     "font-src 'self' https://fonts.gstatic.com",

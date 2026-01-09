@@ -22,82 +22,61 @@ export default {
   theme: {
   	extend: {
   		colors: {
-  			matrix: { black: '#0A0A0A' },
-  			neon: { lime: '#39FF14' },
-  			emerald: { digital: '#00B86B' },
-  			'matrix-white': '#E8FFE8',
-  			'matrix-black': '#0A0A0A',
-  			'neon-lime': '#39FF14',
-  			'digital-emerald': '#00B86B',
-  			'cyber-gray': '#222222',
-  			'matrix-white': '#E4FFE4',
-  			'matrix-white-light': '#F8FFF8',
-  			'cyber-gray-light': '#F0F0F0',
-  			'neon-lime-dark': '#2ECC71',
-  			'digital-emerald-dark': '#00994D',
-  			'neon-cyan': '#00FFFF',
-  			'neon-purple': '#8A2BE2',
-  			'neon-pink': '#FF1493',
-  			'cyber-blue': '#2EA3FF',
-  			'cyan-blue': '#00BFFF',
-  			'matrix-gold': '#FFD700',
-  			'dark-slate': '#1A1A1A',
-  			'light-slate': '#2A2A2A',
+  			// Core Brand Colors (8 total - strict limit)
   			primary: {
-  				DEFAULT: '#39FF14', /* Neon Lime - Direct hex value */
-  				foreground: '#0A0A0A' /* Dark text on neon background */
+  				DEFAULT: '#39FF14', // Neon Lime
+  				foreground: '#0A0A0A'
   			},
   			secondary: {
-  				DEFAULT: '#00B86B', /* Digital Emerald - Direct hex value */
-  				foreground: '#FFFFFF' /* White text on emerald background */
+  				DEFAULT: '#00B86B', // Digital Emerald
+  				foreground: '#FFFFFF'
   			},
   			accent: {
-  				DEFAULT: '#222222', /* Cyber Gray */
-  				foreground: '#E8FFE8' /* Matrix White */
+  				DEFAULT: '#222222', // Cyber Gray
+  				foreground: '#E8FFE8'
   			},
-  			background: '#0A0A0A', /* Matrix Black */
-  			foreground: '#E8FFE8', /* Matrix White */
+
+  			// Semantic Colors
+  			background: '#0A0A0A', // Matrix Black
+  			foreground: '#E8FFE8', // Matrix White
   			muted: {
-  				DEFAULT: '#222222', /* Cyber Gray */
-  				foreground: '#B5B5B5' /* Muted text */
+  				DEFAULT: '#222222',
+  				foreground: '#B5B5B5'
   			},
-  			'muted-foreground': '#B5B5B5',
-  			border: '#222222', /* Cyber Gray */
-  			input: '#222222', /* Cyber Gray */
-  			ring: '#39FF14', /* Neon Lime for focus rings */
+  			border: '#222222',
+  			input: '#222222',
+  			ring: '#39FF14',
+
+			// Status Colors
+			destructive: {
+				DEFAULT: '#FF4444',
+				foreground: '#FFFFFF'
+			},
+			success: '#00B86B',
+			warning: '#FFAA00',
+			info: '#39FF14',
+			cyan: {
+				DEFAULT: '#00FFFF', // Branded Cyan for Creative Lab
+				foreground: '#0A0A0A'
+			},
+
+			// shadcn/ui Required
   			card: {
-  				DEFAULT: '#0A0A0A', /* Matrix Black */
-  				foreground: '#E8FFE8' /* Matrix White */
+  				DEFAULT: '#0A0A0A',
+  				foreground: '#E8FFE8'
   			},
-  			'card-foreground': '#E8FFE8',
   			popover: {
-  				DEFAULT: '#0A0A0A', /* Matrix Black */
-  				foreground: '#E8FFE8' /* Matrix White */
+  				DEFAULT: '#0A0A0A',
+  				foreground: '#E8FFE8'
   			},
-  			'popover-foreground': '#E8FFE8',
-  			destructive: {
-  				DEFAULT: '#FF4444', /* Red for destructive actions */
-  				foreground: '#FFFFFF' /* White text */
-  			},
-  			'destructive-foreground': '#FFFFFF',
-  			success: '#00B86B',
-  			'success-foreground': '#FFFFFF',
-  			warning: '#FFAA00',
-  			'warning-foreground': '#000000',
-  			info: '#39FF14',
-  			'info-foreground': '#000000',
-  			'brand-green-dark': '#1A4D1A',
-  			'brand-green-darker': '#0F2E0F',
-  			'brand-emerald-dark': '#005C3A',
-  			'brand-emerald-darker': '#003D26',
-  			'text-muted': '#9CA3AF',
-  			'text-muted-dark': '#6B7280',
+
+  			// Chart Colors (limited to 5)
   			chart: {
-  				'1': '#39FF14', /* Neon Lime */
-  				'2': '#00B86B', /* Digital Emerald */
-  				'3': '#00FFFF', /* Neon Cyan */
-  				'4': '#8A2BE2', /* Neon Purple */
-  				'5': '#FF1493' /* Neon Pink */
+  				'1': '#39FF14',
+  				'2': '#00B86B',
+  				'3': '#00FFFF',
+  				'4': '#8A2BE2',
+  				'5': '#FF1493'
   			}
   		},
   		ringColor: ({ theme }) => ({
@@ -119,18 +98,25 @@ export default {
   				'monospace'
   			]
   		},
-  				spacing: {
-			'15': '3.75rem',
-			'18': '4.5rem',
-			'88': '22rem',
-			'128': '32rem',
-			// Enhanced spacing for better visual hierarchy
-			'72': '18rem',
-			'80': '20rem',
-			'96': '24rem',
-			'112': '28rem',
-			'144': '36rem'
-		},
+  		spacing: {
+  			// Clean scale: xs, sm, md, lg, xl, 2xl, 3xl, 4xl, 5xl, 6xl
+  			'xs': '0.25rem',    // 4px
+  			'sm': '0.5rem',     // 8px
+  			'md': '0.75rem',    // 12px
+  			'lg': '1rem',       // 16px
+  			'xl': '1.25rem',    // 20px
+  			'2xl': '1.5rem',    // 24px
+  			'3xl': '2rem',      // 32px
+  			'4xl': '2.5rem',    // 40px
+  			'5xl': '3rem',      // 48px
+  			'6xl': '4rem',      // 64px
+  			'7xl': '5rem',      // 80px
+  			'8xl': '6rem',      // 96px
+  			'9xl': '8rem',      // 128px
+  			'10xl': '10rem',    // 160px
+  			'11xl': '12rem',    // 192px
+  			'12xl': '16rem'     // 256px
+  		},
   		aspectRatio: {
   			'16/10': '16 / 10',
   			'16/9': '16 / 9',
@@ -282,30 +268,24 @@ export default {
   			xs: '2px'
   		},
   		boxShadow: {
-  			'neon': '0 0 24px rgba(57, 255, 20, 0.25)',
+  			// Neon glows (primary brand)
+  			neon: '0 0 24px rgba(57, 255, 20, 0.25)',
   			'neon-strong': '0 0 42px rgba(57, 255, 20, 0.35)',
-  			neon: '0 0 0 3px rgba(57, 255, 20, 0.5)',
   			'neon-lg': '0 0 0 4px rgba(57, 255, 20, 0.6)',
+
+  			// Secondary brand colors
   			emerald: '0 0 20px rgba(0, 184, 107, 0.3)',
   			'emerald-lg': '0 0 40px rgba(0, 184, 107, 0.4)',
+
+  			// Accent colors (limited)
   			cyan: '0 0 20px rgba(0, 255, 255, 0.3)',
-  			'cyan-lg': '0 0 40px rgba(0, 255, 255, 0.4)',
-  			purple: '0 0 20px rgba(138, 43, 226, 0.3)',
-  			'purple-lg': '0 0 40px rgba(138, 43, 226, 0.4)',
-  			pink: '0 0 20px rgba(255, 20, 147, 0.3)',
-  			'pink-lg': '0 0 40px rgba(255, 20, 147, 0.4)',
-  			gold: '0 0 20px rgba(255, 215, 0, 0.3)',
-  			'gold-lg': '0 0 40px rgba(255, 215, 0, 0.4)',
-  			'cyber-blue': '0 0 20px rgba(0, 174, 239, 0.3)',
-  			'cyber-blue-lg': '0 0 40px rgba(0, 174, 239, 0.4)'
+  			purple: '0 0 20px rgba(138, 43, 226, 0.3)'
   		},
   		textShadow: {
   			neon: '0 0 10px rgba(57, 255, 20, 0.5)',
   			emerald: '0 0 10px rgba(0, 184, 107, 0.5)',
   			cyan: '0 0 10px rgba(0, 255, 255, 0.5)',
-  			purple: '0 0 10px rgba(138, 43, 226, 0.5)',
-  			pink: '0 0 10px rgba(255, 20, 147, 0.5)',
-  			gold: '0 0 10px rgba(255, 215, 0, 0.5)'
+  			purple: '0 0 10px rgba(138, 43, 226, 0.5)'
   		},
   		backgroundImage: {
   			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

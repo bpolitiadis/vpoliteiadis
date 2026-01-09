@@ -119,11 +119,15 @@ pnpm run build
 
 ### Components
 
+- **HeroSection** - GSAP-powered hero with floating animations and illustrations
+- **AboutSection** - Comprehensive profile showcase with work experience, education, and certifications
+- **ProfileCard** - Interactive profile card with tilt effects and social links
+- **ProjectsSection** - Featured projects showcase with GSAP animations
+- **CreativeLabSection** - Creative portfolio showcase with category-based styling
 - **GlassCard** - Modern glass morphism effect
 - **ElectricBorder** - Animated neon borders
 - **NeonCTA** - Glowing call-to-action buttons
--- **AImage** - Canonical image wrapper for astro:assets
-- **HeroAnimation** - Smooth scroll animations
+- **AImage** - Canonical image wrapper for astro:assets
 
 ### Color Palette
 
@@ -225,6 +229,9 @@ pnpm preview      # Preview production build
 pnpm optimize:images  # Optimize images manually
 pnpm lint         # Run ESLint
 pnpm type-check   # Run TypeScript checks
+pnpm test         # Run Playwright tests
+pnpm test:ui      # Run tests with Playwright UI
+pnpm test:headed  # Run tests in headed mode
 ```
 
 ### Code Quality
@@ -232,7 +239,8 @@ pnpm type-check   # Run TypeScript checks
 - **ESLint** - Code linting and formatting
 - **Prettier** - Code formatting
 - **TypeScript** - Type safety and IntelliSense
-- **Husky** - Git hooks for quality assurance
+- **Playwright** - E2E testing, accessibility, responsive, and performance tests
+- **Page Object Model** - Maintainable test architecture
 
 ## 📚 Documentation
 
@@ -309,4 +317,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Built with ❤️ using modern web technologies**
 
-*Last updated: January 2025* 
+*Last updated: January 2026* 

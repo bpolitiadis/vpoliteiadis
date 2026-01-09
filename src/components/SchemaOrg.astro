@@ -42,5 +42,5 @@ const finalSchema = enrichSchema(schema);
 const jsonLd = JSON.stringify(finalSchema, null, 0); // Minified for production
 ---
 
-<script type="application/ld+json" set:html={jsonLd} />
+<script is:inline type="application/ld+json" set:html={jsonLd} />
 
