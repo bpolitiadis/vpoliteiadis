@@ -4,6 +4,22 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 
 ## [Unreleased]
 
+### Domain URL Consolidation & Site Configuration
+- **Primary Domain Update**: Changed primary site URL from `vpoliteiadis.com` to `vpoliteiadis.dev`
+- **Hardcoded URL Elimination**: Replaced all hardcoded domain URLs with `Astro.site` or `context.site` references
+  - Updated `astro.config.mjs` to use `site: 'https://vpoliteiadis.dev'` as single source of truth
+  - Replaced hardcoded URLs in 11+ files with dynamic site references:
+    - `src/pages/index.astro` (structured data)
+    - `src/layouts/MainLayout.astro` (JSON-LD schema)
+    - `src/pages/rss.xml.ts` (RSS feed URLs)
+    - `src/pages/robots.txt.ts` (sitemap references)
+    - `src/pages/ai.txt.ts` (policy URLs)
+    - `src/pages/structured/*.ts` (all structured data endpoints)
+    - `src/pages/404.astro` (404 page structured data)
+  - Updated sitemap `customPages` to use site config constant
+- **Maintainability Improvement**: Domain changes now require only updating `astro.config.mjs` instead of 11+ files
+- **Technical Debt Reduction**: Addresses P1 audit item from Technical Debt & Optimization Roadmap
+
 ### Image Strategy Cleanup & Optimization
 - **Image Directory Cleanup**: Removed 242 redundant optimized image variants from `public/images/`
   - Deleted all manually optimized variants (`*-480w.webp`, `*-800w.webp`, etc.) as Astro 5 handles optimization automatically

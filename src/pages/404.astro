@@ -11,11 +11,11 @@ const errorStructuredData = {
   "@type": "WebPage",
   "name": "Page Not Found - 404 Error",
   "description": "The page you're looking for doesn't exist. Navigate back to the main portfolio or explore our projects and blog.",
-  "url": "https://vpoliteiadis.com/404",
+  "url": `${Astro.site?.toString() ?? "https://vpoliteiadis.dev"}/404`,
   "isPartOf": {
     "@type": "WebSite",
     "name": "Vasileios Politeiadis - Portfolio",
-    "url": "https://vpoliteiadis.com"
+    "url": Astro.site?.toString() ?? "https://vpoliteiadis.dev"
   }
 };
 

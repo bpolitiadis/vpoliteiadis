@@ -9,8 +9,9 @@ export async function getStaticPaths() {
   return projects.map((p) => ({ params: { slug: p.slug } }));
 }
 
-export const GET: APIRoute = async ({ params }) => {
+export const GET: APIRoute = async ({ params, site }) => {
   const slug = params.slug as string;
+  const siteUrl = site?.toString() ?? 'https://vpoliteiadis.dev';
   const projects = await getCollection('projects');
   const project = projects.find((p) => p.slug === slug);
   if (!project) {
@@ -30,16 +31,16 @@ export const GET: APIRoute = async ({ params }) => {
     ).toISOString(),
     keywords: project.data.tags.join(', '),
     image: project.data.coverImage
-      ? `https://vpoliteiadis.com${project.data.coverImage}`
+      ? `${siteUrl}${project.data.coverImage}`
       : undefined,
-    url: `https://vpoliteiadis.com/projects/${project.slug}`,
+    url: `${siteUrl}/projects/${project.slug}`,
     mainEntity: {
       '@type': 'SoftwareApplication',
       name: project.data.title,
       description: project.data.description,
       applicationCategory: 'WebApplication',
       operatingSystem: 'Web Browser',
-      url: `https://vpoliteiadis.com/projects/${project.slug}`,
+      url: `${siteUrl}/projects/${project.slug}`,
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
     },
   } as const;

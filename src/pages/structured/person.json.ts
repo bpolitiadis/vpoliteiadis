@@ -1,13 +1,14 @@
 import type { APIRoute } from 'astro';
 
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async ({ site }) => {
+  const siteUrl = site?.toString() ?? 'https://vpoliteiadis.dev';
   const payload = {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: 'Vasileios Politeiadis',
-    url: 'https://vpoliteiadis.com',
+    url: siteUrl,
     // VP logo for brand identity in structured data
-    image: 'https://vpoliteiadis.com/images/vp-logo-800w.webp',
+    image: `${siteUrl}/images/vp-logo-800w.webp`,
     sameAs: [
       'https://www.linkedin.com/in/vasileios-politeiadis/',
       'https://github.com/bpolitiadis',

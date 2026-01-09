@@ -11,8 +11,9 @@ export async function getStaticPaths() {
     .map((p) => ({ params: { slug: p.slug } }));
 }
 
-export const GET: APIRoute = async ({ params }) => {
+export const GET: APIRoute = async ({ params, site }) => {
   const slug = params.slug as string;
+  const siteUrl = site?.toString() ?? 'https://vpoliteiadis.dev';
   const posts = await getCollection('blog');
   const post = posts.find((p) => p.slug === slug && !p.data.draft);
   if (!post) {
@@ -35,9 +36,9 @@ export const GET: APIRoute = async ({ params }) => {
     publisher: { '@type': 'Person', name: 'Vasileios Politeiadis' },
     keywords: (post.data.seo?.keywords || post.data.tags).join(', '),
     image: post.data.coverImage
-      ? `https://vpoliteiadis.com${post.data.coverImage}`
+      ? `${siteUrl}${post.data.coverImage}`
       : undefined,
-    url: `https://vpoliteiadis.com/blog/${post.slug}`,
+    url: `${siteUrl}/blog/${post.slug}`,
   } as const;
 
   return new Response(JSON.stringify(payload), {

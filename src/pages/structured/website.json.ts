@@ -1,11 +1,12 @@
 import type { APIRoute } from 'astro';
 
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async ({ site }) => {
+  const siteUrl = site?.toString() ?? 'https://vpoliteiadis.dev';
   const payload = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'Vasileios Politeiadis',
-    url: 'https://vpoliteiadis.com',
+    url: siteUrl,
     description: 'Full-Stack Developer & AI Visionary portfolio',
     inLanguage: 'en',
     author: {

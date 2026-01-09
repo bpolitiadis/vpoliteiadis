@@ -12,9 +12,12 @@ import rehypeSanitize from 'rehype-sanitize';
 // This must be imported at the top level to ensure global error handlers are set up
 // Sentry initialization is handled in app runtime; skip importing here to avoid config-time resolution issues.
 
+// Primary site URL - used as fallback in various endpoints
+const SITE_URL = 'https://vpoliteiadis.dev';
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://vpoliteiadis.com',
+  site: SITE_URL,
   output: 'server',
       adapter: vercel({
         webAnalytics: { enabled: true },
@@ -87,12 +90,12 @@ export default defineConfig({
       lastmod: new Date(),
       // Custom sitemap entries for better SEO
       customPages: [
-        'https://vpoliteiadis.com/',
-        'https://vpoliteiadis.com/about',
-        'https://vpoliteiadis.com/projects',
-        'https://vpoliteiadis.com/blog',
-        'https://vpoliteiadis.com/creative',
-        'https://vpoliteiadis.com/contact',
+        `${SITE_URL}/`,
+        `${SITE_URL}/about`,
+        `${SITE_URL}/projects`,
+        `${SITE_URL}/blog`,
+        `${SITE_URL}/creative`,
+        `${SITE_URL}/contact`,
       ],
       // Enhanced sitemap configuration
       filter: (page) => {

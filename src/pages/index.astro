@@ -21,7 +21,7 @@ const homeStructuredData = {
   "@type": "WebSite",
   "name": "Vasileios Politeiadis - Portfolio",
   "description": "Professional portfolio of Vasileios Politeiadis, Senior QA Automation Specialist and Full-Stack Developer specializing in European Commission projects, React/Next.js development, and AI automation solutions.",
-  "url": "https://vpoliteiadis.com",
+  "url": Astro.site?.toString() ?? "https://vpoliteiadis.dev",
   "author": {
     "@type": "Person",
     "name": "Vasileios Politeiadis",
@@ -29,7 +29,7 @@ const homeStructuredData = {
   },
   "potentialAction": {
     "@type": "SearchAction",
-    "target": "https://vpoliteiadis.com/search?q={search_term_string}",
+    "target": `${Astro.site?.toString() ?? "https://vpoliteiadis.dev"}/search?q={search_term_string}`,
     "query-input": "required name=search_term_string"
   }
 };

@@ -3,7 +3,7 @@ import type { APIRoute } from 'astro';
 // Simple AI crawling and usage policy declaration, inspired by ai.txt community convention
 // Reference: https://ai.txt.wiki (community guidance; not an official standard)
 export const GET: APIRoute = ({ site }) => {
-  const origin = site?.toString().replace(/\/?$/, '') ?? 'https://vpoliteiadis.com';
+  const origin = site?.toString().replace(/\/?$/, '') ?? 'https://vpoliteiadis.dev';
   const body = [
     '# ai.txt — AI crawling and usage policy',
     `# Site: ${origin}`,

@@ -95,8 +95,8 @@ const baseStructuredData = {
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "Vasileios Politeiadis",
-  "url": "https://vpoliteiadis.com",
-  "image": "https://vpoliteiadis.com/images/vp-logo-800w.webp",
+  "url": Astro.site?.toString() ?? "https://vpoliteiadis.dev",
+  "image": `${Astro.site?.toString() ?? "https://vpoliteiadis.dev"}/images/vp-logo-800w.webp`,
   "sameAs": [
     "https://github.com/bpolitiadis",
     "https://www.linkedin.com/in/vasileios-politeiadis/",
