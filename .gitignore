@@ -217,3 +217,11 @@ profile/
 # ===========================================
 # Keep backup files locally but exclude from git to reduce repo size
 backup/
+
+# ===========================================
+# Check Output Files
+# ===========================================
+# Temporary check output files
+*_check_output.txt
+check_output.txt
+astro_check_output.txt
