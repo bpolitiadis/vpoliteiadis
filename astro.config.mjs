@@ -19,10 +19,10 @@ const SITE_URL = 'https://vpoliteiadis.dev';
 export default defineConfig({
   site: SITE_URL,
   output: 'static',
-  adapter: vercel({
-    webAnalytics: { enabled: true },
-    // Disable image service - use simple static serving
-  }),
+      adapter: vercel({
+        webAnalytics: { enabled: true },
+        // Disable image service - use simple static serving
+      }),
   // Performance optimizations
   build: {
     inlineStylesheets: 'auto',

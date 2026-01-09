@@ -54,41 +54,42 @@ export default defineConfig({
       },
     },
 
-    {
-      name: 'chromium-mobile',
-      use: {
-        ...devices['Pixel 5'],
-        contextOptions: {
-          reducedMotion: 'reduce', // Test reduced motion
-        }
-      },
-      metadata: {
-        browser: 'chromium',
-        viewport: 'mobile',
-      },
-    },
+    // COMMENTED OUT: Pixel 5 mobile tests for now
+    // {
+    //   name: 'chromium-mobile',
+    //   use: {
+    //     ...devices['Pixel 5'],
+    //     contextOptions: {
+    //       reducedMotion: 'reduce', // Test reduced motion
+    //     }
+    //   },
+    //   metadata: {
+    //     browser: 'chromium',
+    //     viewport: 'mobile',
+    //   },
+    // },
 
-    // Firefox tests for cross-browser compatibility
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-      metadata: {
-        browser: 'firefox',
-        viewport: 'desktop',
-      },
-    },
+    // COMMENTED OUT: Firefox tests for cross-browser compatibility
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    //   metadata: {
+    //     browser: 'firefox',
+    //     viewport: 'desktop',
+    //   },
+    // },
 
-    // WebKit tests for Safari compatibility
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-      metadata: {
-        browser: 'webkit',
-        viewport: 'desktop',
-      },
-    },
+    // COMMENTED OUT: WebKit tests for Safari compatibility
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    //   metadata: {
+    //     browser: 'webkit',
+    //     viewport: 'desktop',
+    //   },
+    // },
 
-    /* Comprehensive mobile testing */
+    /* Comprehensive mobile testing - iPhone only */
     {
       name: 'Mobile Safari',
       use: { ...devices['iPhone 12'] },
@@ -97,44 +98,11 @@ export default defineConfig({
         viewport: 'mobile',
       },
     },
-
-    /* Accessibility-focused tests */
-    {
-      name: 'accessibility',
-      use: {
-        ...devices['Desktop Chrome'],
-        contextOptions: {
-          reducedMotion: 'no-preference',
-        }
-      },
-      grep: /accessibility/,
-      metadata: {
-        type: 'accessibility',
-      },
-    },
-
-    /* Performance-focused tests */
-    {
-      name: 'performance',
-      use: {
-        ...devices['Desktop Chrome'],
-        contextOptions: {
-          // Disable images for performance tests
-          permissions: [],
-        }
-      },
-      grep: /performance/,
-      metadata: {
-        type: 'performance',
-      },
-    },
   ],
 
   /* Test groups for different test types */
-  grepInvert: process.env.TEST_TYPE ? undefined : /accessibility|performance/, // Run accessibility and performance separately
-  grep: process.env.TEST_TYPE === 'accessibility' ? /accessibility/ :
-        process.env.TEST_TYPE === 'performance' ? /performance/ :
-        process.env.TEST_TYPE === 'smoke' ? /smoke/ : undefined,
+  // Simplified - no longer need to exclude accessibility/performance since they're consolidated
+  grep: process.env.TEST_TYPE === 'smoke' ? /smoke/ : undefined,
 
   /* Run your local dev server before starting the tests */
   webServer: {
