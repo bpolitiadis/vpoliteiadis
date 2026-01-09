@@ -10,12 +10,12 @@ export interface ProjectCard {
   viewLiveLink: Locator;
 }
 
-export class ProjectsPage {
+export class ProjectsSection {
   readonly page: Page;
   readonly navPage: NavigationPage;
 
-  // Page containers
-  readonly pageContainer: Locator;
+  // Section containers
+  readonly sectionContainer: Locator;
   readonly projectsGrid: Locator;
 
   // Project cards
@@ -25,25 +25,26 @@ export class ProjectsPage {
     this.page = page;
     this.navPage = new NavigationPage(page);
 
-    // Page containers
-    this.pageContainer = page.getByTestId('page-projects');
+    // Section containers
+    this.sectionContainer = page.getByTestId('page-projects');
     this.projectsGrid = page.getByTestId('projects-grid');
   }
 
   /**
-   * Navigate to projects page
+   * Scroll to projects section
    */
-  async goto() {
-    await this.page.goto('/projects');
-    await this.waitForPageToLoad();
+  async scrollToSection() {
+    await this.navPage.scrollToProjects();
+    await this.waitForSectionToLoad();
   }
 
   /**
-   * Wait for projects page to load completely
+   * Wait for projects section to load completely
    */
-  async waitForPageToLoad() {
+  async waitForSectionToLoad() {
     await this.navPage.waitForNavbarToLoad();
-    await expect(this.pageContainer).toBeVisible({ timeout: 15000 });
+    await expect(this.sectionContainer).toBeVisible({ timeout: 15000 });
+    await expect(this.sectionContainer).toBeInViewport();
     await expect(this.projectsGrid).toBeVisible();
 
     // Wait for project cards to load
@@ -180,7 +181,7 @@ export class ProjectsPage {
   async testResponsiveGrid(viewportSize: { width: number; height: number }) {
     await this.page.setViewportSize(viewportSize);
     await this.page.reload();
-    await this.waitForPageToLoad();
+    await this.waitForSectionToLoad();
 
     await expect(this.projectsGrid).toBeVisible();
 

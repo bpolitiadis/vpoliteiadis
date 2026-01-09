@@ -8,12 +8,12 @@ export interface CreativeProjectCard {
   ctaButton: Locator;
 }
 
-export class CreativePage {
+export class CreativeSection {
   readonly page: Page;
   readonly navPage: NavigationPage;
 
-  // Page containers
-  readonly pageContainer: Locator;
+  // Section containers
+  readonly sectionContainer: Locator;
   readonly creativeProjectsGrid: Locator;
 
   // Creative project cards
@@ -23,25 +23,26 @@ export class CreativePage {
     this.page = page;
     this.navPage = new NavigationPage(page);
 
-    // Page containers
-    this.pageContainer = page.getByTestId('page-creative');
+    // Section containers
+    this.sectionContainer = page.getByTestId('page-creative');
     this.creativeProjectsGrid = page.getByTestId('creative-projects-grid');
   }
 
   /**
-   * Navigate to creative page
+   * Scroll to creative section
    */
-  async goto() {
-    await this.page.goto('/creative');
-    await this.waitForPageToLoad();
+  async scrollToSection() {
+    await this.navPage.scrollToCreative();
+    await this.waitForSectionToLoad();
   }
 
   /**
-   * Wait for creative page to load completely
+   * Wait for creative section to load completely
    */
-  async waitForPageToLoad() {
+  async waitForSectionToLoad() {
     await this.navPage.waitForNavbarToLoad();
-    await expect(this.pageContainer).toBeVisible({ timeout: 15000 });
+    await expect(this.sectionContainer).toBeVisible({ timeout: 15000 });
+    await expect(this.sectionContainer).toBeInViewport();
     await expect(this.creativeProjectsGrid).toBeVisible();
 
     // Wait for creative projects to load
@@ -163,7 +164,7 @@ export class CreativePage {
   async testResponsiveGrid(viewportSize: { width: number; height: number }) {
     await this.page.setViewportSize(viewportSize);
     await this.page.reload();
-    await this.waitForPageToLoad();
+    await this.waitForSectionToLoad();
 
     await expect(this.creativeProjectsGrid).toBeVisible();
 

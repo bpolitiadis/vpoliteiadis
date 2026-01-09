@@ -7,10 +7,10 @@ This directory contains a comprehensive Playwright test suite for the Vasileios 
 ### Page Object Model
 - **NavigationPage**: Global navigation functionality
 - **HomePage**: Homepage hero, navigation buttons, chat layout
-- **AboutPage**: About content, images, layout
-- **ProjectsPage**: Project grid, cards, navigation
+- **AboutSection**: About content, images, layout
+- **ProjectsSection**: Project grid, cards, navigation
 - **BlogPage**: Blog posts, newsletter, search/filtering
-- **CreativePage**: Creative projects, galleries, media
+- **CreativeSection**: Creative projects, galleries, media
 - **ContactFormPage**: Contact form (existing)
 
 ### Test Categories

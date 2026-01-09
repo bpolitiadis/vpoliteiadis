@@ -117,7 +117,14 @@ export class NavigationPage {
     }
 
     await link.click();
-    await this.page.waitForURL(`**${this.getNavItemByLabel(linkName).href}`);
+
+    const navItem = this.getNavItemByLabel(linkName);
+    // If it's a homepage section, scroll instead of waiting for URL change
+    if (this.isHomepageSection(navItem.href)) {
+      await this.scrollToSection(linkName.toLowerCase());
+    } else {
+      await this.page.waitForURL(`**${navItem.href}`);
+    }
   }
 
   /**
@@ -133,7 +140,15 @@ export class NavigationPage {
     }
 
     await link.click();
-    await this.page.waitForURL(`**${this.getNavItemByLabel(linkName).href}`);
+
+    const navItem = this.getNavItemByLabel(linkName);
+    // If it's a homepage section, scroll instead of waiting for URL change
+    if (this.isHomepageSection(navItem.href)) {
+      await this.closeMobileMenu(); // Close mobile menu first
+      await this.scrollToSection(linkName.toLowerCase());
+    } else {
+      await this.page.waitForURL(`**${navItem.href}`);
+    }
   }
 
   /**
@@ -163,6 +178,95 @@ export class NavigationPage {
    */
   async isMobileMenuOpen(): Promise<boolean> {
     return await this.mobileMenu.isVisible();
+  }
+
+  /**
+   * Scroll to a specific section on the homepage
+   */
+  async scrollToSection(sectionName: string) {
+    const sectionSelectors: Record<string, string> = {
+      'home': 'body',
+      'about': '[data-testid="page-about"]',
+      'projects': '[data-testid="page-projects"]',
+      'creative': '[data-testid="page-creative"]',
+      'contact': '[data-testid="page-contact"]'
+    };
+
+    const selector = sectionSelectors[sectionName.toLowerCase()];
+    if (!selector) {
+      throw new Error(`Unknown section '${sectionName}'. Available sections: ${Object.keys(sectionSelectors).join(', ')}`);
+    }
+
+    const sectionElement = this.page.locator(selector);
+    await expect(sectionElement).toBeVisible();
+
+    // Scroll to the section with smooth behavior
+    await sectionElement.scrollIntoViewIfNeeded();
+
+    // Wait for scroll to complete and any animations
+    await this.page.waitForTimeout(1000);
+
+    // Verify the section is in viewport
+    await expect(sectionElement).toBeInViewport();
+  }
+
+  /**
+   * Scroll to About section
+   */
+  async scrollToAbout() {
+    await this.scrollToSection('about');
+  }
+
+  /**
+   * Scroll to Projects section
+   */
+  async scrollToProjects() {
+    await this.scrollToSection('projects');
+  }
+
+  /**
+   * Scroll to Creative section
+   */
+  async scrollToCreative() {
+    await this.scrollToSection('creative');
+  }
+
+  /**
+   * Scroll to Contact section
+   */
+  async scrollToContact() {
+    await this.scrollToSection('contact');
+  }
+
+  /**
+   * Get current active section based on scroll position
+   */
+  async getActiveSection(): Promise<string | null> {
+    const sections = [
+      { name: 'contact', selector: '[data-testid="page-contact"]' },
+      { name: 'creative', selector: '[data-testid="page-creative"]' },
+      { name: 'projects', selector: '[data-testid="page-projects"]' },
+      { name: 'about', selector: '[data-testid="page-about"]' },
+      { name: 'home', selector: 'body' }
+    ];
+
+    for (const section of sections) {
+      try {
+        const element = this.page.locator(section.selector);
+        const isInViewport = await element.isVisible();
+        if (isInViewport) {
+          // Check if the section is actually in the viewport (top part visible)
+          const boundingBox = await element.boundingBox();
+          if (boundingBox && boundingBox.y <= 100) { // Within 100px of top
+            return section.name;
+          }
+        }
+      } catch {
+        // Continue to next section
+      }
+    }
+
+    return null;
   }
 
   /**
@@ -293,6 +397,14 @@ export class NavigationPage {
       await expect(this.mobileMenuButton).toHaveAttribute('aria-expanded', 'false');
       await expect(this.mobileMenu).toHaveAttribute('aria-labelledby', 'mobile-menu-button');
     }
+  }
+
+  /**
+   * Check if a navigation href is a homepage section (scroll-based)
+   */
+  private isHomepageSection(href: string): boolean {
+    const homepageSections = ['/', '/about', '/projects', '/creative', '/contact'];
+    return homepageSections.includes(href);
   }
 
   /**

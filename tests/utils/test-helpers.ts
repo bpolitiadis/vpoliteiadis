@@ -264,7 +264,6 @@ export class AccessibilityTestHelper {
 
     for (let i = 0; i < selectors.length; i++) {
       const focusedElement = page.locator(':focus');
-      const expectedSelector = selectors[i];
 
       // Check if focused element matches expected selector
       const isFocused = await focusedElement.isVisible();
@@ -402,7 +401,6 @@ export class PerformanceTestHelper {
    */
   static async checkRenderBlockingResources(page: any): Promise<string[]> {
     const blockingResources = await page.evaluate(() => {
-      const resources = performance.getEntriesByType('resource') as PerformanceResourceTiming[];
       const blocking: string[] = [];
 
       // Check for render-blocking CSS
@@ -426,7 +424,7 @@ export class PerformanceTestHelper {
       return blocking;
     });
 
-    return blockingResources;
+    return blockingResources.length > 0 ? blockingResources : ['No render-blocking resources found'];
   }
 }
 
