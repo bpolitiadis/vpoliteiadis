@@ -45,10 +45,21 @@ const IMAGES_TO_OPTIMIZE = [
   },
 ];
 
+// Images that need additional width variants (already optimized but missing some widths)
+const IMAGES_TO_COMPLETE = [
+  {
+    source: 'src/assets/images/upiria-cover.png', // Use PNG source from assets
+    preset: 'card',
+    name: 'upiria-cover',
+    widths: [320, 768, 1024], // Generate missing card preset widths only
+    skipBase: true, // Skip base file creation since it already exists
+  },
+];
+
 /**
  * Optimize a single image to WebP and AVIF formats
  */
-async function optimizeImage({ source, preset, name }) {
+async function optimizeImage({ source, preset, name, widths: customWidths, skipBase = false }) {
   const sourcePath = path.join(repoRoot, source);
   
   if (!fs.existsSync(sourcePath)) {
@@ -56,8 +67,11 @@ async function optimizeImage({ source, preset, name }) {
     return;
   }
 
-  const widths = RESPONSIVE_WIDTHS[preset] || RESPONSIVE_WIDTHS.default;
-  const outputDir = path.dirname(sourcePath);
+  const widths = customWidths || RESPONSIVE_WIDTHS[preset] || RESPONSIVE_WIDTHS.default;
+  // For images from src/assets, output to public/images
+  const outputDir = source.startsWith('src/') 
+    ? path.join(repoRoot, 'public/images')
+    : path.dirname(sourcePath);
   const baseName = name || path.basename(source, path.extname(source));
 
   console.log(`\n🖼️  Optimizing: ${baseName}`);
@@ -101,31 +115,41 @@ async function optimizeImage({ source, preset, name }) {
       console.log(`   ✅ Created: ${path.basename(avifPath)}`);
     }
 
-    // Also create base versions (without width suffix) at original size
-    const baseWebpPath = path.join(outputDir, `${baseName}.webp`);
-    await image
-      .clone()
-      .webp({ quality: 85, effort: 6 })
-      .toFile(baseWebpPath);
-    console.log(`   ✅ Created: ${path.basename(baseWebpPath)}`);
+    // Also create base versions (without width suffix) at original size (unless skipped)
+    if (!skipBase) {
+      const baseWebpPath = path.join(outputDir, `${baseName}.webp`);
+      // Only create if it doesn't exist
+      if (!fs.existsSync(baseWebpPath)) {
+        await image
+          .clone()
+          .webp({ quality: 85, effort: 6 })
+          .toFile(baseWebpPath);
+        console.log(`   ✅ Created: ${path.basename(baseWebpPath)}`);
+      }
 
-    const baseAvifPath = path.join(outputDir, `${baseName}.avif`);
-    await image
-      .clone()
-      .avif({ quality: 80, effort: 4 })
-      .toFile(baseAvifPath);
-    console.log(`   ✅ Created: ${path.basename(baseAvifPath)}`);
+      const baseAvifPath = path.join(outputDir, `${baseName}.avif`);
+      if (!fs.existsSync(baseAvifPath)) {
+        await image
+          .clone()
+          .avif({ quality: 80, effort: 4 })
+          .toFile(baseAvifPath);
+        console.log(`   ✅ Created: ${path.basename(baseAvifPath)}`);
+      }
 
-    // Get file sizes for comparison
-    const originalSize = fs.statSync(sourcePath).size;
-    const webpSize = fs.statSync(baseWebpPath).size;
-    const avifSize = fs.statSync(baseAvifPath).size;
-    const savings = ((1 - Math.min(webpSize, avifSize) / originalSize) * 100).toFixed(1);
-
-    console.log(`   📊 Original: ${(originalSize / 1024 / 1024).toFixed(2)}MB`);
-    console.log(`   📊 WebP: ${(webpSize / 1024 / 1024).toFixed(2)}MB`);
-    console.log(`   📊 AVIF: ${(avifSize / 1024 / 1024).toFixed(2)}MB`);
-    console.log(`   💾 Savings: ~${savings}%`);
+      // Get file sizes for comparison
+      const originalSize = fs.statSync(sourcePath).size;
+      const webpSize = fs.existsSync(baseWebpPath) ? fs.statSync(baseWebpPath).size : 0;
+      const avifSize = fs.existsSync(baseAvifPath) ? fs.statSync(baseAvifPath).size : 0;
+      if (webpSize > 0 && avifSize > 0) {
+        const savings = ((1 - Math.min(webpSize, avifSize) / originalSize) * 100).toFixed(1);
+        console.log(`   📊 Original: ${(originalSize / 1024 / 1024).toFixed(2)}MB`);
+        console.log(`   📊 WebP: ${(webpSize / 1024 / 1024).toFixed(2)}MB`);
+        console.log(`   📊 AVIF: ${(avifSize / 1024 / 1024).toFixed(2)}MB`);
+        console.log(`   💾 Savings: ~${savings}%`);
+      }
+    } else {
+      console.log(`   ⏭️  Skipped base file creation (already exists)`);
+    }
 
   } catch (error) {
     console.error(`   ❌ Error optimizing ${baseName}:`, error.message);
@@ -140,6 +164,11 @@ async function main() {
   console.log(`📁 Working directory: ${repoRoot}\n`);
 
   for (const imageConfig of IMAGES_TO_OPTIMIZE) {
+    await optimizeImage(imageConfig);
+  }
+
+  // Generate missing width variants for already-optimized images
+  for (const imageConfig of IMAGES_TO_COMPLETE) {
     await optimizeImage(imageConfig);
   }
 
