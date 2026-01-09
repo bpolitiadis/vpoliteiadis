@@ -211,3 +211,9 @@ lighthouse/
 # Performance profiling
 profile/
 *.cpuprofile
+
+# ===========================================
+# Backup Assets (Local Only)
+# ===========================================
+# Keep backup files locally but exclude from git to reduce repo size
+backup/
