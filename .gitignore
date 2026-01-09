@@ -148,6 +148,9 @@ playwright/.cache/
 *.gif
 *.svg
 
+# Keep source images committed (exception after *.png rule)
+!src/assets/images/*.png
+
 # Playwright trace files
 trace.zip
 trace/
