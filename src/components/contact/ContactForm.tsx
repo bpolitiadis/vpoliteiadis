@@ -188,8 +188,8 @@ export default function ContactForm() {
             disabled={form.formState.isSubmitting}
             data-testid="contact-submit"
           >
-            <Send className="w-4 h-4" aria-hidden="true" />
             Send Message
+            <Send className="w-4 h-4" aria-hidden="true" />
           </Button>
         </Form>
       </CardContent>
