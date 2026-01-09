@@ -6,11 +6,11 @@ This directory contains a comprehensive Playwright test suite for the Vasileios 
 
 ### Page Object Model
 - **NavigationPage**: Global navigation functionality
+- **AboutSection**: About content, images, layout (section-based)
+- **ProjectsSection**: Project grid, cards, navigation (section-based)
+- **CreativeSection**: Creative projects, galleries, media (section-based)
 - **HomePage**: Homepage hero, navigation buttons, chat layout
-- **AboutSection**: About content, images, layout
-- **ProjectsSection**: Project grid, cards, navigation
 - **BlogPage**: Blog posts, newsletter, search/filtering
-- **CreativeSection**: Creative projects, galleries, media
 - **ContactFormPage**: Contact form (existing)
 
 ### Test Categories
@@ -38,26 +38,11 @@ This directory contains a comprehensive Playwright test suite for the Vasileios 
 - Galleries: Lightbox functionality, image navigation, keyboard controls
 - Navigation: Dropdown menus, mobile overlay, focus management
 
-#### 4. Accessibility Tests (`accessibility.spec.ts`)
-- WCAG Compliance: Color contrast, focus indicators, ARIA attributes
-- Keyboard Navigation: Tab order, enter/space activation, escape dismissal
-- Screen Reader Support: Proper labeling, live regions, semantic HTML
-- Motion Preferences: Reduced motion support for animations
-- Touch Targets: Minimum 44px touch targets on mobile
-- Error Announcements: Form validation, network errors, status updates
-
-#### 5. Responsive Design Tests (`responsive.spec.ts`)
-- Mobile (< 768px): Single column layouts, touch interactions
-- Tablet (768px - 1024px): Two-column layouts, responsive navigation
-- Desktop (> 1024px): Multi-column layouts, hover effects, large screens
-- Breakpoint Transitions: Smooth layout changes, content reflow
-
-#### 6. Performance & SEO Tests (`performance.spec.ts`)
-- Loading Performance: Page load times, image lazy loading
-- Meta Tags: Title, description, Open Graph tags on all pages
-- Structured Data: JSON-LD validation for projects/blog posts
-- Font Loading: Web font optimization, fallback handling
-- Core Web Vitals: LCP, CLS, FID simulation
+#### 4. Global Tests (`global.spec.ts`)
+- Comprehensive global test suite covering critical functionality
+- Integration testing across all homepage sections
+- End-to-end validation of core user flows
+- Cross-section interaction testing and validation
 
 ### Test Coverage Summary
 

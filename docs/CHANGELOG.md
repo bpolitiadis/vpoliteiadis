@@ -4,6 +4,31 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 
 ## [Unreleased]
 
+### Test Suite Refactoring
+- **Section-Based Test Architecture**: Major refactoring of Playwright test suite to use section-based components instead of page-based approach
+  - Removed obsolete page-based test helpers (`AboutPage.ts`, `CreativePage.ts`, `ProjectsPage.ts`)
+  - Removed unused test files (`accessibility.spec.ts`, `contact-form-real-email.spec.ts`, `performance.spec.ts`, `responsive.spec.ts`)
+  - Added new section-based test helpers (`AboutSection.ts`, `CreativeSection.ts`, `ProjectsSection.ts`)
+  - Added global test spec (`global.spec.ts`) for comprehensive test coverage
+  - Updated existing test specs to work with new section-based structure
+  - Updated test utilities and documentation
+  - **Impact**: 16 files changed, 515 insertions, 1326 deletions - significant test suite modernization
+
+### Component Updates & Text Animation Feature
+- **New TextAnimation Component**: Added `src/components/TextAnimation.tsx` for enhanced text effects and animations
+- **Component Updates**: Enhanced existing components with improvements:
+  - Updated `AboutSection.astro` with new features and optimizations
+  - Updated `CreativeLabSection.astro` with enhanced functionality
+  - Updated `ProjectsSection.astro` with improvements
+  - Updated `profile-card.tsx` UI component with refinements
+- **Styling Updates**: Enhanced global CSS styles for better visual consistency
+- **Code Quality**: Maintained TypeScript compliance and performance optimizations
+
+### Configuration Updates
+- **Astro Configuration**: Updated `astro.config.mjs` with new build settings and optimizations
+- **Playwright Configuration**: Updated `playwright.config.ts` with enhanced test configuration
+- **Build Optimization**: Improved configuration for better development and production builds
+
 ### Astro Configuration Fix
 - **Fixed Output Mode Mismatch**: Changed `output: 'server'` to `output: 'static'` in `astro.config.mjs`
   - All pages use `prerender = true` (static generation)
