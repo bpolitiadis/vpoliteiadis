@@ -159,21 +159,56 @@ All interactive elements must have `data-testid` attributes for reliable test au
 - **Content:** `content-`, `section-` prefixes for major sections
 
 #### Playwright Test Structure
+Following the Page Object Model (POM) pattern for maintainable test automation:
+
 ```typescript
 // Page Object Model pattern
 export class BlogPage {
+  readonly page: Page;
+  readonly blogPostsGrid: Locator;
+  readonly newsletterSignup: Locator;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.blogPostsGrid = page.getByTestId('blog-posts-grid');
+    this.newsletterSignup = page.getByTestId('newsletter-signup');
+  }
+
   async goto() {
     await this.page.goto('/blog');
+    await this.waitForPageToLoad();
   }
 
-  async getPostCards() {
-    return this.page.locator('[data-testid="blog-post-card"]');
+  async getBlogPostCards() {
+    return this.page.locator('[data-testid^="blog-post-"]');
   }
 
-  async clickPostByTitle(title: string) {
-    await this.page.locator(`[data-title="${title}"] [data-testid="blog-post-link"]`).click();
+  async clickReadMore(slug: string) {
+    await this.page.getByTestId(`blog-post-link-${slug}`).click();
+  }
+
+  async waitForPageToLoad() {
+    await expect(this.blogPostsGrid).toBeVisible({ timeout: 15000 });
   }
 }
+```
+
+#### Test Execution Workflow
+```bash
+# Development testing
+pnpm test:debug          # Debug mode with inspector
+pnpm test:ui            # Visual test runner
+pnpm test:headed        # Run tests with browser visible
+
+# CI/CD testing
+pnpm test               # Run all tests headless
+pnpm test:report        # View detailed test reports
+pnpm test:contact       # Run specific test suite
+
+# Cross-browser testing
+pnpm test --project=chromium
+pnpm test --project=firefox
+pnpm test --project=webkit
 ```
 
 ## 📝 Pull Request Process

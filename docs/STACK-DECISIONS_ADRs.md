@@ -1,10 +1,10 @@
 # Stack Decisions (ADRs)
 
-Who this is for: maintainers making architectural choices.
-What you’ll learn: rationale, trade‑offs, and links to implementation.
+**Who this is for:** Maintainers making architectural choices.
 
-> TL;DR
-> Static Astro site with Tailwind, optional React islands, strict headers/CSP, and first‑party SEO endpoints.
+**What you'll learn:** Rationale, trade-offs, and links to implementation.
+
+> **TL;DR** - Static Astro site with Tailwind, optional React islands, strict headers/CSP, and first-party SEO endpoints.
 
 ## ADR-001: Choose Astro for static-first site
 - Context: Portfolio with content collections, high performance, minimal client JS.

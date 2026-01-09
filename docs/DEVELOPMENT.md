@@ -39,16 +39,47 @@ pnpm preview
 
 ### Development Scripts
 
+#### Core Development
 | Script | Purpose |
 |--------|---------|
 | `pnpm dev` | Start dev server with hot reload |
-| `pnpm build` | Typecheck, optimize images, build static site |
+| `pnpm build` | Typecheck, build static site, run asset checks |
 | `pnpm preview` | Serve built site from `dist/` |
+| `pnpm clean` | Remove build artifacts (`dist/`, cache) |
+| `pnpm astro` | Direct access to Astro CLI |
+
+#### Code Quality
+| Script | Purpose |
+|--------|---------|
 | `pnpm lint` | Run ESLint on `.js,.ts,.astro` files |
 | `pnpm lint:fix` | ESLint with auto-fix |
 | `pnpm format` | Prettier write |
 | `pnpm format:check` | Prettier check |
-| `pnpm optimize:images` | Run Sharp-based image optimization |
+| `pnpm type-check` | Run TypeScript type checking only |
+
+#### Testing & QA
+| Script | Purpose |
+|--------|---------|
+| `pnpm test` | Run all Playwright tests |
+| `pnpm test:headed` | Run tests in headed mode (visible browser) |
+| `pnpm test:debug` | Debug tests with Playwright inspector |
+| `pnpm test:ui` | Run tests with Playwright UI mode |
+| `pnpm test:report` | View test reports |
+| `pnpm test:install` | Install Playwright browsers |
+| `pnpm test:contact` | Run contact form specific tests |
+| `pnpm test:all` | Run comprehensive test suite |
+
+#### SEO & Performance
+| Script | Purpose |
+|--------|---------|
+| `pnpm seo:lighthouse` | Run Lighthouse CI performance audit |
+| `pnpm seo:verify` | Verify homepage H1 tag |
+| `pnpm seo:check-html` | Check H1 tags across all routes |
+
+#### Advanced
+| Script | Purpose |
+|--------|---------|
+| `pnpm build:analyze` | Build with bundle analysis (ANALYZE=true) |
 
 ## 🔧 Environment Configuration
 
@@ -102,12 +133,37 @@ pnpm preview
 | `RESEND_API_KEY` | Yes | - | Resend API key for sending emails |
 | `FROM_EMAIL` | Yes | - | Sender email address (must be verified in Resend) |
 | `CONTACT_EMAIL` | No | `FROM_EMAIL` | Email to receive contact form submissions |
+| `REPLY_TO_EMAIL` | No | `formData.email` | Email to use as reply-to (defaults to form submitter) |
+| `SEND_CONFIRMATION_EMAIL` | No | `false` | Send confirmation email to form submitter |
+| `RESEND_DEBUG` | No | `false` | Enable debug logging for email operations |
+
+#### Logging & Observability
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `LOG_LEVEL` | No | `info`/`debug` | Log level: `trace`, `debug`, `info`, `warn`, `error`, `fatal` |
+| `REDACTION_EXTRA_KEYS` | No | - | Comma-separated list of additional keys to redact in logs |
+
+#### Error Tracking (Sentry)
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `SENTRY_DSN` | No | - | Server-side Sentry DSN for error tracking |
+| `PUBLIC_SENTRY_DSN` | No | - | Client-side Sentry DSN (must start with `PUBLIC_`) |
+| `SENTRY_ENV` | No | `NODE_ENV` | Environment name in Sentry |
+| `SENTRY_TRACES_SAMPLE_RATE` | No | `0.1` | Performance monitoring sample rate (0.0-1.0) |
+
+#### Spotify Integration
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `SPOTIFY_CLIENT_ID` | No | - | Spotify API client ID for music integration |
+| `SPOTIFY_CLIENT_SECRET` | No | - | Spotify API client secret |
 
 #### Vercel Auto-Variables
 | Variable | Auto-Set | Description |
 |----------|----------|-------------|
 | `VERCEL_ENV` | ✅ | `development`, `preview`, or `production` |
 | `VERCEL_URL` | ✅ | Public deployment URL |
+| `VERCEL_GIT_COMMIT_SHA` | ✅ | Git commit SHA for release tracking |
+| `VERCEL_DEPLOYMENT_URL` | ✅ | Full deployment URL with protocol |
 
 ## 🏗️ Development Workflow
 

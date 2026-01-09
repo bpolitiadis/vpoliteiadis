@@ -1,6 +1,12 @@
-# Image Strategy - The "Law"
+# 🖼️ Image Strategy
 
-**Last Updated**: 2025-01-XX  
+**Who this is for:** Developers and content creators managing images and media assets.
+
+**What you'll learn:** Image optimization workflows, asset organization, responsive image handling, and performance best practices.
+
+> **TL;DR** - Primary: `astro:assets` for local images. Secondary: `public/images/` for social sharing. Never use `public/` for content images.
+
+**Last Updated**: 2025-01-XX
 **Status**: ✅ Active Standard
 
 ## 🎯 Golden Path Strategy
