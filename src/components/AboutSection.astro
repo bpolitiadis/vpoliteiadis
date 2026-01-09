@@ -103,6 +103,7 @@ function getTimelineColors(isCurrent: boolean) {
     <h2
       id="about-heading"
       class="text-3xl md:text-4xl lg:text-5xl font-orbitron font-bold text-center mb-12 md:mb-16"
+      data-animate="reveal"
     >
       <DecryptedText
         client:visible
@@ -145,7 +146,7 @@ function getTimelineColors(isCurrent: boolean) {
           />
         </ElectricBorder>
       */}
-      <div class="flex items-start justify-center animate-reveal-up-delayed-1 opacity-0 pt-8 md:pt-12 lg:sticky lg:top-20 lg:self-start">
+      <div class="flex items-start justify-center pt-8 md:pt-12 lg:sticky lg:top-20 lg:self-start" data-animate="reveal">
         <div class="w-full max-w-xs lg:max-w-sm">
           <ProfileCard
             client:load
@@ -186,11 +187,11 @@ function getTimelineColors(isCurrent: boolean) {
           >
             Work Experience
           </h3>
-          <div class="space-y-0">
+          <div class="space-y-0" data-animate="stagger-container">
             {workExperience.map((job) => {
               const colors = getTimelineColors(job.isCurrent ?? false);
               const content = (
-                  <div class="text-animation py-4 group">
+                  <div class="text-animation py-4 group" data-animate="stagger-item">
                   <div class="flex flex-col lg:grid lg:grid-cols-[140px_1fr] lg:gap-6">
                     {/* Date column */}
                     <div class="mb-2 lg:mb-0">
@@ -264,11 +265,11 @@ function getTimelineColors(isCurrent: boolean) {
           >
             Education
           </h3>
-          <div class="space-y-0">
+          <div class="space-y-0" data-animate="stagger-container">
             {education.map((edu) => {
               const colors = getTimelineColors(false);
               const content = (
-                  <div class="text-animation py-4 group">
+                  <div class="text-animation py-4 group" data-animate="stagger-item">
                   <div class="flex flex-col lg:grid lg:grid-cols-[140px_1fr] lg:gap-6">
                     {/* Date column */}
                     <div class="mb-2 lg:mb-0">
@@ -332,11 +333,11 @@ function getTimelineColors(isCurrent: boolean) {
           >
             Certifications
           </h3>
-          <div class="space-y-0">
+          <div class="space-y-0" data-animate="stagger-container">
             {certifications.map((cert) => {
               const colors = getTimelineColors(false);
               const content = (
-                  <div class="text-animation py-4 group">
+                  <div class="text-animation py-4 group" data-animate="stagger-item">
                   <div class="flex flex-col lg:grid lg:grid-cols-[140px_1fr] lg:gap-6">
                     {/* Date column */}
                     <div class="mb-2 lg:mb-0">
@@ -397,31 +398,3 @@ function getTimelineColors(isCurrent: boolean) {
   </div>
 </section>
 
-<script>
-  // IntersectionObserver for reveal animations - vanilla JS implementation
-  document.addEventListener('DOMContentLoaded', () => {
-    const section = document.querySelector('[data-about-section]');
-    if (!section) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const animatedElements = entry.target.querySelectorAll(
-              '.animate-reveal-up, .animate-stagger-fade'
-            );
-            animatedElements.forEach((element, index) => {
-              setTimeout(() => {
-                element.classList.add('animate');
-              }, index * 100);
-            });
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(section);
-  });
-</script>

@@ -77,6 +77,54 @@ import PageHero from '../components/PageHero.astro';
 |-----------|------|---------|-----------|--------------|
 | `Navbar.astro` | `src/components/Navbar.astro` | Compact Matrix-inspired top nav with scroll spy and neon styling | `currentPath?` | `/public/scripts/navbar.js` (mobile menu), Intersection Observer API, global styles |
 | `Footer.astro` | `src/components/Footer.astro` | Footer with social links and branding | — | SocialLink components |
+| `Breadcrumb.astro` | `src/components/Breadcrumb.astro` | Navigation breadcrumb with JSON-LD structured data | `items: BreadcrumbItem[]`, `class?: string` | SchemaOrg component |
+
+#### Breadcrumb.astro
+**Purpose:** Navigation breadcrumb with JSON-LD structured data for SEO.
+
+**Props:**
+- `items` (required): Array of breadcrumb items (name, href)
+- `class` (optional): Additional CSS classes
+
+**Usage:**
+```astro
+---
+import Breadcrumb from '../components/Breadcrumb.astro';
+---
+
+<Breadcrumb items={[
+  { name: 'Home', href: '/' },
+  { name: 'Blog', href: '/blog' },
+  { name: 'Article Title', href: '/blog/article' }
+]} />
+```
+
+#### SocialLink.astro
+**Purpose:** Social media link with platform-specific icons and accessibility.
+
+**Props:**
+- `profile` (required): Social profile object with platform, username, displayName, deepLink, webUrl, icon, ariaLabel
+- `className` (optional): Additional CSS classes
+- `size` (optional): Icon size ('sm', 'md', 'lg')
+
+**Usage:**
+```astro
+---
+import SocialLink from '../components/SocialLink.astro';
+
+const githubProfile = {
+  platform: 'github',
+  username: 'bpolitiadis',
+  displayName: 'Vasileios Politeiadis',
+  deepLink: 'github://user?username=bpolitiadis',
+  webUrl: 'https://github.com/bpolitiadis',
+  icon: 'github',
+  ariaLabel: 'Visit my GitHub profile'
+};
+---
+
+<SocialLink profile={githubProfile} size="lg" />
+```
 
 ### Hero & Animation
 
@@ -90,22 +138,176 @@ import PageHero from '../components/PageHero.astro';
 | `TextType.tsx` | `src/components/TextType.tsx` | Typing/erasing text rotator with cursor | `text: string \| string[]`, `typingSpeed?`, `deletingSpeed?`, `pauseDuration?`, `showCursor?`, `cursorCharacter?`, `cursorClassName?`, `className?`, `startOnVisible?` | React, CSS animations |
 | `TextAnimation.tsx` | `src/components/TextAnimation.tsx` | Advanced text animation effects component | `text: string`, `effect?: 'fadeIn' \| 'slideUp' \| 'typewriter' \| 'glitch'`, `duration?: number`, `delay?: number`, `className?: string` | React, GSAP, CSS animations |
 | `FuzzyText.tsx` | `src/components/FuzzyText.tsx` | Canvas-based fuzzy text effect with hover interactions | `children`, `fontSize?`, `fontWeight?`, `fontFamily?`, `color?`, `enableHover?`, `baseIntensity?`, `hoverIntensity?` | React, Canvas API, requestAnimationFrame |
+| `LetterGlitch.tsx` | `src/components/LetterGlitch.tsx` | Canvas-based letter glitch effect with customizable colors and speed | `glitchColors?`, `glitchSpeed?`, `centerVignette?`, `outerVignette?`, `smooth?` | React, Canvas API |
+
+#### LetterGlitch.tsx
+**Purpose:** Canvas-based letter glitch effect component with customizable glitch colors and speed.
+
+**Props:**
+- `glitchColors` (optional): Array of hex color strings for glitch effects
+- `glitchSpeed` (optional): Speed of glitch animation (default: 50)
+- `centerVignette` (optional): Enable center vignette effect
+- `outerVignette` (optional): Enable outer vignette effect (default: true)
+- `smooth` (optional): Enable smooth animation (default: true)
+
+**Usage:**
+```tsx
+import LetterGlitch from '../components/LetterGlitch';
+
+function MyComponent() {
+  return (
+    <LetterGlitch
+      glitchColors={['#2b4539', '#61dca3', '#61b3dc']}
+      glitchSpeed={75}
+      centerVignette={false}
+      outerVignette={true}
+      smooth={true}
+    >
+      <h1>GLITCHED TEXT</h1>
+    </LetterGlitch>
+  );
+}
+```
 
 ### Sections & Page Layouts
 
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
 | `AboutSection.astro` | `src/components/AboutSection.astro` | Comprehensive profile showcase with work experience, education, and certifications | `profileImageSrc: string` | ProfileCard, structured data |
-| `ProjectsSection.astro` | `src/components/ProjectsSection.astro` | Featured projects showcase with GSAP animations | — | GSAP animations, public images |
-| `CreativeLabSection.astro` | `src/components/CreativeLabSection.astro` | Creative portfolio showcase with category-based styling and animations | — | GSAP animations, category colors |
+| `ProjectsSection.astro` | `src/components/ProjectsSection.astro` | Featured projects showcase with scroll-triggered animations | — | ProjectCard, data-animate attributes, public images |
+| `CreativeLabSection.astro` | `src/components/CreativeLabSection.astro` | Creative portfolio showcase with category-based styling and staggered animations | — | data-animate attributes, category colors |
+| `ContactSection.astro` | `src/components/ContactSection.astro` | Contact form section with background image and animations | — | ContactForm, ContactCards, AImage |
+
+#### ContactSection.astro
+**Purpose:** Contact form section with background image, animations, and structured layout.
+
+**Props:** None - configured via internal components
+
+**Usage:**
+```astro
+---
+import ContactSection from '../components/ContactSection.astro';
+---
+
+<ContactSection />
+```
+
+### SEO & Metadata
+
+| Component | Path | Purpose | Key Props | Dependencies |
+|-----------|------|---------|-----------|--------------|
+| `Seo.astro` | `src/components/Seo.astro` | Centralized SEO meta tags, Open Graph, and Twitter Cards | `title`, `description`, `canonical?`, `image?`, `type?`, `keywords?` | — |
+| `SchemaOrg.astro` | `src/components/SchemaOrg.astro` | JSON-LD structured data for rich snippets | `schema: Record<string, unknown>` | — |
+
+#### Seo.astro
+**Purpose:** Centralized SEO component for meta tags, Open Graph, and Twitter Cards.
+
+**Props:**
+- `title` (required): Page title
+- `description` (optional): Meta description
+- `canonical` (optional): Canonical URL path
+- `image` (optional): Open Graph image
+- `type` (optional): Open Graph type
+- `keywords` (optional): Page keywords
+- `publishedAt/updatedAt` (optional): Article dates
+- `author` (optional): Article author
+
+**Usage:**
+```astro
+---
+import Seo from '../components/Seo.astro';
+---
+
+<Seo
+  title="My Page Title"
+  description="Page description for SEO"
+  canonical="/my-page"
+  image="/images/og-image.webp"
+  type="article"
+  keywords={['keyword1', 'keyword2']}
+/>
+```
+
+#### SchemaOrg.astro
+**Purpose:** Renders JSON-LD structured data for SEO and rich snippets.
+
+**Props:**
+- `schema` (required): Schema.org structured data object (will automatically add @context)
+
+**Usage:**
+```astro
+---
+import SchemaOrg from '../components/SchemaOrg.astro';
+---
+
+<SchemaOrg schema={{
+  "@type": "Person",
+  "name": "Vasileios Politeiadis",
+  "jobTitle": "Senior QA Automation Specialist"
+}} />
+```
 
 ### Cards & Containers
 
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
+| `BlogPostCard.astro` | `src/components/BlogPostCard.astro` | Blog post preview card with cover image, metadata, and tags | `post: BlogPostMeta`, `class?: string` | AImage, global styles |
 | `ProfileCard.tsx` | `src/components/ui/profile-card.tsx` | Interactive profile card with tilt effects, social links, and status indicators | `name: string`, `title: string`, `status?: 'Online' \| 'Offline' \| 'Away'`, `contactText?`, `avatarUrl: string`, `showUserInfo?`, `enableTilt?`, `enableMobileTilt?`, `onContactClick?`, `className?` | React, Button, Card, Icon components |
 | `GlassCard.astro` | `src/components/GlassCard.astro` | Glassmorphic container with neon accent | `accent?`, `ariaLabel?`, `class?` | global.css glass-card styles |
+| `CreativeCard.astro` | `src/components/CreativeCard.astro` | Creative portfolio project card with hover effects and tool badges | `project: CreativeProject`, `class?: string` | AImage, ExternalLink, global styles |
+| `ProjectCard.astro` | `src/components/ProjectCard.astro` | Featured project showcase card with hover zoom and tech badges | `project: Project`, `class?: string` | AImage, global styles |
 | `HighlightBlock.astro` | `src/components/HighlightBlock.astro` | Compact highlight tile for impact points | `title: string`, `description?`, `class?` | global.css styling |
+
+#### BlogPostCard.astro
+**Purpose:** Blog post preview card with cover image, metadata, and tags.
+
+**Props:**
+- `post` (required): BlogPostMeta object with slug, title, excerpt, coverImage, tags, publishedAt, readingTime
+- `class` (optional): Additional CSS classes
+
+**Usage:**
+```astro
+---
+import BlogPostCard from '../components/BlogPostCard.astro';
+
+const post = {
+  slug: 'my-article',
+  title: 'My Blog Article',
+  excerpt: 'A brief description of the article...',
+  coverImage: '/images/article-cover.webp',
+  tags: ['javascript', 'react', 'tutorial'],
+  publishedAt: '2024-01-15',
+  readingTime: '5 min read'
+};
+---
+
+<BlogPostCard post={post} />
+```
+
+#### CreativeCard.astro
+**Purpose:** Creative portfolio project card with hover effects and tool badges.
+
+**Props:**
+- `project` (required): Creative project object with slug, title, description, hero, detailUrl, tools, cta
+
+**Usage:**
+```astro
+---
+import CreativeCard from '../components/CreativeCard.astro';
+
+const project = {
+  slug: 'digital-artwork',
+  title: 'Digital Artwork',
+  description: 'Interactive digital art piece',
+  hero: '/images/artwork.webp',
+  detailUrl: '/creative/digital-artwork',
+  tools: ['Photoshop', 'Illustrator', 'After Effects'],
+  cta: { label: 'View Project', href: '/creative/digital-artwork' }
+};
+---
+
+<CreativeCard project={project} />
+```
 
 ### Media & Images
 
@@ -115,6 +317,41 @@ import PageHero from '../components/PageHero.astro';
 | `OptimizedImage.tsx` | `src/components/OptimizedImage.tsx` | React image helper (deprecated) | `src`, `width?`, `quality?`, plus `<img>` attrs | React, deprecated |
 | `ScreenshotFrame.astro` | `src/components/ScreenshotFrame.astro` | Premium framed screenshot with neon/scanlines | `src` (req), `alt` (req), `eager?`, `width?`, `height?`, `class?` | global.css holo-frame styles |
 | `LightboxGallery.tsx` | `src/components/LightboxGallery.tsx` | React lightbox grid powered by `yet-another-react-lightbox` | `items: { thumbSrc, fullSrc, alt }[]`, `className?` | React, yet-another-react-lightbox |
+| `AImage.astro` | `src/components/media/AImage.astro` | Unified image component with responsive optimization | `src`, `alt`, `preset?`, `sizes?`, `loading?`, `width?`, `height?` | Astro Image, image-presets |
+
+#### AImage.astro
+**Purpose:** Unified image component with responsive optimization and performance presets.
+
+**Props:**
+- `src` (required): ImageMetadata (preferred) or static path string
+- `alt` (required): Alt text for accessibility
+- `preset` (optional): Responsive preset ('hero', 'card', 'thumb')
+- `sizes` (optional): Custom sizes attribute
+- `loading` (optional): Loading strategy ('eager', 'lazy')
+- `width/height` (optional): Explicit dimensions to prevent CLS
+
+**Usage:**
+```astro
+---
+import AImage from '../components/media/AImage.astro';
+import heroImage from '../../assets/images/hero.webp';
+---
+
+<!-- Preferred: Imported ImageMetadata -->
+<AImage
+  src={heroImage}
+  alt="Hero image"
+  preset="hero"
+  loading="eager"
+/>
+
+<!-- Legacy: Static path (deprecated) -->
+<AImage
+  src="/images/hero.webp"
+  alt="Hero image"
+  sizes="(max-width: 768px) 100vw, 50vw"
+/>
+```
 
 ### Interactive Elements
 
@@ -129,6 +366,66 @@ import PageHero from '../components/PageHero.astro';
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
 | `Icon.tsx` | `src/components/icons/Icon.tsx` | Lucide icon wrapper with consistent sizing | `name: string`, `size?: 'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl'`, `className?` | React, Lucide React |
+
+### UI Components (shadcn/ui)
+
+| Component | Path | Purpose | Key Props | Dependencies |
+|-----------|------|---------|-----------|--------------|
+| `Button.tsx` | `src/components/ui/button.tsx` | Cyberpunk-styled button with neon glow effects | `variant?`, `size?`, `asChild?` | React, class-variance-authority |
+| `Card.tsx` | `src/components/ui/card.tsx` | Glassmorphic card container with cyberpunk styling | — | React, tailwind-merge |
+| `Avatar.tsx` | `src/components/ui/avatar.tsx` | Profile avatar component with fallback | `src?`, `alt?`, `fallback?` | React, Radix UI Avatar |
+| `Badge.tsx` | `src/components/ui/badge.tsx` | Status and category badges | `variant?`, `className?` | React, class-variance-authority |
+| `Dialog.tsx` | `src/components/ui/dialog.tsx` | Modal dialog component | `open?`, `onOpenChange?` | React, Radix UI Dialog |
+| `DropdownMenu.tsx` | `src/components/ui/dropdown-menu.tsx` | Dropdown menu component | — | React, Radix UI Dropdown Menu |
+| `Form.tsx` | `src/components/ui/form.tsx` | Form components with validation | — | React, React Hook Form |
+| `Input.tsx` | `src/components/ui/input.tsx` | Text input component | — | React |
+| `Label.tsx` | `src/components/ui/label.tsx` | Form label component | — | React, Radix UI Label |
+| `Progress.tsx` | `src/components/ui/progress.tsx` | Progress bar component | `value?`, `className?` | React, Radix UI Progress |
+| `Select.tsx` | `src/components/ui/select.tsx` | Select dropdown component | — | React, Radix UI Select |
+| `Separator.tsx` | `src/components/ui/separator.tsx` | Visual separator component | `orientation?`, `className?` | React, Radix UI Separator |
+| `Textarea.tsx` | `src/components/ui/textarea.tsx` | Multi-line text input | — | React |
+
+#### Button.tsx
+**Purpose:** Cyberpunk-styled button with neon glow effects and multiple variants.
+
+**Variants:** `default`, `destructive`, `outline`, `secondary`, `ghost`, `link`
+**Sizes:** `default`, `sm`, `lg`, `icon`
+
+**Usage:**
+```tsx
+import { Button } from '../components/ui/button';
+
+function MyComponent() {
+  return (
+    <Button variant="default" size="lg">
+      Click Me
+    </Button>
+  );
+}
+```
+
+#### Card.tsx
+**Purpose:** Glassmorphic card container with cyberpunk styling.
+
+**Sub-components:** `CardHeader`, `CardContent`, `CardFooter`, `CardTitle`, `CardDescription`
+
+**Usage:**
+```tsx
+import { Card, CardHeader, CardContent, CardTitle } from '../components/ui/card';
+
+function MyComponent() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Card Title</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p>Card content goes here</p>
+      </CardContent>
+    </Card>
+  );
+}
+```
 
 ## 🔗 Component Dependencies
 
@@ -155,7 +452,7 @@ graph TD
   AD[AboutSection.astro] --> AE[ProfileCard.tsx]
   AD --> AF[Structured Data]
 
-  AG[ProjectsSection.astro] --> AH[GSAP Animations]
+  AG[ProjectsSection.astro] --> AH[Centralized Animation System]
   AI[CreativeLabSection.astro] --> AH
 ```
 

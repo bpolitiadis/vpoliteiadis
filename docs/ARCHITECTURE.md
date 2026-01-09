@@ -229,6 +229,13 @@ graph LR
 - **CLS**: Stable layouts with proper image dimensions
 - **FCP**: Fast first contentful paint with optimized fonts
 
+### Animation System Architecture
+- **Centralized Controller**: `src/lib/animations.ts` provides unified GSAP-powered scroll animations
+- **Data Attributes**: Components use declarative `data-animate` attributes instead of imperative scripts
+- **Matrix Theme**: Blur-in effects, staggered reveals, and cyberpunk aesthetics
+- **Performance**: `will-change` optimization, reduced motion support, visibility change handling
+- **Maintainability**: Single source of truth for all animation logic vs scattered `IntersectionObserver` scripts
+
 ## 🔍 SEO & Structured Data
 
 ### Meta Tags & Open Graph

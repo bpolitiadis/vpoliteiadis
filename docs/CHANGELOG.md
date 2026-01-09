@@ -4,6 +4,25 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 
 ## [Unreleased]
 
+### Animation System Refactoring
+- **Centralized GSAP Animation System**: Major refactoring from fragmented `IntersectionObserver` scripts to unified GSAP-powered system
+  - Created `src/lib/animations.ts` as single source of truth for all scroll animations
+  - Implemented Matrix-themed animations: blur-in reveals, staggered cascades, and cyberpunk effects
+  - Replaced manual `IntersectionObserver` scripts in 5 components with declarative `data-animate` attributes
+  - Added performance optimizations: `will-change` usage, reduced motion support, visibility change handling
+  - Enhanced maintainability: single animation controller vs scattered scripts across components
+  - **Impact**: 6 files changed - centralized animation logic, improved performance, consistent Matrix aesthetic
+
+### Component Architecture Consistency
+- **New ProjectCard Component**: Extracted inline project card logic into reusable `ProjectCard.astro` component
+  - Matches `CreativeCard.astro` architecture for consistency across portfolio sections
+  - Clean hover zoom animation (only image scales, no card movement or glow)
+  - Added gradient overlay that fades on hover for visual depth
+  - Removed unwanted global CSS effects (card lifting, glow shadows)
+  - Proper TypeScript typing with `ImageMetadata | string`
+  - **Impact**: Improved maintainability, consistent component patterns, better reusability
+  - **Components Updated**: AboutSection, ProjectsSection, CreativeLabSection, CreativeCard, ContactSection
+
 ### Test Suite Refactoring
 - **Section-Based Test Architecture**: Major refactoring of Playwright test suite to use section-based components instead of page-based approach
   - Removed obsolete page-based test helpers (`AboutPage.ts`, `CreativePage.ts`, `ProjectsPage.ts`)

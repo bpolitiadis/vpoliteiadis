@@ -1,4 +1,5 @@
 ---
+import ProjectCard from './ProjectCard.astro';
 import AImage from './media/AImage.astro';
 import DecryptedText from './DecryptedText';
 import upiriaCover from '../assets/images/upiria-cover.webp';
@@ -83,137 +84,12 @@ const projects: Project[] = [
     {/* Projects Grid - Centered with Equal Sizing */}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
       {projects.map((project, index) => (
-        <div
+        <ProjectCard
+          project={project}
           data-project-card={index}
-          class="relative flex flex-col animate-reveal-up opacity-0 h-full"
-          style={`animation-delay: ${index * 150}ms`}
-        >
-          {/* Project Image */}
-          <div class="relative w-full overflow-hidden rounded-lg" style="aspect-ratio: 16 / 9">
-            <a
-              href={project.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="block w-full h-full"
-              aria-label={`Visit ${project.title} website`}
-            >
-              <AImage
-                src={project.image}
-                alt={project.title}
-                preset="card"
-                class="w-full h-full object-cover rounded-lg"
-                loading="lazy"
-                decoding="async"
-                width={1024}
-                height={576}
-              />
-            </a>
-          </div>
-
-          <div class="flex flex-col space-y-3 mt-4">
-            <div class="font-bold leading-none tracking-tight font-orbitron text-lg md:text-xl">
-              <a
-                href={project.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 text-neon-lime hover:text-neon-lime/90 transition-colors"
-                style={{ color: '#39FF14', textShadow: '0 0 10px rgba(57, 255, 20, 0.6), 0 0 20px rgba(57, 255, 20, 0.3)' }}
-              >
-                {project.title}
-                <span class="text-sm opacity-70">↗</span>
-              </a>
-            </div>
-            <div class="text-sm text-matrix-white/85 leading-relaxed">
-              {project.description}
-            </div>
-            <div class="flex flex-wrap gap-2">
-              {project.technologies.map((tech) => (
-                <div class="badge-emerald">
-                  {tech}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        />
       ))}
     </div>
   </div>
 </section>
 
-<script>
-  import gsap from 'gsap';
-
-  // IntersectionObserver and GSAP animations - vanilla JS implementation
-  document.addEventListener('DOMContentLoaded', () => {
-    const section = document.querySelector('[data-projects-section]');
-    if (!section) return;
-
-    // Check for reduced motion preference
-    const prefersReducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
-
-    const isMobile = window.innerWidth < 640;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const animatedElements = entry.target.querySelectorAll(
-              '.animate-reveal-up'
-            );
-            animatedElements.forEach((element, index) => {
-              setTimeout(() => {
-                element.classList.add('animate');
-              }, index * 150);
-            });
-
-            // Start GSAP floating animations for cards
-            if (!prefersReducedMotion) {
-              const cardElements = entry.target.querySelectorAll('[data-project-card]');
-              cardElements.forEach((cardRef) => {
-                const movements = isMobile
-                  ? [
-                      { y: '-=4', x: '+=3', rotation: '-=0.25' },
-                      { y: '+=4', x: '-=3', rotation: '-=0.25' },
-                      { y: '-=3', rotation: '+=0.25' },
-                      { y: '+=3', rotation: '+=0.25' },
-                    ]
-                  : [
-                      { y: '-=8', x: '+=5', rotation: '-=0.5' },
-                      { y: '+=8', x: '-=5', rotation: '-=0.5' },
-                      { y: '-=6', rotation: '+=0.5' },
-                      { y: '+=6', rotation: '+=0.5' },
-                    ];
-
-                const durations = [4, 3, 4, 3];
-                const cardTimeline = gsap.timeline({ repeat: -1 });
-                movements.forEach((movement, moveIndex) => {
-                  cardTimeline.to(cardRef, {
-                    duration: durations[moveIndex],
-                    ...movement,
-                    ease: 'power1.easeInOut',
-                  });
-                });
-              });
-            }
-
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(section);
-
-    // Cleanup function
-    return () => {
-      observer.unobserve(section);
-      const cardElements = section.querySelectorAll('[data-project-card]');
-      cardElements.forEach((cardRef) => {
-        gsap.killTweensOf(cardRef);
-      });
-    };
-  });
-</script>

@@ -11,6 +11,7 @@ import CreativeLabSection from '../components/CreativeLabSection.astro';
 import ContactSection from '../components/ContactSection.astro';
 import { getImage } from 'astro:assets';
 import vasileiosProfile from '../assets/images/vasileios-profile.webp';
+import { initScrollAnimations } from '../lib/animations';
 
 // Get optimized profile image URL
 const profileImage = await getImage({src: vasileiosProfile, width: 800});
@@ -88,20 +89,12 @@ const homeStructuredData = {
 </MainLayout>
 
 <script>
-  // Simplified animation trigger script for main page
+  // Initialize GSAP scroll animations
   document.addEventListener('DOMContentLoaded', () => {
-    // Trigger animations after a short delay to ensure components are loaded
+    // Initialize scroll animations after a brief delay to ensure DOM is ready
     setTimeout(() => {
-      // Trigger animations for elements with animate-reveal-up class
-      const animatedElements = document.querySelectorAll('.animate-reveal-up');
-      
-      // Add animate class to trigger animations with staggered delay
-      animatedElements.forEach((element, index) => {
-        setTimeout(() => {
-          element.classList.add('animate');
-        }, index * 200);
-      });
-    }, 500); // Increased delay to ensure proper component hydration
+      initScrollAnimations();
+    }, 100);
   });
 </script>
 

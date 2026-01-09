@@ -135,6 +135,47 @@ Before submitting a PR, verify:
 - **Accessibility** requirements must be tested
 - **Performance budgets** must be maintained
 
+### QA Automation Standards
+
+#### data-testid Naming Conventions
+All interactive elements must have `data-testid` attributes for reliable test automation:
+
+```tsx
+// ✅ Good: Semantic naming with component context
+<button data-testid="hero-cta-primary">Get Started</button>
+<div data-testid="blog-post-card" data-title="Article Title">
+<a data-testid="blog-post-link" href="/blog/article-slug">
+
+// ❌ Avoid: Generic or inconsistent naming
+<button data-testid="button">Click</button>
+<div data-testid="card">
+```
+
+#### Component Test IDs
+- **Navigation:** `nav-`, `navbar-`, `footer-` prefixes
+- **Cards:** `{component}-card` (e.g., `blog-post-card`, `project-card`)
+- **Forms:** `{field}-input`, `{field}-error`, `form-submit`
+- **Interactive:** `cta-`, `link-`, `button-` prefixes
+- **Content:** `content-`, `section-` prefixes for major sections
+
+#### Playwright Test Structure
+```typescript
+// Page Object Model pattern
+export class BlogPage {
+  async goto() {
+    await this.page.goto('/blog');
+  }
+
+  async getPostCards() {
+    return this.page.locator('[data-testid="blog-post-card"]');
+  }
+
+  async clickPostByTitle(title: string) {
+    await this.page.locator(`[data-title="${title}"] [data-testid="blog-post-link"]`).click();
+  }
+}
+```
+
 ## 📝 Pull Request Process
 
 ### Creating a Pull Request

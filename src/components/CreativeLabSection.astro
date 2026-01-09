@@ -88,6 +88,7 @@ const creativeProjects = [
       <h2
         id="creative-heading"
         class="text-3xl md:text-4xl lg:text-5xl font-orbitron font-bold mb-3"
+        data-animate="reveal"
       >
         <DecryptedText
           client:visible
@@ -113,7 +114,7 @@ const creativeProjects = [
     </div>
 
     {/* Creative Projects Grid */}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" data-animate="stagger-container">
       {creativeProjects.map((project) => (
         <CreativeCard project={project} />
       ))}
@@ -121,7 +122,3 @@ const creativeProjects = [
   </div>
 </section>
 
-<script>
-  // Note: Section heading animation is handled by DecryptedText component
-  // This script can be used for future content animations if needed
-</script>

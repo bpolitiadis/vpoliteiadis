@@ -1,0 +1,70 @@
+---
+import AImage from './media/AImage.astro';
+import type { ImageMetadata } from 'astro';
+
+export interface Props {
+  project: {
+    title: string;
+    description: string;
+    website: string;
+    image: ImageMetadata | string;
+    technologies: string[];
+  };
+}
+
+const { project } = Astro.props;
+---
+
+<div
+  class="group relative flex flex-col h-full w-full"
+  data-animate="reveal"
+>
+  {/* Project Image */}
+  <div class="relative w-full overflow-hidden rounded-lg" style="aspect-ratio: 16 / 9">
+    <a
+      href={project.website}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="block w-full h-full"
+      aria-label={`Visit ${project.title} website`}
+    >
+      <AImage
+        src={project.image}
+        alt={project.title}
+        preset="card"
+        class="w-full h-full object-cover rounded-lg transition-transform duration-700 group-hover:scale-110 will-change-transform"
+        loading="lazy"
+        decoding="async"
+        width={1024}
+        height={576}
+      />
+      <!-- Matrix gradient overlay -->
+      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent opacity-90 group-hover:opacity-60 transition-opacity duration-500 rounded-lg" />
+    </a>
+  </div>
+
+  <div class="flex flex-col space-y-3 mt-4">
+    <div class="font-bold leading-none tracking-tight font-orbitron text-lg md:text-xl">
+      <a
+        href={project.website}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 text-neon-lime hover:text-neon-lime/90 transition-colors"
+        style={{ color: '#39FF14', textShadow: '0 0 10px rgba(57, 255, 20, 0.6), 0 0 20px rgba(57, 255, 20, 0.3)' }}
+      >
+        {project.title}
+        <span class="text-sm opacity-70">↗</span>
+      </a>
+    </div>
+    <div class="text-sm text-matrix-white/85 leading-relaxed">
+      {project.description}
+    </div>
+    <div class="flex flex-wrap gap-2">
+      {project.technologies.map((tech) => (
+        <div class="badge-emerald">
+          {tech}
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
