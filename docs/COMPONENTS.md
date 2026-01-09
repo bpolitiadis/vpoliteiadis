@@ -105,7 +105,6 @@ import PageHero from '../components/PageHero.astro';
 | `ProfileCard.tsx` | `src/components/ui/profile-card.tsx` | Interactive profile card with tilt effects, social links, and status indicators | `name: string`, `title: string`, `status?: 'Online' \| 'Offline' \| 'Away'`, `contactText?`, `avatarUrl: string`, `showUserInfo?`, `enableTilt?`, `enableMobileTilt?`, `onContactClick?`, `className?` | React, Button, Card, Icon components |
 | `GlassCard.astro` | `src/components/GlassCard.astro` | Glassmorphic container with neon accent | `accent?`, `ariaLabel?`, `class?` | global.css glass-card styles |
 | `HighlightBlock.astro` | `src/components/HighlightBlock.astro` | Compact highlight tile for impact points | `title: string`, `description?`, `class?` | global.css styling |
-| `FeaturedProjectCard.tsx` | `src/components/FeaturedProjectCard.tsx` | Featured, rich project card (React) | `title`, `role`, `description`, `hero`, `detailUrl`, `cta`, `techStack`, `tags` | OptimizedImage, React |
 
 ### Media & Images
 
@@ -157,9 +156,6 @@ graph TD
 
   AG[ProjectsSection.astro] --> AH[GSAP Animations]
   AI[CreativeLabSection.astro] --> AH
-
-  AJ[FeaturedProjectCard.tsx] --> AK[OptimizedImage.tsx]
-  AJ --> AL[React]
 ```
 
 ### Component Hierarchy

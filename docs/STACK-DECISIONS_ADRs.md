@@ -19,10 +19,10 @@ What you’ll learn: rationale, trade‑offs, and links to implementation.
 - Links: `tailwind.config.js`, `src/styles/global.css`.
 
 ## ADR-003: React islands when necessary
-- Context: Ergonomic image helper and a rich featured card.
-- Decision: Use React islands for `OptimizedImage.tsx`, `FeaturedProjectCard.tsx`.
+- Context: Ergonomic image helper and interactive components.
+- Decision: Use React islands for interactive components (`src/components/DecryptedText.tsx`, `src/components/LightboxGallery.tsx`, `src/components/ui/profile-card.tsx`). Project cards use native Astro for better performance.
 - Alternatives: Pure Astro images; chosen mix balances DX and control.
-- Links: `src/components/OptimizedImage.tsx`, `src/components/FeaturedProjectCard.tsx`.
+- Links: `src/components/DecryptedText.tsx`, `src/components/LightboxGallery.tsx`, `src/components/ui/profile-card.tsx`.
 
 ## ADR-004: shadcn/ui availability (not yet used)
 - Context: `@shadcn/ui` present in devDeps but no `components/ui` in repo.

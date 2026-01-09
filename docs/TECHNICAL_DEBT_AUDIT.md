@@ -34,13 +34,13 @@ This audit identifies **23 actionable items** across 3 priority tiers, focusing 
 |----------|------------------|----------------|------------------------------------------|-------------|------------|--------|
 | ~~**P1**~~ | ~~**Hardcoded domain URLs**~~ - ~~Replace `https://vpoliteiadis.com` with `Astro.site` or env var~~ | ~~`src/pages/index.astro`, `src/layouts/MainLayout.astro`, `src/pages/rss.xml.ts`, `src/pages/robots.txt.ts`, `src/pages/ai.txt.ts`, `src/pages/structured/*.ts` (11 files)~~ | ~~**Maintainability:** Domain changes require 11+ file edits. **Performance:** No direct impact, but violates DRY. Should use `Astro.site` or `import.meta.env.SITE`.~~ | ~~S (2-3h)~~ | ~~Low~~ | ✅ **COMPLETED** (2025-01-27) - Replaced all hardcoded URLs with `Astro.site`/`context.site`, updated primary domain to `vpoliteiadis.dev` |
 | **P1** | **Astro config mismatch** - `output: 'server'` but page has `prerender = true` | `astro.config.mjs` (line 18), `src/pages/index.astro` (line 3) | **Performance:** Conflicting configs cause confusion. Should be `output: 'static'` for SSG or remove `prerender` for SSR. Current setup works but is misleading. | S (30m) | Low | |
-| **P1** | **Unused React component export** - `FeaturedProjectCard.tsx` exported but never imported | `src/components/FeaturedProjectCard.tsx`, `src/components/index.ts` | **Bundle Size:** Unused component adds ~5KB to bundle. **Maintainability:** Dead code increases cognitive load. Remove export or implement usage. | S (15m) | Low |
+| ~~**P1**~~ | ~~**Unused React component export**~~ - ~~`FeaturedProjectCard.tsx` exported but never imported~~ | ~~`src/components/FeaturedProjectCard.tsx`, `src/components/index.ts`~~ | ~~**Bundle Size:** Unused component adds ~5KB to bundle. **Maintainability:** Dead code increases cognitive load. Remove export or implement usage.~~ | ~~S (15m)~~ | ~~Low~~ | ✅ **COMPLETED** (2025-01-27) - Deleted unused component, replaced by native Astro implementation in `ProjectsSection.astro` |
 | **P1** | **Type safety violations** - 20 instances of `any` type, 2 `@ts-expect-error` suppressions | `src/lib/analytics.ts`, `src/lib/logger.ts`, `src/lib/sentry.ts`, `src/lib/spotify.ts`, `src/lib/logger-client.ts`, `src/lib/sentry-client.ts`, `src/components/ElectricBorder.tsx`, `src/components/hero/HeroSection.tsx` | **Type Safety:** Loose types hide bugs, reduce IDE support. **Maintainability:** Makes refactoring risky. Replace with proper types or `unknown` with type guards. | M (1-2d) | Medium |
 | **P1** | **Public scripts bypass Vite bundling** - 10 vanilla JS files in `public/scripts/` | `public/scripts/*.js` (10 files: navbar.js, contact-form.js, matrix-rain.js, etc.) | **Performance:** No tree-shaking, no minification, no code-splitting. **Bundle Size:** ~15-20KB of unoptimized JS. Migrate to `src/lib/scripts/` and import in Astro components. | M (2-3d) | Medium |
 | **P2** | **Unnecessary `client:load` directives** - 4 instances where `client:visible` or static would suffice | `src/pages/index.astro` (LetterGlitch), `src/components/AboutSection.astro` (ProfileCard x2), `src/pages/404.astro` (DecryptedText x2) | **Performance:** `client:load` hydrates immediately, blocking TTI. `client:visible` defers hydration until viewport. **Impact:** ~50-100ms TTI improvement per instance. | S (1-2h) | Low |
-| **P2** | **React components that could be Astro** - `FeaturedProjectCard.tsx` is mostly static | `src/components/FeaturedProjectCard.tsx` | **Bundle Size:** Component has minimal interactivity (just hover states). Could be Astro with CSS-only hover effects. **Impact:** Saves ~3-4KB React hydration code. | M (4-6h) | Low |
+| ~~**P2**~~ | ~~**React components that could be Astro**~~ - ~~`FeaturedProjectCard.tsx` is mostly static~~ | ~~`src/components/FeaturedProjectCard.tsx`~~ | ~~**Bundle Size:** Component has minimal interactivity (just hover states). Could be Astro with CSS-only hover effects. **Impact:** Saves ~3-4KB React hydration code.~~ | ~~M (4-6h)~~ | ~~Low~~ | ✅ **RESOLVED** (2025-01-27) - Component deleted, replaced by native Astro implementation |
 | **P2** | **Unused UI components** - 7 shadcn components exported but never imported | `src/components/ui/avatar.tsx`, `src/components/ui/badge.tsx`, `src/components/ui/dialog.tsx`, `src/components/ui/dropdown-menu.tsx`, `src/components/ui/progress.tsx`, `src/components/ui/separator.tsx`, `src/components/ui/select.tsx` | **Bundle Size:** Unused Radix UI primitives add ~25-30KB to bundle. **Maintainability:** Dead code. Remove from exports or implement usage. | S (1h) | Low |
-| **P2** | **Tailwind arbitrary values** - 33 instances of `w-[...]`, `h-[...]`, `shadow-[...]` | `src/components/ui/profile-card.tsx`, `src/components/ui/button.tsx`, `src/components/hero/HeroSection.tsx`, `src/components/contact/ContactForm.tsx`, `src/components/LetterGlitch.tsx`, `src/components/ElectricBorder.tsx`, `src/components/LightboxGallery.tsx`, `src/components/FeaturedProjectCard.tsx`, `src/components/ui/textarea.tsx`, `src/components/ui/select.tsx`, `src/components/ui/dropdown-menu.tsx`, `src/components/ui/dialog.tsx`, `src/components/ScreenshotFrame.astro` | **Maintainability:** Arbitrary values bypass design system. **Performance:** Slight CSS bundle bloat. Extract to `tailwind.config.js` tokens (spacing, shadows, etc.). | M (1-2d) | Low |
+| **P2** | **Tailwind arbitrary values** - 33 instances of `w-[...]`, `h-[...]`, `shadow-[...]` | `src/components/ui/profile-card.tsx`, `src/components/ui/button.tsx`, `src/components/hero/HeroSection.tsx`, `src/components/contact/ContactForm.tsx`, `src/components/LetterGlitch.tsx`, `src/components/ElectricBorder.tsx`, `src/components/LightboxGallery.tsx`, `src/components/ui/textarea.tsx`, `src/components/ui/select.tsx`, `src/components/ui/dropdown-menu.tsx`, `src/components/ui/dialog.tsx`, `src/components/ScreenshotFrame.astro` | **Maintainability:** Arbitrary values bypass design system. **Performance:** Slight CSS bundle bloat. Extract to `tailwind.config.js` tokens (spacing, shadows, etc.). | M (1-2d) | Low |
 | **P2** | **Duplicate contact form logic** - `public/scripts/contact-form.js` vs `src/components/contact/ContactForm.tsx` | `public/scripts/contact-form.js`, `src/components/contact/ContactForm.tsx` | **Maintainability:** Two implementations for same feature. `contact-form.js` appears unused (ContactForm.tsx uses react-hook-form). Remove dead script or consolidate. | S (30m) | Low |
 | **P2** | **Loose Zod schemas** - `publishedAt` as `string` instead of `date()` | `src/content/config.ts` (lines 13, 52, 81) | **Type Safety:** String dates require manual parsing. Zod `z.date()` provides validation and type inference. **Maintainability:** Prevents invalid date formats. | S (1h) | Low |
 | **P2** | **Hardcoded animation delays** - Magic numbers in inline styles | `src/components/ProjectsSection.astro` (line 89: `animation-delay: ${index * 150}ms`), `src/pages/index.astro` (line 102: `index * 200`) | **Maintainability:** Magic numbers scattered. Extract to constants (`src/lib/constants.ts`). **Consistency:** Ensures uniform animation timing. | S (30m) | Low |
@@ -85,7 +85,7 @@ This audit identifies **23 actionable items** across 3 priority tiers, focusing 
 
 ### Week 1: Quick Wins (P1, Low Risk)
 1. Fix Astro config mismatch (`output: 'static'`)
-2. Remove unused `FeaturedProjectCard` export
+2. ~~Remove unused `FeaturedProjectCard` export~~ ✅ **COMPLETED**
 3. Replace hardcoded domain URLs with `Astro.site`
 4. Remove unused UI component exports
 5. Remove duplicate `contact-form.js` script
@@ -98,7 +98,7 @@ This audit identifies **23 actionable items** across 3 priority tiers, focusing 
 
 ### Week 3: Polish & Optimization (P2-P3)
 10. Extract Tailwind arbitrary values to tokens
-11. Convert `FeaturedProjectCard` to Astro (if feasible)
+11. ~~Convert `FeaturedProjectCard` to Astro (if feasible)~~ ✅ **RESOLVED** - Component deleted, already replaced by Astro
 12. Clean up commented code
 13. Audit and remove unused lib exports
 14. Extract magic numbers to constants
@@ -108,7 +108,7 @@ This audit identifies **23 actionable items** across 3 priority tiers, focusing 
 ## Performance Impact Estimates
 
 ### Bundle Size Reduction
-- **Unused components:** ~35KB (FeaturedProjectCard + 7 UI components)
+- **Unused components:** ~30KB (7 UI components) - FeaturedProjectCard removed
 - **Public scripts optimization:** ~5-8KB (minification + tree-shaking)
 - **Total potential reduction:** ~40-43KB (~15-20% of current JS bundle)
 

@@ -70,7 +70,7 @@ graph TD
 
 ### Astro Islands Architecture
 - **Static by Default**: All components render to HTML at build time
-- **React Islands**: Interactive components (`FeaturedProjectCard.tsx`, `OptimizedImage.tsx`) hydrate on demand
+- **React Islands**: Interactive components (`src/components/ui/profile-card.tsx`, `src/components/LightboxGallery.tsx`, `src/components/DecryptedText.tsx`) hydrate on demand
 - **Client Directives**: Minimal hydration; primarily static content with progressive enhancement
 - **Performance**: Zero JavaScript by default, React only where needed
 
@@ -82,9 +82,9 @@ graph TD
 <Footer />
 
 // React islands for interactivity
-<FeaturedProjectCard client:load />
-<OptimizedImage client:visible />
+<DecryptedText client:visible />
 <LightboxGallery client:load />
+<ProfileCard client:load />
 ```
 
 ### Build Process

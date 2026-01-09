@@ -52,7 +52,7 @@ graph TD
   B --> C[Blog, Projects, Creative]
   A --> D[TailwindCSS + Custom Theme]
   A --> E[React Islands]
-  E --> F[FeaturedProjectCard, OptimizedImage]
+  E --> F[DecryptedText, LightboxGallery, ProfileCard]
   A --> G[Performance Optimized]
   G --> H[Image Pipeline, CSS Inlining]
   A --> I[SEO & Structured Data]

@@ -4,6 +4,13 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 
 ## [Unreleased]
 
+### Dead Code Removal
+- **Removed Unused React Component**: Deleted `FeaturedProjectCard.tsx` component (~5KB bundle savings)
+  - Component was exported but never imported or used anywhere in the codebase
+  - Functionality replaced by native Astro implementation in `ProjectsSection.astro`
+  - Removed export from `src/components/index.ts`
+  - **Technical Debt Reduction**: Addresses P1 audit item from Technical Debt & Optimization Roadmap
+
 ### Domain URL Consolidation & Site Configuration
 - **Primary Domain Update**: Changed primary site URL from `vpoliteiadis.com` to `vpoliteiadis.dev`
 - **Hardcoded URL Elimination**: Replaced all hardcoded domain URLs with `Astro.site` or `context.site` references

@@ -4,7 +4,6 @@ export * from './ui';
 // Custom Components
 export { default as DecryptedText } from './DecryptedText';
 export { default as ElectricBorder } from './ElectricBorder';
-export { default as FeaturedProjectCard } from './FeaturedProjectCard';
 export { default as FuzzyText } from './FuzzyText';
 export { default as LightboxGallery } from './LightboxGallery';
 export { default as TextType } from './TextType';
