@@ -242,7 +242,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       </div>
 
       <div className="lg:basis-2/3 z-10 relative px-2 sm:px-4 md:px-6 lg:px-0">
-        <span className="text-primary lg:text-lg font-orbitron font-medium">
+        <span className="text-primary lg:text-lg font-orbitron font-medium text-animation">
           Hi, my name is
         </span>
         <div className="overflow-hidden">
@@ -259,13 +259,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({
           </div>
         </div>
         <div className="mt-2 my-3 sm:my-4 md:mb-8 overflow-hidden">
-          <p className="text-animation mb-1 text-sm sm:text-base [&_strong]:[text-shadow:0_0_6px_rgba(57,255,20,0.3)]">
+          <p className="text-animation mb-1 text-sm sm:text-base font-inter [&_strong]:[text-shadow:0_0_6px_rgba(57,255,20,0.3)]">
             I break your code professionally using <strong>Playwright</strong> and <strong>Selenium</strong>. When I'm not hunting down bugs, I build full-stack applications with <strong>Next.js</strong> and <strong>Supabase</strong>, craft lightning-fast websites with <strong>Astro</strong> and <strong>TailwindCSS</strong>, and automate boring workflows with <strong>n8n</strong> and custom AI agents that actually work.
           </p>
         </div>
         <a
           href="#contact"
-          className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 mt-2 sm:mt-4"
+          className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-inter font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 mt-2 sm:mt-4"
         >
           Contact me
           <Send className="w-4 h-4" aria-hidden="true" />
@@ -275,7 +275,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
         href="#about"
         className="group absolute link-outline animate-bounce hidden md:bottom-14 lg:bottom-16 left-1/2 transform -translate-x-1/2 md:flex items-center flex-col"
       >
-        <span className="text-secondary text-shadow-emerald group-hover:text-shadow-none transition-all duration-200">
+        <span className="text-secondary text-shadow-emerald group-hover:text-shadow-none transition-all duration-200 font-inter text-sm">
           Scroll
         </span>
         <svg
