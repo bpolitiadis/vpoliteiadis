@@ -6,6 +6,7 @@ import { getCollection } from 'astro:content';
 import MainLayout from '../../layouts/MainLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import SchemaOrg from '../../components/SchemaOrg.astro';
+import AImage from '../../components/media/AImage.astro';
 
 // Generate static paths for all blog posts
 export async function getStaticPaths() {
@@ -66,7 +67,7 @@ const blogPostSchema = {
   'keywords': (post.data.seo?.keywords || post.data.tags).join(', '),
   'image': post.data.coverImage
     ? new URL(post.data.coverImage, Astro.site).toString()
-    : undefined,
+    : new URL('/images/vp-logo-800w.webp', Astro.site).toString(),
   'url': new URL(`/blog/${post.slug}`, Astro.site).toString(),
   'mainEntityOfPage': {
     '@type': 'WebPage',
@@ -83,7 +84,7 @@ const blogPostSchema = {
   publishedAt={publishedDate}
   updatedAt={modifiedDate}
   author={post.data.author}
-  image={post.data.coverImage || '/favicon.png'}
+  image={post.data.coverImage || '/images/vp-logo-800w.webp'}
 >
   <!-- Structured Data for Blog Post -->
   <SchemaOrg schema={blogPostSchema} />
@@ -93,28 +94,16 @@ const blogPostSchema = {
     <!-- Background Image (decorative) -->
     {post.data.coverImage && (
       <>
-        {(() => {
-          const cover = post.data.coverImage;
-          const base = cover.replace(/\.(avif|webp|jpe?g|png)$/i, '');
-          return (
-            <picture>
-              {/* Use commonly available optimized variants - most covers have 480w and 800w */}
-              {/* Browser will gracefully skip missing widths in srcset */}
-              <source srcset={`${base}-800w.avif 800w, ${base}-480w.avif 480w`} type="image/avif" />
-              <source srcset={`${base}-800w.webp 800w, ${base}-480w.webp 480w`} type="image/webp" />
-              <img 
-                src={cover}
-                alt=""
-                class="absolute inset-0 z-0 h-full w-full object-cover object-center opacity-50 md:opacity-60 scale-105 will-change-transform mask-fade-b"
-                aria-hidden="true"
-                loading="eager"
-                fetchpriority="high"
-                decoding="async"
-                sizes="100vw"
-              />
-            </picture>
-          );
-        })()}
+        <img 
+          src={post.data.coverImage}
+          alt=""
+          class="absolute inset-0 z-0 h-full w-full object-cover object-center opacity-50 md:opacity-60 scale-105 will-change-transform mask-fade-b"
+          aria-hidden="true"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          sizes="100vw"
+        />
         <!-- Overlays for readability and brand feel -->
         <div class="absolute inset-0 z-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80"></div>
         <div class="absolute inset-0 z-0 vignette-soft"></div>
@@ -246,13 +235,15 @@ const blogPostSchema = {
             <article class="card group hover:scale-[1.02] transition-transform duration-300">
                 {relatedPost.data.coverImage && (
                   <div class="mb-4">
-                    <img 
+                    <AImage
                       src={relatedPost.data.coverImage}
                       alt={`Cover image for ${relatedPost.data.title}`}
+                      preset="thumb"
                       class="w-full h-40 object-cover rounded-lg"
                       loading="lazy"
                       decoding="async"
                       sizes="(max-width: 768px) 100vw, 400px"
+                      usePicture={false}
                     />
                   </div>
                 )}
