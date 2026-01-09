@@ -96,6 +96,10 @@
     height: auto;
   }
 
+  /* Note: GSAP handles all [data-animate] element visibility */
+  /* Elements are set to opacity: 0 by GSAP and animated in on scroll */
+  /* Fallback is handled in animations-init.js if GSAP fails to load */
+
   /* Optimize animations for users who prefer reduced motion */
   @media (prefers-reduced-motion: reduce) {
     *,

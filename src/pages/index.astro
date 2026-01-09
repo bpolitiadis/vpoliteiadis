@@ -11,7 +11,6 @@ import CreativeLabSection from '../components/CreativeLabSection.astro';
 import ContactSection from '../components/ContactSection.astro';
 import { getImage } from 'astro:assets';
 import vasileiosProfile from '../assets/images/vasileios-profile.webp';
-import { initScrollAnimations } from '../lib/animations';
 
 // Get optimized profile image URL
 const profileImage = await getImage({src: vasileiosProfile, width: 800});
@@ -88,15 +87,7 @@ const homeStructuredData = {
 
 </MainLayout>
 
-<script>
-  // Initialize GSAP scroll animations
-  document.addEventListener('DOMContentLoaded', () => {
-    // Initialize scroll animations after a brief delay to ensure DOM is ready
-    setTimeout(() => {
-      initScrollAnimations();
-    }, 100);
-  });
-</script>
+<!-- Animations are initialized by /scripts/animations-init.js loaded in MainLayout -->
 
 <style>
   /* Enhanced spacing for better visual hierarchy */

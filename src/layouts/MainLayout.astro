@@ -352,10 +352,16 @@ const finalStructuredData = structuredData ? { ...baseStructuredData, ...structu
       <Footer />
     </div>
     
+    <!-- GSAP and ScrollTrigger - Load before animations -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+    
     <!-- Theme initialization (external, CSP-safe) -->
     <script is:inline src="/scripts/theme-init.js" defer></script>
     <!-- Performance optimization script -->
     <script is:inline src="/scripts/performance.js" defer></script>
+    <!-- Animation initialization script - Must load after GSAP -->
+    <script is:inline src="/scripts/animations-init.js" defer></script>
     
     <!-- Vercel Analytics: direct import implementation -->
     {import.meta.env.PROD && <Analytics />}

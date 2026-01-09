@@ -236,7 +236,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
           </p>
         </div>
         <a
-          href="/contact"
+          href="#contact"
           className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 mt-2 sm:mt-4"
         >
           Contact me
