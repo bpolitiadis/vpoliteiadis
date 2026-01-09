@@ -51,6 +51,7 @@ function getOptimizedImagePaths(staticPath: string, widths: number[]) {
   const basePath = staticPath.replace(/^\//, '').replace(/\.(png|jpg|jpeg|webp|avif)$/i, '');
   const fullBasePath = `/${basePath}`;
   
+  // Use the widths directly from preset (now aligned with actual optimized image widths)
   return {
     avifSrcSet: generateSrcSet(fullBasePath, widths, 'avif'),
     webpSrcSet: generateSrcSet(fullBasePath, widths, 'webp'),

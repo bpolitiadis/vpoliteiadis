@@ -98,7 +98,8 @@ const blogPostSchema = {
           const base = cover.replace(/\.(avif|webp|jpe?g|png)$/i, '');
           return (
             <picture>
-              {/* Match generated filenames in /public/images (-480w/-800w) */}
+              {/* Use commonly available optimized variants - most covers have 480w and 800w */}
+              {/* Browser will gracefully skip missing widths in srcset */}
               <source srcset={`${base}-800w.avif 800w, ${base}-480w.avif 480w`} type="image/avif" />
               <source srcset={`${base}-800w.webp 800w, ${base}-480w.webp 480w`} type="image/webp" />
               <img 
