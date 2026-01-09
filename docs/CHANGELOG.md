@@ -4,6 +4,14 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 
 ## [Unreleased]
 
+### Astro Configuration Fix
+- **Fixed Output Mode Mismatch**: Changed `output: 'server'` to `output: 'static'` in `astro.config.mjs`
+  - All pages use `prerender = true` (static generation)
+  - API routes correctly use `prerender = false` (serverless functions via Vercel adapter)
+  - Aligns configuration with actual usage pattern and documentation
+  - **Benefits**: Faster builds, clearer intent, optimized for static site generation, reduced build complexity
+  - **Technical Debt Reduction**: Addresses P1 audit item from Technical Debt & Optimization Roadmap
+
 ### Dead Code Removal
 - **Removed Unused React Component**: Deleted `FeaturedProjectCard.tsx` component (~5KB bundle savings)
   - Component was exported but never imported or used anywhere in the codebase

@@ -18,11 +18,11 @@ const SITE_URL = 'https://vpoliteiadis.dev';
 // https://astro.build/config
 export default defineConfig({
   site: SITE_URL,
-  output: 'server',
-      adapter: vercel({
-        webAnalytics: { enabled: true },
-        // Disable image service - use simple static serving
-      }),
+  output: 'static',
+  adapter: vercel({
+    webAnalytics: { enabled: true },
+    // Disable image service - use simple static serving
+  }),
   // Performance optimizations
   build: {
     inlineStylesheets: 'auto',
