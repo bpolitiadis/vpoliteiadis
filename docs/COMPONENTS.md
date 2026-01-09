@@ -196,37 +196,8 @@ import ContactSection from '../components/ContactSection.astro';
 
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
-| `Seo.astro` | `src/components/Seo.astro` | Centralized SEO meta tags, Open Graph, and Twitter Cards | `title`, `description`, `canonical?`, `image?`, `type?`, `keywords?` | — |
 | `SchemaOrg.astro` | `src/components/SchemaOrg.astro` | JSON-LD structured data for rich snippets | `schema: Record<string, unknown>` | — |
 
-#### Seo.astro
-**Purpose:** Centralized SEO component for meta tags, Open Graph, and Twitter Cards.
-
-**Props:**
-- `title` (required): Page title
-- `description` (optional): Meta description
-- `canonical` (optional): Canonical URL path
-- `image` (optional): Open Graph image
-- `type` (optional): Open Graph type
-- `keywords` (optional): Page keywords
-- `publishedAt/updatedAt` (optional): Article dates
-- `author` (optional): Article author
-
-**Usage:**
-```astro
----
-import Seo from '../components/Seo.astro';
----
-
-<Seo
-  title="My Page Title"
-  description="Page description for SEO"
-  canonical="/my-page"
-  image="/images/og-image.webp"
-  type="article"
-  keywords={['keyword1', 'keyword2']}
-/>
-```
 
 #### SchemaOrg.astro
 **Purpose:** Renders JSON-LD structured data for SEO and rich snippets.
