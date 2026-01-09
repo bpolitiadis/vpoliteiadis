@@ -10,7 +10,7 @@
  */
 
 import { existsSync, mkdirSync } from 'fs';
-import { dirname, basename, extname, join } from 'path';
+import { basename, extname, join } from 'path';
 import { execSync } from 'child_process';
 
 const args = process.argv.slice(2);

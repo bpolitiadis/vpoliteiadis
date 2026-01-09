@@ -14,9 +14,9 @@
  */
 
 import { execSync } from 'child_process';
-import { readdir, stat, unlink } from 'fs/promises';
+import { readdir } from 'fs/promises';
 import { statSync } from 'fs';
-import { join, extname } from 'path';
+import { join } from 'path';
 
 const TARGET_DIR = process.argv[2] || 'src/assets/images';
 

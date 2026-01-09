@@ -12,7 +12,7 @@
  */
 
 import { execSync } from 'child_process';
-import { readdir, stat } from 'fs/promises';
+import { readdir } from 'fs/promises';
 import { statSync } from 'fs';
 import { join } from 'path';
 
