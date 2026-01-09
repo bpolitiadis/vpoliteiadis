@@ -3,8 +3,9 @@ import gsap from "gsap";
 import { Send } from "lucide-react";
 
 // Use public folder paths for React components in Astro
-const vasileiosIllustration = "/images/vasileios-illustration.png";
-const laptop = "/images/laptop-illustration.png";
+// Note: These will use optimized webp/avif versions via picture element
+const vasileiosIllustration = "/images/vasileios-illustration.webp";
+const laptop = "/images/laptop-illustration.webp";
 
 // Animation constants - centralized for easy maintenance
 const ANIMATION_CONFIG = {
@@ -147,31 +148,51 @@ const HeroSection: React.FC = () => {
       <div className="image-animation z-10 select-none mt-0 xs:mt-4 sm:mt-14 lg:mt-0 px-0 mx-auto mb-6 sm:mb-8 lg:mb-0 lg:p-0 lg:basis-1/3">
         <div className="relative w-56 xs:w-64 sm:w-72 md:w-80 h-56 xs:h-64 sm:h-80 flex items-center mx-auto">
           <div className="absolute pointer-events-none scale-75 xs:scale-85 sm:scale-90 mx-auto">
-            <img
-              src={vasileiosIllustration}
-              width={1177}
-              height={1374}
-              id="character-illustration"
-              aria-label="Vasileios Politeiadis character illustration levitating with a Macbook"
-              alt="Vasileios Politeiadis character illustration"
-              loading="eager"
-              // @ts-expect-error - fetchpriority is valid HTML but not yet in React types
-              fetchpriority="high"
-              decoding="async"
-            />
+            <picture>
+              <source
+                srcSet="/images/vasileios-illustration-480w.avif 480w, /images/vasileios-illustration-800w.avif 800w"
+                type="image/avif"
+              />
+              <source
+                srcSet="/images/vasileios-illustration-480w.webp 480w, /images/vasileios-illustration-800w.webp 800w"
+                type="image/webp"
+              />
+              <img
+                src={vasileiosIllustration}
+                width={1177}
+                height={1374}
+                id="character-illustration"
+                aria-label="Vasileios Politeiadis character illustration levitating with a Macbook"
+                alt="Vasileios Politeiadis character illustration"
+                loading="eager"
+                // @ts-expect-error - fetchpriority is valid HTML but not yet in React types
+                fetchpriority="high"
+                decoding="async"
+              />
+            </picture>
           </div>
           <div className="laptop absolute top-10 xs:top-12 sm:top-16 left-0 scale-[.32] xs:scale-[.38] sm:scale-[.41] pointer-events-none">
-            <img
-              src={laptop}
-              width={559}
-              height={386}
-              aria-hidden="true"
-              alt="Laptop illustration"
-              loading="eager"
-              // @ts-expect-error - fetchpriority is valid HTML but not yet in React types
-              fetchpriority="high"
-              decoding="async"
-            />
+            <picture>
+              <source
+                srcSet="/images/laptop-illustration-480w.avif 480w, /images/laptop-illustration-800w.avif 800w, /images/laptop-illustration-1200w.avif 1200w"
+                type="image/avif"
+              />
+              <source
+                srcSet="/images/laptop-illustration-480w.webp 480w, /images/laptop-illustration-800w.webp 800w, /images/laptop-illustration-1200w.webp 1200w"
+                type="image/webp"
+              />
+              <img
+                src={laptop}
+                width={559}
+                height={386}
+                aria-hidden="true"
+                alt="Laptop illustration"
+                loading="eager"
+                // @ts-expect-error - fetchpriority is valid HTML but not yet in React types
+                fetchpriority="high"
+                decoding="async"
+              />
+            </picture>
           </div>
         </div>
       </div>

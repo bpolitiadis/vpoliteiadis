@@ -117,9 +117,16 @@ public/images/*.jpeg
 !public/images/blog/
 !public/images/creative/
 !public/images/projects/
+# Keep optimized image variants (WebP/AVIF) for performance
+# Allow all WebP files (optimized format)
+!public/images/*.webp
+# Allow all AVIF files (optimized format with width variants and base)
+!public/images/*.avif
+# Keep source PNGs that are directly referenced
 !public/images/vasileios-illustration.png
 !public/images/laptop-illustration.png
 !public/images/casacapoeira-cover.png
+!public/images/vibe-coding.png
 
 # Keep source images committed
 !src/assets/images/

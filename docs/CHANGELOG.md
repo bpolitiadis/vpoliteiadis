@@ -4,6 +4,19 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 
 ## [Unreleased]
 
+### Image Optimization System
+- **Image Optimization Script**: Created `scripts/optimize-images.mjs` to convert PNG/JPG to optimized WebP and AVIF formats
+- **Responsive Image Variants**: Generated multiple width variants (320w, 480w, 800w, 1200w, etc.) for optimal loading
+- **Enhanced AImage Component**: Updated to automatically generate `<picture>` elements with AVIF/WebP sources and responsive srcset
+- **Performance Improvements**: Optimized 4 large PNG files (~9.5MB → ~1MB, ~90% reduction)
+  - `casacapoeira-cover.png`: 2.66MB → 0.16MB AVIF (~94% savings)
+  - `vasileios-illustration.png`: 2.35MB → 0.11MB AVIF (~95% savings)
+  - `laptop-illustration.png`: 2.31MB → 0.10MB AVIF (~96% savings)
+  - `vibe-coding.png`: 2.27MB → 0.14MB AVIF (~95% savings)
+- **Code Updates**: Updated all references to use optimized WebP versions with picture elements for modern browsers
+- **Documentation**: Added comprehensive `docs/IMAGE_OPTIMIZATION.md` with usage examples and best practices
+- **Build Script**: Added `pnpm run optimize:images` command for manual image optimization
+
 ### Documentation Suite Restructuring
 - **Consolidated Documentation**: Reorganized documentation into focused, maintainable structure
   - Added: `COMPONENTS.md`, `CONTENT.md`, `CONTRIBUTING.md`, `DEPLOYMENT.md`, `DEVELOPMENT.md`, `TROUBLESHOOTING.md`

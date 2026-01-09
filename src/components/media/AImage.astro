@@ -14,6 +14,8 @@ export interface Props {
   loading?: 'eager' | 'lazy';
   decoding?: 'auto' | 'sync' | 'async';
   fetchpriority?: 'high' | 'low' | 'auto';
+  /** Enable picture element with srcset for static images (default: true) */
+  usePicture?: boolean;
 }
 
 const {
@@ -27,6 +29,7 @@ const {
   loading = 'lazy',
   decoding = 'async',
   fetchpriority = 'auto',
+  usePicture = true,
 } = Astro.props;
 
 const selectedPreset = preset ? imagePresets[preset] : defaultPreset;
@@ -34,6 +37,27 @@ const computedSizes = sizes ?? selectedPreset.sizes;
 
 // Check if src is an imported image (ImageMetadata) or static path (string)
 const isImportedImage = typeof src === 'object' && 'src' in src;
+
+// Helper function to generate srcset for static images
+function generateSrcSet(basePath: string, widths: number[], format: 'webp' | 'avif'): string {
+  return widths
+    .map((w) => `${basePath}-${w}w.${format} ${w}w`)
+    .join(', ');
+}
+
+// Extract base path and check for optimized variants
+function getOptimizedImagePaths(staticPath: string, widths: number[]) {
+  // Remove leading slash and extract base name
+  const basePath = staticPath.replace(/^\//, '').replace(/\.(png|jpg|jpeg|webp|avif)$/i, '');
+  const fullBasePath = `/${basePath}`;
+  
+  return {
+    avifSrcSet: generateSrcSet(fullBasePath, widths, 'avif'),
+    webpSrcSet: generateSrcSet(fullBasePath, widths, 'webp'),
+    fallbackSrc: staticPath, // Keep original as fallback
+    basePath: fullBasePath,
+  };
+}
 ---
 
 {isImportedImage ? (
@@ -51,8 +75,38 @@ const isImportedImage = typeof src === 'object' && 'src' in src;
     {...(width ? { width } : {})}
     {...(height ? { height } : {})}
   />
+) : usePicture ? (
+  // Use picture element with srcset for optimized static images
+  (() => {
+    const staticPath = src as string;
+    const paths = getOptimizedImagePaths(staticPath, selectedPreset.widths);
+    return (
+      <picture>
+        <source
+          type="image/avif"
+          srcset={paths.avifSrcSet}
+          sizes={computedSizes}
+        />
+        <source
+          type="image/webp"
+          srcset={paths.webpSrcSet}
+          sizes={computedSizes}
+        />
+        <img
+          src={paths.fallbackSrc}
+          alt={alt}
+          width={width}
+          height={height}
+          class={className}
+          loading={loading}
+          decoding={decoding}
+          fetchpriority={fetchpriority}
+        />
+      </picture>
+    );
+  })()
 ) : (
-  // Use regular img tag for static paths (already optimized)
+  // Use regular img tag for static paths (fallback)
   <img
     src={src as string}
     alt={alt}

@@ -22,6 +22,7 @@
     "test:install": "playwright install",
     "test:contact": "playwright test contact-form.spec.ts",
     "test:all": "playwright test contact-form",
+    "optimize:images": "node scripts/optimize-images.mjs",
     "seo:lighthouse": "lhci autorun",
     "seo:verify": "node -e \"console.log('Run: curl -s https://vpoliteiadis.com/ | grep \\\"<h1\\\"')\"",
     "seo:check-html": "bash -c 'for route in / /about /projects /blog /contact; do echo \"Testing $route\"; curl -s https://vpoliteiadis.com$route | grep -o \"<h1[^>]*>.*</h1>\" | head -1; done'"
