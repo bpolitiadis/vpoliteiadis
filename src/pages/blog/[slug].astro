@@ -7,6 +7,8 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import SchemaOrg from '../../components/SchemaOrg.astro';
 import AImage from '../../components/media/AImage.astro';
+import { getCoverImage } from '../../lib/blog-images';
+import { getImage } from 'astro:assets';
 
 // Generate static paths for all blog posts
 export async function getStaticPaths() {
@@ -22,6 +24,18 @@ export async function getStaticPaths() {
 // Get the current post and related posts
 const { post } = Astro.props;
 const { Content } = await post.render();
+
+// Optimize cover image for hero background
+let heroCoverImageSrc: string | undefined;
+if (post.data.coverImage) {
+  const coverImage = getCoverImage(post.data.coverImage);
+  if (typeof coverImage === 'object' && 'src' in coverImage) {
+    const optimizedImage = await getImage({ src: coverImage, width: 1920, format: 'webp' });
+    heroCoverImageSrc = optimizedImage.src;
+  } else {
+    heroCoverImageSrc = coverImage as string;
+  }
+}
 
 // Get related posts based on tags and category
 const allPosts = await getCollection('blog');
@@ -92,10 +106,10 @@ const blogPostSchema = {
   <!-- Hero Section with background cover image -->
   <section class="relative overflow-hidden py-28 lg:py-36">
     <!-- Background Image (decorative) -->
-    {post.data.coverImage && (
+    {heroCoverImageSrc && (
       <>
         <img 
-          src={post.data.coverImage}
+          src={heroCoverImageSrc}
           alt=""
           class="absolute inset-0 z-0 h-full w-full object-cover object-center opacity-50 md:opacity-60 scale-105 will-change-transform mask-fade-b"
           aria-hidden="true"
@@ -231,12 +245,16 @@ const blogPostSchema = {
           📚 Related Articles
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {relatedPosts.map(relatedPost => (
-            <article class="card group hover:scale-[1.02] transition-transform duration-300">
-                {relatedPost.data.coverImage && (
+          {relatedPosts.map(relatedPost => {
+            const relatedCoverImage = relatedPost.data.coverImage 
+              ? getCoverImage(relatedPost.data.coverImage)
+              : undefined;
+            return (
+              <article class="card group hover:scale-[1.02] transition-transform duration-300">
+                {relatedCoverImage && (
                   <div class="mb-4">
                     <AImage
-                      src={relatedPost.data.coverImage}
+                      src={relatedCoverImage}
                       alt={`Cover image for ${relatedPost.data.title}`}
                       preset="thumb"
                       class="w-full h-40 object-cover rounded-lg"
@@ -246,32 +264,33 @@ const blogPostSchema = {
                     />
                   </div>
                 )}
-              <div class="space-y-3">
-                <div class="flex items-center space-x-4 text-sm text-matrix-white/60">
-                  <span>{new Date(relatedPost.data.publishedAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>
-                  {relatedPost.data.readingTime && (
-                    <>
-                      <span>•</span>
-                      <span>{relatedPost.data.readingTime}</span>
-                    </>
-                  )}
+                <div class="space-y-3">
+                  <div class="flex items-center space-x-4 text-sm text-matrix-white/60">
+                    <span>{new Date(relatedPost.data.publishedAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>
+                    {relatedPost.data.readingTime && (
+                      <>
+                        <span>•</span>
+                        <span>{relatedPost.data.readingTime}</span>
+                      </>
+                    )}
+                  </div>
+                  <h3 class="text-lg font-orbitron font-bold text-neon-lime">
+                    <a href={`/blog/${relatedPost.slug}`} class="hover:text-glow transition-all duration-300">
+                      {relatedPost.data.title}
+                    </a>
+                  </h3>
+                  <p class="text-matrix-white/80 text-sm">
+                    {relatedPost.data.excerpt || relatedPost.data.description}
+                  </p>
+                  <div class="flex flex-wrap gap-2">
+                    {relatedPost.data.tags.slice(0, 2).map(tag => (
+                      <span class="px-2 py-1 bg-neon-lime/10 text-neon-lime text-xs rounded">{tag}</span>
+                    ))}
+                  </div>
                 </div>
-                <h3 class="text-lg font-orbitron font-bold text-neon-lime">
-                  <a href={`/blog/${relatedPost.slug}`} class="hover:text-glow transition-all duration-300">
-                    {relatedPost.data.title}
-                  </a>
-                </h3>
-                <p class="text-matrix-white/80 text-sm">
-                  {relatedPost.data.excerpt || relatedPost.data.description}
-                </p>
-                <div class="flex flex-wrap gap-2">
-                  {relatedPost.data.tags.slice(0, 2).map(tag => (
-                    <span class="px-2 py-1 bg-neon-lime/10 text-neon-lime text-xs rounded">{tag}</span>
-                  ))}
-                </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>

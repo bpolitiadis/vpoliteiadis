@@ -8,6 +8,7 @@ import PageHero from '../../components/PageHero.astro';
 import BlogPostCard from '../../components/BlogPostCard.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import SchemaOrg from '../../components/SchemaOrg.astro';
+import { getCoverImage } from '../../lib/blog-images';
 
 // Get all published blog posts and sort by date
 const allPosts = await getCollection('blog');
@@ -90,7 +91,7 @@ const blogSchema = {
                 title: post.data.title,
                 excerpt: post.data.excerpt,
                 description: post.data.description,
-                coverImage: post.data.coverImage,
+                coverImage: getCoverImage(post.data.coverImage),
                 tags: post.data.tags,
                 publishedAt: post.data.publishedAt,
                 readingTime: post.data.readingTime

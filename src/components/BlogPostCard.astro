@@ -1,12 +1,13 @@
 ---
 import AImage from './media/AImage.astro';
+import type { ImageMetadata } from 'astro';
 
 export interface BlogPostMeta {
   slug: string;
   title: string;
   excerpt?: string;
   description?: string;
-  coverImage?: string;
+  coverImage?: ImageMetadata | string;
   tags: string[];
   publishedAt: string | Date;
   readingTime?: string;
