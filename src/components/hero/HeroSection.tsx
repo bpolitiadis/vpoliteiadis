@@ -2,10 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { Send } from "lucide-react";
 
-// Use public folder paths for React components in Astro
-// Note: These will use optimized webp/avif versions via picture element
-const vasileiosIllustration = "/images/vasileios-illustration.webp";
-const laptop = "/images/laptop-illustration.webp";
+interface HeroImageData {
+  src: string;
+  srcSet: string;
+  avifSrcSet: string;
+  width: number;
+  height: number;
+}
+
+interface HeroSectionProps {
+  vasileiosIllustration?: HeroImageData;
+  laptopIllustration?: HeroImageData;
+}
 
 // Animation constants - centralized for easy maintenance
 const ANIMATION_CONFIG = {
@@ -50,9 +58,17 @@ const ANIMATION_CONFIG = {
   easing: "power1.easeInOut" as const,
 } as const;
 
-const HeroSection: React.FC = () => {
+const HeroSection: React.FC<HeroSectionProps> = ({ 
+  vasileiosIllustration, 
+  laptopIllustration 
+}) => {
   const sectionRef = useRef<HTMLElement>(null);
   const [isMounted, setIsMounted] = useState(false);
+  
+  // Images should always be provided from HeroIntro.astro via imports
+  // Using non-null assertion since HeroIntro.astro always provides these
+  const vasileiosImg = vasileiosIllustration!;
+  const laptopImg = laptopIllustration!;
 
   useEffect(() => {
     setIsMounted(true);
@@ -150,17 +166,17 @@ const HeroSection: React.FC = () => {
           <div className="absolute pointer-events-none scale-75 xs:scale-85 sm:scale-90 mx-auto">
             <picture>
               <source
-                srcSet="/images/vasileios-illustration-480w.avif 480w, /images/vasileios-illustration-800w.avif 800w"
+                srcSet={vasileiosImg.avifSrcSet}
                 type="image/avif"
               />
               <source
-                srcSet="/images/vasileios-illustration-480w.webp 480w, /images/vasileios-illustration-800w.webp 800w"
+                srcSet={vasileiosImg.srcSet}
                 type="image/webp"
               />
               <img
-                src={vasileiosIllustration}
-                width={1177}
-                height={1374}
+                src={vasileiosImg.src}
+                width={vasileiosImg.width}
+                height={vasileiosImg.height}
                 id="character-illustration"
                 aria-label="Vasileios Politeiadis character illustration levitating with a Macbook"
                 alt="Vasileios Politeiadis character illustration"
@@ -174,17 +190,17 @@ const HeroSection: React.FC = () => {
           <div className="laptop absolute top-10 xs:top-12 sm:top-16 left-0 scale-[.32] xs:scale-[.38] sm:scale-[.41] pointer-events-none">
             <picture>
               <source
-                srcSet="/images/laptop-illustration-480w.avif 480w, /images/laptop-illustration-800w.avif 800w, /images/laptop-illustration-1200w.avif 1200w"
+                srcSet={laptopImg.avifSrcSet}
                 type="image/avif"
               />
               <source
-                srcSet="/images/laptop-illustration-480w.webp 480w, /images/laptop-illustration-800w.webp 800w, /images/laptop-illustration-1200w.webp 1200w"
+                srcSet={laptopImg.srcSet}
                 type="image/webp"
               />
               <img
-                src={laptop}
-                width={559}
-                height={386}
+                src={laptopImg.src}
+                width={laptopImg.width}
+                height={laptopImg.height}
                 aria-hidden="true"
                 alt="Laptop illustration"
                 loading="eager"
