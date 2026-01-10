@@ -25,10 +25,15 @@ test.describe('Global Site Behavior', () => {
     test('should navigate between sections using navbar', async () => {
       await navPage.goto('/');
 
-      // Test navigation to each section
+      // Test navigation to each section - use appropriate navigation method based on viewport
       const sections = ['about', 'projects', 'creative', 'contact'];
       for (const section of sections) {
-        await navPage.navigateDesktop(section);
+        const isDesktop = await navPage.isDesktopMenuVisible();
+        if (isDesktop) {
+          await navPage.navigateDesktop(section);
+        } else {
+          await navPage.navigateMobile(section);
+        }
         await expect(navPage.page.locator(`[data-testid="page-${section}"]`)).toBeInViewport();
       }
     });
