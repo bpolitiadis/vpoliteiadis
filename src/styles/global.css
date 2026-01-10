@@ -73,6 +73,17 @@
     line-height: 1.2;
   }
 
+  /* Ensure Tailwind font utilities override global styles */
+  .font-orbitron {
+    font-family: 'Orbitron', sans-serif !important;
+    font-display: swap;
+  }
+
+  .font-inter {
+    font-family: 'Inter', system-ui, sans-serif !important;
+    font-display: swap;
+  }
+
   /* Typography clamps for hero */
   .hero-h1-clamp { font-size: clamp(28px, 5vw, 44px); }
   .hero-body-clamp { font-size: clamp(14px, 2.2vw, 18px); }
