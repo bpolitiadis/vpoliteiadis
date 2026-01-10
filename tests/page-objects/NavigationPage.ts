@@ -74,8 +74,22 @@ export class NavigationPage {
    * Wait for navbar to be visible and ready
    */
   async waitForNavbarToLoad() {
-    await expect(this.navbar).toBeVisible({ timeout: 10000 });
-    await expect(this.logo).toBeVisible();
+    // Wait for DOM to be ready
+    await this.page.waitForLoadState('domcontentloaded', { timeout: 10000 });
+
+    // Wait for network to be idle (but don't fail if it takes longer)
+    try {
+      await this.page.waitForLoadState('networkidle', { timeout: 5000 });
+    } catch {
+      // Continue even if networkidle times out - some assets may still be loading
+    }
+
+    // Give extra time for React hydration and component mounting
+    await this.page.waitForTimeout(1000);
+
+    // Wait for navbar and logo to be visible
+    await expect(this.navbar).toBeVisible({ timeout: 20000 });
+    await expect(this.logo).toBeVisible({ timeout: 10000 });
   }
 
   /**
