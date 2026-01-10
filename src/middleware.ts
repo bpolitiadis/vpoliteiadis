@@ -60,9 +60,10 @@ export const onRequest: MiddlewareHandler = async (context, next) => {
   // - Allow Google Fonts stylesheets
   // - Keep inline scripts/styles for Astro hydration
   // - Allow images from HTTPS and data URIs
+  // - Allow GSAP from jsdelivr CDN for animations
   const csp = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' https://cdn.vercel-insights.com",
+    "script-src 'self' 'unsafe-inline' https://cdn.vercel-insights.com https://cdn.jsdelivr.net",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "img-src 'self' data: https:",
     "font-src 'self' https://fonts.gstatic.com",

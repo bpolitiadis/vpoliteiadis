@@ -3,7 +3,7 @@
 export const prerender = true;
 
 import MainLayout from '../layouts/MainLayout.astro';
-import HeroIntro from '../components/hero/HeroIntro.astro';
+import HeroSection from '../components/hero/HeroSection.astro';
 import LetterGlitch from '../components/LetterGlitch.tsx';
 import AboutSection from '../components/AboutSection.astro';
 import ProjectsSection from '../components/ProjectsSection.astro';
@@ -67,7 +67,7 @@ const homeStructuredData = {
     
     <!-- Hero content with better spacing -->
     <div class="flex-1 flex items-center justify-center">
-      <HeroIntro />
+      <HeroSection />
     </div>
   </section>
 
