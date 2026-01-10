@@ -120,7 +120,7 @@ vpoliteiadis/
 
 ### Vercel (Recommended)
 ```bash
-npm i -g vercel
+ pnpm add -g vercel
 vercel login
 vercel
 ```

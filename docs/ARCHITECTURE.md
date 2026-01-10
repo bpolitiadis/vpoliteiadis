@@ -292,11 +292,11 @@ User-agent: Amazonbot
 Allow: /
 
 # Sitemaps
-Sitemap: https://vpoliteiadis.com/sitemap-index.xml
-Sitemap: https://vpoliteiadis.com/sitemap.xml
+Sitemap: https://vpoliteiadis.dev/sitemap-index.xml
+Sitemap: https://vpoliteiadis.dev/sitemap.xml
 
 # AI policy
-AI policy: https://vpoliteiadis.com/ai.txt`,
+AI policy: https://vpoliteiadis.dev/ai.txt`,
     { headers: { 'Content-Type': 'text/plain' } }
   );
 }
@@ -308,7 +308,7 @@ AI policy: https://vpoliteiadis.com/ai.txt`,
 export async function GET() {
   return new Response(
     `# ai.txt — AI crawling and usage policy
-# Site: https://vpoliteiadis.com
+# Site: https://vpoliteiadis.dev (primary), https://vpoliteiadis.com (secondary)
 
 # Indexing
 Allow: *

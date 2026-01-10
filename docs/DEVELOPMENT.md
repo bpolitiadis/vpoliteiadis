@@ -14,6 +14,30 @@
 - **pnpm** >= 9.0.0
 - **macOS/Linux/Windows**
 
+### Package Manager Policy
+
+**This project exclusively uses `pnpm` as the package manager.** Do not use `npm`, `yarn`, or any other package manager. All scripts, documentation, and CI/CD pipelines are configured for pnpm only.
+
+**Why pnpm?**
+- Faster installation and better disk usage
+- Strict dependency resolution prevents issues
+- Built-in workspace support for monorepos
+- Better security with isolated node_modules
+
+**Commands:**
+```bash
+# ✅ Always use pnpm
+pnpm install        # Install dependencies
+pnpm add package    # Add new dependency
+pnpm dev           # Start development
+pnpm build         # Build for production
+pnpm test          # Run tests
+
+# ❌ Never use these
+npm install        # Don't do this
+yarn install       # Don't do this
+```
+
 ```bash
 # Verify installations
 node -v    # >= 20.10.0
@@ -326,7 +350,7 @@ pnpm test:debug
 
 ```bash
 # Install Vercel CLI
-npm i -g vercel
+pnpm add -g vercel
 
 # Login and deploy
 vercel login

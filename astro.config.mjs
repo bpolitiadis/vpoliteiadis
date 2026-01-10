@@ -15,6 +15,8 @@ import rehypeSanitize from 'rehype-sanitize';
 // Primary site URL - used as fallback in various endpoints
 const SITE_URL = 'https://vpoliteiadis.dev';
 
+// Secondary domain: https://vpoliteiadis.com (redirects to primary)
+
 // https://astro.build/config
 export default defineConfig({
   site: SITE_URL,

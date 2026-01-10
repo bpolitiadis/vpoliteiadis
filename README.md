@@ -69,6 +69,19 @@ docs/                       # Project documentation
 - **Node.js** 18.0+ (LTS recommended)
 - **pnpm** 8.0+ (faster, more efficient than npm)
 
+### Package Manager Policy
+
+```bash
+# ✅ Correct
+pnpm install
+pnpm dev
+pnpm build
+
+# ❌ Never use npm
+npm install  # Don't do this
+npm run dev  # Don't do this
+```
+
 ### Installation
 
 ```bash
@@ -308,8 +321,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact
 
-- **Website**: [vpoliteiadis.com](https://vpoliteiadis.com)
-- **Email**: [contact@vpoliteiadis.com](mailto:contact@vpoliteiadis.com)
+- **Website**: [vpoliteiadis.dev](https://vpoliteiadis.dev) (primary), [vpoliteiadis.com](https://vpoliteiadis.com) (secondary)
+- **Email**: [contact@vpoliteiadis.dev](mailto:contact@vpoliteiadis.dev)
 - **LinkedIn**: [vpoliteiadis](https://linkedin.com/in/vpoliteiadis)
 - **GitHub**: [bpolitiadis](https://github.com/bpolitiadis)
 

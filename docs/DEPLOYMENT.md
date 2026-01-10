@@ -146,7 +146,7 @@ Sentry.init({
   tracesSampleRate: parseFloat(import.meta.env.SENTRY_TRACES_SAMPLE_RATE) || 0.1,
   integrations: [
     new Sentry.BrowserTracing({
-      tracePropagationTargets: ['vpoliteiadis.com']
+      tracePropagationTargets: ['vpoliteiadis.dev', 'vpoliteiadis.com']
     })
   ]
 });
@@ -328,7 +328,7 @@ export function onRequest({ request, next }) {
 **One-time Setup:**
 ```bash
 # Install Vercel CLI
-npm i -g vercel
+pnpm add -g vercel
 
 # Login to Vercel
 vercel login
@@ -435,7 +435,7 @@ inject();
   "ci": {
     "collect": {
       "numberOfRuns": 3,
-      "url": ["https://vpoliteiadis.com"]
+      "url": ["https://vpoliteiadis.dev"]
     },
     "assert": {
       "assertions": {
@@ -496,7 +496,7 @@ vercel ls
 **Uptime Monitoring:**
 ```bash
 # Health check endpoint
-curl -f https://vpoliteiadis.com/api/health
+curl -f https://vpoliteiadis.dev/api/health
 ```
 
 **Performance Budgets:**

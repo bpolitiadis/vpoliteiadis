@@ -198,11 +198,11 @@ User-agent: Amazonbot
 Allow: /
 
 # Sitemaps
-Sitemap: https://vpoliteiadis.com/sitemap-index.xml
-Sitemap: https://vpoliteiadis.com/sitemap.xml
+Sitemap: https://vpoliteiadis.dev/sitemap-index.xml
+Sitemap: https://vpoliteiadis.dev/sitemap.xml
 
 # AI policy
-AI policy: https://vpoliteiadis.com/ai.txt`,
+AI policy: https://vpoliteiadis.dev/ai.txt`,
     { headers: { 'Content-Type': 'text/plain' } }
   );
 }
@@ -214,7 +214,7 @@ AI policy: https://vpoliteiadis.com/ai.txt`,
 export async function GET() {
   return new Response(
     `# ai.txt — AI crawling and usage policy
-# Site: https://vpoliteiadis.com
+# Site: https://vpoliteiadis.dev (primary), https://vpoliteiadis.com (secondary)
 
 # Indexing
 Allow: *
@@ -248,8 +248,8 @@ export async function GET() {
     <item>
       <title><![CDATA[${post.data.title}]]></title>
       <description><![CDATA[${post.data.description}]]></description>
-      <link>https://vpoliteiadis.com/blog/${post.slug}</link>
-      <guid>https://vpoliteiadis.com/blog/${post.slug}</guid>
+      <link>https://vpoliteiadis.dev/blog/${post.slug}</link>
+      <guid>https://vpoliteiadis.dev/blog/${post.slug}</guid>
       <pubDate>${new Date(post.data.publishedAt).toUTCString()}</pubDate>
       ${post.data.tags.map(tag => `<category><![CDATA[${tag}]]></category>`).join('')}
     </item>
@@ -260,8 +260,8 @@ export async function GET() {
   <channel>
     <title>Vasileios Politeiadis</title>
     <description>Technical articles about development, AI, and career growth</description>
-    <link>https://vpoliteiadis.com</link>
-    <atom:link href="https://vpoliteiadis.com/rss.xml" rel="self" type="application/rss+xml" />
+    <link>https://vpoliteiadis.dev</link>
+    <atom:link href="https://vpoliteiadis.dev/rss.xml" rel="self" type="application/rss+xml" />
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     ${rssItems}
   </channel>
@@ -430,19 +430,19 @@ const { items } = Astro.props;
 
 ```bash
 # Test HTML content delivery
-curl -s https://vpoliteiadis.com/ | grep -o "<h1[^>]*>.*</h1>"
+curl -s https://vpoliteiadis.dev/ | grep -o "<h1[^>]*>.*</h1>"
 
 # Verify meta tags
-curl -s https://vpoliteiadis.com/ | grep 'meta name="description"'
+curl -s https://vpoliteiadis.dev/ | grep 'meta name="description"'
 
 # Check structured data
-curl -s https://vpoliteiadis.com/structured/website.json | jq '.["@type"]'
+curl -s https://vpoliteiadis.dev/structured/website.json | jq '.["@type"]'
 
 # Test sitemap
-curl -s https://vpoliteiadis.com/sitemap.xml | head -20
+curl -s https://vpoliteiadis.dev/sitemap.xml | head -20
 
 # Verify robots.txt
-curl -s https://vpoliteiadis.com/robots.txt
+curl -s https://vpoliteiadis.dev/robots.txt
 ```
 
 ### Automated Testing
@@ -474,7 +474,7 @@ curl -s https://vpoliteiadis.com/robots.txt
 # Google Rich Results Test
 curl -X POST "https://search.google.com/test/rich-results" \
   -H "Content-Type: application/json" \
-  -d '{"url": "https://vpoliteiadis.com/blog/example-post"}'
+  -d '{"url": "https://vpoliteiadis.dev/blog/example-post"}'
 
 # Schema.org Validator
 curl -X POST "https://validator.schema.org/validate" \
