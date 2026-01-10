@@ -5,6 +5,20 @@ import { Button } from "./button";
 import { Card } from "./card";
 import { cn } from "@/lib/utils";
 import { GitHubIcon, LinkedInIcon, InstagramIcon } from "@/components/icons/Icon";
+import TextType from "@/components/TextType";
+
+const HERO_QUOTES = [
+  "Certified bug hunter.",
+  "Debugging reality.",
+  "I break code professionally.",
+  "Automating workflows, amplifying humans.",
+  "The best way to predict the future is to invent it.",
+  "Human creativity, artificial brains.",
+  "Writing tests that test the limits.",
+  "I write code that watches your code.",
+  "Imagination is more important than knowledge.",
+  "The future is already here — it's just not evenly distributed.",
+];
 
 interface ProfileCardProps {
   name: string;
@@ -131,7 +145,7 @@ const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
 
           {/* User Info - Bottom Section */}
           {showUserInfo && (
-            <div className="flex flex-col items-start space-y-2 w-full mb-4">
+            <div className="flex flex-col items-start space-y-1 w-full mb-2">
               <h3 className="text-xl font-orbitron font-bold text-neon-lime leading-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                 {name}
               </h3>
@@ -146,6 +160,21 @@ const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
                   title
                 )}
               </p>
+              {/* Rotating Quotes */}
+              <div className="min-h-[1.5rem] mt-1 mb-2">
+                <TextType
+                  text={HERO_QUOTES}
+                  className="text-xs text-white font-inter italic leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                  typingSpeed={45}
+                  deletingSpeed={25}
+                  pauseDuration={1500}
+                  loop={true}
+                  showCursor={true}
+                  cursorCharacter="|"
+                  cursorClassName="text-white"
+                  hideCursorWhileTyping={false}
+                />
+              </div>
               {/* Social Links */}
               <div className="flex items-center gap-3 mt-2">
                 <a

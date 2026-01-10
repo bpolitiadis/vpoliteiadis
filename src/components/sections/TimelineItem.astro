@@ -1,0 +1,128 @@
+---
+interface Props {
+  item: {
+    period: string;
+    title: string;
+    subtitle?: string;
+    url?: string;
+    description: string;
+    skills?: string[];
+    isCurrent?: boolean;
+  };
+}
+
+const { item } = Astro.props;
+
+// Helper function to get timeline item colors
+function getTimelineColors(isCurrent: boolean) {
+  return {
+    period: isCurrent ? "text-neon-lime" : "text-matrix-white/60",
+    title: isCurrent ? "text-neon-lime" : "text-digital-emerald",
+  };
+}
+
+const colors = getTimelineColors(item.isCurrent ?? false);
+const titleClass = item.isCurrent ? 'job-title-current' : 'job-title-past';
+---
+
+{item.url ? (
+  <a
+    href={item.url}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="block rounded-md border border-transparent hover:border-digital-emerald/20 hover:bg-matrix-black/10 transition-all -mx-8 sm:-mx-6 lg:-mx-4 px-8 sm:px-6 lg:px-4"
+    aria-label={`View ${item.subtitle || item.title} website`}
+  >
+    <div class="text-animation py-4 group" data-animate="stagger-item">
+      <div class="flex flex-col lg:grid lg:grid-cols-[140px_1fr] lg:gap-6">
+        {/* Date column */}
+        <div class="mb-2 lg:mb-0">
+          <span class={`text-sm font-mono tracking-wide ${colors.period}`}>
+            {item.period}
+          </span>
+        </div>
+
+        {/* Content column */}
+        <div class="space-y-2">
+          <div class="flex flex-wrap items-baseline gap-2">
+            <h3 
+              class={`text-sm font-semibold ${colors.title} group-hover:opacity-80 transition-opacity ${titleClass}`}
+            >
+              {item.title}
+            </h3>
+            {item.subtitle && (
+              <span 
+                class={`text-sm font-semibold ${colors.title} inline-flex items-center gap-1.5 ${titleClass}`}
+              >
+                <span class="text-matrix-white/40">·</span>
+                {item.subtitle}
+                {item.url && <span class="text-xs opacity-70">↗</span>}
+              </span>
+            )}
+          </div>
+
+          <p class="text-sm text-matrix-white/70 leading-relaxed">
+            {item.description}
+          </p>
+
+          {item.skills && item.skills.length > 0 && (
+            <div class="flex flex-wrap gap-2 pt-1">
+              {item.skills.map((skill) => (
+                <div class="badge-emerald">
+                  {skill}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </a>
+) : (
+  <div class="-mx-8 sm:-mx-6 lg:-mx-4 px-8 sm:px-6 lg:px-4">
+    <div class="text-animation py-4 group" data-animate="stagger-item">
+      <div class="flex flex-col lg:grid lg:grid-cols-[140px_1fr] lg:gap-6">
+        {/* Date column */}
+        <div class="mb-2 lg:mb-0">
+          <span class={`text-sm font-mono tracking-wide ${colors.period}`}>
+            {item.period}
+          </span>
+        </div>
+
+        {/* Content column */}
+        <div class="space-y-2">
+          <div class="flex flex-wrap items-baseline gap-2">
+            <h3 
+              class={`text-sm font-semibold ${colors.title} group-hover:opacity-80 transition-opacity ${titleClass}`}
+            >
+              {item.title}
+            </h3>
+            {item.subtitle && (
+              <span 
+                class={`text-sm font-semibold ${colors.title} inline-flex items-center gap-1.5 ${titleClass}`}
+              >
+                <span class="text-matrix-white/40">·</span>
+                {item.subtitle}
+                {item.url && <span class="text-xs opacity-70">↗</span>}
+              </span>
+            )}
+          </div>
+
+          <p class="text-sm text-matrix-white/70 leading-relaxed">
+            {item.description}
+          </p>
+
+          {item.skills && item.skills.length > 0 && (
+            <div class="flex flex-wrap gap-2 pt-1">
+              {item.skills.map((skill) => (
+                <div class="badge-emerald">
+                  {skill}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+)}

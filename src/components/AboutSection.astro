@@ -1,16 +1,16 @@
 ---
-// import ElectricBorder from './ElectricBorder'; // Commented out - replaced with ProfileCard
 import { ProfileCard } from './ui/profile-card';
 import AImage from './media/AImage.astro';
 import DecryptedText from './DecryptedText';
-import TextAnimation from './TextAnimation';
+import TextAnimationWrapper from './TextAnimationWrapper.astro';
+import TimelineItem from './sections/TimelineItem.astro';
 import aboutBg from '../assets/images/about-bg.webp';
 
 interface Props {
   profileImageSrc: string;
 }
 
-interface TimelineItem {
+interface TimelineItemData {
   period: string;
   title: string;
   subtitle?: string;
@@ -22,7 +22,7 @@ interface TimelineItem {
 
 const { profileImageSrc } = Astro.props;
 
-const workExperience: TimelineItem[] = [
+const workExperience: TimelineItemData[] = [
   {
     period: "2024 — PRESENT",
     title: "Senior QA Automation Specialist",
@@ -50,7 +50,7 @@ const workExperience: TimelineItem[] = [
   },
 ];
 
-const education: TimelineItem[] = [
+const education: TimelineItemData[] = [
   {
     period: "2018",
     title: "Electrical Engineering and Computer Science",
@@ -60,7 +60,7 @@ const education: TimelineItem[] = [
   },
 ];
 
-const certifications: TimelineItem[] = [
+const certifications: TimelineItemData[] = [
   {
     period: "2018",
     title: "Certified Tester Foundation Level",
@@ -69,19 +69,11 @@ const certifications: TimelineItem[] = [
     description: "Foundation level certification in software testing principles and practices, validating expertise in QA methodologies.",
   },
 ];
-
-// Helper function to get timeline item colors
-function getTimelineColors(isCurrent: boolean) {
-  return {
-    period: isCurrent ? "text-neon-lime" : "text-matrix-white/60",
-    title: isCurrent ? "text-neon-lime" : "text-digital-emerald",
-  };
-}
 ---
 
 <section
   id="about"
-  class="relative py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-background overflow-visible"
+  class="relative py-16 md:py-24 px-8 sm:px-6 lg:px-8 bg-background overflow-visible"
   role="region"
   aria-labelledby="about-heading"
   data-testid="page-about"
@@ -120,32 +112,6 @@ function getTimelineColors(isCurrent: boolean) {
     {/* Two Column Layout */}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
       {/* Left Column - Profile Card (Sticky) */}
-      {/* 
-        ELECTRIC BORDER - Commented out for future use/debugging
-        Previously used ElectricBorder component with:
-        - color="#00B86B" (Digital Emerald)
-        - speed={0.2}
-        - chaos={0.3}
-        - thickness={2}
-        Can be restored if needed for testing or design iterations
-        
-        <ElectricBorder
-          client:load
-          color="#00B86B"
-          speed={0.2}
-          chaos={0.3}
-          thickness={2}
-          className="w-full rounded-lg"
-          style={{ borderRadius: '0.5rem' }}
-        >
-          <img
-            src={profileImageSrc}
-            alt="Vasileios Politeiadis - Senior QA Automation Specialist & Full-Stack Developer"
-            class="w-full rounded-lg object-cover relative z-0"
-            loading="lazy"
-          />
-        </ElectricBorder>
-      */}
       <div class="flex items-start justify-center pt-8 md:pt-12 lg:sticky lg:top-20 lg:self-start" data-animate="reveal">
         <div class="w-full max-w-xs lg:max-w-sm">
           <ProfileCard
@@ -173,225 +139,59 @@ function getTimelineColors(isCurrent: boolean) {
       <div class="space-y-8 flex flex-col items-center" data-testid="about-main-content">
         <div class="w-full max-w-2xl">
         {/* Introduction Paragraph */}
-        <TextAnimation client:load>
+        <TextAnimationWrapper>
           <p class="text-animation text-sm md:text-base text-matrix-white/90 leading-relaxed mb-6" data-testid="about-hero-content">
             I'm a Quality Assurance Automation Specialist and Full-stack Developer with 7+ years of experience building reliable software. I've worked on everything from enterprise-level European Commission projects to fast-moving startups, where I learned to take products from concept to production. As a freelancer, I've designed and built websites and applications for clients across various industries. This mix of corporate, startup, and freelance work has taught me that quality and reliability matter regardless of the environment.
           </p>
-        </TextAnimation>
+        </TextAnimationWrapper>
 
         {/* Work Experience Section */}
-        <TextAnimation client:load>
+        <TextAnimationWrapper>
           <div>
-          <h3 
-              class="text-animation text-xl md:text-2xl font-orbitron font-bold text-neon-lime mb-6 section-heading-neon"
-          >
-            Work Experience
-          </h3>
-          <div class="space-y-0" data-animate="stagger-container">
-            {workExperience.map((job) => {
-              const colors = getTimelineColors(job.isCurrent ?? false);
-              const content = (
-                  <div class="text-animation py-4 group" data-animate="stagger-item">
-                  <div class="flex flex-col lg:grid lg:grid-cols-[140px_1fr] lg:gap-6">
-                    {/* Date column */}
-                    <div class="mb-2 lg:mb-0">
-                      <span class={`text-sm font-mono tracking-wide ${colors.period}`}>
-                        {job.period}
-                      </span>
-                    </div>
-
-                    {/* Content column */}
-                    <div class="space-y-2">
-                      <div class="flex flex-wrap items-baseline gap-2">
-                        <h3 
-                          class={`text-base font-semibold ${colors.title} group-hover:opacity-80 transition-opacity ${job.isCurrent ? 'job-title-current' : 'job-title-past'}`}
-                        >
-                          {job.title}
-                        </h3>
-                        {job.subtitle && (
-                          <span 
-                            class={`text-base font-semibold ${colors.title} inline-flex items-center gap-1.5 ${job.isCurrent ? 'job-title-current' : 'job-title-past'}`}
-                          >
-                            <span class="text-matrix-white/40">·</span>
-                            {job.subtitle}
-                            {job.url && <span class="text-xs opacity-70">↗</span>}
-                          </span>
-                        )}
-                      </div>
-
-                      <p class="text-sm text-matrix-white/70 leading-relaxed">
-                        {job.description}
-                      </p>
-
-                      {job.skills && job.skills.length > 0 && (
-                        <div class="flex flex-wrap gap-2 pt-1">
-                          {job.skills.map((skill) => (
-                            <div class="badge-emerald">
-                              {skill}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              );
-
-              if (job.url) {
-                return (
-                  <a
-                    href={job.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="block rounded-md border border-transparent hover:border-digital-emerald/20 hover:bg-matrix-black/10 transition-all -mx-4 px-4"
-                    aria-label={`View ${job.subtitle || job.title} website`}
-                  >
-                    {content}
-                  </a>
-                );
-              }
-
-              return <div class="-mx-4 px-4">{content}</div>;
-            })}
+            <h3 
+              class="text-animation text-xl md:text-2xl font-orbitron font-bold text-neon-lime mb-1 md:mb-6 section-heading-neon"
+            >
+              Work Experience
+            </h3>
+            <div class="space-y-0" data-animate="stagger-container">
+              {workExperience.map((job) => (
+                <TimelineItem item={job} />
+              ))}
+            </div>
           </div>
-        </div>
-        </TextAnimation>
+        </TextAnimationWrapper>
 
         {/* Education Section */}
-        <TextAnimation client:load>
+        <TextAnimationWrapper>
           <div>
-          <h3 
-              class="text-animation text-xl md:text-2xl font-orbitron font-bold text-neon-lime mb-6 section-heading-neon"
-          >
-            Education
-          </h3>
-          <div class="space-y-0" data-animate="stagger-container">
-            {education.map((edu) => {
-              const colors = getTimelineColors(false);
-              const content = (
-                  <div class="text-animation py-4 group" data-animate="stagger-item">
-                  <div class="flex flex-col lg:grid lg:grid-cols-[140px_1fr] lg:gap-6">
-                    {/* Date column */}
-                    <div class="mb-2 lg:mb-0">
-                      <span class={`text-sm font-mono tracking-wide ${colors.period}`}>
-                        {edu.period}
-                      </span>
-                    </div>
-
-                    {/* Content column */}
-                    <div class="space-y-2">
-                      <div class="flex flex-wrap items-baseline gap-2">
-                        <h3 
-                            class={`text-base font-semibold ${colors.title} group-hover:opacity-80 transition-opacity job-title-past`}
-                        >
-                          {edu.title}
-                        </h3>
-                        {edu.subtitle && (
-                          <span 
-                              class={`text-base font-semibold ${colors.title} inline-flex items-center gap-1.5 job-title-past`}
-                          >
-                            <span class="text-matrix-white/40">·</span>
-                            {edu.subtitle}
-                            {edu.url && <span class="text-xs opacity-70">↗</span>}
-                          </span>
-                        )}
-                      </div>
-
-                      <p class="text-sm text-matrix-white/70 leading-relaxed">
-                        {edu.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-
-              if (edu.url) {
-                return (
-                  <a
-                    href={edu.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="block rounded-md border border-transparent hover:border-digital-emerald/20 hover:bg-matrix-black/10 transition-all -mx-4 px-4"
-                    aria-label={`View ${edu.subtitle || edu.title} website`}
-                  >
-                    {content}
-                  </a>
-                );
-              }
-
-              return <div class="-mx-4 px-4">{content}</div>;
-            })}
+            <h3 
+              class="text-animation text-xl md:text-2xl font-orbitron font-bold text-neon-lime mb-1 md:mb-6 section-heading-neon"
+            >
+              Education
+            </h3>
+            <div class="space-y-0" data-animate="stagger-container">
+              {education.map((edu) => (
+                <TimelineItem item={edu} />
+              ))}
+            </div>
           </div>
-        </div>
-        </TextAnimation>
+        </TextAnimationWrapper>
 
         {/* Certifications Section */}
-        <TextAnimation client:load>
+        <TextAnimationWrapper>
           <div>
-          <h3 
-              class="text-animation text-xl md:text-2xl font-orbitron font-bold text-neon-lime mb-6 section-heading-neon"
-          >
-            Certifications
-          </h3>
-          <div class="space-y-0" data-animate="stagger-container">
-            {certifications.map((cert) => {
-              const colors = getTimelineColors(false);
-              const content = (
-                  <div class="text-animation py-4 group" data-animate="stagger-item">
-                  <div class="flex flex-col lg:grid lg:grid-cols-[140px_1fr] lg:gap-6">
-                    {/* Date column */}
-                    <div class="mb-2 lg:mb-0">
-                      <span class={`text-sm font-mono tracking-wide ${colors.period}`}>
-                        {cert.period}
-                      </span>
-                    </div>
-
-                    {/* Content column */}
-                    <div class="space-y-2">
-                      <div class="flex flex-wrap items-baseline gap-2">
-                        <h3 
-                            class={`text-base font-semibold ${colors.title} group-hover:opacity-80 transition-opacity job-title-past`}
-                        >
-                          {cert.title}
-                        </h3>
-                        {cert.subtitle && (
-                          <span 
-                              class={`text-base font-semibold ${colors.title} inline-flex items-center gap-1.5 job-title-past`}
-                          >
-                            <span class="text-matrix-white/40">·</span>
-                            {cert.subtitle}
-                            {cert.url && <span class="text-xs opacity-70">↗</span>}
-                          </span>
-                        )}
-                      </div>
-
-                      <p class="text-sm text-matrix-white/70 leading-relaxed">
-                        {cert.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-
-              if (cert.url) {
-                return (
-                  <a
-                    href={cert.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="block rounded-md border border-transparent hover:border-digital-emerald/20 hover:bg-matrix-black/10 transition-all -mx-4 px-4"
-                    aria-label={`View ${cert.subtitle || cert.title} website`}
-                  >
-                    {content}
-                  </a>
-                );
-              }
-
-              return <div class="-mx-4 px-4">{content}</div>;
-            })}
+            <h3 
+              class="text-animation text-xl md:text-2xl font-orbitron font-bold text-neon-lime mb-1 md:mb-6 section-heading-neon"
+            >
+              Certifications
+            </h3>
+            <div class="space-y-0" data-animate="stagger-container">
+              {certifications.map((cert) => (
+                <TimelineItem item={cert} />
+              ))}
+            </div>
           </div>
-        </div>
-        </TextAnimation>
+        </TextAnimationWrapper>
         </div>
       </div>
     </div>

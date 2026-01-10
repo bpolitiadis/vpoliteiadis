@@ -282,7 +282,7 @@ const LetterGlitch = ({
   if (!isMounted) {
     return (
       <div 
-        className="relative w-full h-full bg-black overflow-hidden" 
+        className="relative w-full h-full overflow-hidden" 
         suppressHydrationWarning
         aria-hidden="true"
       />
@@ -290,7 +290,7 @@ const LetterGlitch = ({
   }
 
   return (
-    <div className="relative w-full h-full bg-black overflow-hidden">
+    <div className="relative w-full h-full overflow-hidden">
       <canvas ref={canvasRef} className="block w-full h-full" />
       {outerVignette && (
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none bg-[radial-gradient(circle,_rgba(0,0,0,0)_60%,_rgba(0,0,0,1)_100%)]"></div>

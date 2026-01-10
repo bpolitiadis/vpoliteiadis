@@ -16,19 +16,22 @@ const laptopImg = await getImage({
   format: 'webp',
 });
 
-// Generate AVIF srcsets for better compression
+// Generate AVIF srcsets for better compression (consistent with WebP widths)
 const vasileiosAvif480 = await getImage({ src: vasileiosIllustration, width: 480, format: 'avif' });
 const vasileiosAvif800 = await getImage({ src: vasileiosIllustration, width: 800, format: 'avif' });
+const vasileiosAvif1200 = await getImage({ src: vasileiosIllustration, width: 1200, format: 'avif' });
 const laptopAvif480 = await getImage({ src: laptopIllustration, width: 480, format: 'avif' });
 const laptopAvif800 = await getImage({ src: laptopIllustration, width: 800, format: 'avif' });
 const laptopAvif1200 = await getImage({ src: laptopIllustration, width: 1200, format: 'avif' });
 
-// Calculate aspect ratios for CLS prevention
-const vasileiosAspectRatio = (vasileiosIllustration.width || 1177) / (vasileiosIllustration.height || 1374);
-const laptopAspectRatio = (laptopIllustration.width || 559) / (laptopIllustration.height || 386);
+// Generate responsive WebP srcsets
+const vasileiosWebp480 = await getImage({ src: vasileiosIllustration, width: 480, format: 'webp' });
+const vasileiosWebp800 = await getImage({ src: vasileiosIllustration, width: 800, format: 'webp' });
+const vasileiosWebp1200 = await getImage({ src: vasileiosIllustration, width: 1200, format: 'webp' });
+const laptopWebp480 = await getImage({ src: laptopIllustration, width: 480, format: 'webp' });
+const laptopWebp800 = await getImage({ src: laptopIllustration, width: 800, format: 'webp' });
+const laptopWebp1200 = await getImage({ src: laptopIllustration, width: 1200, format: 'webp' });
 
-// Preload critical hero image
-const vasileiosPreload = await getImage({ src: vasileiosIllustration, width: 800, format: 'webp' });
 ---
 
 <section
@@ -36,31 +39,26 @@ const vasileiosPreload = await getImage({ src: vasileiosIllustration, width: 800
   aria-label="Hero section"
   data-testid="hero-section"
 >
-  <!-- Preload critical LCP image -->
-  <link rel="preload" as="image" href={vasileiosPreload.src} fetchpriority="high" />
-  
-  <!-- Image container with explicit aspect-ratio to prevent CLS -->
-  <div 
-    class="image-animation z-10 select-none mt-0 xs:mt-4 sm:mt-14 lg:mt-0 px-0 mx-auto mb-6 sm:mb-8 lg:mb-0 lg:p-0 lg:basis-1/3"
-    style={`aspect-ratio: ${vasileiosAspectRatio};`}
-  >
-    <div 
-      class="relative w-56 xs:w-64 sm:w-72 md:w-80 mx-auto"
-      style={`aspect-ratio: ${vasileiosAspectRatio};`}
-    >
+  <!-- Image container - matches React component structure -->
+  <div class="image-animation z-10 select-none mt-0 xs:mt-4 sm:mt-14 lg:mt-0 px-0 mx-auto mb-6 sm:mb-8 lg:mb-0 lg:p-0 lg:basis-1/3">
+    <div class="relative w-56 xs:w-64 sm:w-72 md:w-80 h-56 xs:h-64 sm:h-80 flex items-center mx-auto">
       <!-- Character illustration - LCP element -->
-      <div class="absolute pointer-events-none scale-75 xs:scale-85 sm:scale-90 mx-auto inset-0 flex items-center justify-center">
+      <div class="absolute pointer-events-none scale-75 xs:scale-85 sm:scale-90 mx-auto">
         <picture>
           <source
-            srcset={`${vasileiosAvif480.src} 480w, ${vasileiosAvif800.src} 800w`}
+            srcset={`${vasileiosAvif480.src} 480w, ${vasileiosAvif800.src} 800w, ${vasileiosAvif1200.src} 1200w`}
+            sizes="(max-width: 640px) 224px, (max-width: 768px) 256px, (max-width: 1024px) 288px, 320px"
             type="image/avif"
           />
           <source
-            srcset={`${vasileiosImg.src} 1177w`}
+            srcset={`${vasileiosWebp480.src} 480w, ${vasileiosWebp800.src} 800w, ${vasileiosWebp1200.src} 1200w`}
+            sizes="(max-width: 640px) 224px, (max-width: 768px) 256px, (max-width: 1024px) 288px, 320px"
             type="image/webp"
           />
           <img
             src={vasileiosImg.src}
+            srcset={`${vasileiosWebp480.src} 480w, ${vasileiosWebp800.src} 800w, ${vasileiosWebp1200.src} 1200w`}
+            sizes="(max-width: 640px) 224px, (max-width: 768px) 256px, (max-width: 1024px) 288px, 320px"
             width={vasileiosIllustration.width || 1177}
             height={vasileiosIllustration.height || 1374}
             id="character-illustration"
@@ -69,37 +67,34 @@ const vasileiosPreload = await getImage({ src: vasileiosIllustration, width: 800
             loading="eager"
             fetchpriority="high"
             decoding="async"
-            class="w-full h-full object-contain"
-            style={`aspect-ratio: ${vasileiosAspectRatio};`}
           />
         </picture>
       </div>
       
-      <!-- Laptop illustration -->
-      <div 
-        class="laptop absolute top-10 xs:top-12 sm:top-16 left-0 scale-[.32] xs:scale-[.38] sm:scale-[.41] pointer-events-none"
-        style={`aspect-ratio: ${laptopAspectRatio}; width: ${(laptopIllustration.width || 559) * 0.41}px;`}
-      >
+      <!-- Laptop illustration - positioned in front of character's chest -->
+      <div class="laptop absolute top-10 xs:top-12 sm:top-16 left-0 scale-[.40] xs:scale-[.40] sm:scale-[.40] pointer-events-none">
         <picture>
           <source
             srcset={`${laptopAvif480.src} 480w, ${laptopAvif800.src} 800w, ${laptopAvif1200.src} 1200w`}
+            sizes="(max-width: 640px) 192px, (max-width: 768px) 224px, (max-width: 1024px) 256px, 320px"
             type="image/avif"
           />
           <source
-            srcset={`${laptopImg.src} 559w`}
+            srcset={`${laptopWebp480.src} 480w, ${laptopWebp800.src} 800w, ${laptopWebp1200.src} 1200w`}
+            sizes="(max-width: 640px) 192px, (max-width: 768px) 224px, (max-width: 1024px) 256px, 320px"
             type="image/webp"
           />
           <img
             src={laptopImg.src}
+            srcset={`${laptopWebp480.src} 480w, ${laptopWebp800.src} 800w, ${laptopWebp1200.src} 1200w`}
+            sizes="(max-width: 640px) 192px, (max-width: 768px) 224px, (max-width: 1024px) 256px, 320px"
             width={laptopIllustration.width || 559}
             height={laptopIllustration.height || 386}
             aria-hidden="true"
-            alt=""
+            alt="Laptop illustration"
             loading="eager"
             fetchpriority="high"
             decoding="async"
-            class="w-full h-full object-contain"
-            style={`aspect-ratio: ${laptopAspectRatio};`}
           />
         </picture>
       </div>
@@ -125,17 +120,18 @@ const vasileiosPreload = await getImage({ src: vasileiosIllustration, width: 800
       </div>
     </div>
     <div class="mt-2 my-3 sm:my-4 md:mb-8 overflow-hidden">
-      <p class="text-animation mb-1 text-sm sm:text-base [&_strong]:[text-shadow:0_0_6px_rgba(57,255,20,0.3)]">
+      <p class="text-animation mb-1 text-sm sm:text-base font-inter [&_strong]:[text-shadow:0_0_6px_rgba(57,255,20,0.3)]">
         I break your code professionally using <strong>Playwright</strong> and <strong>Selenium</strong>. When I'm not hunting down bugs, I build full-stack applications with <strong>Next.js</strong> and <strong>Supabase</strong>, craft lightning-fast websites with <strong>Astro</strong> and <strong>TailwindCSS</strong>, and automate boring workflows with <strong>n8n</strong> and custom AI agents that actually work.
       </p>
     </div>
-    <a
-      href="#contact"
-      class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 mt-2 sm:mt-4"
+    <a 
+      href="#contact" 
+      class="hero-cta-button text-animation inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium font-inter h-9 px-4 py-2 mt-2 sm:mt-4 bg-primary text-primary-foreground shadow-[0_0_20px_rgba(57,255,20,0.25)] hover:bg-primary/90 hover:shadow-[0_0_24px_rgba(57,255,20,0.35)] transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
     >
       Contact me
-      <svg class="w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4" aria-hidden="true">
+        <path d="m22 2-7 20-4-9-9-4Z"></path>
+        <path d="M22 2 11 13"></path>
       </svg>
     </a>
   </div>
@@ -143,7 +139,7 @@ const vasileiosPreload = await getImage({ src: vasileiosIllustration, width: 800
   <!-- Scroll indicator -->
   <a
     href="#about"
-    class="group absolute link-outline animate-bounce hidden md:bottom-14 lg:bottom-16 left-1/2 transform -translate-x-1/2 md:flex items-center flex-col"
+    class="group absolute link-outline hidden md:bottom-14 lg:bottom-16 left-1/2 transform -translate-x-1/2 md:flex items-center flex-col scroll-indicator"
   >
     <span class="text-secondary text-shadow-emerald group-hover:text-shadow-none transition-all duration-200">
       Scroll
@@ -170,124 +166,261 @@ const vasileiosPreload = await getImage({ src: vasileiosIllustration, width: 800
   </a>
 </section>
 
-<!-- GSAP animations script - loads after critical content -->
-<script is:inline>
-  (function() {
-    // Wait for GSAP to be available (more robust than previous approach)
-    function waitForGSAP(callback, maxAttempts = 50, attempt = 0) {
-      // @ts-expect-error - GSAP is loaded via CDN and available on window
-      if (typeof window !== 'undefined' && typeof window.gsap !== 'undefined') {
-        // Small delay to ensure DOM is ready
-        setTimeout(callback, 50);
-      } else if (attempt < maxAttempts) {
-        setTimeout(() => {
-          waitForGSAP(callback, maxAttempts, attempt + 1);
-        }, 100);
-      } else {
-        console.warn('GSAP not loaded after waiting, hero animations may not work');
-      }
+<!-- CSS ensures content is always visible - animations via CSS keyframes -->
+<style is:global>
+  /* Base state: ALL content visible by default */
+  [data-testid="hero-section"] .text-animation,
+  [data-testid="hero-section"] .image-animation,
+  [data-testid="hero-section"] .laptop {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  
+  /* CSS fallback animations - only active when GSAP is not ready */
+  [data-testid="hero-section"]:not(.gsap-ready) .image-animation {
+    animation: hero-float-fallback 6s ease-in-out infinite;
+  }
+  
+  [data-testid="hero-section"]:not(.gsap-ready) .laptop {
+    --laptop-scale: 0.40;
+    transform: scale(var(--laptop-scale)) !important;
+    animation: hero-float-laptop-fallback 5s ease-in-out infinite 0.5s;
+  }
+  
+  /* Disable CSS animations and clear transforms when GSAP is ready */
+  [data-testid="hero-section"].gsap-ready .image-animation,
+  [data-testid="hero-section"].gsap-ready .laptop {
+    animation: none !important;
+    /* Let GSAP control all transforms */
+  }
+  
+  @keyframes hero-float-fallback {
+    0%, 100% {
+      transform: translateY(0) rotate(0deg);
     }
+    25% {
+      transform: translateY(-15px) translateX(10px) rotate(-1deg);
+    }
+    50% {
+      transform: translateY(-5px) translateX(-5px) rotate(0.5deg);
+    }
+    75% {
+      transform: translateY(-20px) translateX(5px) rotate(-0.5deg);
+    }
+  }
+  
+  @keyframes hero-float-laptop-fallback {
+    0%, 100% {
+      transform: scale(var(--laptop-scale)) translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: scale(var(--laptop-scale)) translateY(-8px) rotate(0.5deg);
+    }
+  }
+  
+  /* Scroll indicator animation - respects reduced motion */
+  [data-testid="hero-section"] .scroll-indicator {
+    animation: hero-bounce 2s ease-in-out infinite;
+  }
+  
+  @keyframes hero-bounce {
+    0%, 100% {
+      transform: translateX(-50%) translateY(0);
+    }
+    50% {
+      transform: translateX(-50%) translateY(-10px);
+    }
+  }
+  
+  /* Reduced motion: disable all animations and ensure visibility */
+  @media (prefers-reduced-motion: reduce) {
+    [data-testid="hero-section"] .text-animation,
+    [data-testid="hero-section"] .image-animation,
+    [data-testid="hero-section"] .laptop,
+    [data-testid="hero-section"] .scroll-indicator {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: translateX(-50%) !important;
+    }
+  }
+</style>
 
-    function initAnimations() {
-      // @ts-expect-error - GSAP is loaded via CDN and available on window
-      const gsap = window.gsap;
-      const section = document.querySelector('[data-testid="hero-section"]');
-      if (!section) {
-        console.warn('Hero section not found');
-        return;
-      }
+<!-- GSAP animations - separate timelines for character and laptop for 3D depth effect -->
+<script>
+  import gsap from 'gsap';
 
-      // Check for reduced motion preference
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const isMobile = window.innerWidth < 640;
+  // Animation config matching React component
+  const ANIMATION_CONFIG = {
+    // Tailwind sm breakpoint (matches 640px)
+    MOBILE_BREAKPOINT: 640,
+    image: {
+      durations: [3, 2, 3, 3],
+      movements: [
+        { y: '-=30', x: '+=20', rotation: '-=2' },
+        { y: '+=30', x: '-=20', rotation: '-=2' },
+        { y: '-=20', rotation: '+=2' },
+        { y: '+=20', rotation: '+=2' },
+      ],
+      movementsMobile: [
+        { y: '-=15', x: '+=10', rotation: '-=1' },
+        { y: '+=15', x: '-=10', rotation: '-=1' },
+        { y: '-=10', rotation: '+=1' },
+        { y: '+=10', rotation: '+=1' },
+      ],
+    },
+    laptop: {
+      durations: [3, 2, 3, 3],
+      movements: [
+        { y: '-=10', x: '+=10', rotation: '-=1' },
+        { y: '+=10', x: '-=10', rotation: '-=1' },
+        { y: '-=10', rotation: '+=1' },
+        { y: '+=10', rotation: '+=1' },
+      ],
+      movementsMobile: [
+        { y: '-=5', x: '+=5', rotation: '-=0.5' },
+        { y: '+=5', x: '-=5', rotation: '-=0.5' },
+        { y: '-=5', rotation: '+=0.5' },
+        { y: '+=5', rotation: '+=0.5' },
+      ],
+    },
+    easing: 'power1.easeInOut',
+  };
 
-      const q = gsap.utils.selector(section);
+  // Development mode detection (remove console logs in production)
+  const IS_DEV = import.meta.env.DEV;
 
-      // Text slide-up animation
-      const textTimeline = gsap.timeline({
-        defaults: {
-          stagger: 0.2,
-          duration: 0.3,
-        },
+  let imageTimeline: ReturnType<typeof gsap.timeline> | null = null;
+  let laptopTimeline: ReturnType<typeof gsap.timeline> | null = null;
+  let resizeTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  function getIsMobile(): boolean {
+    return window.innerWidth < ANIMATION_CONFIG.MOBILE_BREAKPOINT;
+  }
+
+  function createAnimations(section: Element, prefersReducedMotion: boolean): void {
+    const imageElements = section.querySelectorAll('.image-animation');
+    const laptopElements = section.querySelectorAll('.laptop');
+    const isMobile = getIsMobile();
+
+    if (IS_DEV) {
+      console.log('[HeroSection] Creating animations', {
+        imageElements: imageElements.length,
+        laptopElements: laptopElements.length,
+        prefersReducedMotion,
+        isMobile,
+        width: window.innerWidth
       });
+    }
 
-      if (!prefersReducedMotion) {
-        textTimeline.fromTo(
-          q('.text-animation'),
-          { y: 100, opacity: 0 },
-          { y: 0, opacity: 1, delay: 1 }
-        );
-      } else {
-        textTimeline.fromTo(
-          q('.text-animation'),
-          { opacity: 0 },
-          { opacity: 1, delay: 1 }
-        );
-      }
+    // Clean up existing timelines
+    if (imageTimeline) imageTimeline.kill();
+    if (laptopTimeline) laptopTimeline.kill();
 
-      // Illustration floating effect
-      const imageTimeline = gsap.timeline({ repeat: -1 });
-      if (!prefersReducedMotion) {
-        const movements = isMobile
-          ? [
-              { y: '-=15', x: '+=10', rotation: '-=1' },
-              { y: '+=15', x: '-=10', rotation: '-=1' },
-              { y: '-=10', rotation: '+=1' },
-              { y: '+=10', rotation: '+=1' },
-            ]
-          : [
-              { y: '-=30', x: '+=20', rotation: '-=2' },
-              { y: '+=30', x: '-=20', rotation: '-=2' },
-              { y: '-=20', rotation: '+=2' },
-              { y: '+=20', rotation: '+=2' },
-            ];
-        const durations = [3, 2, 3, 3];
-        movements.forEach((movement, index) => {
-          imageTimeline.to(q('.image-animation'), {
-            ...movement,
-            ease: 'power1.easeInOut',
-            duration: durations[index],
-          });
+    // Character illustration floating effect (infinite loop)
+    if (!prefersReducedMotion && imageElements.length > 0) {
+      gsap.set(imageElements, { x: 0, y: 0, rotation: 0, force3D: true });
+      
+      const movements = isMobile 
+        ? ANIMATION_CONFIG.image.movementsMobile 
+        : ANIMATION_CONFIG.image.movements;
+      
+      imageTimeline = gsap.timeline({ repeat: -1 });
+      movements.forEach((movement, index) => {
+        imageTimeline!.to(imageElements, {
+          ...movement,
+          ease: ANIMATION_CONFIG.easing,
+          duration: ANIMATION_CONFIG.image.durations[index],
+          force3D: true,
         });
-      }
+      });
+    }
 
-      // Laptop floating effect
-      const laptopTimeline = gsap.timeline({ repeat: -1 });
+    // Laptop floating effect (infinite loop, separate timeline for 3D depth)
+    if (laptopElements.length > 0) {
+      gsap.set(laptopElements, { 
+        scale: 0.40,
+        x: 0, 
+        y: 0, 
+        rotation: 0,
+        transformOrigin: 'center center',
+        force3D: true
+      });
+      
       if (!prefersReducedMotion) {
-        const movements = isMobile
-          ? [
-              { y: '-=5', x: '+=5', rotation: '-=0.5' },
-              { y: '+=5', x: '-=5', rotation: '-=0.5' },
-              { y: '-=5', rotation: '+=0.5' },
-              { y: '+=5', rotation: '+=0.5' },
-            ]
-          : [
-              { y: '-=10', x: '+=10', rotation: '-=1' },
-              { y: '+=10', x: '-=10', rotation: '-=1' },
-              { y: '-=10', rotation: '+=1' },
-              { y: '+=10', rotation: '+=1' },
-            ];
-        const durations = [3, 2, 3, 3];
+        const movements = isMobile 
+          ? ANIMATION_CONFIG.laptop.movementsMobile 
+          : ANIMATION_CONFIG.laptop.movements;
+        
+        laptopTimeline = gsap.timeline({ repeat: -1 });
         movements.forEach((movement, index) => {
-          laptopTimeline.to(q('.laptop'), {
+          laptopTimeline!.to(laptopElements, {
             ...movement,
-            ease: 'power1.easeInOut',
-            duration: durations[index],
+            ease: ANIMATION_CONFIG.easing,
+            duration: ANIMATION_CONFIG.laptop.durations[index],
+            force3D: true,
           });
         });
       }
     }
+  }
 
-    // Initialize when DOM is ready
-    if (typeof window !== 'undefined') {
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-          waitForGSAP(initAnimations);
-        });
-      } else {
-        // DOM already ready, wait for GSAP
-        waitForGSAP(initAnimations);
-      }
+  function initHeroAnimations(): void {
+    const section = document.querySelector('[data-testid="hero-section"]');
+    if (!section) {
+      if (IS_DEV) console.warn('[HeroSection] Section not found');
+      return;
     }
-  })();
+
+    // Check if GSAP is available
+    if (typeof gsap === 'undefined') {
+      if (IS_DEV) console.error('[HeroSection] GSAP is not available');
+      return;
+    }
+
+    // Mark section as GSAP-ready to disable CSS fallback animations
+    section.classList.add('gsap-ready');
+
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    // Create animations
+    createAnimations(section, prefersReducedMotion);
+
+    // Handle window resize with debouncing (updates mobile detection on orientation changes)
+    const handleResize = (): void => {
+      if (resizeTimeout) clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        createAnimations(section, prefersReducedMotion);
+      }, 150);
+    };
+
+    window.addEventListener('resize', handleResize, { passive: true });
+
+    // Cleanup on page unload (for SPA navigation scenarios)
+    const cleanup = (): void => {
+      if (imageTimeline) {
+        imageTimeline.kill();
+        imageTimeline = null;
+      }
+      if (laptopTimeline) {
+        laptopTimeline.kill();
+        laptopTimeline = null;
+      }
+      if (resizeTimeout) {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = null;
+      }
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('beforeunload', cleanup);
+    };
+
+    window.addEventListener('beforeunload', cleanup);
+  }
+
+  // Run when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeroAnimations);
+  } else {
+    initHeroAnimations();
+  }
 </script>
