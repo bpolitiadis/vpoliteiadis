@@ -39,12 +39,18 @@ export default function DecryptedText({
   reAnimateOnView = false, // Default: one-time animation (better UX for section headings)
   ...props
 }: DecryptedTextProps) {
+  const [isMounted, setIsMounted] = useState<boolean>(false)
   const [displayText, setDisplayText] = useState<string>(text)
   const [isAnimating, setIsAnimating] = useState<boolean>(false)
   const [isScrambling, setIsScrambling] = useState<boolean>(false)
   const [revealedIndices, setRevealedIndices] = useState<Set<number>>(new Set())
   const [hasAnimated, setHasAnimated] = useState<boolean>(false)
   const containerRef = useRef<HTMLSpanElement>(null)
+
+  // Client-only mount guard to prevent hydration mismatches
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   useEffect(() => {
     let interval: number | undefined
@@ -234,6 +240,22 @@ export default function DecryptedText({
           },
         }
       : {}
+
+  // Render static text during SSR to prevent hydration mismatch
+  if (!isMounted) {
+    return (
+      <span
+        className={`inline-block whitespace-pre-wrap ${parentClassName}`}
+        suppressHydrationWarning
+        {...props}
+      >
+        <span className="sr-only">{text}</span>
+        <span aria-hidden="true" className={className}>
+          {text}
+        </span>
+      </span>
+    )
+  }
 
   return (
     <span

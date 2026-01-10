@@ -278,6 +278,17 @@ const LetterGlitch = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMounted, glitchSpeed, smooth]);
 
+  // Render empty div during SSR to prevent hydration mismatch
+  if (!isMounted) {
+    return (
+      <div 
+        className="relative w-full h-full bg-black overflow-hidden" 
+        suppressHydrationWarning
+        aria-hidden="true"
+      />
+    );
+  }
+
   return (
     <div className="relative w-full h-full bg-black overflow-hidden">
       <canvas ref={canvasRef} className="block w-full h-full" />
