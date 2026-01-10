@@ -131,8 +131,8 @@ const githubProfile = {
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
 | `Hero.astro` | `src/components/Hero.astro` | Home hero with matrix rain, ElectricBorder avatar, and dynamic subtitle | — | HeroAnimationController, ElectricBorder, `/public/scripts/matrix-rain.js` |
-| `HeroSection.tsx` | `src/components/hero/HeroSection.tsx` | GSAP-powered hero section with floating animations for illustrations and laptop graphics | — | React, GSAP, public folder images |
-| `HeroIntro.astro` | `src/components/hero/HeroIntro.astro` | Hero intro section with chat layout (uses HeroSection) | — | HeroSection |
+| `HeroSection.astro` | `src/components/hero/HeroSection.astro` | Static hero section with GSAP animations, optimized images, and floating illustrations | — | GSAP, Astro assets |
+| `HeroSection.tsx` | `src/components/hero/deprecated/HeroSection.tsx` | ⚠️ DEPRECATED - GSAP-powered React hero section | — | React, GSAP |
 | `HeroAnimationController.tsx` | `src/components/HeroAnimationController.tsx` | React component managing hero animation sequence | `quotes: string[]` (14 professional quotes) | DecryptedText, TextType |
 | `DecryptedText.tsx` | `src/components/DecryptedText.tsx` | Matrix-style text decryption effect | `text: string`, `speed?: number`, `className?: string` | React, CSS animations |
 | `TextType.tsx` | `src/components/TextType.tsx` | Typing/erasing text rotator with cursor | `text: string \| string[]`, `typingSpeed?`, `deletingSpeed?`, `pauseDuration?`, `showCursor?`, `cursorCharacter?`, `cursorClassName?`, `className?`, `startOnVisible?` | React, CSS animations |
@@ -173,7 +173,8 @@ function MyComponent() {
 
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
-| `AboutSection.astro` | `src/components/AboutSection.astro` | Comprehensive profile showcase with work experience, education, and certifications | `profileImageSrc: string` | ProfileCard, structured data |
+| `AboutSection.astro` | `src/components/AboutSection.astro` | Comprehensive profile showcase with work experience, education, and certifications | `profileImageSrc: string` | ProfileCard, TimelineItem, structured data |
+| `TimelineItem.astro` | `src/components/sections/TimelineItem.astro` | Reusable timeline item component for work experience, education, and certifications | `item: TimelineItemData` | — |
 | `ProjectsSection.astro` | `src/components/ProjectsSection.astro` | Featured projects showcase with scroll-triggered animations | — | ProjectCard, data-animate attributes, public images |
 | `CreativeLabSection.astro` | `src/components/CreativeLabSection.astro` | Creative portfolio showcase with category-based styling and staggered animations | — | data-animate attributes, category colors |
 | `ContactSection.astro` | `src/components/ContactSection.astro` | Contact form section with background image and animations | — | ContactForm, ContactCards, AImage |
@@ -190,6 +191,38 @@ import ContactSection from '../components/ContactSection.astro';
 ---
 
 <ContactSection />
+```
+
+#### TimelineItem.astro
+**Purpose:** Reusable timeline item component for displaying work experience, education, and certifications with consistent styling and hover effects.
+
+**Props:**
+- `item` (required): TimelineItemData object with period, title, subtitle, url, description, skills, and isCurrent flag
+
+**Features:**
+- Responsive grid layout (stacked on mobile, side-by-side on desktop)
+- Color-coded current vs. past items
+- Hover effects with border and background transitions
+- Skills badges support
+- External link handling with proper accessibility
+
+**Usage:**
+```astro
+---
+import TimelineItem from '../components/sections/TimelineItem.astro';
+
+const workItem = {
+  period: "2024 — PRESENT",
+  title: "Senior QA Automation Specialist",
+  subtitle: "VASS",
+  url: "https://example.com",
+  description: "Leading test automation...",
+  skills: ["Java", "Selenium"],
+  isCurrent: true
+};
+---
+
+<TimelineItem item={workItem} />
 ```
 
 ### SEO & Metadata
@@ -417,8 +450,7 @@ graph TD
   H --> V[FuzzyText.tsx]
   G --> K[/public/scripts/matrix-rain.js]
 
-  AA[HeroSection.tsx] --> AB[GSAP]
-  AC[HeroIntro.astro] --> AA
+  AA[HeroSection.astro] --> AB[GSAP]
 
   AD[AboutSection.astro] --> AE[ProfileCard.tsx]
   AD --> AF[Structured Data]

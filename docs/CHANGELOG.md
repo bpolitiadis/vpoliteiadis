@@ -4,6 +4,36 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 
 ## [Unreleased]
 
+### Unit Testing Infrastructure
+- **Vitest Setup**: Added Vitest configuration for unit testing Astro components
+  - Configured with Astro Container API for component rendering
+  - Added `happy-dom` environment for DOM testing
+  - Integrated `@testing-library/jest-dom` for DOM assertions
+- **Unit Test Suite**: Created comprehensive unit tests for major components
+  - `HeroSection.astro` - 9 test cases covering structure, accessibility, and content
+  - `ContactSection.astro` - 6 test cases for contact form section
+  - `AboutSection.astro` - 8 test cases for profile and timeline sections
+  - `CreativeLabSection.astro` - 9 test cases for creative projects showcase
+  - `ProjectsSection.astro` - 10 test cases for featured projects
+- **Test Scripts**: Added npm scripts for unit testing workflow
+  - `pnpm test:unit` - Run all unit tests
+  - `pnpm test:unit:watch` - Watch mode for development
+  - `pnpm test:unit:ui` - Interactive UI mode
+  - `pnpm test:unit:coverage` - Generate coverage reports
+- **Documentation**: Added unit testing guide (`tests/unit/README.md`) with examples and best practices
+- **Testing Strategy**: Dual-layer testing approach
+  - Unit tests (Vitest) for component structure, props, and accessibility
+  - E2E tests (Playwright) for user flows, integration, and performance
+- **Impact**: 5 test files created, 42 test cases total, improved test coverage and developer experience
+
+### Hero Component Architecture Cleanup
+- **Removed Redundant HeroIntro.astro**: Eliminated unnecessary wrapper component that duplicated image optimization logic
+- **Direct HeroSection.astro Usage**: Now using the optimized Astro component directly instead of React wrapper
+- **Deprecated React Component**: Moved `HeroSection.tsx` to `src/components/hero/deprecated/` for reference
+- **Updated Documentation**: Refreshed component docs, README, and dependency references
+- **Cleaner Architecture**: Single Astro component handles image optimization, animations, and rendering
+- **Impact**: 4 files changed - removed redundant code, simplified imports, improved maintainability
+
 ### Animation System Refactoring
 - **Centralized GSAP Animation System**: Major refactoring from fragmented `IntersectionObserver` scripts to unified GSAP-powered system
   - Created `src/lib/animations.ts` as single source of truth for all scroll animations

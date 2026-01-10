@@ -242,7 +242,11 @@ pnpm preview      # Preview production build
 pnpm optimize:images  # Optimize images manually
 pnpm lint         # Run ESLint
 pnpm type-check   # Run TypeScript checks
-pnpm test         # Run Playwright tests
+pnpm test         # Run Playwright E2E tests
+pnpm test:unit    # Run Vitest unit tests
+pnpm test:unit:watch  # Run unit tests in watch mode
+pnpm test:unit:ui # Run unit tests with UI
+pnpm test:unit:coverage  # Generate unit test coverage
 pnpm test:ui      # Run tests with Playwright UI
 pnpm test:headed  # Run tests in headed mode
 ```
@@ -252,6 +256,7 @@ pnpm test:headed  # Run tests in headed mode
 - **ESLint** - Code linting and formatting
 - **Prettier** - Code formatting
 - **TypeScript** - Type safety and IntelliSense
+- **Vitest** - Unit testing framework for component testing
 - **Playwright** - E2E testing, accessibility, responsive, and performance tests
 - **Page Object Model** - Maintainable test architecture
 

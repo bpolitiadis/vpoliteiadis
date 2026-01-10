@@ -39,6 +39,7 @@ pnpm preview      # Preview production build
 | **[TROUBLESHOOTING.md](./TROUBLESHOOTING.md)** | Common issues, build failures, debug procedures | Developers, support |
 | **[CONTRIBUTING.md](./CONTRIBUTING.md)** | Contribution process, code standards, testing | Contributors, maintainers |
 | **[appendices/](./appendices/)** | Reference docs (branding, motion, social, testing) | Specialized use cases |
+| **[tests/unit/README.md](../tests/unit/README.md)** | Unit testing guide with Vitest and Astro Container API | Developers, contributors |
 || **[LOGGING.md](./LOGGING.md)** | Server-only logging, request correlation, Sentry integration | Developers, DevOps |
 
 || **[ENVIRONMENT_VARIABLES.md](./ENVIRONMENT_VARIABLES.md)** | Complete environment variables reference and setup guide | Developers, DevOps |
@@ -113,8 +114,10 @@ vpoliteiadis/
 - **ESLint + Prettier** for code quality
 - **Hot Module Replacement** in development
 - **Build-time validation** and optimization
-- **Comprehensive Test Suite** with Playwright for E2E, accessibility, responsive, and performance testing
-- **Page Object Model** architecture for maintainable test code
+- **Comprehensive Test Suite**:
+  - **Unit Tests**: Vitest with Astro Container API for component testing
+  - **E2E Tests**: Playwright for end-to-end, accessibility, responsive, and performance testing
+  - **Page Object Model** architecture for maintainable test code
 
 ## 🚀 Deployment
 
