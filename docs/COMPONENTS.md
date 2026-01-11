@@ -134,11 +134,77 @@ const githubProfile = {
 | `HeroSection.astro` | `src/components/hero/HeroSection.astro` | Static hero section with GSAP animations, optimized images, and floating illustrations | — | GSAP, Astro assets |
 | `HeroSection.tsx` | `src/components/hero/deprecated/HeroSection.tsx` | ⚠️ DEPRECATED - GSAP-powered React hero section | — | React, GSAP |
 | `HeroAnimationController.tsx` | `src/components/HeroAnimationController.tsx` | React component managing hero animation sequence | `quotes: string[]` (14 professional quotes) | DecryptedText, TextType |
-| `DecryptedText.tsx` | `src/components/DecryptedText.tsx` | Matrix-style text decryption effect | `text: string`, `speed?: number`, `className?: string` | React, CSS animations |
+| `DecryptedText.tsx` | `src/components/DecryptedText.tsx` | Matrix-style text decryption effect with scroll-triggered animations | `text: string`, `speed?: number`, `sequential?: boolean`, `revealDirection?: 'start' \| 'end' \| 'center'`, `animateOn?: 'view' \| 'hover'`, `className?: string`, `encryptedClassName?: string`, `revealedStyle?: React.CSSProperties` | React, IntersectionObserver |
 | `TextType.tsx` | `src/components/TextType.tsx` | Typing/erasing text rotator with cursor | `text: string \| string[]`, `typingSpeed?`, `deletingSpeed?`, `pauseDuration?`, `showCursor?`, `cursorCharacter?`, `cursorClassName?`, `className?`, `startOnVisible?` | React, CSS animations |
 | `TextAnimation.tsx` | `src/components/TextAnimation.tsx` | Advanced text animation effects component | `text: string`, `effect?: 'fadeIn' \| 'slideUp' \| 'typewriter' \| 'glitch'`, `duration?: number`, `delay?: number`, `className?: string` | React, GSAP, CSS animations |
 | `FuzzyText.tsx` | `src/components/FuzzyText.tsx` | Canvas-based fuzzy text effect with hover interactions | `children`, `fontSize?`, `fontWeight?`, `fontFamily?`, `color?`, `enableHover?`, `baseIntensity?`, `hoverIntensity?` | React, Canvas API, requestAnimationFrame |
 | `LetterGlitch.tsx` | `src/components/LetterGlitch.tsx` | Canvas-based letter glitch effect with customizable colors and speed | `glitchColors?`, `glitchSpeed?`, `centerVignette?`, `outerVignette?`, `smooth?` | React, Canvas API |
+
+#### DecryptedText.tsx
+**Purpose:** Matrix-style text decryption animation that reveals characters sequentially. Supports both scroll-triggered (view) and hover-triggered animations.
+
+**Key Features:**
+- **Scroll-triggered animations**: Uses IntersectionObserver for reliable scroll-triggered animations
+- **Early visibility detection**: Automatically detects if element is already visible on page load (above the fold or hash navigation)
+- **Sequential character reveal**: Characters decrypt one-by-one in configurable direction (start, end, center)
+- **Accessibility**: Respects `prefers-reduced-motion` and provides screen reader support
+- **Simplified implementation**: No GSAP dependency, uses native browser APIs only
+
+**Animation Behavior:**
+- **Above the fold**: When element is visible on page load, animation triggers immediately after mount
+- **Below the fold**: When element requires scrolling, IntersectionObserver fires when element enters viewport (15% threshold)
+- **Hash navigation**: Direct links to sections (e.g., `#about`) trigger animation even if element is already visible
+
+**Props:**
+- `text` (required): Text to decrypt
+- `speed` (optional): Milliseconds between character reveals (default: 50)
+- `sequential` (optional): Reveal characters one-by-one vs all at once (default: true)
+- `revealDirection` (optional): 'start' | 'end' | 'center' - direction of character reveal (default: 'start')
+- `animateOn` (optional): 'view' | 'hover' - trigger type (default: 'view')
+- `className` (optional): CSS classes for revealed text
+- `encryptedClassName` (optional): CSS classes for scrambled characters
+- `revealedStyle` (optional): Inline styles for revealed characters (useful for gradients/glows)
+- `reAnimateOnView` (optional): Re-animate when scrolling back into view (default: false)
+
+**Usage:**
+```tsx
+import DecryptedText from '../components/DecryptedText';
+
+// Basic usage - scroll-triggered
+<DecryptedText
+  client:visible
+  text="Who am I?"
+  speed={60}
+  sequential={true}
+  revealDirection="start"
+  className="text-neon-lime"
+  encryptedClassName="text-primary/40"
+/>
+
+// With custom revealed styles (gradient text)
+<DecryptedText
+  client:visible
+  text="Creative Lab"
+  revealedStyle={{
+    background: 'linear-gradient(135deg, #00FFFF 0%, #00BFFF 100%)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+  }}
+/>
+
+// Hover-triggered animation
+<DecryptedText
+  text="Hover me"
+  animateOn="hover"
+  speed={30}
+/>
+```
+
+**Technical Notes:**
+- Uses `client:visible` directive for optimal performance (hydrates when element enters viewport)
+- Uses IntersectionObserver for reliable scroll detection (no GSAP dependency)
+- Prevents double-triggering with ref-based animation guard
+- Simplified implementation reduces complexity and improves reliability
 
 #### LetterGlitch.tsx
 **Purpose:** Canvas-based letter glitch effect component with customizable glitch colors and speed.
