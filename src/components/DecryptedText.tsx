@@ -40,21 +40,52 @@ export default function DecryptedText({
   ...props
 }: DecryptedTextProps) {
   const [isMounted, setIsMounted] = useState<boolean>(false)
-  const [displayText, setDisplayText] = useState<string>(text)
+  
+  // Generate initial scrambled text
+  const generateScrambledText = (originalText: string, useOriginalOnly: boolean, charSet: string): string => {
+    const availableChars = useOriginalOnly
+      ? Array.from(new Set(originalText.split(''))).filter((char) => char !== ' ')
+      : charSet.split('')
+    
+    return originalText
+      .split('')
+      .map((char) => {
+        if (char === ' ') return ' '
+        return availableChars[Math.floor(Math.random() * availableChars.length)]
+      })
+      .join('')
+  }
+  
+  // Initialize with scrambled text for view animations, final text for hover animations
+  const initialText = animateOn === 'view' 
+    ? generateScrambledText(text, useOriginalCharsOnly, characters)
+    : text
+  
+  const [displayText, setDisplayText] = useState<string>(initialText)
   const [isAnimating, setIsAnimating] = useState<boolean>(false)
-  const [isScrambling, setIsScrambling] = useState<boolean>(false)
+  const [isScrambling, setIsScrambling] = useState<boolean>(animateOn === 'view')
   const [revealedIndices, setRevealedIndices] = useState<Set<number>>(new Set())
-  const [hasAnimated, setHasAnimated] = useState<boolean>(false)
   const containerRef = useRef<HTMLSpanElement>(null)
+  const hasAnimatedRef = useRef<boolean>(false)
+  const intervalRef = useRef<number | undefined>(undefined)
 
   // Client-only mount guard to prevent hydration mismatches
   useEffect(() => {
     setIsMounted(true)
   }, [])
 
+  // Animation effect - simplified and reliable
   useEffect(() => {
-    let interval: number | undefined
-    let currentIteration = 0
+    if (!isAnimating) {
+      // Clear any existing interval
+      if (intervalRef.current) {
+        window.clearInterval(intervalRef.current)
+        intervalRef.current = undefined
+      }
+      return
+    }
+
+    setIsScrambling(true)
 
     const getNextIndex = (revealedSet: Set<number>): number => {
       const textLength = text.length
@@ -126,44 +157,64 @@ export default function DecryptedText({
       }
     }
 
-    if (isAnimating) {
-      setIsScrambling(true)
-      interval = window.setInterval(() => {
-        setRevealedIndices((prevRevealed) => {
-          if (sequential) {
-            if (prevRevealed.size < text.length) {
-              const nextIndex = getNextIndex(prevRevealed)
-              const newRevealed = new Set(prevRevealed)
-              newRevealed.add(nextIndex)
-              setDisplayText(shuffleText(text, newRevealed))
-              return newRevealed
-            } else {
-              window.clearInterval(interval)
-              setIsScrambling(false)
-              setTimeout(() => {
-                onComplete?.()
-              }, 200)
-              return prevRevealed
-            }
-          } else {
-            setDisplayText(shuffleText(text, prevRevealed))
-            currentIteration++
-            if (currentIteration >= maxIterations) {
-              window.clearInterval(interval)
-              setIsScrambling(false)
-              setDisplayText(text)
-              setTimeout(() => {
-                onComplete?.()
-              }, 200)
-            }
+    let currentIteration = 0
+
+    intervalRef.current = window.setInterval(() => {
+      setRevealedIndices((prevRevealed) => {
+        if (sequential) {
+          // Check if animation is already complete
+          if (prevRevealed.size >= text.length) {
             return prevRevealed
           }
-        })
-      }, speed)
-    }
+
+          // Reveal next character
+          const nextIndex = getNextIndex(prevRevealed)
+          const newRevealed = new Set(prevRevealed)
+          newRevealed.add(nextIndex)
+          setDisplayText(shuffleText(text, newRevealed))
+
+          // Check if this was the last character
+          if (newRevealed.size >= text.length) {
+            // Animation complete - clear interval and set final state
+            if (intervalRef.current) {
+              window.clearInterval(intervalRef.current)
+              intervalRef.current = undefined
+            }
+            setIsScrambling(false)
+            setIsAnimating(false)
+            setDisplayText(text)
+            setTimeout(() => {
+              onComplete?.()
+            }, 200)
+          }
+
+          return newRevealed
+        } else {
+          // Non-sequential mode
+          setDisplayText(shuffleText(text, prevRevealed))
+          currentIteration++
+          if (currentIteration >= maxIterations) {
+            if (intervalRef.current) {
+              window.clearInterval(intervalRef.current)
+              intervalRef.current = undefined
+            }
+            setIsScrambling(false)
+            setIsAnimating(false)
+            setDisplayText(text)
+            setTimeout(() => {
+              onComplete?.()
+            }, 200)
+          }
+          return prevRevealed
+        }
+      })
+    }, speed)
 
     return () => {
-      if (interval) window.clearInterval(interval)
+      if (intervalRef.current) {
+        window.clearInterval(intervalRef.current)
+        intervalRef.current = undefined
+      }
     }
   }, [
     isAnimating,
@@ -177,56 +228,78 @@ export default function DecryptedText({
     onComplete,
   ])
 
+  // Simplified view-based animation trigger - IntersectionObserver only
   useEffect(() => {
-    if (animateOn !== 'view') return
+    if (animateOn !== 'view' || !isMounted) return
 
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          // One-time animation (default): only animate if not already animated
-          if (!reAnimateOnView && !hasAnimated) {
-            setIsAnimating(true)
-            setHasAnimated(true)
-          }
-          // Re-animate on view: reset and animate every time element enters viewport
-          else if (reAnimateOnView) {
-            // Reset state for re-animation
-            setRevealedIndices(new Set())
-            setIsScrambling(false)
-            setIsAnimating(true)
-            // Generate initial scrambled text
-            const availableChars = useOriginalCharsOnly
-              ? Array.from(new Set(text.split(''))).filter((char) => char !== ' ')
-              : characters.split('')
-            const scrambledText = text
-              .split('')
-              .map((char) => {
-                if (char === ' ') return ' '
-                return availableChars[Math.floor(Math.random() * availableChars.length)]
-              })
-              .join('')
-            setDisplayText(scrambledText)
-          }
-        }
-      })
-    }
-
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.3,
-    }
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions)
     const currentRef = containerRef.current
-    if (currentRef) {
-      observer.observe(currentRef)
+    if (!currentRef) return
+
+    const startAnimation = () => {
+      // Prevent duplicate animations
+      if (!reAnimateOnView && hasAnimatedRef.current) {
+        return
+      }
+
+      // Generate initial scrambled text
+      const availableChars = useOriginalCharsOnly
+        ? Array.from(new Set(text.split(''))).filter((char) => char !== ' ')
+        : characters.split('')
+      const scrambledText = text
+        .split('')
+        .map((char) => {
+          if (char === ' ') return ' '
+          return availableChars[Math.floor(Math.random() * availableChars.length)]
+        })
+        .join('')
+
+      setDisplayText(scrambledText)
+      setRevealedIndices(new Set())
+      setIsScrambling(true)
+      setIsAnimating(true)
+      hasAnimatedRef.current = true
+    }
+
+    // Use IntersectionObserver - simple and reliable
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (reAnimateOnView || !hasAnimatedRef.current) {
+              startAnimation()
+            }
+            if (!reAnimateOnView) {
+              observer.unobserve(entry.target)
+            }
+          }
+        })
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15, // Trigger when 15% visible
+      }
+    )
+
+    observer.observe(currentRef)
+
+    // Check if element is already visible
+    const rect = currentRef.getBoundingClientRect()
+    const viewportHeight = window.innerHeight
+    const triggerPoint = viewportHeight * 0.85
+
+    if (rect.top < triggerPoint && rect.bottom > 0 && !hasAnimatedRef.current) {
+      setTimeout(() => {
+        if (!hasAnimatedRef.current) {
+          startAnimation()
+        }
+      }, 100)
     }
 
     return () => {
-      if (currentRef) observer.unobserve(currentRef)
+      observer.disconnect()
     }
-  }, [animateOn, hasAnimated, reAnimateOnView, text, useOriginalCharsOnly, characters])
+  }, [animateOn, reAnimateOnView, text, useOriginalCharsOnly, characters, isMounted])
 
   const hoverProps =
     animateOn === 'hover'
@@ -261,6 +334,7 @@ export default function DecryptedText({
     <span
       ref={containerRef}
       className={`inline-block whitespace-pre-wrap ${parentClassName}`}
+      data-decrypted-text="true"
       {...hoverProps}
       {...props}
     >
@@ -268,12 +342,19 @@ export default function DecryptedText({
 
       <span aria-hidden="true" className="relative">
         {displayText.split('').map((char, index) => {
-          const isRevealedOrDone =
-            revealedIndices.has(index) || !isScrambling || !isAnimating
+          // Character is revealed if it's in the revealed set
+          const isRevealed = revealedIndices.has(index)
+          // Animation is complete when all characters are revealed and animation stopped
+          const isComplete = revealedIndices.size === text.length && !isScrambling
+          const isRevealedOrDone = isRevealed || isComplete
+          
+          // Show final character if revealed, scrambled character otherwise
+          // When animation hasn't started (isAnimating=false), show scrambled text
+          const displayChar = isRevealedOrDone ? text[index] : char
 
           return (
             <span
-              key={`${char}-${index}`}
+              key={`${char}-${index}-${isRevealed}-${isAnimating}`}
               className={`${
                 isRevealedOrDone 
                   ? `${className} transition-all duration-200` 
@@ -286,7 +367,7 @@ export default function DecryptedText({
                   : {})
               }}
             >
-              {char}
+              {displayChar}
             </span>
           )
         })}
