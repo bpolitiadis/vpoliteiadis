@@ -88,7 +88,6 @@ const creativeProjects = [
       <h2
         id="creative-heading"
         class="text-3xl md:text-4xl lg:text-5xl font-orbitron font-bold mb-3"
-        data-animate="reveal"
       >
         <DecryptedText
           client:visible
@@ -114,7 +113,7 @@ const creativeProjects = [
     </div>
 
     {/* Creative Projects Grid */}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" data-animate="stagger-container">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
       {creativeProjects.map((project) => (
         <CreativeCard project={project} />
       ))}

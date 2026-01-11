@@ -38,7 +38,6 @@ import contactBg from '../assets/images/contact-bg.webp';
     <h2
       id="contact-heading"
       class="text-3xl md:text-4xl lg:text-5xl font-orbitron font-bold text-center mb-12 md:mb-16"
-      data-animate="reveal"
     >
       <DecryptedText
         client:visible
@@ -53,19 +52,19 @@ import contactBg from '../assets/images/contact-bg.webp';
     </h2>
     
     {/* Section Description */}
-    <p class="text-center text-foreground/80 text-lg md:text-xl mb-12 md:mb-16 max-w-2xl mx-auto" data-animate="reveal">
+    <p class="text-center text-foreground/80 text-lg md:text-xl mb-12 md:mb-16 max-w-2xl mx-auto">
       Let's collaborate on your next project or discuss creative opportunities
     </p>
 
     {/* Contact Content */}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 items-stretch">
       {/* Left column - Contact Form */}
-      <div class="flex flex-col" data-animate="reveal">
+      <div class="flex flex-col">
         <ContactForm client:visible />
       </div>
 
       {/* Right column - Contact Cards */}
-      <div class="flex flex-col" data-animate="reveal">
+      <div class="flex flex-col">
         <ContactCards />
       </div>
     </div>

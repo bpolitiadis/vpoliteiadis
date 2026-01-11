@@ -2,7 +2,6 @@
 import { ProfileCard } from './ui/profile-card';
 import AImage from './media/AImage.astro';
 import DecryptedText from './DecryptedText';
-import TextAnimationWrapper from './TextAnimationWrapper.astro';
 import TimelineItem from './sections/TimelineItem.astro';
 import aboutBg from '../assets/images/about-bg.webp';
 
@@ -95,7 +94,6 @@ const certifications: TimelineItemData[] = [
     <h2
       id="about-heading"
       class="text-3xl md:text-4xl lg:text-5xl font-orbitron font-bold text-center mb-12 md:mb-16"
-      data-animate="reveal"
     >
       <DecryptedText
         client:visible
@@ -112,7 +110,7 @@ const certifications: TimelineItemData[] = [
     {/* Two Column Layout */}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
       {/* Left Column - Profile Card (Sticky) */}
-      <div class="flex items-start justify-center pt-8 md:pt-12 lg:sticky lg:top-20 lg:self-start" data-animate="reveal">
+      <div class="flex items-start justify-center pt-8 md:pt-12 lg:sticky lg:top-20 lg:self-start">
         <div class="w-full max-w-xs lg:max-w-sm">
           <ProfileCard
             client:load
@@ -139,59 +137,54 @@ const certifications: TimelineItemData[] = [
       <div class="space-y-8 flex flex-col items-center" data-testid="about-main-content">
         <div class="w-full max-w-2xl">
         {/* Introduction Paragraph */}
-        <TextAnimationWrapper>
-          <p class="text-animation text-sm md:text-base text-matrix-white/90 leading-relaxed mb-6" data-testid="about-hero-content">
-            I'm a Quality Assurance Automation Specialist and Full-stack Developer with 7+ years of experience building reliable software. I've worked on everything from enterprise-level European Commission projects to fast-moving startups, where I learned to take products from concept to production. As a freelancer, I've designed and built websites and applications for clients across various industries. This mix of corporate, startup, and freelance work has taught me that quality and reliability matter regardless of the environment.
-          </p>
-        </TextAnimationWrapper>
+        <p 
+          class="text-sm md:text-base text-matrix-white/90 leading-relaxed mb-6" 
+          data-testid="about-hero-content"
+        >
+          I'm a Quality Assurance Automation Specialist and Full-stack Developer with 7+ years of experience building reliable software. I've worked on everything from enterprise-level European Commission projects to fast-moving startups, where I learned to take products from concept to production. As a freelancer, I've designed and built websites and applications for clients across various industries. This mix of corporate, startup, and freelance work has taught me that quality and reliability matter regardless of the environment.
+        </p>
 
         {/* Work Experience Section */}
-        <TextAnimationWrapper>
-          <div>
-            <h3 
-              class="text-animation text-xl md:text-2xl font-orbitron font-bold text-neon-lime mb-1 md:mb-6 section-heading-neon"
-            >
-              Work Experience
-            </h3>
-            <div class="space-y-0" data-animate="stagger-container">
-              {workExperience.map((job) => (
-                <TimelineItem item={job} />
-              ))}
-            </div>
+        <div>
+          <h3 
+            class="text-xl md:text-2xl font-orbitron font-bold text-neon-lime mb-1 md:mb-6 section-heading-neon"
+          >
+            Work Experience
+          </h3>
+          <div class="space-y-0">
+            {workExperience.map((job) => (
+              <TimelineItem item={job} />
+            ))}
           </div>
-        </TextAnimationWrapper>
+        </div>
 
         {/* Education Section */}
-        <TextAnimationWrapper>
-          <div>
-            <h3 
-              class="text-animation text-xl md:text-2xl font-orbitron font-bold text-neon-lime mb-1 md:mb-6 section-heading-neon"
-            >
-              Education
-            </h3>
-            <div class="space-y-0" data-animate="stagger-container">
-              {education.map((edu) => (
-                <TimelineItem item={edu} />
-              ))}
-            </div>
+        <div>
+          <h3 
+            class="text-xl md:text-2xl font-orbitron font-bold text-neon-lime mb-1 md:mb-6 section-heading-neon"
+          >
+            Education
+          </h3>
+          <div class="space-y-0">
+            {education.map((edu) => (
+              <TimelineItem item={edu} />
+            ))}
           </div>
-        </TextAnimationWrapper>
+        </div>
 
         {/* Certifications Section */}
-        <TextAnimationWrapper>
-          <div>
-            <h3 
-              class="text-animation text-xl md:text-2xl font-orbitron font-bold text-neon-lime mb-1 md:mb-6 section-heading-neon"
-            >
-              Certifications
-            </h3>
-            <div class="space-y-0" data-animate="stagger-container">
-              {certifications.map((cert) => (
-                <TimelineItem item={cert} />
-              ))}
-            </div>
+        <div>
+          <h3 
+            class="text-xl md:text-2xl font-orbitron font-bold text-neon-lime mb-1 md:mb-6 section-heading-neon"
+          >
+            Certifications
+          </h3>
+          <div class="space-y-0">
+            {certifications.map((cert) => (
+              <TimelineItem item={cert} />
+            ))}
           </div>
-        </TextAnimationWrapper>
+        </div>
         </div>
       </div>
     </div>
