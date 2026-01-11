@@ -372,10 +372,12 @@ const finalStructuredData = structuredData ? { ...baseStructuredData, ...structu
     .nav-link-desktop { transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
     .animate-reveal-up { opacity: 0; transform: translateY(30px) scale(0.95); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
     .animate-reveal-up.animate { opacity: 1; transform: translateY(0) scale(1); }
+    .text-animation { opacity: 0; transform: translateY(30px) scale(0.95); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+    .text-animation.animate { opacity: 1; transform: translateY(0) scale(1); }
     h1, h2, h3, h4, h5, h6 { font-family: Orbitron, sans-serif; line-height: 1.2; }
     img { max-width: 100%; height: auto; }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
-    @media (max-width: 768px) { .animate-reveal-up, .animate-reveal-up.animate { opacity: 1; transform: none; } }
+    @media (max-width: 768px) { .animate-reveal-up, .animate-reveal-up.animate, .text-animation, .text-animation.animate { opacity: 1; transform: none; } }
   `} />
 )}
 

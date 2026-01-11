@@ -15,7 +15,7 @@ export const TEXT_REVEAL_CONFIG = {
   /** Selector for elements that should reveal */
   SELECTOR: '.text-animation',
 
-  /** Class added when element should animate */
+  /** Class added when element should animate (deprecated - now handled by CSS) */
   ANIMATE_CLASS: 'animate-reveal-up',
 
   /** Class added when animation is triggered */
@@ -171,9 +171,9 @@ export function initTextReveal(container: Document | Element = document): () => 
 
   log('Initializing text reveal for', elements.length, 'elements');
 
-  // Add animate class to all elements (sets initial state)
+  // Elements already have initial hidden state via .text-animation class
+  // Just track them for observation
   elements.forEach((element) => {
-    element.classList.add(TEXT_REVEAL_CONFIG.ANIMATE_CLASS);
     state.observedElements.add(element);
   });
 
@@ -227,7 +227,7 @@ export function initTextReveal(container: Document | Element = document): () => 
     }
 
     state.observedElements.forEach((element) => {
-      element.classList.remove(TEXT_REVEAL_CONFIG.ANIMATE_CLASS);
+      // Don't remove .text-animation class as it provides initial state
       element.classList.remove(TEXT_REVEAL_CONFIG.TRIGGERED_CLASS);
     });
 

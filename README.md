@@ -10,7 +10,7 @@ A modern, performance-optimized personal portfolio built with **Astro**, **TypeS
 - **Responsive Design**: Mobile-first approach with modern breakpoints
 - **SEO Optimized**: Structured data, meta tags, and performance metrics
 - **Accessibility**: ARIA compliant, screen reader friendly
-- **Modern UI**: Glass morphism, neon effects, and smooth animations
+- **Modern UI**: Glass morphism, neon effects, and smooth animations with optimized text reveal system (no flash, IntersectionObserver-powered)
 
 ## 🏗️ Architecture
 

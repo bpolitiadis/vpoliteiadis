@@ -556,16 +556,19 @@
   }
 
   /* 2025 Modern UX Animations - Synchronized with TextType */
-  .animate-reveal-up {
+  /* Base hidden state - applied immediately to prevent flash */
+  .text-animation {
     will-change: transform, opacity;
     backface-visibility: hidden;
-    /* GPU acceleration + initial hidden state */
+    /* Initial hidden state - prevents flash */
     transform: translateZ(0) translateY(30px) scale(0.95);
     opacity: 0;
     /* Smooth transition when .animate class is added */
     transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
       transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
+
+  /* Legacy animate-reveal-up class - kept for backward compatibility */
 
   /* Fallback: Show content after 2 seconds if animation doesn't trigger */
   .animate-reveal-up:not(.animate) {
@@ -596,7 +599,7 @@
     transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .animate-reveal-up.animate {
+  .text-animation.animate {
     opacity: 1;
     transform: translateZ(0) translateY(0) scale(1);
   }
