@@ -107,10 +107,6 @@
     height: auto;
   }
 
-  /* Note: GSAP handles all [data-animate] element visibility */
-  /* Elements are set to opacity: 0 by GSAP and animated in on scroll */
-  /* Fallback is handled in animations-init.js if GSAP fails to load */
-
   /* Optimize animations for users who prefer reduced motion */
   @media (prefers-reduced-motion: reduce) {
     *,
@@ -564,12 +560,7 @@
   }
 
   /* 2025 Modern UX Animations - Synchronized with TextType */
-  .animate-reveal-up,
-  .animate-reveal-up-delayed-1,
-  .animate-reveal-up-delayed-2,
-  .animate-reveal-up-delayed-3,
-  .animate-reveal-up-delayed-4,
-  .animate-reveal-up-delayed-5 {
+  .animate-reveal-up {
     will-change: transform, opacity;
     backface-visibility: hidden;
     transform: translateZ(0);
@@ -593,10 +584,7 @@
     }
   }
 
-  .animate-stagger-fade,
-  .animate-stagger-fade-delayed-1,
-  .animate-stagger-fade-delayed-2,
-  .animate-stagger-fade-delayed-3 {
+  .animate-stagger-fade {
     will-change: transform, opacity;
     backface-visibility: hidden;
     transform: translateZ(0);
@@ -605,36 +593,20 @@
   }
 
   /* Animation trigger classes */
-  .animate-reveal-up,
-  .animate-reveal-up-delayed-1,
-  .animate-reveal-up-delayed-2,
-  .animate-reveal-up-delayed-3,
-  .animate-reveal-up-delayed-4,
-  .animate-reveal-up-delayed-5 {
+  .animate-reveal-up {
     transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .animate-stagger-fade,
-  .animate-stagger-fade-delayed-1,
-  .animate-stagger-fade-delayed-2,
-  .animate-stagger-fade-delayed-3 {
+  .animate-stagger-fade {
     transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .animate-reveal-up.animate,
-  .animate-reveal-up-delayed-1.animate,
-  .animate-reveal-up-delayed-2.animate,
-  .animate-reveal-up-delayed-3.animate,
-  .animate-reveal-up-delayed-4.animate,
-  .animate-reveal-up-delayed-5.animate {
+  .animate-reveal-up.animate {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
 
-  .animate-stagger-fade.animate,
-  .animate-stagger-fade-delayed-1.animate,
-  .animate-stagger-fade-delayed-2.animate,
-  .animate-stagger-fade-delayed-3.animate {
+  .animate-stagger-fade.animate {
     opacity: 1;
     transform: translateY(0);
   }
@@ -966,15 +938,7 @@
   .animate-slide-up-delayed,
   .animate-fade-in-delayed,
   .animate-reveal-up,
-  .animate-reveal-up-delayed-1,
-  .animate-reveal-up-delayed-2,
-  .animate-reveal-up-delayed-3,
-  .animate-reveal-up-delayed-4,
-  .animate-reveal-up-delayed-5,
-  .animate-stagger-fade,
-  .animate-stagger-fade-delayed-1,
-  .animate-stagger-fade-delayed-2,
-  .animate-stagger-fade-delayed-3 {
+  .animate-stagger-fade {
     animation: none;
     opacity: 1;
     transform: none;
