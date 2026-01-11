@@ -1,5 +1,7 @@
 # HeroSection Animations - Complete Explanation
 
+> **Note:** As of January 2026, hero animations have been extracted to `/src/lib/animations/heroAnimations.ts` for better testability and reusability. This document explains the animation concepts and configuration.
+
 ## 🎬 What is GSAP?
 
 **GSAP (GreenSock Animation Platform)** is a powerful JavaScript animation library that lets you animate HTML elements smoothly. Think of it as a more powerful version of CSS animations, but with JavaScript control.
@@ -9,7 +11,21 @@
 1. **Timeline**: A container that holds multiple animations. Like a playlist - animations play in sequence or parallel.
 2. **Tween**: A single animation (e.g., "move this element from A to B").
 3. **Easing**: How the animation accelerates/decelerates (e.g., smooth start/end vs instant).
-4. **Selector**: How GSAP finds elements to animate (we use `gsap.utils.selector`).
+4. **Selector**: How GSAP finds elements to animate.
+
+## 📁 File Structure
+
+```
+src/lib/animations/
+├── index.ts              # Centralized exports
+└── heroAnimations.ts     # GSAP floating animations
+```
+
+**Usage in HeroSection.astro:**
+```javascript
+import { autoInitHeroAnimations } from '../../lib/animations';
+autoInitHeroAnimations();
+```
 
 ---
 
@@ -73,45 +89,46 @@ laptopTl.to(q(".laptop"), 3, { y: "-=10", x: "+=10", rotation: "-=1", ease: "Pow
 
 ---
 
-## 🐛 Issues Found
+## 🐛 Issues Found (Historical - All Fixed)
 
-### 1. **Memory Leak - No Cleanup**
+### 1. ✅ **Memory Leak - No Cleanup** (FIXED)
 When the component unmounts (user navigates away), the animations keep running. This wastes memory and CPU.
 
-**Fix:** Return a cleanup function from `useEffect` that kills all timelines.
+**Solution:** The extracted `heroAnimations.ts` module now returns a cleanup function and handles `beforeunload` event.
 
-### 2. **Inconsistent Ease Naming**
+### 2. ✅ **Inconsistent Ease Naming** (FIXED)
 Line 64: `"Power1.easeInOut"` (capital P)  
 Lines 38, 44, 49, 54, 70, 75, 80: `"power1.easeInOut"` (lowercase)
 
-**Fix:** Use lowercase consistently (GSAP accepts both, but consistency matters).
+**Solution:** Consistent `power1.easeInOut` used throughout `HERO_ANIMATION_CONFIG`.
 
-### 3. **Missing Paragraph Animation**
-The paragraph text (line 145) doesn't have `.text-animation` class, so it doesn't slide up like the title and subtitle.
+### 3. ✅ **Missing Paragraph Animation** (FIXED)
+The paragraph text didn't have `.text-animation` class.
 
-**Fix:** Add `text-animation` class to the paragraph.
+**Solution:** Paragraph now has the class applied.
 
-### 4. **Hardcoded Values**
+### 4. ✅ **Hardcoded Values** (FIXED)
 Animation durations (3, 2, 3, 3) are hardcoded throughout. Hard to maintain.
 
-**Fix:** Extract to constants at the top of the component.
+**Solution:** All values extracted to `HERO_ANIMATION_CONFIG` object in `heroAnimations.ts`.
 
-### 5. **Unused ScrollTrigger**
-ScrollTrigger is registered but never used (parallax effect is commented out).
+### 5. ✅ **Unused ScrollTrigger** (FIXED)
+ScrollTrigger was registered but never used.
 
-**Fix:** Only register if needed, or remove if not planning to use.
+**Solution:** Removed entirely.
 
 ---
 
-## ✅ Improved Version
+## ✅ Current Implementation (January 2026)
 
-The improved version will:
-- ✅ Clean up animations on unmount
-- ✅ Fix ease naming inconsistency
-- ✅ Add paragraph animation
-- ✅ Extract magic numbers to constants
-- ✅ Better code organization
-- ✅ Respect `prefers-reduced-motion` for accessibility
+The extracted `heroAnimations.ts` module includes:
+- ✅ Clean up animations on unmount (via returned cleanup function)
+- ✅ Consistent ease naming (`power1.easeInOut`)
+- ✅ Exported configuration object (`HERO_ANIMATION_CONFIG`)
+- ✅ Centralized state management with TypeScript types
+- ✅ Debug helpers (`getAnimationState()`, `killHeroAnimations()`)
+- ✅ `prefers-reduced-motion` accessibility support
+- ✅ Responsive: different animations for mobile vs desktop
 
 ---
 
@@ -129,3 +146,9 @@ The improved version will:
 - [GSAP Documentation](https://greensock.com/docs/)
 - [Timeline Guide](https://greensock.com/docs/v3/GSAP/Timeline)
 - [Easing Functions](https://greensock.com/docs/v3/Eases)
+
+## 🔗 Related Files
+
+- **Animation Module:** `/src/lib/animations/heroAnimations.ts`
+- **Component:** `/src/components/hero/HeroSection.astro`
+- **Improvements Guide:** `./HERO_ANIMATIONS_IMPROVEMENTS.md`

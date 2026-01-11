@@ -1,5 +1,7 @@
 # HeroSection Animations - Improvements Made
 
+> **Updated January 2026:** All improvements have been extracted to `/src/lib/animations/heroAnimations.ts` for better separation of concerns, testability, and reusability.
+
 ## ✅ Changes Summary
 
 ### 1. **Fixed Memory Leak** ✅
@@ -157,10 +159,11 @@ textTimeline.fromTo(
 
 ## 📝 Notes for Future Development
 
-1. **To adjust animation timing:** Edit `ANIMATION_CONFIG` constants
-2. **To add new animation:** Follow the pattern in `ANIMATION_CONFIG`
-3. **To enable parallax:** Uncomment background text effect and re-add ScrollTrigger
-4. **Animation performance:** All animations use GPU-accelerated properties (transform, opacity)
+1. **To adjust animation timing:** Edit `HERO_ANIMATION_CONFIG` in `/src/lib/animations/heroAnimations.ts`
+2. **To add new animation module:** Create file in `/src/lib/animations/` and export from `index.ts`
+3. **For debugging:** Use `getAnimationState()` to inspect current animation state
+4. **For testing:** Use `killHeroAnimations()` to stop all animations
+5. **Animation performance:** All animations use GPU-accelerated properties (transform, opacity, force3D)
 
 ---
 
@@ -169,3 +172,14 @@ textTimeline.fromTo(
 - [GSAP Documentation](https://greensock.com/docs/)
 - [Hero Animations Explained](./HERO_ANIMATIONS_EXPLAINED.md)
 - [Accessibility Guidelines](https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html)
+
+## 📁 File Structure
+
+```
+src/lib/animations/
+├── index.ts              # Centralized exports
+└── heroAnimations.ts     # GSAP floating animations (220 lines)
+
+src/components/hero/
+└── HeroSection.astro     # Now only 3 lines of animation code
+```

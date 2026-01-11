@@ -4,6 +4,43 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 
 ## [Unreleased]
 
+### Hero Animation Module Extraction
+- **Extracted GSAP Animation Logic**: Moved 177 lines of inline JavaScript from `HeroSection.astro` to dedicated module
+  - Created `/src/lib/animations/heroAnimations.ts` with TypeScript types and proper exports
+  - Created `/src/lib/animations/index.ts` for centralized animation exports
+  - `HeroSection.astro` now uses 3-line import: `import { autoInitHeroAnimations } from '../../lib/animations'`
+- **Improved Code Organization**:
+  - Exported `HERO_ANIMATION_CONFIG` for customization without modifying source
+  - Added cleanup function `killHeroAnimations()` for testing
+  - Added debug helper `getAnimationState()` for inspection
+  - Proper TypeScript types for all state and configuration
+- **Documentation Updates**:
+  - Updated `docs/ANIMATION_REVIEW.md` with fix status for sections 4.1 and 4.2
+  - Updated `docs/appendices/HERO_ANIMATIONS_EXPLAINED.md` with new file structure
+  - Updated `docs/appendices/HERO_ANIMATIONS_IMPROVEMENTS.md` with current implementation
+- **Benefits**:
+  - Better separation of concerns (markup vs animation logic)
+  - Testable animation module
+  - Reusable animation patterns
+  - Reduced component file size (~174 lines saved)
+  - Follows established pattern for future animation modules
+
+### Dead Code Cleanup & CSS Simplification
+- **Removed Unused Components**: Deleted unused React components from codebase
+  - Removed `src/components/FuzzyText.tsx` (231 lines) - exported but never used
+  - Removed `src/components/TextAnimation.tsx` (77 lines) - not imported anywhere
+- **Removed Unused Scripts**: Cleaned up obsolete animation and performance scripts
+  - Removed `public/scripts/animations-init.js` - queried for `[data-animate]` attributes that no longer exist
+  - Removed `scripts/performance.js` (271 lines) - obsolete performance optimization script
+- **CSS Cleanup**: Removed duplicate and unused CSS across multiple files
+  - Removed duplicate reduced motion CSS from `MainLayout.astro` and `index.astro` (kept in `global.css` as single source)
+  - Removed unused animation classes from `global.css` (multiple delayed variants consolidated to single classes)
+  - Removed outdated comments referencing removed GSAP `[data-animate]` system
+- **Layout Cleanup**: Removed obsolete script references
+  - Removed `animations-init.js` script reference from `MainLayout.astro`
+  - Removed unused animation initialization comment from `index.astro`
+- **Impact**: 4 files deleted, 869 lines removed - reduced bundle size, improved maintainability, eliminated dead code
+
 ### Unit Testing Infrastructure
 - **Vitest Setup**: Added Vitest configuration for unit testing Astro components
   - Configured with Astro Container API for component rendering
@@ -38,7 +75,7 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 - **Centralized GSAP Animation System**: Major refactoring from fragmented `IntersectionObserver` scripts to unified GSAP-powered system
   - Created `src/lib/animations.ts` as single source of truth for all scroll animations
   - Implemented Matrix-themed animations: blur-in reveals, staggered cascades, and cyberpunk effects
-  - Replaced manual `IntersectionObserver` scripts in 5 components with declarative `data-animate` attributes
+  - Replaced manual `IntersectionObserver` scripts in components with centralized animation system
   - Added performance optimizations: `will-change` usage, reduced motion support, visibility change handling
   - Enhanced maintainability: single animation controller vs scattered scripts across components
   - **Impact**: 6 files changed - centralized animation logic, improved performance, consistent Matrix aesthetic

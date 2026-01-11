@@ -241,8 +241,8 @@ function MyComponent() {
 |-----------|------|---------|-----------|--------------|
 | `AboutSection.astro` | `src/components/AboutSection.astro` | Comprehensive profile showcase with work experience, education, and certifications | `profileImageSrc: string` | ProfileCard, TimelineItem, structured data |
 | `TimelineItem.astro` | `src/components/sections/TimelineItem.astro` | Reusable timeline item component for work experience, education, and certifications | `item: TimelineItemData` | — |
-| `ProjectsSection.astro` | `src/components/ProjectsSection.astro` | Featured projects showcase with scroll-triggered animations | — | ProjectCard, data-animate attributes, public images |
-| `CreativeLabSection.astro` | `src/components/CreativeLabSection.astro` | Creative portfolio showcase with category-based styling and staggered animations | — | data-animate attributes, category colors |
+| `ProjectsSection.astro` | `src/components/ProjectsSection.astro` | Featured projects showcase with scroll-triggered animations | — | ProjectCard, public images |
+| `CreativeLabSection.astro` | `src/components/CreativeLabSection.astro` | Creative portfolio showcase with category-based styling and staggered animations | — | category colors |
 | `ContactSection.astro` | `src/components/ContactSection.astro` | Contact form section with background image and animations | — | ContactForm, ContactCards, AImage |
 
 #### ContactSection.astro

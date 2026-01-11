@@ -231,7 +231,7 @@ graph LR
 
 ### Animation System Architecture
 - **Centralized Controller**: `src/lib/animations.ts` provides unified GSAP-powered scroll animations
-- **Data Attributes**: Components use declarative `data-animate` attributes instead of imperative scripts
+- **Animation Patterns**: Components use IntersectionObserver-based animations and GSAP for complex timelines
 - **Matrix Theme**: Blur-in effects, staggered reveals, and cyberpunk aesthetics
 - **Performance**: `will-change` optimization, reduced motion support, visibility change handling
 - **Maintainability**: Single source of truth for all animation logic vs scattered `IntersectionObserver` scripts
