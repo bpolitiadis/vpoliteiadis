@@ -414,18 +414,16 @@ graph TD
   B --> E[DecryptedText]
   B --> F[TextType]
   
-  G[Projects Index] --> H[PageHero]
-  G --> I[ProjectCard Grid]
+  G[Projects Index] --> I[ProjectCard Grid]
   I --> J[VercelImage]
-  
-  K[Blog Index] --> L[PageHero]
-  K --> M[Blog Card Grid]
+
+  K[Blog Index] --> M[Blog Card Grid]
   M --> N[Search/Filter Scripts]
-  
+
   O[About Page] --> P[MainLayout]
   O --> Q[Compact Hero]
-  
-  R[Contact Page] --> S[PageHero]
+
+  R[Contact Page]
   R --> T[Contact Form]
   T --> U[Form Validation Script]
   

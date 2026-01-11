@@ -13,7 +13,6 @@
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
 | `MainLayout.astro` | `src/layouts/MainLayout.astro` | Global shell, meta tags, backgrounds, navbar/footer | `title`, `description`, `currentPath`, `bgSlug`, `bgEager`, `bgOpacityClass`, `bgOverlayClass` | Navbar, Footer, global styles |
-| `PageHero.astro` | `src/components/PageHero.astro` | Page hero with optional background | `title` (req), `description?`, `bgSlug?`, `metaText?`, `eager?` | MainLayout, background images |
 
 #### MainLayout.astro
 **Purpose:** Global shell wrapping all pages with consistent navigation, footer, and meta tags.
@@ -45,30 +44,6 @@ const bgSlug = "projects-bg";
 >
   <!-- Page content -->
 </MainLayout>
-```
-
-#### PageHero.astro
-**Purpose:** Consistent page headers with optional backgrounds and metadata.
-
-**Props:**
-- `title` (required): Page title
-- `description` (optional): Page description
-- `bgSlug` (optional): Background image identifier
-- `metaText` (optional): Additional metadata text
-- `eager` (optional): Load background immediately
-
-**Usage:**
-```astro
----
-import PageHero from '../components/PageHero.astro';
----
-
-<PageHero
-  title="Projects"
-  description="Selected work and case studies"
-  bgSlug="projects-bg"
-  eager
-/>
 ```
 
 ### Navigation & Chrome
@@ -507,8 +482,6 @@ graph TD
   A --> C[Footer.astro]
   A --> D[/public/scripts/theme-init.js]
   B --> E[/public/scripts/navbar.js]
-
-  F[PageHero.astro] --> A
 
   G[Hero.astro] --> H[HeroAnimationController.tsx]
   H --> I[DecryptedText.tsx]

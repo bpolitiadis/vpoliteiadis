@@ -4,6 +4,33 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 
 ## [Unreleased]
 
+### Font Loading Optimization & Component Cleanup
+- **Font Loading Strategy**: Optimized font loading for zero FOUT (Flash of Unstyled Text)
+  - Changed from `font-display: optional` to `font-display: swap` for synchronous loading
+  - Removed preload/link complexity in favor of direct stylesheet loading
+  - Simplified font CSS rules by removing redundant `font-display: swap` declarations
+  - **Impact**: Eliminates font loading race conditions, ensures consistent typography rendering
+- **Component Cleanup**: Removed unused `PageHero.astro` component
+  - Deleted 61-line component that was no longer used in any pages
+  - Removed export from `src/components/index.ts`
+  - Updated blog index page to work without PageHero dependency
+- **Blog Search Optimization**: Updated blog index search script selector
+  - Changed from `article` elements to `div[data-title]` for better semantic targeting
+  - Improved search functionality reliability
+
+### Text Reveal Animation System
+- **New TextRevealAnimation Class**: Added IntersectionObserver-powered text reveal animations
+  - Modern, performant animations using native browser APIs
+  - CSS-based transitions with reduced motion support
+  - Reusable animation system following 2025 best practices
+- **Hero Section Integration**: Updated HeroSection to work with text reveal animations
+  - Modified animation triggers to use JavaScript class addition instead of inline styles
+  - Improved animation timing and reduced motion accessibility
+- **Comprehensive Test Suite**: Added unit tests for text reveal functionality
+  - 10+ test cases covering animation states, timing, and accessibility
+  - Updated Vitest configuration for better animation testing
+  - Added utility function tests and setup improvements
+
 ### Hero Animation Module Extraction
 - **Extracted GSAP Animation Logic**: Moved 177 lines of inline JavaScript from `HeroSection.astro` to dedicated module
   - Created `/src/lib/animations/heroAnimations.ts` with TypeScript types and proper exports
