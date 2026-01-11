@@ -15,3 +15,11 @@ export {
   getAnimationState as getHeroAnimationState,
   HERO_ANIMATION_CONFIG,
 } from './heroAnimations';
+
+export {
+  initTextReveal,
+  autoInit as autoInitTextReveal,
+  killTextReveal,
+  getTextRevealState,
+  TEXT_REVEAL_CONFIG,
+} from './textReveal';

@@ -3,7 +3,7 @@ import { getViteConfig } from 'astro/config';
 import path from 'path';
 
 export default defineConfig({
-  ...getViteConfig(),
+  ...getViteConfig({}),
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
