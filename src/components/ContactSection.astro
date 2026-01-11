@@ -35,26 +35,26 @@ import contactBg from '../assets/images/contact-bg.webp';
 
   <div class="max-w-7xl mx-auto relative z-10">
     {/* Section Headline */}
-    <h2
-      id="contact-heading"
-      class="text-3xl md:text-4xl lg:text-5xl font-orbitron font-bold text-center mb-12 md:mb-16"
-    >
-      <DecryptedText
-        client:visible
-        text="Contact"
-        speed={60}
-        sequential={true}
-        revealDirection="start"
-        className="text-neon-lime text-shadow-neon"
-        encryptedClassName="text-primary/40"
-        parentClassName="block"
-      />
-    </h2>
-    
-    {/* Section Description */}
-    <p class="text-center text-foreground/80 text-lg md:text-xl mb-12 md:mb-16 max-w-2xl mx-auto">
-      Let's collaborate on your next project or discuss creative opportunities
-    </p>
+    <div class="text-center mb-12 md:mb-16">
+      <h2
+        id="contact-heading"
+        class="text-3xl md:text-4xl lg:text-5xl font-orbitron font-bold mb-3"
+      >
+        <DecryptedText
+          client:visible
+          text="Contact"
+          speed={60}
+          sequential={true}
+          revealDirection="start"
+          className="text-neon-lime text-shadow-neon"
+          encryptedClassName="text-primary/40"
+          parentClassName="block"
+        />
+      </h2>
+      <p class="text-base md:text-lg text-matrix-white/70 font-inter max-w-2xl mx-auto">
+        Let's collaborate on your next project or discuss creative opportunities
+      </p>
+    </div>
 
     {/* Contact Content */}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 items-stretch">
