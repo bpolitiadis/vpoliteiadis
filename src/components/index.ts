@@ -4,14 +4,12 @@ export * from './ui';
 // Custom Components
 export { default as DecryptedText } from './DecryptedText';
 export { default as ElectricBorder } from './ElectricBorder';
-export { default as FuzzyText } from './FuzzyText';
 export { default as LightboxGallery } from './LightboxGallery';
 export { default as TextType } from './TextType';
 
 // Astro Components
 export { default as Footer } from './Footer.astro';
 export { default as Navbar } from './Navbar.astro';
-export { default as PageHero } from './PageHero.astro';
 export { default as SocialLink } from './SocialLink.astro';
 export { default as SpotifyEmbed } from './SpotifyEmbed.astro';
 export { default as AImage } from './media/AImage.astro';

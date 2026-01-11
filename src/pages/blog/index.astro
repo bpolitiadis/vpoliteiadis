@@ -4,10 +4,12 @@ export const prerender = true;
 
 import { getCollection } from 'astro:content';
 import MainLayout from '../../layouts/MainLayout.astro';
-import PageHero from '../../components/PageHero.astro';
 import BlogPostCard from '../../components/BlogPostCard.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import SchemaOrg from '../../components/SchemaOrg.astro';
+import DecryptedText from '../../components/DecryptedText';
+import AImage from '../../components/media/AImage.astro';
+import blogBg from '../../assets/images/blog-bg.webp';
 import { getCoverImage } from '../../lib/blog-images';
 
 // Get all published blog posts and sort by date
@@ -23,7 +25,7 @@ const posts = allPosts
 // SEO metadata
 const title = 'Blog - Vasileios Politeiadis';
 const description =
-  'Insights on technology, creativity, and the intersection of human and artificial intelligence.';
+  'Insights on technology and creativity.';
 
 // Build breadcrumb
 const breadcrumbItems = [
@@ -61,86 +63,87 @@ const blogSchema = {
   <!-- Structured Data -->
   <SchemaOrg schema={blogSchema} />
 
-  <div class="relative content-visibility-auto" data-testid="page-blog">
-    <PageHero 
-      title="Blog"
-      description="Insights on technology, creativity, and the intersection of human and artificial intelligence."
-      eager={true}
-    >
-    </PageHero>
+  <!-- Breadcrumb (Hidden visually, visible to search engines) -->
+  <Breadcrumb items={breadcrumbItems} class="sr-only" />
 
-    <!-- Breadcrumb (Hidden visually, visible to search engines) -->
-    <Breadcrumb items={breadcrumbItems} class="sr-only" />
+  <section
+    class="relative pt-16 md:pt-20 lg:pt-24 pb-24 md:pb-32 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden"
+    role="region"
+    aria-labelledby="blog-heading"
+    data-testid="page-blog"
+  >
+    {/* Background image */}
+    <div class="absolute inset-0 z-0 overflow-hidden">
+      <AImage
+        src={blogBg}
+        alt=""
+        preset="hero"
+        class="w-full h-full object-cover object-center"
+        aria-hidden="true"
+      />
+      <div class="absolute inset-0 bg-background/50"></div>
+    </div>
 
-  <!-- Blog Content -->
-  <section class="py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <!-- Minimalist List -->
+    {/* Background decorative elements */}
+    <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      <div class="absolute top-0 left-1/4 w-px h-32 bg-gradient-to-b from-primary/20 to-transparent" />
+      <div class="absolute top-0 right-1/4 w-px h-32 bg-gradient-to-b from-secondary/20 to-transparent" />
+      <div class="absolute bottom-0 left-1/2 w-px h-24 bg-gradient-to-t from-primary/10 to-transparent" />
+    </div>
 
-      <!-- All Posts -->
-      <div class="mb-16">
-           <h2 class="text-2xl font-orbitron font-bold text-secondary mb-8">
-          📝 All Posts
+    <div class="max-w-7xl mx-auto relative z-10">
+      {/* Section Headline - Tighter spacing for standalone page */}
+      <div class="text-center mb-10 md:mb-12">
+        <h2
+          id="blog-heading"
+          class="text-3xl md:text-4xl lg:text-5xl font-orbitron font-bold mb-3"
+        >
+          <DecryptedText
+            client:visible
+            text="Blog"
+            speed={60}
+            sequential={true}
+            revealDirection="start"
+            className="text-neon-lime text-shadow-neon"
+            encryptedClassName="text-primary/40"
+            parentClassName="block"
+          />
         </h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="posts-grid" data-testid="blog-posts-grid">
-          {posts.map(post => (
-            <BlogPostCard
-              post={{
-                slug: post.slug,
-                title: post.data.title,
-                excerpt: post.data.excerpt,
-                description: post.data.description,
-                coverImage: getCoverImage(post.data.coverImage),
-                tags: post.data.tags,
-                publishedAt: post.data.publishedAt,
-                readingTime: post.data.readingTime
-              }}
-              class="card"
-            />
-          ))}
-        </div>
-
-        <!-- No Results Message -->
-        <div id="no-results" class="hidden text-center py-12" aria-live="polite">
-          <div class="text-6xl mb-4">🔍</div>
-          <h3 class="text-xl font-orbitron font-bold text-matrix-white/60 mb-2">
-            No articles found
-          </h3>
-          <p class="text-matrix-white/60">
-            Try a different search or clear the tag filter
-          </p>
-        </div>
+        <p class="text-base md:text-lg text-matrix-white/70 font-inter max-w-2xl mx-auto">
+          Insights on technology and creativity.
+        </p>
       </div>
 
-      <!-- Newsletter Signup (disabled) - Section hidden/commented out per request
-      <div class="card" data-testid="newsletter-signup">
-        <div class="text-center">
-          <h2 class="text-2xl font-orbitron font-bold text-neon-lime mb-4">
-            📧 Stay Updated
-          </h2>
-          <p class="text-matrix-white/90 mb-6 max-w-2xl mx-auto">
-            Get notified when I publish new articles about technology, creativity, and AI. 
-            No spam, just valuable insights delivered to your inbox.
-          </p>
-          <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <input 
-              type="email" 
-              placeholder="Enter your email" 
-              class="flex-1 px-4 py-3 bg-cyber-gray border border-neon-lime/20 rounded-lg text-matrix-white placeholder-matrix-white/50 focus:border-neon-lime/50 focus:outline-none"
-              aria-label="Email address for newsletter subscription"
-              data-testid="newsletter-email-input"
-            >
-            <button class="btn-primary whitespace-nowrap" data-testid="newsletter-subscribe-button">
-              Subscribe
-            </button>
-          </div>
-        </div>
+      {/* Blog Posts Grid - Full width, responsive columns */}
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" id="posts-grid" data-testid="blog-posts-grid">
+        {posts.map(post => (
+          <BlogPostCard
+            post={{
+              slug: post.slug,
+              title: post.data.title,
+              excerpt: post.data.excerpt,
+              description: post.data.description,
+              coverImage: getCoverImage(post.data.coverImage),
+              tags: post.data.tags,
+              publishedAt: post.data.publishedAt,
+              readingTime: post.data.readingTime
+            }}
+          />
+        ))}
       </div>
-      -->
+
+      <!-- No Results Message -->
+      <div id="no-results" class="hidden text-center py-12" aria-live="polite">
+        <div class="text-6xl mb-4">🔍</div>
+        <h3 class="text-xl font-orbitron font-bold text-matrix-white/60 mb-2">
+          No articles found
+        </h3>
+        <p class="text-matrix-white/60">
+          Try a different search or clear the tag filter
+        </p>
+      </div>
     </div>
   </section>
-    </div>
 </MainLayout>
 
 <script is:inline src="/scripts/blog-index.js" defer></script>

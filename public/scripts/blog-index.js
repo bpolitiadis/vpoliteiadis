@@ -2,7 +2,7 @@
 (function () {
   const searchInput = document.getElementById('search');
   const tagContainer = document.getElementById('tag-chips');
-  const cards = Array.from(document.querySelectorAll('#posts-grid article'));
+  const cards = Array.from(document.querySelectorAll('#posts-grid > div[data-title]'));
   const noResults = document.getElementById('no-results');
   const clearFiltersBtn = document.getElementById('clear-filters');
 

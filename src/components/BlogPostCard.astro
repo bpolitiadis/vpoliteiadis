@@ -15,80 +15,80 @@ export interface BlogPostMeta {
 
 interface Props {
   post: BlogPostMeta;
-  class?: string;
 }
 
-const { post, class: className = '' } = Astro.props as Props;
-const date = new Date(post.publishedAt).toLocaleDateString('en-US', {
-  month: 'long',
+const { post } = Astro.props as Props;
+
+// Format date for display
+const formattedDate = new Date(post.publishedAt).toLocaleDateString('en-US', {
+  month: 'short',
   year: 'numeric'
 });
 ---
 
-<article
-  class={`group rounded-xl border bg-card/80 text-card-foreground shadow transition-transform duration-300 hover:scale-[1.02] backdrop-blur-md ${className}`}
+<div
+  class="group relative flex flex-col h-full w-full"
   data-title={post.title}
   data-excerpt={post.excerpt || post.description}
   data-tags={post.tags.join(',')}
 >
+  {/* Blog Post Image */}
   {post.coverImage && (
-    <div class="relative mb-4 overflow-hidden rounded-lg">
-      <AImage
-        src={post.coverImage}
-        alt={`Cover image for ${post.title}`}
-        preset="thumb"
-        class="h-44 w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-        loading="lazy"
-        decoding="async"
-        sizes="(max-width: 768px) 100vw, 400px"
-      />
-      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" aria-hidden="true"></div>
+    <div class="relative w-full overflow-hidden rounded-lg" style="aspect-ratio: 16 / 9">
+      <a
+        href={`/blog/${post.slug}`}
+        class="block w-full h-full"
+        aria-label={`Read ${post.title}`}
+      >
+        <AImage
+          src={post.coverImage}
+          alt={post.title}
+          preset="card"
+          class="w-full h-full object-cover rounded-lg transition-transform duration-700 group-hover:scale-110 will-change-transform"
+          loading="lazy"
+          decoding="async"
+          width={1024}
+          height={576}
+        />
+        <!-- Matrix gradient overlay -->
+        <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent opacity-90 group-hover:opacity-60 transition-opacity duration-500 rounded-lg" />
+      </a>
     </div>
   )}
 
-  <div class="p-6 pt-0 space-y-3">
-    <div class="flex items-center gap-3 text-sm text-muted-foreground">
-      <span>{date}</span>
+  <div class="flex flex-col space-y-3 mt-4">
+    {/* Date and Reading Time - Minimal design */}
+    <div class="flex items-center gap-2 text-xs text-matrix-white/60 font-inter">
+      <time datetime={new Date(post.publishedAt).toISOString()}>
+        {formattedDate}
+      </time>
       {post.readingTime && (
         <>
-          <span>•</span>
+          <span aria-hidden="true">•</span>
           <span>{post.readingTime}</span>
         </>
       )}
     </div>
-
-    <h3 class="text-lg sm:text-xl font-orbitron font-bold text-primary tracking-tight text-balance break-words hyphens-auto">
-      <a href={`/blog/${post.slug}`} class="transition-colors duration-200 hover:text-primary">
-        {post.title}
-      </a>
-    </h3>
-
-    {(post.excerpt || post.description) && (
-      <p class="text-foreground/80">
-        {post.excerpt || post.description}
-      </p>
-    )}
-
-    {post.tags?.length > 0 && (
-      <div class="flex flex-wrap gap-2 pt-1">
-        {post.tags.slice(0, 3).map((tag) => (
-          <span class="px-2 py-1 rounded bg-primary/10 text-primary text-xs">
-            {tag}
-          </span>
-        ))}
-      </div>
-    )}
-
-    <div class="pt-2">
+    <div class="font-bold leading-none tracking-tight font-orbitron text-lg md:text-xl">
       <a
         href={`/blog/${post.slug}`}
-        class="btn-link"
-        aria-label={`Read more: ${post.title}`}
+        class="inline-flex items-center gap-2 text-neon-lime hover:text-neon-lime/90 transition-all duration-300 hover:scale-[1.02] origin-left"
+        style={{ color: '#39FF14', textShadow: '0 0 10px rgba(57, 255, 20, 0.6), 0 0 20px rgba(57, 255, 20, 0.3)' }}
       >
-        Read More →
+        {post.title}
       </a>
     </div>
+    <div class="text-sm text-matrix-white/85 leading-relaxed">
+      {post.excerpt || post.description}
+    </div>
+    <div class="flex flex-wrap gap-2">
+      {post.tags.slice(0, 3).map((tag) => (
+        <div class="badge-emerald">
+          {tag}
+        </div>
+      ))}
+    </div>
   </div>
-</article>
+</div>
 
 

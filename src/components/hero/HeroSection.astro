@@ -168,13 +168,15 @@ const laptopWebp1200 = await getImage({ src: laptopIllustration, width: 1200, fo
 
 <!-- CSS ensures content is always visible - animations via CSS keyframes -->
 <style is:global>
-  /* Base state: ALL content visible by default */
-  [data-testid="hero-section"] .text-animation,
+  /* Base state: Images always visible, text animations handled by textReveal */
   [data-testid="hero-section"] .image-animation,
   [data-testid="hero-section"] .laptop {
     opacity: 1 !important;
     visibility: visible !important;
   }
+  
+  /* Text animations: Initial state set by animate-reveal-up class */
+  /* Animation triggered by JavaScript adding 'animate' class */
   
   /* CSS fallback animations - only active when GSAP is not ready */
   [data-testid="hero-section"]:not(.gsap-ready) .image-animation {
@@ -234,19 +236,33 @@ const laptopWebp1200 = await getImage({ src: laptopIllustration, width: 1200, fo
   
   /* Reduced motion: disable all animations and ensure visibility */
   @media (prefers-reduced-motion: reduce) {
-    [data-testid="hero-section"] .text-animation,
     [data-testid="hero-section"] .image-animation,
     [data-testid="hero-section"] .laptop,
     [data-testid="hero-section"] .scroll-indicator {
       animation: none !important;
       opacity: 1 !important;
+    }
+    
+    [data-testid="hero-section"] .scroll-indicator {
       transform: translateX(-50%) !important;
+    }
+    
+    /* Text reveal: show immediately without animation */
+    [data-testid="hero-section"] .text-animation {
+      opacity: 1 !important;
+      transform: none !important;
     }
   }
 </style>
 
 <!-- GSAP animations - extracted to src/lib/animations/heroAnimations.ts -->
+<!-- Text reveal animations - extracted to src/lib/animations/textReveal.ts -->
 <script>
-  import { autoInitHeroAnimations } from '../../lib/animations';
+  import { autoInitHeroAnimations, autoInitTextReveal } from '../../lib/animations';
+  
+  // Initialize hero floating animations
   autoInitHeroAnimations();
+  
+  // Initialize text reveal animations (staggered reveal-up effect)
+  autoInitTextReveal();
 </script>

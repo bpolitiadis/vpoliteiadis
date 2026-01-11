@@ -170,22 +170,10 @@ const finalStructuredData = structuredData ? { ...baseStructuredData, ...structu
     <!-- RSS Feed -->
     <link rel="alternate" type="application/rss+xml" title="Vasileios Politeiadis Blog RSS Feed" href="/rss.xml" />
     
-    <!-- Preload critical resources -->
+    <!-- Font loading: preconnect + synchronous load for zero FOUT -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    
-    <!-- Preload critical fonts with font-display: optional for zero CLS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=optional" />
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=optional" rel="stylesheet" media="print" onload="this.media='all'" />
-    <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    </noscript>
-    
-    <!-- DNS prefetch for external resources -->
-    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-    <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     
     <!-- Performance meta tags -->
     <meta name="color-scheme" content="dark" />
@@ -244,15 +232,18 @@ const finalStructuredData = structuredData ? { ...baseStructuredData, ...structu
       body {
         background-color: var(--matrix-black);
         color: var(--matrix-white);
-        font-family: 'Inter', system-ui, sans-serif;
+        font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         line-height: 1.6;
       }
       
+      h1, h2, h3, h4, h5, h6 {
+        font-family: 'Orbitron', sans-serif;
+      }
+      
       .font-orbitron {
         font-family: 'Orbitron', sans-serif;
-        font-display: swap;
       }
       
       /* Ensure smooth scrolling */
@@ -265,11 +256,6 @@ const finalStructuredData = structuredData ? { ...baseStructuredData, ...structu
         max-width: 100%;
         height: auto;
         display: block;
-      }
-      
-      /* Font loading optimization */
-      .font-loading {
-        font-display: swap;
       }
       
       /* Performance optimizations */
