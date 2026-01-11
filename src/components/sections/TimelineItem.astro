@@ -30,7 +30,7 @@ const titleClass = item.isCurrent ? 'job-title-current' : 'job-title-past';
     href={item.url}
     target="_blank"
     rel="noopener noreferrer"
-    class="block rounded-md border border-transparent hover:border-digital-emerald/20 hover:bg-matrix-black/10 transition-all -mx-8 sm:-mx-6 lg:-mx-4 px-8 sm:px-6 lg:px-4"
+    class="block rounded-md border border-transparent hover:border-digital-emerald/20 hover:bg-matrix-black/10 transition-all -mx-8 sm:-mx-6 lg:-mx-4 px-8 sm:px-6 lg:px-4 text-animation"
     aria-label={`View ${item.subtitle || item.title} website`}
   >
     <div class="py-4 group">
@@ -79,7 +79,7 @@ const titleClass = item.isCurrent ? 'job-title-current' : 'job-title-past';
     </div>
   </a>
 ) : (
-  <div class="-mx-8 sm:-mx-6 lg:-mx-4 px-8 sm:px-6 lg:px-4">
+  <div class="-mx-8 sm:-mx-6 lg:-mx-4 px-8 sm:px-6 lg:px-4 text-animation">
     <div class="py-4 group">
       <div class="flex flex-col lg:grid lg:grid-cols-[140px_1fr] lg:gap-6">
         {/* Date column */}

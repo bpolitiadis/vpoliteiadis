@@ -108,6 +108,7 @@ vpoliteiadis/
 - **Long-term Caching** strategies
 - **Cinematic Intro Hero** with GSAP animations, floating illustrations, and progressive panels (Astro islands; reduced-motion aware)
 - **GSAP Animations** for smooth, performant hero and section animations
+- **Text Reveal Animations** with IntersectionObserver-powered reveals for Hero, About, Projects, Creative Lab, and Blog sections (reduced-motion aware)
 
 ### Developer Experience
 - **TypeScript** strict mode with proper types
