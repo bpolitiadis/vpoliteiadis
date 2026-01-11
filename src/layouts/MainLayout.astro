@@ -141,6 +141,12 @@ const finalStructuredData = structuredData ? { ...baseStructuredData, ...structu
 <!DOCTYPE html>
 <html lang="en" class="dark">
   <head>
+    <!-- Critical: Preconnect to font domains EARLY (before any other resources) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    
     <!-- Profile verification & identity hints for crawlers -->
     <link rel="me" href="https://github.com/bpolitiadis" />
     <link rel="me" href="https://www.linkedin.com/in/vasileios-politeiadis/" />
@@ -170,10 +176,28 @@ const finalStructuredData = structuredData ? { ...baseStructuredData, ...structu
     <!-- RSS Feed -->
     <link rel="alternate" type="application/rss+xml" title="Vasileios Politeiadis Blog RSS Feed" href="/rss.xml" />
     
-    <!-- Font loading: preconnect + synchronous load for zero FOUT -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Font loading: Async with media trick to prevent render blocking -->
+    <link 
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" 
+      rel="stylesheet" 
+      media="print" 
+      onload="this.media='all'; this.onload=null;" 
+    />
+    <noscript>
+      <link 
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" 
+        rel="stylesheet" 
+      />
+    </noscript>
+    <!-- Fallback script for browsers that don't support onload -->
+    <script is:inline>
+      (function() {
+        var link = document.querySelector('link[href*="fonts.googleapis.com"][media="print"]');
+        if (link && !link.onload) {
+          link.media = 'all';
+        }
+      })();
+    </script>
     
     <!-- Performance meta tags -->
     <meta name="color-scheme" content="dark" />
@@ -213,9 +237,10 @@ const finalStructuredData = structuredData ? { ...baseStructuredData, ...structu
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
     
     <!-- Resource hints for performance -->
-    <link rel="dns-prefetch" href="//www.google-analytics.com" />
-    <link rel="dns-prefetch" href="//vercel.live" />
-    <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+    <link rel="dns-prefetch" href="https://vercel.live" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
     
     <!-- GSAP Animation Library - Only needed for HeroSection floating animations -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>

@@ -283,18 +283,20 @@ export default function DecryptedText({
 
     observer.observe(currentRef)
 
-    // Check if element is already visible
-    const rect = currentRef.getBoundingClientRect()
-    const viewportHeight = window.innerHeight
-    const triggerPoint = viewportHeight * 0.85
+    // Check if element is already visible (use requestAnimationFrame to batch DOM reads)
+    requestAnimationFrame(() => {
+      const rect = currentRef.getBoundingClientRect()
+      const viewportHeight = window.innerHeight
+      const triggerPoint = viewportHeight * 0.85
 
-    if (rect.top < triggerPoint && rect.bottom > 0 && !hasAnimatedRef.current) {
-      setTimeout(() => {
-        if (!hasAnimatedRef.current) {
-          startAnimation()
-        }
-      }, 100)
-    }
+      if (rect.top < triggerPoint && rect.bottom > 0 && !hasAnimatedRef.current) {
+        setTimeout(() => {
+          if (!hasAnimatedRef.current) {
+            startAnimation()
+          }
+        }, 100)
+      }
+    })
 
     return () => {
       observer.disconnect()

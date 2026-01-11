@@ -27,6 +27,7 @@ const LetterGlitch = ({
   const grid = useRef({ columns: 0, rows: 0 });
   const context = useRef<CanvasRenderingContext2D | null>(null);
   const lastGlitchTime = useRef(Date.now());
+  const canvasDimensions = useRef({ width: 0, height: 0 });
 
   const fontSize = 16;
   const charWidth = 10;
@@ -153,28 +154,36 @@ const LetterGlitch = ({
     const parent = canvas.parentElement;
     if (!parent) return;
 
-    const dpr = window.devicePixelRatio || 1;
-    const rect = parent.getBoundingClientRect();
+    // Batch DOM reads to prevent forced reflow
+    requestAnimationFrame(() => {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = parent.getBoundingClientRect();
+      
+      // Cache dimensions to avoid repeated getBoundingClientRect calls
+      canvasDimensions.current = { width: rect.width, height: rect.height };
 
-    canvas.width = rect.width * dpr;
-    canvas.height = rect.height * dpr;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
 
-    canvas.style.width = `${rect.width}px`;
-    canvas.style.height = `${rect.height}px`;
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
 
-    if (context.current) {
-      context.current.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
+      if (context.current) {
+        context.current.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
 
-    const { columns, rows } = calculateGrid(rect.width, rect.height);
-    initializeLetters(columns, rows);
-    drawLetters();
+      const { columns, rows } = calculateGrid(rect.width, rect.height);
+      initializeLetters(columns, rows);
+      drawLetters();
+    });
   };
 
   const drawLetters = () => {
     if (!context.current || letters.current.length === 0) return;
     const ctx = context.current;
-    const { width, height } = canvasRef.current!.getBoundingClientRect();
+    // Use cached dimensions instead of getBoundingClientRect to prevent forced reflow
+    const { width, height } = canvasDimensions.current;
+    if (width === 0 || height === 0) return; // Skip if dimensions not set
     ctx.clearRect(0, 0, width, height);
     ctx.font = `${fontSize}px monospace`;
     ctx.textBaseline = 'top';
