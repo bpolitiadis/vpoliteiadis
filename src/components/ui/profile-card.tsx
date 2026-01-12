@@ -1,12 +1,13 @@
 "use client";
 
-import * as React from "react";
+import { useRef, useState, useCallback, memo } from "react";
 import { Button } from "./button";
 import { Card } from "./card";
 import { cn } from "@/lib/utils";
 import { GitHubIcon, LinkedInIcon, InstagramIcon } from "@/components/icons/Icon";
 import TextType from "@/components/TextType";
 
+// Moved outside component to prevent recreation on each render
 const HERO_QUOTES = [
   "Certified bug hunter.",
   "Debugging reality.",
@@ -19,6 +20,19 @@ const HERO_QUOTES = [
   "Imagination is more important than knowledge.",
   "The future is already here — it's just not evenly distributed.",
 ];
+
+// Status color map outside component
+const STATUS_COLORS = {
+  Online: "#39FF14",
+  Away: "#FFAA00",
+  Offline: "#222222",
+} as const;
+
+const STATUS_GLOW = {
+  Online: "shadow-[0_0_8px_rgba(57,255,20,0.2)]",
+  Offline: "",
+  Away: "shadow-[0_0_8px_rgba(255,170,0,0.2)]",
+} as const;
 
 interface ProfileCardProps {
   name: string;
@@ -33,78 +47,66 @@ interface ProfileCardProps {
   className?: string;
 }
 
-const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
-  (
-    {
-      name,
-      title,
-      status = "Online",
-      contactText = "Contact Me",
-      avatarUrl,
-      showUserInfo = true,
-      enableTilt = true,
-      enableMobileTilt = false,
-      onContactClick,
-      className,
-      ...props
+const ProfileCardComponent = ({
+  name,
+  title,
+  status = "Online",
+  contactText = "Contact Me",
+  avatarUrl,
+  showUserInfo = true,
+  enableTilt = true,
+  enableMobileTilt = false,
+  onContactClick,
+  className,
+}: ProfileCardProps) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (!enableTilt || (!enableMobileTilt && window.innerWidth < 768)) {
+        return;
+      }
+
+      const card = cardRef.current;
+      if (!card) return;
+
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateX = ((y - centerY) / centerY) * -10;
+      const rotateY = ((x - centerX) / centerX) * 10;
+
+      setTilt({ x: rotateX, y: rotateY });
     },
-    _ref
-  ) => {
-    const cardRef = React.useRef<HTMLDivElement>(null);
-    const [tilt, setTilt] = React.useState({ x: 0, y: 0 });
+    [enableTilt, enableMobileTilt]
+  );
 
-    const handleMouseMove = React.useCallback(
-      (e: React.MouseEvent<HTMLDivElement>) => {
-        if (!enableTilt || (!enableMobileTilt && window.innerWidth < 768)) {
-          return;
-        }
+  const handleMouseLeave = useCallback(() => {
+    setTilt({ x: 0, y: 0 });
+  }, []);
 
-        const card = cardRef.current;
-        if (!card) return;
-
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-
-        const rotateX = ((y - centerY) / centerY) * -10;
-        const rotateY = ((x - centerX) / centerX) * 10;
-
-        setTilt({ x: rotateX, y: rotateY });
-      },
-      [enableTilt, enableMobileTilt]
-    );
-
-    const handleMouseLeave = React.useCallback(() => {
-      setTilt({ x: 0, y: 0 });
-    }, []);
-
-    const statusGlow = {
-      Online: "shadow-[0_0_8px_rgba(57,255,20,0.2)]",
-      Offline: "",
-      Away: "shadow-[0_0_8px_rgba(255,170,0,0.2)]",
-    };
-
-    return (
-      <Card
-        ref={cardRef}
-        className={cn(
-          "relative overflow-hidden border-2 border-digital-emerald/60 transition-all duration-300",
-          "hover:border-digital-emerald hover:shadow-[0_0_16px_rgba(0,184,107,0.6)]",
-          "shadow-[0_0_8px_rgba(0,184,107,0.6)]",
-          "w-full aspect-[4/5]",
-          className
-        )}
-        style={{
-          transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-          transition: "transform 0.1s ease-out",
-        }}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        {...props}
-      >
+  return (
+    <Card
+      ref={cardRef}
+      className={cn(
+        "relative overflow-hidden border-2 border-digital-emerald/60 transition-all duration-300",
+        "hover:border-digital-emerald hover:shadow-[0_0_16px_rgba(0,184,107,0.6)]",
+        "shadow-[0_0_8px_rgba(0,184,107,0.6)]",
+        "w-full aspect-[4/5]",
+        className
+      )}
+      style={{
+        transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+        transition: "transform 0.1s ease-out",
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
         {/* Background Image - Covering entire card with vertical offset to center face */}
         <div 
           className="absolute inset-0 bg-cover bg-[center_bottom_100%]"
@@ -125,20 +127,16 @@ const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
             className={cn(
               "absolute top-4 right-4 flex items-center gap-2 px-3 py-1.5 rounded-full z-20",
               "bg-matrix-black/80 backdrop-blur-sm border border-primary/30",
-              statusGlow[status || "Online"]
+              STATUS_GLOW[status]
             )}
-            aria-label={`Status: ${status || "Online"}`}
+            aria-label={`Status: ${status}`}
           >
             <span className="text-sm font-medium text-primary font-inter">
-              Online
+              {status}
             </span>
             <div
               className="w-2 h-2 rounded-full"
-              style={{ 
-                backgroundColor: (status || "Online") === "Online" ? "#39FF14" : 
-                               (status || "Online") === "Away" ? "#FFAA00" : 
-                               "#222222"
-              }}
+              style={{ backgroundColor: STATUS_COLORS[status] }}
               aria-hidden="true"
             />
           </div>
@@ -220,10 +218,11 @@ const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
           )}
         </div>
       </Card>
-    );
-  }
-);
+  );
+};
 
+// Memoize to prevent unnecessary re-renders when parent updates
+const ProfileCard = memo(ProfileCardComponent);
 ProfileCard.displayName = "ProfileCard";
 
 export { ProfileCard };
