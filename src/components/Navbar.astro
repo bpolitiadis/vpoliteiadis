@@ -218,7 +218,13 @@ const homeSections = [
     const sections: string[] = ['about', 'projects', 'creative', 'contact'];
     const navLinks = document.querySelectorAll('[data-section-id]');
     const navbar = document.querySelector('.navbar-compact') as HTMLElement;
-    const navbarHeight: number = navbar?.offsetHeight || 56;
+
+    // Get CSS variables for layout dimensions
+    const computedStyle = getComputedStyle(document.documentElement);
+    const navbarHeight = navbar?.offsetHeight || parseInt(computedStyle.getPropertyValue('--navbar-height-desktop')) || 56;
+    const scrollOffset = parseInt(computedStyle.getPropertyValue('--navbar-scroll-offset')) || 20;
+    const homeOffset = parseInt(computedStyle.getPropertyValue('--navbar-home-offset')) || 100;
+
     const homeLink = document.querySelector('[data-nav-item="home"]') as HTMLElement;
     let activeSection: string | null = null;
     let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -227,7 +233,7 @@ const homeSections = [
     function scrollToSection(sectionId: string): void {
       const section = document.getElementById(sectionId);
       if (section) {
-        const targetPosition = section.offsetTop - navbarHeight - 20;
+        const targetPosition = section.offsetTop - navbarHeight - scrollOffset;
         window.scrollTo({
           top: targetPosition,
           behavior: 'smooth'
@@ -311,7 +317,7 @@ const homeSections = [
       // Options for Intersection Observer
       const observerOptions = {
         root: null,
-        rootMargin: `-${navbarHeight + 20}px 0px -60% 0px`, // Trigger when section enters top 40% of viewport
+        rootMargin: `-${navbarHeight + scrollOffset}px 0px -60% 0px`, // Trigger when section enters top 40% of viewport
         threshold: [0, 0.1, 0.5, 1]
       };
 
@@ -338,9 +344,9 @@ const homeSections = [
           if (!visibleSection) {
             const scrollY = window.scrollY || window.pageYOffset;
             const firstSection = sectionElements[0];
-            
+
             // Home is active if we're above the first section or at the very top
-            if (scrollY < (firstSection?.offsetTop || 0) - navbarHeight - 100) {
+            if (scrollY < (firstSection?.offsetTop || 0) - navbarHeight - homeOffset) {
               visibleSection = null; // Home
             } else {
               // Find the section we're closest to
@@ -348,7 +354,7 @@ const homeSections = [
               let minDistance = Infinity;
 
               sectionElements.forEach(section => {
-                const distance = Math.abs(section.offsetTop - scrollY - navbarHeight);
+                const distance = Math.abs(section.offsetTop - scrollY - navbarHeight - scrollOffset);
                 if (distance < minDistance) {
                   minDistance = distance;
                   closestSection = section.id;
@@ -373,8 +379,8 @@ const homeSections = [
       const checkInitialSection = () => {
         const scrollY = window.scrollY || window.pageYOffset;
         const firstSection = sectionElements[0];
-        
-        if (scrollY < (firstSection?.offsetTop || 0) - navbarHeight - 100) {
+
+        if (scrollY < (firstSection?.offsetTop || 0) - navbarHeight - homeOffset) {
           updateActiveNavItem(null); // Home
         } else {
           // Find which section is currently in view
@@ -382,7 +388,7 @@ const homeSections = [
           let minDistance = Infinity;
 
           sectionElements.forEach(section => {
-            const sectionTop = section.offsetTop - navbarHeight - 20;
+            const sectionTop = section.offsetTop - navbarHeight - scrollOffset;
             const sectionBottom = sectionTop + section.offsetHeight;
             
             if (scrollY >= sectionTop && scrollY < sectionBottom) {
@@ -488,14 +494,14 @@ const homeSections = [
     display: inline; 
   }
   
-  /* Custom navbar height - more compact */
+  /* Custom navbar height - using CSS variables for maintainability */
   .navbar-compact {
-    height: 56px;
+    height: var(--navbar-height-desktop);
   }
-  
+
   @media (max-width: 768px) {
     .navbar-compact {
-      height: 48px;
+      height: var(--navbar-height-mobile);
     }
   }
   

@@ -30,6 +30,12 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+
+    /* Navbar layout variables */
+    --navbar-height-desktop: 56px;
+    --navbar-height-mobile: 48px;
+    --navbar-scroll-offset: 20px;
+    --navbar-home-offset: 100px;
   }
 
   .dark {
