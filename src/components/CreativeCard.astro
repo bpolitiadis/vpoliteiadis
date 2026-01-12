@@ -21,7 +21,7 @@ const { project } = Astro.props;
 ---
 
 <div
-  class="group relative flex flex-col h-full w-full text-animation"
+  class="group relative flex flex-col h-full w-full text-animation rounded-xl transition-all duration-500 ease-out hover:-translate-y-1"
   data-testid={`creative-card-${project.slug}`}
 >
   <!-- Project Cover Image -->
@@ -35,12 +35,12 @@ const { project } = Astro.props;
         src={project.hero}
         alt={project.title}
         preset="card"
-        class={`w-full h-full ${project.heroFit === 'contain' ? 'object-contain p-6' : 'object-cover'} rounded-lg transition-transform duration-700 group-hover:scale-110 will-change-transform`}
+        class={`w-full h-full ${project.heroFit === 'contain' ? 'object-contain p-6' : 'object-cover'} rounded-lg transition-transform duration-500 ease-out group-hover:scale-105 will-change-transform`}
         loading="lazy"
         decoding="async"
       />
-      <!-- Purple gradient overlay -->
-      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent opacity-90 group-hover:opacity-60 transition-opacity duration-500 rounded-lg" />
+      <!-- Cyan gradient overlay -->
+      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent opacity-90 group-hover:opacity-50 transition-opacity duration-400 rounded-lg" />
     </a>
   </div>
 
@@ -51,18 +51,17 @@ const { project } = Astro.props;
         href={project.cta?.external ? project.cta.href : project.detailUrl}
         target={project.cta?.external ? '_blank' : undefined}
         rel={project.cta?.external ? 'noopener noreferrer' : undefined}
-        class="inline-flex items-center gap-2 text-cyan hover:text-cyan/90 transition-all duration-300 hover:scale-[1.02] origin-left"
-        style="color: #00FFFF; text-shadow: 0 0 10px rgba(0, 255, 255, 0.6), 0 0 20px rgba(0, 255, 255, 0.3);"
+        class="creative-card-title inline-flex items-center gap-2 transition-all duration-300"
       >
         {project.title}
         {project.cta?.external && (
-          <ExternalLink class="w-4 h-4 opacity-60 hover:opacity-100 transition-opacity stroke-current" aria-hidden="true" />
+          <ExternalLink class="w-4 h-4 opacity-60 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 stroke-current" aria-hidden="true" />
         )}
       </a>
     </div>
 
     <!-- Description -->
-    <p class="text-sm text-matrix-white/85 leading-relaxed">
+    <p class="text-sm text-matrix-white/85 leading-relaxed transition-colors duration-300 group-hover:text-matrix-white/95">
       {project.description}
     </p>
 
@@ -70,7 +69,7 @@ const { project } = Astro.props;
     {project.tools && project.tools.length > 0 && (
       <div class="flex flex-wrap gap-2">
         {project.tools.map((tool) => (
-          <div class="badge-cyan">
+          <div class="badge-cyan transition-all duration-300 group-hover:border-cyan/70">
             {tool}
           </div>
         ))}
@@ -78,3 +77,14 @@ const { project } = Astro.props;
     )}
   </div>
 </div>
+
+<style>
+  .creative-card-title {
+    color: #00FFFF;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5), 0 0 20px rgba(0, 255, 255, 0.2);
+  }
+  
+  .group:hover .creative-card-title {
+    text-shadow: 0 0 12px rgba(0, 255, 255, 0.7), 0 0 24px rgba(0, 255, 255, 0.4);
+  }
+</style>

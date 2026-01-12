@@ -16,7 +16,7 @@ const { project } = Astro.props;
 ---
 
 <div
-  class="group relative flex flex-col h-full w-full text-animation"
+  class="group relative flex flex-col h-full w-full text-animation rounded-xl transition-all duration-500 ease-out hover:-translate-y-1"
 >
   {/* Project Image */}
   <div class="relative w-full overflow-hidden rounded-lg" style="aspect-ratio: 16 / 9">
@@ -31,14 +31,14 @@ const { project } = Astro.props;
         src={project.image}
         alt={project.title}
         preset="card"
-        class="w-full h-full object-cover rounded-lg transition-transform duration-700 group-hover:scale-110 will-change-transform"
+        class="w-full h-full object-cover rounded-lg transition-transform duration-500 ease-out group-hover:scale-105 will-change-transform"
         loading="lazy"
         decoding="async"
         width={1024}
         height={576}
       />
       <!-- Matrix gradient overlay -->
-      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent opacity-90 group-hover:opacity-60 transition-opacity duration-500 rounded-lg" />
+      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent opacity-90 group-hover:opacity-50 transition-opacity duration-400 rounded-lg" />
     </a>
   </div>
 
@@ -48,22 +48,32 @@ const { project } = Astro.props;
         href={project.website}
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 text-neon-lime hover:text-neon-lime/90 transition-all duration-300 hover:scale-[1.02] origin-left"
-        style={{ color: '#39FF14', textShadow: '0 0 10px rgba(57, 255, 20, 0.6), 0 0 20px rgba(57, 255, 20, 0.3)' }}
+        class="project-card-title inline-flex items-center gap-2 transition-all duration-300"
       >
         {project.title}
-        <span class="text-sm opacity-70">↗</span>
+        <span class="text-sm opacity-70 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
       </a>
     </div>
-    <div class="text-sm text-matrix-white/85 leading-relaxed">
+    <div class="text-sm text-matrix-white/85 leading-relaxed transition-colors duration-300 group-hover:text-matrix-white/95">
       {project.description}
     </div>
     <div class="flex flex-wrap gap-2">
       {project.technologies.map((tech) => (
-        <div class="badge-emerald">
+        <div class="badge-emerald transition-all duration-300 group-hover:border-secondary/70">
           {tech}
         </div>
       ))}
     </div>
   </div>
 </div>
+
+<style>
+  .project-card-title {
+    color: #39FF14;
+    text-shadow: 0 0 10px rgba(57, 255, 20, 0.5), 0 0 20px rgba(57, 255, 20, 0.2);
+  }
+  
+  .group:hover .project-card-title {
+    text-shadow: 0 0 12px rgba(57, 255, 20, 0.7), 0 0 24px rgba(57, 255, 20, 0.4);
+  }
+</style>
