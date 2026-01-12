@@ -4,6 +4,41 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 
 ## [Unreleased]
 
+### Performance & Animation Enhancements
+- **Font Loading Strategy Refinement**: Optimized font loading performance by eliminating FOUT (Flash of Unstyled Text) through improved CSS font-display strategy
+  - Changed from `font-display: optional` to `font-display: swap` for synchronous loading
+  - Simplified font CSS rules by removing redundant `font-display: swap` declarations
+  - **Impact**: Eliminates font loading race conditions, ensures consistent typography rendering across all devices
+- **Text Reveal Animation System**: Implemented comprehensive IntersectionObserver-powered text reveal animations across multiple homepage sections
+  - Added TextRevealAnimation class for reusable scroll-triggered animations
+  - Enhanced HeroSection, AboutSection, ProjectsSection, CreativeLabSection, and Blog sections with optimized text reveals
+  - **Performance**: No flash optimization, reduced-motion aware, IntersectionObserver-based for better performance than scroll event listeners
+  - **Impact**: Improved user experience with smooth, performant text animations that respect user preferences
+- **ContactSection Layout Optimization**: Restructured ContactSection layout for improved readability and visual hierarchy
+  - Enhanced component organization and responsive design
+  - Better integration with background imagery and animations
+
+### Code Quality & Architecture Improvements
+- **Component Cleanup**: Removed unused PageHero.astro component (61 lines) that was no longer referenced in any pages
+  - Deleted component file and export from component index
+  - Updated blog index page to work without PageHero dependency
+  - **Impact**: Reduced bundle size, eliminated dead code, improved maintainability
+- **Hero Animation Module Extraction**: Extracted 177 lines of inline GSAP animation logic from HeroSection.astro into dedicated module
+  - Created `/src/lib/animations/heroAnimations.ts` with TypeScript types and proper exports
+  - Added centralized animation configuration and cleanup functions
+  - **Benefits**: Better separation of concerns, testable animation logic, reusable animation patterns, reduced component complexity
+- **CSS Simplification**: Removed duplicate and unused CSS rules across multiple files
+  - Consolidated reduced motion CSS to single source of truth in `global.css`
+  - Removed obsolete animation classes and GSAP `[data-animate]` system references
+  - **Impact**: Cleaner stylesheets, reduced CSS bundle size, improved maintainability
+
+### Documentation Updates
+- **Component Documentation Synchronization**: Updated COMPONENTS.md to accurately reflect current component architecture
+  - Added missing components: ContactCards.astro, ContactForm.tsx, TimelineItem.astro, SocialLink.astro, SpotifyEmbed.astro
+  - Removed references to non-existent components: GlassCard.astro, HighlightBlock.astro, VercelImage.astro, OptimizedImage.tsx, ScreenshotFrame.astro, NeonCTA.astro, Avatar.tsx, DropdownMenu.tsx
+  - Fixed component paths and categorization for better organization
+  - **Impact**: Accurate component inventory, improved developer onboarding, reduced confusion
+
 ### Font Loading Optimization & Component Cleanup
 - **Font Loading Strategy**: Optimized font loading for zero FOUT (Flash of Unstyled Text)
   - Changed from `font-display: optional` to `font-display: swap` for synchronous loading

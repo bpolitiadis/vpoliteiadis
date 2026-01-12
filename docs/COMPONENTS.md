@@ -53,6 +53,7 @@ const bgSlug = "projects-bg";
 | `Navbar.astro` | `src/components/Navbar.astro` | Compact Matrix-inspired top nav with scroll spy and neon styling | `currentPath?` | `/public/scripts/navbar.js` (mobile menu), Intersection Observer API, global styles |
 | `Footer.astro` | `src/components/Footer.astro` | Footer with social links and branding | — | SocialLink components |
 | `Breadcrumb.astro` | `src/components/Breadcrumb.astro` | Navigation breadcrumb with JSON-LD structured data | `items: BreadcrumbItem[]`, `class?: string` | SchemaOrg component |
+| `SocialLink.astro` | `src/components/SocialLink.astro` | Social media link with platform-specific icons and accessibility | `profile: SocialProfile`, `className?`, `size?: 'sm' \| 'md' \| 'lg'` | — |
 
 #### Breadcrumb.astro
 **Purpose:** Navigation breadcrumb with JSON-LD structured data for SEO.
@@ -105,14 +106,10 @@ const githubProfile = {
 
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
-| `Hero.astro` | `src/components/Hero.astro` | Home hero with matrix rain, ElectricBorder avatar, and dynamic subtitle | — | HeroAnimationController, ElectricBorder, `/public/scripts/matrix-rain.js` |
-| `HeroSection.astro` | `src/components/hero/HeroSection.astro` | Static hero section with GSAP animations, optimized images, and floating illustrations | — | GSAP, Astro assets |
-| `HeroSection.tsx` | `src/components/hero/deprecated/HeroSection.tsx` | ⚠️ DEPRECATED - GSAP-powered React hero section | — | React, GSAP |
+| `HeroSection.astro` | `src/components/hero/HeroSection.astro` | Static hero section with GSAP animations, optimized images, and floating illustrations | — | GSAP, Astro assets, text reveal animations |
 | `HeroAnimationController.tsx` | `src/components/HeroAnimationController.tsx` | React component managing hero animation sequence | `quotes: string[]` (14 professional quotes) | DecryptedText, TextType |
 | `DecryptedText.tsx` | `src/components/DecryptedText.tsx` | Matrix-style text decryption effect with scroll-triggered animations | `text: string`, `speed?: number`, `sequential?: boolean`, `revealDirection?: 'start' \| 'end' \| 'center'`, `animateOn?: 'view' \| 'hover'`, `className?: string`, `encryptedClassName?: string`, `revealedStyle?: React.CSSProperties` | React, IntersectionObserver |
 | `TextType.tsx` | `src/components/TextType.tsx` | Typing/erasing text rotator with cursor | `text: string \| string[]`, `typingSpeed?`, `deletingSpeed?`, `pauseDuration?`, `showCursor?`, `cursorCharacter?`, `cursorClassName?`, `className?`, `startOnVisible?` | React, CSS animations |
-| `TextAnimation.tsx` | `src/components/TextAnimation.tsx` | Advanced text animation effects component | `text: string`, `effect?: 'fadeIn' \| 'slideUp' \| 'typewriter' \| 'glitch'`, `duration?: number`, `delay?: number`, `className?: string` | React, GSAP, CSS animations |
-| `FuzzyText.tsx` | `src/components/FuzzyText.tsx` | Canvas-based fuzzy text effect with hover interactions | `children`, `fontSize?`, `fontWeight?`, `fontFamily?`, `color?`, `enableHover?`, `baseIntensity?`, `hoverIntensity?` | React, Canvas API, requestAnimationFrame |
 | `LetterGlitch.tsx` | `src/components/LetterGlitch.tsx` | Canvas-based letter glitch effect with customizable colors and speed | `glitchColors?`, `glitchSpeed?`, `centerVignette?`, `outerVignette?`, `smooth?` | React, Canvas API |
 
 #### DecryptedText.tsx
@@ -215,7 +212,6 @@ function MyComponent() {
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
 | `AboutSection.astro` | `src/components/AboutSection.astro` | Comprehensive profile showcase with work experience, education, and certifications | `profileImageSrc: string` | ProfileCard, TimelineItem, structured data |
-| `TimelineItem.astro` | `src/components/sections/TimelineItem.astro` | Reusable timeline item component for work experience, education, and certifications | `item: TimelineItemData` | — |
 | `ProjectsSection.astro` | `src/components/ProjectsSection.astro` | Featured projects showcase with scroll-triggered animations | — | ProjectCard, public images |
 | `CreativeLabSection.astro` | `src/components/CreativeLabSection.astro` | Creative portfolio showcase with category-based styling and staggered animations | — | category colors |
 | `ContactSection.astro` | `src/components/ContactSection.astro` | Contact form section with background image and animations | — | ContactForm, ContactCards, AImage |
@@ -298,10 +294,8 @@ import SchemaOrg from '../components/SchemaOrg.astro';
 |-----------|------|---------|-----------|--------------|
 | `BlogPostCard.astro` | `src/components/BlogPostCard.astro` | Blog post preview card with cover image, metadata, and tags | `post: BlogPostMeta`, `class?: string` | AImage, global styles |
 | `ProfileCard.tsx` | `src/components/ui/profile-card.tsx` | Interactive profile card with tilt effects, social links, and status indicators | `name: string`, `title: string`, `status?: 'Online' \| 'Offline' \| 'Away'`, `contactText?`, `avatarUrl: string`, `showUserInfo?`, `enableTilt?`, `enableMobileTilt?`, `onContactClick?`, `className?` | React, Button, Card, Icon components |
-| `GlassCard.astro` | `src/components/GlassCard.astro` | Glassmorphic container with neon accent | `accent?`, `ariaLabel?`, `class?` | global.css glass-card styles |
 | `CreativeCard.astro` | `src/components/CreativeCard.astro` | Creative portfolio project card with hover effects and tool badges | `project: CreativeProject`, `class?: string` | AImage, ExternalLink, global styles |
 | `ProjectCard.astro` | `src/components/ProjectCard.astro` | Featured project showcase card with hover zoom and tech badges | `project: Project`, `class?: string` | AImage, global styles |
-| `HighlightBlock.astro` | `src/components/HighlightBlock.astro` | Compact highlight tile for impact points | `title: string`, `description?`, `class?` | global.css styling |
 
 #### BlogPostCard.astro
 **Purpose:** Blog post preview card with cover image, metadata, and tags.
@@ -358,11 +352,8 @@ const project = {
 
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
-| `VercelImage.astro` | `src/components/VercelImage.astro` | Astro Image wrapper using built-in optimization | `src`, `alt?`, `width?`, `quality?`, `class?` | Astro Image component |
-| `OptimizedImage.tsx` | `src/components/OptimizedImage.tsx` | React image helper (deprecated) | `src`, `width?`, `quality?`, plus `<img>` attrs | React, deprecated |
-| `ScreenshotFrame.astro` | `src/components/ScreenshotFrame.astro` | Premium framed screenshot with neon/scanlines | `src` (req), `alt` (req), `eager?`, `width?`, `height?`, `class?` | global.css holo-frame styles |
-| `LightboxGallery.tsx` | `src/components/LightboxGallery.tsx` | React lightbox grid powered by `yet-another-react-lightbox` | `items: { thumbSrc, fullSrc, alt }[]`, `className?` | React, yet-another-react-lightbox |
 | `AImage.astro` | `src/components/media/AImage.astro` | Unified image component with responsive optimization | `src`, `alt`, `preset?`, `sizes?`, `loading?`, `width?`, `height?` | Astro Image, image-presets |
+| `LightboxGallery.tsx` | `src/components/LightboxGallery.tsx` | React lightbox grid powered by `yet-another-react-lightbox` | `items: { thumbSrc, fullSrc, alt }[]`, `className?` | React, yet-another-react-lightbox |
 
 #### AImage.astro
 **Purpose:** Unified image component with responsive optimization and performance presets.
@@ -403,7 +394,6 @@ import heroImage from '../../assets/images/hero.webp';
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
 | `ElectricBorder.tsx` | `src/components/ElectricBorder.tsx` | Animated electric border effect using SVG filters | `color?`, `speed?`, `chaos?`, `thickness?`, `className?`, `style?` | React, SVG filters, CSS animations |
-| `NeonCTA.astro` | `src/components/NeonCTA.astro` | Neon-styled call-to-action button | `href`, `text?`, `class?` | global.css neon-cta styles |
 | `SpotifyEmbed.astro` | `src/components/SpotifyEmbed.astro` | Spotify iframe helper with cyberpunk styling | `src` or (`type`, `id`), `height?`, `title?`, `theme?` | Spotify embed API |
 
 ### Icons & Graphics
@@ -416,19 +406,31 @@ import heroImage from '../../assets/images/hero.webp';
 
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
+| `Badge.tsx` | `src/components/ui/badge.tsx` | Status and category badges | `variant?`, `className?` | React, class-variance-authority |
 | `Button.tsx` | `src/components/ui/button.tsx` | Cyberpunk-styled button with neon glow effects | `variant?`, `size?`, `asChild?` | React, class-variance-authority |
 | `Card.tsx` | `src/components/ui/card.tsx` | Glassmorphic card container with cyberpunk styling | — | React, tailwind-merge |
-| `Avatar.tsx` | `src/components/ui/avatar.tsx` | Profile avatar component with fallback | `src?`, `alt?`, `fallback?` | React, Radix UI Avatar |
-| `Badge.tsx` | `src/components/ui/badge.tsx` | Status and category badges | `variant?`, `className?` | React, class-variance-authority |
 | `Dialog.tsx` | `src/components/ui/dialog.tsx` | Modal dialog component | `open?`, `onOpenChange?` | React, Radix UI Dialog |
-| `DropdownMenu.tsx` | `src/components/ui/dropdown-menu.tsx` | Dropdown menu component | — | React, Radix UI Dropdown Menu |
 | `Form.tsx` | `src/components/ui/form.tsx` | Form components with validation | — | React, React Hook Form |
 | `Input.tsx` | `src/components/ui/input.tsx` | Text input component | — | React |
 | `Label.tsx` | `src/components/ui/label.tsx` | Form label component | — | React, Radix UI Label |
+| `ProfileCard.tsx` | `src/components/ui/profile-card.tsx` | Interactive profile card with tilt effects, social links, and status indicators | `name: string`, `title: string`, `status?: 'Online' \| 'Offline' \| 'Away'`, `contactText?`, `avatarUrl: string`, `showUserInfo?`, `enableTilt?`, `enableMobileTilt?`, `onContactClick?`, `className?` | React, Button, Card, Icon components |
 | `Progress.tsx` | `src/components/ui/progress.tsx` | Progress bar component | `value?`, `className?` | React, Radix UI Progress |
 | `Select.tsx` | `src/components/ui/select.tsx` | Select dropdown component | — | React, Radix UI Select |
 | `Separator.tsx` | `src/components/ui/separator.tsx` | Visual separator component | `orientation?`, `className?` | React, Radix UI Separator |
 | `Textarea.tsx` | `src/components/ui/textarea.tsx` | Multi-line text input | — | React |
+
+### Contact Components
+
+| Component | Path | Purpose | Key Props | Dependencies |
+|-----------|------|---------|-----------|--------------|
+| `ContactCards.astro` | `src/components/contact/ContactCards.astro` | Contact information cards with social links | — | SocialLink components |
+| `ContactForm.tsx` | `src/components/contact/ContactForm.tsx` | Interactive contact form with validation | — | React, React Hook Form, Resend API |
+
+### Timeline Components
+
+| Component | Path | Purpose | Key Props | Dependencies |
+|-----------|------|---------|-----------|--------------|
+| `TimelineItem.astro` | `src/components/sections/TimelineItem.astro` | Reusable timeline item for work experience and education | `item: TimelineItemData` | — |
 
 #### Button.tsx
 **Purpose:** Cyberpunk-styled button with neon glow effects and multiple variants.
