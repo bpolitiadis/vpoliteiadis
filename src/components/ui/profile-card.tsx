@@ -17,8 +17,6 @@ const HERO_QUOTES = [
   "Human creativity, artificial brains.",
   "Writing tests that test the limits.",
   "I write code that watches your code.",
-  "Imagination is more important than knowledge.",
-  "The future is already here — it's just not evenly distributed.",
 ];
 
 // Status color map outside component
