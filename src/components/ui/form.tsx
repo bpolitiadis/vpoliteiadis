@@ -18,8 +18,31 @@ export function Form<TFieldValues extends FieldValues = FieldValues>({
   children,
   'data-testid': dataTestId,
 }: FormProps<TFieldValues>) {
+  const handleFormSubmit = React.useCallback((e: React.FormEvent<HTMLFormElement>) => {
+    // Prevent default to prevent form navigation
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // React Hook Form's handleSubmit returns a function that:
+    // - Validates the form first
+    // - Only calls onSubmit if validation passes
+    // - Prevents default automatically if validation fails
+    // We need to call it without the event to ensure validation runs
+    const submitHandler = form.handleSubmit(onSubmit, (_errors) => {
+      // This callback runs when validation fails
+      // Errors are automatically set in form.formState.errors
+    });
+    // Call the handler - it will validate and only call onSubmit if valid
+    submitHandler(e);
+  }, [form, onSubmit]);
+
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className={className} noValidate data-testid={dataTestId}>
+    <form 
+      onSubmit={handleFormSubmit}
+      className={className} 
+      noValidate 
+      data-testid={dataTestId}
+    >
       {children}
     </form>
   );
@@ -55,23 +78,26 @@ export function FormControl({ className = "", ...props }: FormControlProps) {
 }
 
 export interface FormMessageProps
-  extends React.HTMLAttributes<HTMLParagraphElement> {}
+  extends React.HTMLAttributes<HTMLParagraphElement> {
+  'data-testid'?: string;
+}
 
-export function FormMessage({ className = "", children, ...props }: FormMessageProps) {
-  // Reserve space to prevent layout shift when error messages appear/disappear
-  const hasContent = Boolean(children);
+export function FormMessage({ className = "", children, 'data-testid': dataTestId, ...props }: FormMessageProps) {
+  // Only render if there are children (errors)
+  if (!children) return null;
+
   return (
     <p
       className={cn(
-        "text-sm text-destructive mt-1 min-h-[1.25rem]",
-        !hasContent && "invisible",
+        "text-sm text-destructive mt-1",
         className
       )}
-      role={hasContent ? "alert" : undefined}
-      aria-live={hasContent ? "polite" : undefined}
+      role="alert"
+      aria-live="polite"
+      data-testid={dataTestId}
       {...props}
     >
-      {children || "\u00A0"}
+      {children}
     </p>
   );
 }
