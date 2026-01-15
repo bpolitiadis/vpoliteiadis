@@ -192,6 +192,25 @@ test.describe('Contact Form - Focused Tests', () => {
       
       await expect(contactFormPage.errorMessage).toContainText('There was an error sending your message');
     });
+
+    test('should handle rate limit error (429)', async ({ page }) => {
+      await ContactFormMocks.mockRateLimitResponse(page);
+      
+      await contactFormPage.fillForm(ContactFormTestData.valid);
+      await contactFormPage.submitForm();
+      
+      await contactFormPage.waitForSubmission();
+      await contactFormPage.waitForError();
+      
+      // Verify rate limit error message
+      await expect(contactFormPage.errorMessage).toContainText('error');
+      
+      // Verify rate limit headers are present in response
+      const response = await page.waitForResponse('**/api/contact');
+      const headers = response.headers();
+      expect(headers['retry-after']).toBeTruthy();
+      expect(headers['x-ratelimit-limit']).toBeTruthy();
+    });
   });
 
   test.describe('Form State Management', () => {

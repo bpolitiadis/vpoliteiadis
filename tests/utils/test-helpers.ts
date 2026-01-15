@@ -27,6 +27,7 @@ export class ContactFormMocks {
 
   /**
    * Mock server error response
+   * Updated to match new security-hardened API response format
    */
   static async mockErrorResponse(page: Page, status: number = 500, delay: number = 0) {
     await page.route('**/api/contact', async (route: Route) => {
@@ -34,12 +35,44 @@ export class ContactFormMocks {
         await new Promise(resolve => setTimeout(resolve, delay));
       }
       
+      // Match new obfuscated error format
+      const errorMessages: Record<number, string> = {
+        400: 'Invalid input. Please check your form data.',
+        413: 'Request too large',
+        429: 'Too many requests. Please try again later.',
+        500: 'Failed to send message. Please try again later.',
+      };
+      
       await route.fulfill({
         status,
         contentType: 'application/json',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+        },
         body: JSON.stringify({ 
-          error: 'Internal Server Error',
-          message: 'Something went wrong' 
+          error: errorMessages[status] || 'An error occurred',
+        }),
+      });
+    });
+  }
+
+  /**
+   * Mock rate limit response (429)
+   */
+  static async mockRateLimitResponse(page: Page) {
+    await page.route('**/api/contact', async (route: Route) => {
+      await route.fulfill({
+        status: 429,
+        contentType: 'application/json',
+        headers: {
+          'Retry-After': '3600',
+          'X-RateLimit-Limit': '5',
+          'X-RateLimit-Remaining': '0',
+          'X-RateLimit-Reset': String(Date.now() + 3600000),
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+        },
+        body: JSON.stringify({ 
+          error: 'Too many requests. Please try again later.',
         }),
       });
     });
@@ -91,8 +124,8 @@ export const ContactFormTestData = {
   },
   
   longData: {
-    firstName: 'A'.repeat(60), // Max length
-    lastName: 'B'.repeat(60), // Max length
+    firstName: 'A'.repeat(50), // Max length (updated to match new limits)
+    lastName: 'B'.repeat(50), // Max length (updated to match new limits)
     email: 'test@example.com',
     message: 'C'.repeat(5000), // Max length
   },

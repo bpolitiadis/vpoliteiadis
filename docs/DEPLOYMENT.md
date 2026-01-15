@@ -53,6 +53,8 @@ graph LR
 | `LOG_LEVEL` | Logging verbosity | Optional |
 | `SENTRY_DSN` | Error tracking | Optional |
 | `RESEND_API_KEY` | Email service | Required |
+| `UPSTASH_REDIS_REST_URL` | Upstash Redis URL for rate limiting | Required* |
+| `UPSTASH_REDIS_REST_TOKEN` | Upstash Redis token for rate limiting | Required* |
 
 #### Environment-Specific Setup
 
@@ -62,6 +64,10 @@ graph LR
 RESEND_API_KEY=re_1234567890abcdef
 FROM_EMAIL=noreply@yourdomain.com
 CONTACT_EMAIL=contact@yourdomain.com
+
+# Required for Rate Limiting (see SECURITY_SETUP.md)
+UPSTASH_REDIS_REST_URL=https://your-redis.upstash.io
+UPSTASH_REDIS_REST_TOKEN=your-token-here
 
 # Recommended
 LOG_LEVEL=info
@@ -320,6 +326,31 @@ export function onRequest({ request, next }) {
 - TailwindCSS purging unused styles
 - Critical CSS inlined
 - Minimal custom CSS additions
+
+## 🔒 Security Setup
+
+### Required: Rate Limiting Configuration
+
+Before deploying to production, you **must** set up Upstash Redis for rate limiting:
+
+1. **Create Upstash Redis database** (see [SECURITY_SETUP.md](./SECURITY_SETUP.md))
+2. **Add environment variables** to Vercel:
+   ```bash
+   vercel env add UPSTASH_REDIS_REST_URL production
+   vercel env add UPSTASH_REDIS_REST_TOKEN production
+   ```
+3. **Verify security headers** are applied (check `vercel.json`)
+
+**Note:** Rate limiting will be disabled if Redis credentials are not configured (with a warning in logs).
+
+### Security Features Enabled
+
+- ✅ **Distributed Rate Limiting:** 5 requests/hour/IP (Upstash Redis)
+- ✅ **Security Headers:** HSTS, CSP, X-Frame-Options, Permissions-Policy
+- ✅ **Input Sanitization:** Length limits, HTML sanitization
+- ✅ **Error Obfuscation:** Generic error messages (no information leakage)
+
+See [SECURITY_AUDIT.md](./SECURITY_AUDIT.md) for complete security details.
 
 ## 🚀 Deployment Process
 

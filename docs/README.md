@@ -205,7 +205,12 @@ pnpm seo:lighthouse
 - **Lighthouse:** Performance 90+, Accessibility 95+, Best Practices 95+, SEO 95+
 - **Core Web Vitals:** Optimized for LCP, FID, CLS
 - **Accessibility:** WCAG 2.1 AA compliant
-- **Security:** CSP headers, HTTPS-only, no sensitive data exposure
+- **Security:** 
+  - Comprehensive security headers (HSTS, CSP, X-Frame-Options, Permissions-Policy)
+  - Distributed rate limiting (5 req/hour/IP via Upstash Redis)
+  - Input sanitization and validation
+  - Obfuscated error handling (no information leakage)
+  - HTTPS-only, no sensitive data exposure
 
 ## 🔍 AI & Crawling
 
@@ -222,4 +227,17 @@ pnpm seo:lighthouse
 ---
 
 **Built with ❤️ and ☕ by Vasileios Politeiadis**  
-*Last updated: December 2025*
+*Last updated: January 2025*
+
+---
+
+## 🔒 Security
+
+This project implements comprehensive security measures:
+
+- **Rate Limiting:** Distributed rate limiting via Upstash Redis (5 req/hour/IP)
+- **Security Headers:** HSTS, CSP, X-Frame-Options, Permissions-Policy
+- **Input Validation:** Strict length limits and HTML sanitization
+- **Error Handling:** Obfuscated errors (no information leakage)
+
+See [SECURITY_AUDIT.md](./docs/SECURITY_AUDIT.md) and [SECURITY_SETUP.md](./docs/SECURITY_SETUP.md) for details.
