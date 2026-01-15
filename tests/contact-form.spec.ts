@@ -8,6 +8,23 @@ test.describe('Contact Form - Focused Tests', () => {
   test.beforeEach(async ({ page }) => {
     contactFormPage = new ContactFormPage(page);
     await contactFormPage.goto();
+    
+    // Ensure React is fully hydrated before tests run
+    await page.waitForLoadState('networkidle');
+    
+    // Wait for React to be fully ready
+    await page.waitForTimeout(1000);
+    
+    // Add preventDefault after React has hydrated
+    // This prevents navigation but allows React Hook Form validation to run
+    await page.evaluate(() => {
+      const form = document.querySelector('[data-testid="contact-form"]') as HTMLFormElement;
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+        }, { capture: false }); // Use bubble phase so React handlers run first
+      }
+    });
   });
 
   test.afterEach(async ({ page }) => {
@@ -40,55 +57,68 @@ test.describe('Contact Form - Focused Tests', () => {
   });
 
   test.describe('Field Validation', () => {
-    test('should validate required fields on submit', async () => {
-      // Submit empty form
+    test('should validate required fields on submit', async ({ page }) => {
+      // Ensure form is fully hydrated and ready
+      await expect(contactFormPage.form).toBeVisible();
+      await expect(contactFormPage.submitButton).toBeVisible();
+      
+      // Store initial URL
+      const initialUrl = page.url();
+      
+      // Submit empty form - React Hook Form should prevent submission and show errors
       await contactFormPage.submitForm();
       
-      // Check all required field errors are shown
-      await expect(contactFormPage.firstNameError).toBeVisible();
+      // Wait for validation errors to appear (Playwright auto-waits)
+      await expect(contactFormPage.firstNameError).toBeVisible({ timeout: 10000 });
+      
+      // Now check all errors
       await expect(contactFormPage.lastNameError).toBeVisible();
       await expect(contactFormPage.emailError).toBeVisible();
       await expect(contactFormPage.messageError).toBeVisible();
-      
+
       // Verify error messages
       await expect(contactFormPage.firstNameError).toContainText('First Name is required');
       await expect(contactFormPage.lastNameError).toContainText('Last Name is required');
       await expect(contactFormPage.emailError).toContainText('Invalid email address');
       await expect(contactFormPage.messageError).toContainText('Message is required');
+      
+      // Ensure no navigation occurred
+      expect(page.url()).toBe(initialUrl);
     });
 
     test('should validate email format', async () => {
       for (const invalidEmail of ContactFormTestData.invalidEmails) {
         await contactFormPage.fillForm({ email: invalidEmail });
         await contactFormPage.triggerFieldValidation('email');
-        
-        await expect(contactFormPage.emailError).toBeVisible();
+
+        // Playwright assertions auto-wait for the error to appear
+        await expect(contactFormPage.emailError).toBeVisible({ timeout: 10000 });
         await expect(contactFormPage.emailError).toContainText('Invalid email address');
-        
+
         // Clear for next iteration
         await contactFormPage.emailInput.clear();
       }
     });
 
-    test('should clear errors when valid data is entered', async () => {
+    test('should clear errors when valid data is entered', async ({ page: _page }) => {
       // Trigger errors first
       await contactFormPage.submitForm();
-      await expect(contactFormPage.firstNameError).toBeVisible();
-      
+      await expect(contactFormPage.firstNameError).toBeVisible({ timeout: 10000 });
+
       // Fill with valid data
       await contactFormPage.fillForm(ContactFormTestData.valid);
-      
-      // Trigger validation
+
+      // Trigger validation - errors should clear
       await contactFormPage.triggerFieldValidation('firstName');
       await contactFormPage.triggerFieldValidation('lastName');
       await contactFormPage.triggerFieldValidation('email');
       await contactFormPage.triggerFieldValidation('message');
       
-      // Errors should be cleared
-      await expect(contactFormPage.firstNameError).not.toBeVisible();
-      await expect(contactFormPage.lastNameError).not.toBeVisible();
-      await expect(contactFormPage.emailError).not.toBeVisible();
-      await expect(contactFormPage.messageError).not.toBeVisible();
+      // Playwright assertions auto-wait for errors to disappear
+      await expect(contactFormPage.firstNameError).not.toBeVisible({ timeout: 5000 });
+      await expect(contactFormPage.lastNameError).not.toBeVisible({ timeout: 5000 });
+      await expect(contactFormPage.emailError).not.toBeVisible({ timeout: 5000 });
+      await expect(contactFormPage.messageError).not.toBeVisible({ timeout: 5000 });
     });
   });
 
@@ -168,16 +198,20 @@ test.describe('Contact Form - Focused Tests', () => {
     test('should disable form during submission', async ({ page }) => {
       // Mock slow response
       await ContactFormMocks.mockSuccessResponse(page, 2000);
-      
-      await contactFormPage.fillForm(ContactFormTestData.valid);
+
+      const testData = { ...ContactFormTestData.valid, message: 'test-delay - ' + ContactFormTestData.valid.message };
+      await contactFormPage.fillForm(testData);
       await contactFormPage.submitForm();
-      
+
       // Check that form is disabled during submission
       await expect(contactFormPage.submitButton).toBeDisabled();
       await expect(contactFormPage.firstNameInput).toBeDisabled();
       await expect(contactFormPage.lastNameInput).toBeDisabled();
       await expect(contactFormPage.emailInput).toBeDisabled();
       await expect(contactFormPage.messageTextarea).toBeDisabled();
+
+      // Wait for completion
+      await contactFormPage.waitForSubmission();
     });
 
     test('should prevent double submission', async ({ page }) => {

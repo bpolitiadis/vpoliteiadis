@@ -58,7 +58,7 @@ export class ContactFormPage {
    * Navigate to the contact page
    */
   async goto() {
-    await this.page.goto('/contact');
+    await this.page.goto('/');
     await this.waitForFormToLoad();
   }
 
@@ -119,7 +119,17 @@ export class ContactFormPage {
    * Submit the form
    */
   async submitForm() {
-    await this.submitButton.click();
+    // Wait for form to be ready and interactive
+    await expect(this.form).toBeVisible();
+    await expect(this.submitButton).toBeVisible();
+    await expect(this.submitButton).toBeEnabled();
+    
+    // Wait for form inputs to be ready (ensures React has hydrated)
+    await expect(this.firstNameInput).toBeVisible();
+    
+    // Click submit button - React Hook Form will handle validation
+    // The form component has preventDefault handlers that should prevent navigation
+    await this.submitButton.click({ noWaitAfter: true });
   }
 
   /**
@@ -217,6 +227,7 @@ export class ContactFormPage {
   async triggerFieldValidation(field: 'firstName' | 'lastName' | 'email' | 'message') {
     const fieldLocator = this.getFieldLocator(field);
     await fieldLocator.blur();
+    // Let Playwright assertions handle waiting - they auto-wait for elements
   }
 
   /**
