@@ -107,7 +107,6 @@ const githubProfile = {
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
 | `HeroSection.astro` | `src/components/hero/HeroSection.astro` | Static hero section with GSAP animations, optimized images, and floating illustrations | — | GSAP, Astro assets, text reveal animations |
-| `HeroAnimationController.tsx` | `src/components/HeroAnimationController.tsx` | React component managing hero animation sequence | `quotes: string[]` (14 professional quotes) | DecryptedText, TextType |
 | `DecryptedText.tsx` | `src/components/DecryptedText.tsx` | Matrix-style text decryption effect with scroll-triggered animations | `text: string`, `speed?: number`, `sequential?: boolean`, `revealDirection?: 'start' \| 'end' \| 'center'`, `animateOn?: 'view' \| 'hover'`, `className?: string`, `encryptedClassName?: string`, `revealedStyle?: React.CSSProperties` | React, IntersectionObserver |
 | `TextType.tsx` | `src/components/TextType.tsx` | Typing/erasing text rotator with cursor | `text: string \| string[]`, `typingSpeed?`, `deletingSpeed?`, `pauseDuration?`, `showCursor?`, `cursorCharacter?`, `cursorClassName?`, `className?`, `startOnVisible?` | React, CSS animations |
 | `LetterGlitch.tsx` | `src/components/LetterGlitch.tsx` | Canvas-based letter glitch effect with customizable colors and speed | `glitchColors?`, `glitchSpeed?`, `centerVignette?`, `outerVignette?`, `smooth?` | React, Canvas API |
@@ -402,21 +401,15 @@ import heroImage from '../../assets/images/hero.webp';
 |-----------|------|---------|-----------|--------------|
 | `Icon.tsx` | `src/components/icons/Icon.tsx` | Lucide icon wrapper with consistent sizing | `name: string`, `size?: 'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl'`, `className?` | React, Lucide React |
 
-### UI Components (shadcn/ui)
+### UI Components (Custom Implementation)
 
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
-| `Badge.tsx` | `src/components/ui/badge.tsx` | Status and category badges | `variant?`, `className?` | React, class-variance-authority |
 | `Button.tsx` | `src/components/ui/button.tsx` | Cyberpunk-styled button with neon glow effects | `variant?`, `size?`, `asChild?` | React, class-variance-authority |
 | `Card.tsx` | `src/components/ui/card.tsx` | Glassmorphic card container with cyberpunk styling | — | React, tailwind-merge |
-| `Dialog.tsx` | `src/components/ui/dialog.tsx` | Modal dialog component | `open?`, `onOpenChange?` | React, Radix UI Dialog |
 | `Form.tsx` | `src/components/ui/form.tsx` | Form components with validation | — | React, React Hook Form |
 | `Input.tsx` | `src/components/ui/input.tsx` | Text input component | — | React |
-| `Label.tsx` | `src/components/ui/label.tsx` | Form label component | — | React, Radix UI Label |
 | `ProfileCard.tsx` | `src/components/ui/profile-card.tsx` | Interactive profile card with tilt effects, social links, and status indicators | `name: string`, `title: string`, `status?: 'Online' \| 'Offline' \| 'Away'`, `contactText?`, `avatarUrl: string`, `showUserInfo?`, `enableTilt?`, `enableMobileTilt?`, `onContactClick?`, `className?` | React, Button, Card, Icon components |
-| `Progress.tsx` | `src/components/ui/progress.tsx` | Progress bar component | `value?`, `className?` | React, Radix UI Progress |
-| `Select.tsx` | `src/components/ui/select.tsx` | Select dropdown component | — | React, Radix UI Select |
-| `Separator.tsx` | `src/components/ui/separator.tsx` | Visual separator component | `orientation?`, `className?` | React, Radix UI Separator |
 | `Textarea.tsx` | `src/components/ui/textarea.tsx` | Multi-line text input | — | React |
 
 ### Contact Components
@@ -431,6 +424,13 @@ import heroImage from '../../assets/images/hero.webp';
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
 | `TimelineItem.astro` | `src/components/sections/TimelineItem.astro` | Reusable timeline item for work experience and education | `item: TimelineItemData` | — |
+
+### Utility & Configuration
+
+| Component | Path | Purpose | Key Props | Dependencies |
+|-----------|------|---------|-----------|--------------|
+| `index.ts` | `src/components/index.ts` | Main component exports and barrel file | — | All components |
+| `ui/index.ts` | `src/components/ui/index.ts` | UI component exports and barrel file | — | UI components |
 
 #### Button.tsx
 **Purpose:** Cyberpunk-styled button with neon glow effects and multiple variants.
@@ -485,10 +485,8 @@ graph TD
   A --> D[/public/scripts/theme-init.js]
   B --> E[/public/scripts/navbar.js]
 
-  G[Hero.astro] --> H[HeroAnimationController.tsx]
-  H --> I[DecryptedText.tsx]
-  H --> J[TextType.tsx]
-  H --> V[FuzzyText.tsx]
+  G[Hero.astro] --> H[DecryptedText.tsx]
+  H --> I[TextType.tsx]
   G --> K[/public/scripts/matrix-rain.js]
 
   AA[HeroSection.astro] --> AB[GSAP]

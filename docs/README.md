@@ -82,12 +82,16 @@ graph TD
 ```
 vpoliteiadis/
 ├── src/
-│   ├── components/          # Astro + React components
+│   ├── assets/             # Optimized images and videos
+│   ├── components/         # Astro + React components
 │   ├── content/            # MDX collections (blog, projects, creative)
+│   ├── env.d.ts            # TypeScript environment types
 │   ├── layouts/            # MainLayout.astro
 │   ├── lib/                # Utilities (analytics, social, spotify)
+│   ├── middleware.ts       # Security and routing middleware
 │   ├── pages/              # File-based routing
-│   └── styles/             # global.css + Tailwind
+│   ├── styles/             # global.css + Tailwind
+│   └── types/              # Shared type definitions
 ├── docs/                   # This documentation suite
 ├── public/                 # Static assets, scripts
 └── scripts/                # Build-time optimizations
