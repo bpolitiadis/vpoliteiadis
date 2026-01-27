@@ -225,3 +225,10 @@ backup/
 *_check_output.txt
 check_output.txt
 astro_check_output.txt
+
+# Audit Tools & Reports
+# ===========================================
+# SquirrelScan audit reports (keep config, ignore reports)
+docs/WEBSITE_AUDIT_REPORT.md
+*.audit.md
+audit-report*.md

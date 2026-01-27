@@ -4,6 +4,31 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 
 ## [Unreleased]
 
+### Critical Audit Fixes (2026-01-27)
+- **Broken Links Resolution**: Removed broken internal links from creative section
+  - Removed `/creative/emmanuelle-silk`, `/creative/smoking-two`, `/creative/arte-imaginari` 404 links
+  - Updated CreativeCard component to use external CTA links instead
+  - **Impact**: Eliminated crawl budget waste, improved user experience, fixed SEO issues
+
+- **SEO Structure Improvements**: Fixed H1 tag structure and meta tag optimization
+  - Removed duplicate H1 from homepage (kept visible one, removed sr-only)
+  - Changed blog listing page H2 to H1 for proper hierarchy
+  - Optimized title tags: homepage (90→55 chars), blog listing (28→40 chars), blog posts (removed author suffix)
+  - Optimized meta descriptions: homepage (263→155 chars), blog listing (38→130 chars)
+  - **Impact**: Better SEO ranking, improved search result display, proper content hierarchy
+
+- **Structured Data Enhancement**: Fixed Article schema validation error
+  - Added `publisher.logo` to Article structured data schema
+  - Logo points to `/images/vp-logo-800w.webp` with proper ImageObject structure
+  - **Impact**: Rich results eligibility, improved search visibility
+
+- **Legal Compliance**: Added Privacy Policy page
+  - Created comprehensive GDPR-compliant Privacy Policy at `/privacy`
+  - Includes data collection practices, third-party services, user rights, contact information
+  - Added Privacy Policy link in footer (visible on all pages)
+  - Includes structured data for SEO
+  - **Impact**: GDPR/CCPA compliance, legal requirements met
+
 ### UI Component Architecture Refinement
 - **ProfileCard Component Enhancement**: Major refactoring of interactive profile card component
   - Moved hero quotes outside component to prevent recreation on re-renders
