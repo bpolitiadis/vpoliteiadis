@@ -13,7 +13,8 @@ import { getImage } from 'astro:assets';
 import vasileiosProfile from '../assets/images/vasileios-profile.webp';
 
 // Get optimized profile image URL
-const profileImage = await getImage({src: vasileiosProfile, width: 800});
+// Use AVIF format with quality 80 for illustrations
+const profileImage = await getImage({src: vasileiosProfile, width: 800, format: 'avif', quality: 80});
 
 
 // Enhanced structured data for homepage

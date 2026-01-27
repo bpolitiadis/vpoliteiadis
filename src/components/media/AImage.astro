@@ -32,6 +32,10 @@ export interface Props {
   decoding?: 'auto' | 'sync' | 'async';
   /** Fetch priority - use 'high' for LCP images */
   fetchpriority?: 'high' | 'low' | 'auto';
+  /** Image quality (0-100) - lower values = smaller files, default: 80 for illustrations, 75 for photos */
+  quality?: number | 'low' | 'mid' | 'high' | 'max';
+  /** Image format - 'avif' preferred for better compression, 'webp' as fallback */
+  format?: 'avif' | 'webp' | 'png' | 'jpg' | 'jpeg';
   /** 
    * @deprecated Use imported ImageMetadata instead
    * Enable picture element with srcset for static images (default: true)
@@ -50,6 +54,8 @@ const {
   loading = 'lazy',
   decoding = 'async',
   fetchpriority = 'auto',
+  quality = 80, // Default quality: 80 for illustrations (good balance), can override to 75 for photos
+  format = 'avif', // Prefer AVIF for better compression, falls back to WebP automatically
   usePicture = true,
 } = Astro.props;
 
@@ -90,7 +96,8 @@ function getOptimizedImagePaths(staticPath: string, widths: number[]) {
     alt={alt}
     widths={selectedPreset.widths}
     sizes={computedSizes}
-    format="webp"
+    format={format}
+    quality={quality}
     class={className}
     loading={loading}
     decoding={decoding}

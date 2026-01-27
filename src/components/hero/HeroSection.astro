@@ -3,34 +3,38 @@ import { getImage } from 'astro:assets';
 import vasileiosIllustration from '../../assets/images/vasileios-illustration.webp';
 import laptopIllustration from '../../assets/images/laptop-illustration.webp';
 
-// Generate optimized image data with explicit dimensions
+// Generate optimized image data with explicit dimensions and optimized quality
+// Quality 80 for illustrations (good balance between quality and file size)
 const vasileiosImg = await getImage({
   src: vasileiosIllustration,
   widths: [480, 800, 1200],
   format: 'webp',
+  quality: 80,
 });
 
 const laptopImg = await getImage({
   src: laptopIllustration,
   widths: [480, 800, 1200],
   format: 'webp',
+  quality: 80,
 });
 
 // Generate AVIF srcsets for better compression (consistent with WebP widths)
-const vasileiosAvif480 = await getImage({ src: vasileiosIllustration, width: 480, format: 'avif' });
-const vasileiosAvif800 = await getImage({ src: vasileiosIllustration, width: 800, format: 'avif' });
-const vasileiosAvif1200 = await getImage({ src: vasileiosIllustration, width: 1200, format: 'avif' });
-const laptopAvif480 = await getImage({ src: laptopIllustration, width: 480, format: 'avif' });
-const laptopAvif800 = await getImage({ src: laptopIllustration, width: 800, format: 'avif' });
-const laptopAvif1200 = await getImage({ src: laptopIllustration, width: 1200, format: 'avif' });
+// AVIF provides 30-50% better compression than WebP at same quality
+const vasileiosAvif480 = await getImage({ src: vasileiosIllustration, width: 480, format: 'avif', quality: 80 });
+const vasileiosAvif800 = await getImage({ src: vasileiosIllustration, width: 800, format: 'avif', quality: 80 });
+const vasileiosAvif1200 = await getImage({ src: vasileiosIllustration, width: 1200, format: 'avif', quality: 80 });
+const laptopAvif480 = await getImage({ src: laptopIllustration, width: 480, format: 'avif', quality: 80 });
+const laptopAvif800 = await getImage({ src: laptopIllustration, width: 800, format: 'avif', quality: 80 });
+const laptopAvif1200 = await getImage({ src: laptopIllustration, width: 1200, format: 'avif', quality: 80 });
 
-// Generate responsive WebP srcsets
-const vasileiosWebp480 = await getImage({ src: vasileiosIllustration, width: 480, format: 'webp' });
-const vasileiosWebp800 = await getImage({ src: vasileiosIllustration, width: 800, format: 'webp' });
-const vasileiosWebp1200 = await getImage({ src: vasileiosIllustration, width: 1200, format: 'webp' });
-const laptopWebp480 = await getImage({ src: laptopIllustration, width: 480, format: 'webp' });
-const laptopWebp800 = await getImage({ src: laptopIllustration, width: 800, format: 'webp' });
-const laptopWebp1200 = await getImage({ src: laptopIllustration, width: 1200, format: 'webp' });
+// Generate responsive WebP srcsets (fallback for browsers without AVIF support)
+const vasileiosWebp480 = await getImage({ src: vasileiosIllustration, width: 480, format: 'webp', quality: 80 });
+const vasileiosWebp800 = await getImage({ src: vasileiosIllustration, width: 800, format: 'webp', quality: 80 });
+const vasileiosWebp1200 = await getImage({ src: vasileiosIllustration, width: 1200, format: 'webp', quality: 80 });
+const laptopWebp480 = await getImage({ src: laptopIllustration, width: 480, format: 'webp', quality: 80 });
+const laptopWebp800 = await getImage({ src: laptopIllustration, width: 800, format: 'webp', quality: 80 });
+const laptopWebp1200 = await getImage({ src: laptopIllustration, width: 1200, format: 'webp', quality: 80 });
 
 ---
 

@@ -2,7 +2,7 @@
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import Analytics from '@vercel/analytics/astro';
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 // Optional: map page background slugs to imported assets so Astro optimizes them
 import aboutBg from '../assets/images/about-bg.webp';
@@ -10,6 +10,7 @@ import blogBg from '../assets/images/blog-bg.webp';
 import projectsBg from '../assets/images/projects-bg.webp';
 import creativeBg from '../assets/images/creative-bg.webp';
 import contactBg from '../assets/images/contact-bg.webp';
+import vasileiosIllustration from '../assets/images/vasileios-illustration.webp';
 
 const backgroundMap: Record<string, ImageMetadata> = {
   'about-bg': aboutBg,
@@ -89,6 +90,19 @@ const {
 const pathname = currentPath ?? Astro.url.pathname;
 const canonicalURL = new URL(pathname, Astro.site);
 const ogImageURL = new URL(image, Astro.site);
+
+// Preload LCP images based on page type
+// Use AVIF format for better compression, quality 80 for good balance
+let lcpPreloadSrc: string | null = null;
+if (pathname === '/') {
+  // Homepage: preload hero illustration (AVIF preferred for better compression)
+  const heroImage = await getImage({ src: vasileiosIllustration, width: 800, format: 'avif', quality: 80 });
+  lcpPreloadSrc = heroImage.src;
+} else if (pathname === '/blog') {
+  // Blog listing: preload background (AVIF preferred)
+  const blogBgImage = await getImage({ src: blogBg, width: 1920, format: 'avif', quality: 75 });
+  lcpPreloadSrc = blogBgImage.src;
+}
 
 // Enhanced JSON-LD structured data
 const baseStructuredData = {
@@ -242,6 +256,11 @@ const finalStructuredData = structuredData ? { ...baseStructuredData, ...structu
     <link rel="preconnect" href="https://cdn.jsdelivr.net" />
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
     
+    <!-- LCP Image Preloading -->
+    {lcpPreloadSrc && (
+      <link rel="preload" as="image" href={lcpPreloadSrc} fetchpriority="high" />
+    )}
+    
     <!-- GSAP Animation Library - Only needed for HeroSection floating animations -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
     
@@ -332,7 +351,8 @@ const finalStructuredData = structuredData ? { ...baseStructuredData, ...structu
               alt=""
               widths={[480, 800, 1200, 1600, 2400]}
               sizes="100vw"
-              format="webp"
+              format="avif"
+              quality={75}
               loading={bgEager ? 'eager' : 'lazy'}
               class={`w-full h-full object-cover ${bgOpacityClass}`}
               fetchpriority={bgEager ? 'high' : 'auto'}

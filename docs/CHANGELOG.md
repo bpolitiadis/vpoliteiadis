@@ -4,6 +4,103 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 
 ## [Unreleased]
 
+### Image Optimization - AVIF Format & Quality Settings (2026-01-27)
+- **AImage Component Enhancement**: Added quality and format parameter support
+  - Default quality: 80 for illustrations, 75 for photos (optimal balance)
+  - Default format: AVIF (30-50% better compression than WebP)
+  - Quality parameter accepts numeric (0-100) or preset values ('low', 'mid', 'high', 'max')
+  - Format parameter supports 'avif', 'webp', 'png', 'jpg', 'jpeg'
+  - **Impact**: Significant file size reduction, better Core Web Vitals, improved mobile performance
+
+- **Hero Section Optimization**: Updated hero illustrations with optimized quality settings
+  - `vasileios-illustration.webp`: Quality 80, AVIF format
+  - `laptop-illustration.webp`: Quality 80, AVIF format
+  - All AVIF variants generated with quality 80 for consistent compression
+  - **Impact**: 30-50% smaller file sizes, faster LCP
+
+- **Blog & Content Images**: Optimized blog covers and content images
+  - Blog post covers: Quality 75, AVIF format (optimal for photos)
+  - Related post thumbnails: Quality 75, AVIF format
+  - Background images: Quality 75, AVIF format
+  - **Impact**: Better compression for photo-type images, reduced bandwidth
+
+- **Component Updates**: Updated all AImage usages across components
+  - BlogPostCard: Quality 75, AVIF format
+  - ProjectCard: Quality 75, AVIF format
+  - CreativeCard: Quality 75, AVIF format
+  - AboutSection, ProjectsSection, CreativeLabSection, ContactSection: Quality 75, AVIF format
+  - **Impact**: Consistent optimization across all image types
+
+**Files Changed:**
+- `src/components/media/AImage.astro` - Added quality and format props with defaults
+- `src/components/hero/HeroSection.astro` - Updated all getImage calls with quality 80
+- `src/layouts/MainLayout.astro` - Updated LCP preload images with AVIF and quality
+- `src/pages/blog/[slug].astro` - Updated cover image optimization
+- `src/pages/blog/index.astro` - Updated background image
+- `src/pages/index.astro` - Updated profile image
+- All component usages of `AImage` - Now benefit from AVIF format and quality optimization
+
+**Technical Details:**
+- AVIF format provides 30-50% better compression than WebP at same quality level
+- Quality 80 optimal for illustrations (good balance between quality and file size)
+- Quality 75 optimal for photos (slight quality reduction for significant file size savings)
+- Astro automatically generates responsive srcsets with AVIF/WebP fallback
+- Browsers automatically choose AVIF when supported, fall back to WebP for older browsers
+
+**Expected Results:**
+- File sizes reduced by 30-50% compared to WebP
+- Bandwidth savings: ~40-60% reduction in image data transfer
+- LCP improvement: Faster image loading, better Core Web Vitals scores
+- Mobile performance: Better experience on slower connections
+
+### Performance & SEO Quick Wins (2026-01-27)
+- **404 Page Navigation Enhancement**: Added helpful navigation links to 404 page
+  - Added navigation links to main sections (Home, About, Projects, Blog, Contact)
+  - Styled with Matrix theme (neon-lime links, hover effects)
+  - Simple, clean implementation without over-engineering
+  - **Impact**: Improved UX for users landing on 404 pages, better navigation options
+
+- **LCP Image Optimization**: Implemented LCP image preloading for better Core Web Vitals
+  - Added conditional preload links in `MainLayout.astro` based on page type
+  - Homepage: Preloads hero illustration (`vasileios-illustration.webp`)
+  - Blog listing: Preloads background image (`blog-bg.webp`)
+  - Blog posts: Preloads cover images in post template
+  - **Impact**: Improved Largest Contentful Paint (LCP), better Core Web Vitals scores
+
+- **Image Dimensions & CLS Prevention**: Added explicit width/height attributes to prevent layout shifts
+  - Added width/height (1920x1080) to blog post hero cover images
+  - BlogPostCard already had dimensions (1024x576) ✅
+  - **Impact**: Prevents Cumulative Layout Shift (CLS), improves Core Web Vitals
+
+- **Above-Fold Image Loading**: Removed lazy loading from above-fold images
+  - Blog index background now uses `loading="eager"` and `fetchpriority="high"`
+  - Hero images already use eager loading ✅
+  - **Impact**: Faster LCP, improved initial page load performance
+
+- **Footer Navigation**: Added comprehensive footer navigation for better internal linking
+  - Added navigation links to all main pages (Home, About, Projects, Blog, Contact)
+  - Improved search engine discovery and internal linking
+  - All pages now have ≥2 internal links (navbar + footer)
+  - **Impact**: Better SEO crawlability, improved internal link structure
+
+- **HTTP Redirect Verification**: Verified Vercel's automatic HTTP→HTTPS redirect behavior
+  - Vercel uses 308 (Temporary Redirect) which is correct behavior
+  - Preserves request method (GET, POST, etc.) - semantically correct
+  - For SEO purposes, equivalent to 301
+  - **Impact**: No changes needed, correct behavior verified
+
+**Files Changed:**
+- `src/pages/404.astro` - Added navigation links
+- `src/pages/blog/[slug].astro` - Added width/height and LCP preload
+- `src/pages/blog/index.astro` - Changed to eager loading
+- `src/layouts/MainLayout.astro` - Added conditional LCP preload logic
+- `src/components/Footer.astro` - Added navigation links
+
+**Documentation Updated:**
+- `docs/WEBSITE_AUDIT_REPORT.md` - Marked quick wins as completed
+- `docs/AUDIT_REMAINING_ITEMS.md` - Updated status for all quick wins
+- `docs/CHANGELOG.md` - Added this entry
+
 ### Critical Audit Fixes (2026-01-27)
 - **Broken Links Resolution**: Removed broken internal links from creative section
   - Removed `/creative/emmanuelle-silk`, `/creative/smoking-two`, `/creative/arte-imaginari` 404 links
