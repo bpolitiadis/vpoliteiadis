@@ -50,7 +50,8 @@ const relatedPosts = allPosts
   .slice(0, 3);
 
 // SEO metadata
-const title = post.data.seo?.title || `${post.data.title} - Vasileios Politeiadis`;
+// Use SEO title if provided, otherwise use post title (keep under 60 chars for optimal display)
+const title = post.data.seo?.title || post.data.title;
 const description = post.data.seo?.description || post.data.description;
 // const keywords = post.data.seo?.keywords || post.data.tags.join(', ');
 const publishedDate = new Date(post.data.publishedAt).toISOString();
@@ -77,6 +78,12 @@ const blogPostSchema = {
   'publisher': {
     '@type': 'Person',
     'name': 'Vasileios Politeiadis',
+    'logo': {
+      '@type': 'ImageObject',
+      'url': new URL('/images/vp-logo-800w.webp', Astro.site).toString(),
+      'width': 800,
+      'height': 800,
+    },
   },
   'keywords': (post.data.seo?.keywords || post.data.tags).join(', '),
   'image': post.data.coverImage

@@ -1,0 +1,211 @@
+---
+// Prerender this page for optimal performance
+export const prerender = true;
+
+import MainLayout from '../layouts/MainLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import SchemaOrg from '../components/SchemaOrg.astro';
+
+// SEO metadata
+const title = 'Privacy Policy - Vasileios Politeiadis';
+const description = 'Privacy policy outlining data collection practices, cookie usage, third-party services, and user rights for vpoliteiadis.dev.';
+
+// Build breadcrumb
+const breadcrumbItems = [
+  { name: 'Home', href: '/' },
+  { name: 'Privacy Policy', href: '/privacy' },
+];
+
+// Build Privacy Policy structured data
+const privacySchema = {
+  '@type': 'WebPage',
+  'name': 'Privacy Policy',
+  'description': description,
+  'url': new URL('/privacy', Astro.site).toString(),
+  'about': {
+    '@type': 'Thing',
+    'name': 'Privacy Policy',
+  },
+};
+---
+
+<MainLayout 
+  title={title}
+  description={description}
+  currentPath="/privacy"
+>
+  <!-- Structured Data -->
+  <SchemaOrg schema={privacySchema} />
+
+  <!-- Breadcrumb -->
+  <Breadcrumb items={breadcrumbItems} class="sr-only" />
+
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <header class="mb-12">
+      <h1 class="text-4xl md:text-5xl font-orbitron font-bold text-neon-lime mb-4">
+        Privacy Policy
+      </h1>
+      <p class="text-matrix-white/70 text-lg">
+        Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </header>
+
+    <div class="prose prose-invert prose-lg max-w-none">
+      <section class="mb-8">
+        <h2 class="text-2xl font-orbitron font-bold text-primary mb-4">Introduction</h2>
+        <p class="text-matrix-white/90 leading-relaxed mb-4">
+          This Privacy Policy describes how vpoliteiadis.dev ("we", "our", or "us") collects, uses, and protects your personal information when you visit our website.
+        </p>
+        <p class="text-matrix-white/90 leading-relaxed">
+          By using this website, you agree to the collection and use of information in accordance with this policy.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-orbitron font-bold text-primary mb-4">Information We Collect</h2>
+        
+        <h3 class="text-xl font-orbitron font-semibold text-secondary mb-3 mt-6">Contact Form Data</h3>
+        <p class="text-matrix-white/90 leading-relaxed mb-4">
+          When you submit the contact form, we collect:
+        </p>
+        <ul class="list-disc list-inside text-matrix-white/90 mb-4 space-y-2">
+          <li>Name</li>
+          <li>Email address</li>
+          <li>Message content</li>
+        </ul>
+        <p class="text-matrix-white/90 leading-relaxed">
+          This information is used solely to respond to your inquiries and is not shared with third parties except as necessary to process your request.
+        </p>
+
+        <h3 class="text-xl font-orbitron font-semibold text-secondary mb-3 mt-6">Automatically Collected Data</h3>
+        <p class="text-matrix-white/90 leading-relaxed mb-4">
+          We automatically collect certain information when you visit our website:
+        </p>
+        <ul class="list-disc list-inside text-matrix-white/90 mb-4 space-y-2">
+          <li>IP address</li>
+          <li>Browser type and version</li>
+          <li>Device information</li>
+          <li>Pages visited and time spent on pages</li>
+          <li>Referring website addresses</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-orbitron font-bold text-primary mb-4">Third-Party Services</h2>
+        
+        <h3 class="text-xl font-orbitron font-semibold text-secondary mb-3 mt-6">Analytics</h3>
+        <p class="text-matrix-white/90 leading-relaxed mb-4">
+          We use analytics services to understand how visitors interact with our website. These services may collect information about your use of the website.
+        </p>
+
+        <h3 class="text-xl font-orbitron font-semibold text-secondary mb-3 mt-6">Error Tracking</h3>
+        <p class="text-matrix-white/90 leading-relaxed mb-4">
+          We use Sentry for error tracking and performance monitoring. This helps us identify and fix technical issues. Sentry may collect:
+        </p>
+        <ul class="list-disc list-inside text-matrix-white/90 mb-4 space-y-2">
+          <li>Error messages and stack traces</li>
+          <li>Browser and device information</li>
+          <li>Page URLs where errors occurred</li>
+        </ul>
+
+        <h3 class="text-xl font-orbitron font-semibold text-secondary mb-3 mt-6">Hosting and CDN</h3>
+        <p class="text-matrix-white/90 leading-relaxed">
+          Our website is hosted on Vercel, which may collect server logs and performance metrics as part of their service.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-orbitron font-bold text-primary mb-4">Cookies</h2>
+        <p class="text-matrix-white/90 leading-relaxed mb-4">
+          We use cookies and similar tracking technologies to track activity on our website and store certain information. Cookies are files with a small amount of data that may include an anonymous unique identifier.
+        </p>
+        <p class="text-matrix-white/90 leading-relaxed">
+          You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our website.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-orbitron font-bold text-primary mb-4">Data Security</h2>
+        <p class="text-matrix-white/90 leading-relaxed mb-4">
+          We implement appropriate technical and organizational security measures to protect your personal information. However, no method of transmission over the Internet or electronic storage is 100% secure.
+        </p>
+        <p class="text-matrix-white/90 leading-relaxed">
+          We use:
+        </p>
+        <ul class="list-disc list-inside text-matrix-white/90 mb-4 space-y-2">
+          <li>HTTPS encryption for all data transmission</li>
+          <li>Rate limiting to prevent abuse</li>
+          <li>Input validation and sanitization</li>
+          <li>Secure server infrastructure</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-orbitron font-bold text-primary mb-4">Your Rights</h2>
+        <p class="text-matrix-white/90 leading-relaxed mb-4">
+          Under GDPR (if you are in the EU) and other applicable privacy laws, you have the right to:
+        </p>
+        <ul class="list-disc list-inside text-matrix-white/90 mb-4 space-y-2">
+          <li><strong>Access:</strong> Request a copy of the personal data we hold about you</li>
+          <li><strong>Rectification:</strong> Request correction of inaccurate or incomplete data</li>
+          <li><strong>Erasure:</strong> Request deletion of your personal data</li>
+          <li><strong>Portability:</strong> Request transfer of your data to another service</li>
+          <li><strong>Objection:</strong> Object to processing of your personal data</li>
+          <li><strong>Restriction:</strong> Request restriction of processing</li>
+        </ul>
+        <p class="text-matrix-white/90 leading-relaxed">
+          To exercise these rights, please contact us using the contact form on this website or email us at <a href="mailto:contact@vpoliteiadis.dev" class="text-primary hover:text-neon-lime transition-colors">contact@vpoliteiadis.dev</a>.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-orbitron font-bold text-primary mb-4">Data Retention</h2>
+        <p class="text-matrix-white/90 leading-relaxed">
+          We retain your personal information only for as long as necessary to fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required or permitted by law.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-orbitron font-bold text-primary mb-4">Changes to This Privacy Policy</h2>
+        <p class="text-matrix-white/90 leading-relaxed">
+          We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-orbitron font-bold text-primary mb-4">Contact Us</h2>
+        <p class="text-matrix-white/90 leading-relaxed mb-4">
+          If you have any questions about this Privacy Policy, please contact us:
+        </p>
+        <ul class="list-none text-matrix-white/90 space-y-2">
+          <li><strong>Email:</strong> <a href="mailto:contact@vpoliteiadis.dev" class="text-primary hover:text-neon-lime transition-colors">contact@vpoliteiadis.dev</a></li>
+          <li><strong>Website:</strong> <a href="https://vpoliteiadis.dev" class="text-primary hover:text-neon-lime transition-colors">vpoliteiadis.dev</a></li>
+        </ul>
+      </section>
+    </div>
+  </article>
+</MainLayout>
+
+<style>
+  .prose h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .prose h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .prose ul {
+    margin-left: 1.5rem;
+  }
+
+  .prose a {
+    text-decoration: underline;
+  }
+
+  .prose a:hover {
+    text-decoration: none;
+  }
+</style>

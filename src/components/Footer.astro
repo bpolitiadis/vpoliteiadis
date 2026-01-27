@@ -28,9 +28,13 @@ const currentYear = new Date().getFullYear();
           
         </a>
 
-        <!-- Center: copyright text -->
-        <div class="flex items-center text-xs text-matrix-white/60 text-center" data-testid="footer-copyright">
+        <!-- Center: copyright text and privacy link -->
+        <div class="flex items-center gap-3 text-xs text-matrix-white/60 text-center" data-testid="footer-copyright">
           <span>&copy; {currentYear} Vasileios Politeiadis</span>
+          <span aria-hidden="true">•</span>
+          <a href="/privacy" class="hover:text-primary transition-colors" aria-label="Privacy Policy">
+            Privacy Policy
+          </a>
         </div>
 
         <!-- Right: social icons with minimal styling -->

@@ -11,7 +11,6 @@ export interface Props {
     description: string;
     hero: ImageMetadata | string; // Accept both ImageMetadata (preferred) and string (legacy)
     heroFit?: 'cover' | 'contain';
-    detailUrl: string;
     tools?: string[];
     cta?: { label: string; href: string; external?: boolean };
   };
@@ -26,38 +25,36 @@ const { project } = Astro.props;
 >
   <!-- Project Cover Image -->
   <div class="relative w-full overflow-hidden rounded-lg" style="aspect-ratio: 16 / 9">
-    <a
-      href={project.detailUrl}
-      class="block w-full h-full"
-      aria-label={`View ${project.title} details`}
-    >
-      <AImage
-        src={project.hero}
-        alt={project.title}
-        preset="card"
-        class={`w-full h-full ${project.heroFit === 'contain' ? 'object-contain p-6' : 'object-cover'} rounded-lg transition-transform duration-500 ease-out group-hover:scale-105 will-change-transform`}
-        loading="lazy"
-        decoding="async"
-      />
-      <!-- Cyan gradient overlay -->
-      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent opacity-90 group-hover:opacity-50 transition-opacity duration-400 rounded-lg" />
-    </a>
+    <AImage
+      src={project.hero}
+      alt={project.title}
+      preset="card"
+      class={`w-full h-full ${project.heroFit === 'contain' ? 'object-contain p-6' : 'object-cover'} rounded-lg transition-transform duration-500 ease-out group-hover:scale-105 will-change-transform`}
+      loading="lazy"
+      decoding="async"
+    />
+    <!-- Cyan gradient overlay -->
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent opacity-90 group-hover:opacity-50 transition-opacity duration-400 rounded-lg" />
   </div>
 
   <div class="flex flex-col space-y-3 mt-4">
     <!-- Title -->
     <div class="font-bold leading-none tracking-tight font-orbitron text-lg md:text-xl">
-      <a
-        href={project.cta?.external ? project.cta.href : project.detailUrl}
-        target={project.cta?.external ? '_blank' : undefined}
-        rel={project.cta?.external ? 'noopener noreferrer' : undefined}
-        class="creative-card-title inline-flex items-center gap-2 transition-all duration-300"
-      >
-        {project.title}
-        {project.cta?.external && (
-          <ExternalLink class="w-4 h-4 opacity-60 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 stroke-current" aria-hidden="true" />
-        )}
-      </a>
+      {project.cta?.href ? (
+        <a
+          href={project.cta.href}
+          target={project.cta.external ? '_blank' : undefined}
+          rel={project.cta.external ? 'noopener noreferrer' : undefined}
+          class="creative-card-title inline-flex items-center gap-2 transition-all duration-300"
+        >
+          {project.title}
+          {project.cta.external && (
+            <ExternalLink class="w-4 h-4 opacity-60 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 stroke-current" aria-hidden="true" />
+          )}
+        </a>
+      ) : (
+        <span class="creative-card-title">{project.title}</span>
+      )}
     </div>
 
     <!-- Description -->
