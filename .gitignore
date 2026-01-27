@@ -93,6 +93,17 @@ temp/
 *.sln
 *.sw?
 
+# AI Agent/IDE-specific configurations
+# These contain personal AI assistant skills, rules, and configurations
+.agent/
+.agents/
+.claude/
+.codex/
+.cursor/
+.gemini/
+.opencode/
+.windsurf/
+
 # OS generated files
 .DS_Store
 Thumbs.db
