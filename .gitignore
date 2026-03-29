@@ -93,6 +93,16 @@ temp/
 *.sln
 *.sw?
 
+# AI Coding Assistant directories
+.agent/
+.agents/
+.claude/
+.codex/
+.cursor/
+.gemini/
+.opencode/
+.windsurf/
+
 # OS generated files
 .DS_Store
 Thumbs.db
@@ -211,6 +221,12 @@ lighthouse/
 # Performance profiling
 profile/
 *.cpuprofile
+
+# Check/output files
+*_check_output.txt
+*_output.txt
+check_output.txt
+astro_check_output.txt
 
 # ===========================================
 # Backup Assets (Local Only)

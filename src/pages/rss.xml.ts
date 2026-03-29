@@ -1,5 +1,6 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
+import { getBlogPostUrl } from '../lib/blog';
 import type { APIContext } from 'astro';
 
 /**
@@ -28,7 +29,7 @@ export async function GET(context: APIContext) {
     items: publishedPosts.map((post) => ({
       title: post.data.title,
       description: post.data.description,
-      link: `/blog/${post.slug}`,
+      link: getBlogPostUrl(post),
       pubDate: new Date(post.data.publishedAt),
       categories: [post.data.category, ...post.data.tags],
       author: post.data.author,

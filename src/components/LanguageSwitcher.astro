@@ -1,0 +1,54 @@
+---
+export interface Props {
+  currentLang: string;
+  alternateLang: string;
+  alternateUrl: string;
+}
+
+const { currentLang, alternateLang, alternateUrl } = Astro.props;
+
+const langLabels: Record<string, string> = {
+  en: 'English',
+  el: 'Ελληνικά',
+};
+
+const currentLabel = langLabels[currentLang] || currentLang.toUpperCase();
+const alternateLabel = langLabels[alternateLang] || alternateLang.toUpperCase();
+---
+
+<div class="language-switcher">
+  <div class="flex items-center gap-3 px-4 py-2 bg-cyber-gray/50 border border-neon-lime/20 rounded-lg backdrop-blur-sm">
+    <span class="text-sm text-matrix-white/60 font-medium">
+      {currentLabel}
+    </span>
+    <span class="text-neon-lime/40" aria-hidden="true">|</span>
+    <a 
+      href={alternateUrl}
+      class="text-sm text-neon-lime hover:text-glow font-medium transition-all duration-300 hover:scale-105"
+      aria-label={`Switch to ${alternateLabel}`}
+    >
+      {alternateLabel}
+    </a>
+  </div>
+</div>
+
+<style>
+  .language-switcher a {
+    position: relative;
+  }
+  
+  .language-switcher a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--neon-lime);
+    transition: width 0.3s ease;
+  }
+  
+  .language-switcher a:hover::after {
+    width: 100%;
+  }
+</style>

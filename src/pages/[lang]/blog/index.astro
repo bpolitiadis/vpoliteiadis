@@ -1,0 +1,143 @@
+---
+// Prerender this page for optimal performance
+export const prerender = true;
+
+import { getCollection } from 'astro:content';
+import { getBlogPostUrl } from '../../../lib/blog';
+import MainLayout from '../../../layouts/MainLayout.astro';
+import PageHero from '../../../components/PageHero.astro';
+import BlogPostCard from '../../../components/BlogPostCard.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import SchemaOrg from '../../../components/SchemaOrg.astro';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'el' } }];
+}
+
+const { lang } = Astro.params;
+
+// Validate language (only el has a localized blog index)
+if (lang !== 'el') {
+  return Astro.redirect('/404');
+}
+
+// Get all published blog posts for the current language and sort by date
+const allPosts = await getCollection('blog');
+const posts = allPosts
+  .filter((post) => !post.data.draft && (post.data.lang || 'en') === lang)
+  .sort(
+    (a, b) =>
+      new Date(b.data.publishedAt).getTime() -
+      new Date(a.data.publishedAt).getTime()
+  );
+
+// SEO metadata
+const title = 'Blog - Vasileios Politeiadis';
+const description =
+  'Ενδιαφέροντα για την τεχνολογία, τη δημιουργικότητα και τη διασταύρωση της ανθρώπινης και τεχνητής νοημοσύνης.';
+
+const currentPath = `/${lang}/blog`;
+
+// Build breadcrumb
+const breadcrumbItems = [
+  { name: 'Home', href: '/' },
+  { name: 'Blog', href: currentPath },
+];
+
+// Build Blog structured data
+const blogSchema = {
+  '@type': 'Blog',
+  'name': 'Vasileios Politeiadis Blog',
+  'description': description,
+  'url': new URL(currentPath, Astro.site).toString(),
+  'inLanguage': lang,
+  'blogPost': posts.slice(0, 10).map((post) => {
+    const postUrl = getBlogPostUrl(post);
+    return {
+      '@type': 'BlogPosting',
+      'headline': post.data.title,
+      'description': post.data.description,
+      'author': {
+        '@type': 'Person',
+        'name': post.data.author,
+      },
+      'datePublished': new Date(post.data.publishedAt).toISOString(),
+      'url': new URL(postUrl, Astro.site).toString(),
+      'inLanguage': post.data.lang || 'en',
+    };
+  }),
+};
+---
+
+<MainLayout 
+  title={title}
+  description={description}
+  currentPath={currentPath}
+  bgSlug="blog-bg"
+  bgEager={true}
+  lang={lang}
+>
+  <!-- Structured Data -->
+  <SchemaOrg schema={blogSchema} />
+
+  <div class="relative content-visibility-auto" data-testid="page-blog">
+    <PageHero 
+      title="Blog"
+      description={description}
+      eager={true}
+    >
+    </PageHero>
+
+    <!-- Breadcrumb (Hidden visually, visible to search engines) -->
+    <Breadcrumb items={breadcrumbItems} class="sr-only" />
+
+  <!-- Blog Content -->
+  <section class="py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Minimalist List -->
+
+      <!-- All Posts -->
+      <div class="mb-16">
+           <h2 class="text-2xl font-orbitron font-bold text-secondary mb-8">
+          📝 Όλα τα Άρθρα
+        </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="posts-grid" data-testid="blog-posts-grid">
+          {posts.map(post => {
+            const postUrl = getBlogPostUrl(post);
+            return (
+              <BlogPostCard
+                post={{
+                  slug: post.slug,
+                  title: post.data.title,
+                  excerpt: post.data.excerpt,
+                  description: post.data.description,
+                  coverImage: post.data.coverImage,
+                  tags: post.data.tags,
+                  publishedAt: post.data.publishedAt,
+                  readingTime: post.data.readingTime,
+                  url: postUrl
+                }}
+                class="card"
+              />
+            );
+          })}
+        </div>
+
+        <!-- No Results Message -->
+        <div id="no-results" class="hidden text-center py-12" aria-live="polite">
+          <div class="text-6xl mb-4">🔍</div>
+          <h3 class="text-xl font-orbitron font-bold text-matrix-white/60 mb-2">
+            Δεν βρέθηκαν άρθρα
+          </h3>
+          <p class="text-matrix-white/60">
+            Δοκιμάστε μια διαφορετική αναζήτηση ή καθαρίστε το φίλτρο ετικετών
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+    </div>
+</MainLayout>
+
+<script is:inline src="/scripts/blog-index.js" defer></script>

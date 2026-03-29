@@ -3,18 +3,20 @@
 export const prerender = true;
 
 import { getCollection } from 'astro:content';
+import { getBlogUrlSlug, getBlogPostUrl } from '../../lib/blog';
 import MainLayout from '../../layouts/MainLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import SchemaOrg from '../../components/SchemaOrg.astro';
 import AImage from '../../components/media/AImage.astro';
+import LanguageSwitcher from '../../components/LanguageSwitcher.astro';
 
-// Generate static paths for all blog posts
+// Generate static paths for all blog posts (English/default locale only)
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts
-    .filter(post => !post.data.draft)
+    .filter(post => !post.data.draft && (post.data.lang || 'en') === 'en')
     .map(post => ({
-      params: { slug: post.slug },
+      params: { slug: getBlogUrlSlug(post) },
       props: { post },
     }));
 }
@@ -23,30 +25,47 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await post.render();
 
-// Get related posts based on tags and category
+const lang = post.data.lang || 'en';
+
+// Get related posts based on tags and category (same language)
 const allPosts = await getCollection('blog');
 const relatedPosts = allPosts
   .filter(p => 
     p.slug !== post.slug && 
     !p.data.draft &&
+    (p.data.lang || 'en') === lang &&
     (p.data.tags.some(tag => post.data.tags.includes(tag)) || 
      p.data.category === post.data.category)
   )
   .sort((a, b) => new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime())
   .slice(0, 3);
 
+// Find alternate language post for language switcher
+let alternatePost: typeof post | undefined;
+if (post.data.translationId) {
+  alternatePost = allPosts.find(
+    p => 
+      p.data.translationId === post.data.translationId && 
+      p.data.lang !== lang &&
+      !p.data.draft
+  );
+}
+
 // SEO metadata
 const title = post.data.seo?.title || `${post.data.title} - Vasileios Politeiadis`;
 const description = post.data.seo?.description || post.data.description;
-// const keywords = post.data.seo?.keywords || post.data.tags.join(', ');
 const publishedDate = new Date(post.data.publishedAt).toISOString();
 const modifiedDate = post.data.updatedAt ? new Date(post.data.updatedAt).toISOString() : publishedDate;
+
+// Build URLs for current and alternate languages
+const currentUrl = getBlogPostUrl(post);
+const alternateUrl = alternatePost ? getBlogPostUrl(alternatePost) : undefined;
 
 // Build breadcrumb
 const breadcrumbItems = [
   { name: 'Home', href: '/' },
   { name: 'Blog', href: '/blog' },
-  { name: post.data.title, href: `/blog/${post.slug}` },
+  { name: post.data.title, href: currentUrl },
 ];
 
 // Build inline structured data schema for blog post
@@ -68,23 +87,38 @@ const blogPostSchema = {
   'image': post.data.coverImage
     ? new URL(post.data.coverImage, Astro.site).toString()
     : new URL('/images/vp-logo-800w.webp', Astro.site).toString(),
-  'url': new URL(`/blog/${post.slug}`, Astro.site).toString(),
+  'url': new URL(currentUrl, Astro.site).toString(),
+  'inLanguage': lang,
   'mainEntityOfPage': {
     '@type': 'WebPage',
-    '@id': new URL(`/blog/${post.slug}`, Astro.site).toString(),
+    '@id': new URL(currentUrl, Astro.site).toString(),
   },
 };
+
+// Prepare hreflang data for MainLayout
+const hreflangLinks: Array<{ hreflang: string; href: string }> = [
+  { hreflang: lang, href: new URL(currentUrl, Astro.site).toString() },
+];
+if (alternateUrl) {
+  hreflangLinks.push({
+    hreflang: alternatePost!.data.lang || 'el',
+    href: new URL(alternateUrl, Astro.site).toString(),
+  });
+}
+hreflangLinks.push({ hreflang: 'x-default', href: new URL(currentUrl, Astro.site).toString() });
 ---
 
 <MainLayout 
   title={title}
   description={description}
-  currentPath={`/blog/${post.slug}`}
+  currentPath={currentUrl}
   type="article"
   publishedAt={publishedDate}
   updatedAt={modifiedDate}
   author={post.data.author}
   image={post.data.coverImage || '/images/vp-logo-800w.webp'}
+  lang={lang}
+  hreflangLinks={hreflangLinks}
 >
   <!-- Structured Data for Blog Post -->
   <SchemaOrg schema={blogPostSchema} />
@@ -117,6 +151,17 @@ const blogPostSchema = {
       <div class="text-center">
         <!-- Breadcrumb with Structured Data (Hidden visually, visible to search engines) -->
         <Breadcrumb items={breadcrumbItems} class="sr-only" />
+
+        <!-- Language Switcher -->
+        {alternatePost && (
+          <div class="mb-6 flex justify-center">
+            <LanguageSwitcher 
+              currentLang={lang}
+              alternateLang={alternatePost.data.lang || 'el'}
+              alternateUrl={alternateUrl || ''}
+            />
+          </div>
+        )}
 
         <!-- Content (no box/border) -->
         <div class="mx-auto max-w-4xl">
@@ -258,7 +303,7 @@ const blogPostSchema = {
                   )}
                 </div>
                 <h3 class="text-lg font-orbitron font-bold text-neon-lime">
-                  <a href={`/blog/${relatedPost.slug}`} class="hover:text-glow transition-all duration-300">
+                  <a href={getBlogPostUrl(relatedPost)} class="hover:text-glow transition-all duration-300">
                     {relatedPost.data.title}
                   </a>
                 </h3>

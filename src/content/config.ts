@@ -82,6 +82,8 @@ const blogSchema = z.object({
   updatedAt: z.string().optional(),
   readingTime: z.string().optional(), // e.g., "5 min read"
   draft: z.boolean().default(false),
+  lang: z.enum(['en', 'el']).default('en'),
+  translationId: z.string().optional(), // Links translated versions of the same post
   seo: z
     .object({
       title: z.string().optional(),

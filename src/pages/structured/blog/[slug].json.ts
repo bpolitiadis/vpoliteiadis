@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
+import { getBlogUrlSlug, getBlogPostUrl } from '../../../lib/blog';
 
 // Prerender these structured data endpoints
 export const prerender = true;
@@ -8,13 +9,13 @@ export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts
     .filter((p) => !p.data.draft)
-    .map((p) => ({ params: { slug: p.slug } }));
+    .map((p) => ({ params: { slug: getBlogUrlSlug(p) } }));
 }
 
 export const GET: APIRoute = async ({ params }) => {
   const slug = params.slug as string;
   const posts = await getCollection('blog');
-  const post = posts.find((p) => p.slug === slug && !p.data.draft);
+  const post = posts.find((p) => getBlogUrlSlug(p) === slug && !p.data.draft);
   if (!post) {
     return new Response('Not found', { status: 404 });
   }
@@ -37,7 +38,7 @@ export const GET: APIRoute = async ({ params }) => {
     image: post.data.coverImage
       ? `https://vpoliteiadis.com${post.data.coverImage}`
       : undefined,
-    url: `https://vpoliteiadis.com/blog/${post.slug}`,
+    url: `https://vpoliteiadis.com${getBlogPostUrl(post)}`,
   } as const;
 
   return new Response(JSON.stringify(payload), {

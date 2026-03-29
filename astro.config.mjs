@@ -15,11 +15,18 @@ import rehypeSanitize from 'rehype-sanitize';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://vpoliteiadis.com',
-  output: 'server',
-      adapter: vercel({
-        webAnalytics: { enabled: true },
-        // Disable image service - use simple static serving
-      }),
+  output: 'static',
+  i18n: {
+    locales: ['en', 'el'],
+    defaultLocale: 'en',
+    routing: {
+      prefixDefaultLocale: false, // Don't show /en/ prefix for default locale
+    },
+  },
+  adapter: vercel({
+    webAnalytics: { enabled: true },
+    // Disable image service - use simple static serving
+  }),
   // Performance optimizations
   build: {
     inlineStylesheets: 'auto',

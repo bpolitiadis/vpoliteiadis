@@ -10,6 +10,7 @@ export interface BlogPostMeta {
   tags: string[];
   publishedAt: string | Date;
   readingTime?: string;
+  url?: string; // Optional custom URL (for localized routes)
 }
 
 interface Props {
@@ -22,6 +23,7 @@ const date = new Date(post.publishedAt).toLocaleDateString('en-US', {
   month: 'long',
   year: 'numeric'
 });
+const postUrl = post.url || `/blog/${post.slug}`;
 ---
 
 <article
@@ -58,7 +60,7 @@ const date = new Date(post.publishedAt).toLocaleDateString('en-US', {
     </div>
 
     <h3 class="text-lg sm:text-xl font-orbitron font-bold text-primary tracking-tight text-balance break-words hyphens-auto">
-      <a href={`/blog/${post.slug}`} class="transition-colors duration-200 hover:text-primary">
+      <a href={postUrl} class="transition-colors duration-200 hover:text-primary">
         {post.title}
       </a>
     </h3>
@@ -81,7 +83,7 @@ const date = new Date(post.publishedAt).toLocaleDateString('en-US', {
 
     <div class="pt-2">
       <a
-        href={`/blog/${post.slug}`}
+        href={postUrl}
         class="btn-link"
         aria-label={`Read more: ${post.title}`}
       >

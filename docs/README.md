@@ -40,6 +40,7 @@ pnpm preview      # Preview production build
 | **[CONTRIBUTING.md](./CONTRIBUTING.md)** | Contribution process, code standards, testing | Contributors, maintainers |
 | **[appendices/](./appendices/)** | Reference docs (branding, motion, social, testing) | Specialized use cases |
 || **[LOGGING.md](./LOGGING.md)** | Server-only logging, request correlation, Sentry integration | Developers, DevOps |
+|| **[NEXT_PHASES.md](./NEXT_PHASES.md)** | Future ideas, tools backlog, mini web apps & games | Planning, contributors |
 
 || **[ENVIRONMENT_VARIABLES.md](./ENVIRONMENT_VARIABLES.md)** | Complete environment variables reference and setup guide | Developers, DevOps |
 || **[fixes/](./fixes/)** | Common bugs and troubleshooting guides | All developers |
