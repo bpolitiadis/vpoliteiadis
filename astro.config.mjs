@@ -21,10 +21,20 @@ const SITE_URL = 'https://vpoliteiadis.dev';
 export default defineConfig({
   site: SITE_URL,
   output: 'static',
-      adapter: vercel({
-        webAnalytics: { enabled: true },
-        // Disable image service - use simple static serving
-      }),
+  redirects: {
+    '/blog/bitcoin-as-philosophy-and-as-asset': {
+      status: 301,
+      destination: '/blog/bitcoin-10-plus-1-things-you-need-to-know',
+    },
+    '/structured/blog/bitcoin-as-philosophy-and-as-asset.json': {
+      status: 301,
+      destination: '/structured/blog/bitcoin-10-plus-1-things-you-need-to-know.json',
+    },
+  },
+  adapter: vercel({
+    webAnalytics: { enabled: true },
+    // Disable image service - use simple static serving
+  }),
   // Performance optimizations
   build: {
     inlineStylesheets: 'auto',
