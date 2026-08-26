@@ -4,7 +4,7 @@ export const prerender = true;
 
 import MainLayout from '../layouts/MainLayout.astro';
 import HeroSection from '../components/hero/HeroSection.astro';
-import LetterGlitch from '../components/LetterGlitch.tsx';
+import LetterGlitch from '../components/LetterGlitch.astro';
 import AboutSection from '../components/AboutSection.astro';
 import ProjectsSection from '../components/ProjectsSection.astro';
 import CreativeLabSection from '../components/CreativeLabSection.astro';
@@ -59,9 +59,9 @@ const homeStructuredData = {
 >
   <!-- Enhanced Hero Section - Full viewport height with better spacing distribution -->
   <section class="relative min-h-[calc(100svh-48px-60px)] sm:min-h-[calc(100vh-56px-60px)] overflow-visible flex flex-col justify-between py-1 sm:py-8" role="banner" aria-labelledby="hero-heading" data-testid="page-home">
-    <!-- Full-screen glitch background - lazy load when visible -->
+    <!-- Full-screen glitch background -->
     <div class="absolute inset-0 pointer-events-none opacity-20 z-0" aria-hidden="true">
-      <LetterGlitch client:visible />
+      <LetterGlitch />
     </div>
     
     <!-- Hero content with better spacing -->

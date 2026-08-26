@@ -4,6 +4,11 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 
 ## [Unreleased]
 
+### LetterGlitch hero contrast
+- LetterGlitch is an Astro canvas (not a React island) so the hero background actually paints after load
+- Hero/404 glitch uses forest green as the field and mint/cyan as sparse accents at 20% opacity so heading and accent text keep contrast
+- 404 uses the same LetterGlitch field instead of the leftover matrix-rain script
+
 ### Image Optimization - AVIF Format & Quality Settings (2026-01-27)
 - **AImage Component Enhancement**: Added quality and format parameter support
   - Default quality: 80 for illustrations, 75 for photos (optimal balance)
