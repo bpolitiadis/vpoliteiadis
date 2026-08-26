@@ -3,7 +3,7 @@
 export const prerender = true;
 
 import MainLayout from '../layouts/MainLayout.astro';
-import LetterGlitch from '../components/LetterGlitch.tsx';
+import LetterGlitch from '../components/LetterGlitch.astro';
 ---
 
 <MainLayout title="Letter Glitch Demo">
@@ -18,7 +18,7 @@ import LetterGlitch from '../components/LetterGlitch.tsx';
         <div class="space-y-4">
           <h2 class="text-white text-xl font-semibold">Default Settings</h2>
           <div class="h-64 border border-gray-600 rounded-lg overflow-hidden">
-            <LetterGlitch client:load />
+            <LetterGlitch />
           </div>
         </div>
 
@@ -26,8 +26,7 @@ import LetterGlitch from '../components/LetterGlitch.tsx';
         <div class="space-y-4">
           <h2 class="text-white text-xl font-semibold">Custom Colors</h2>
           <div class="h-64 border border-gray-600 rounded-lg overflow-hidden">
-            <LetterGlitch 
-              client:load
+            <LetterGlitch
               glitchColors={['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff']}
               glitchSpeed={100}
             />
@@ -38,8 +37,7 @@ import LetterGlitch from '../components/LetterGlitch.tsx';
         <div class="space-y-4">
           <h2 class="text-white text-xl font-semibold">Fast Glitch</h2>
           <div class="h-64 border border-gray-600 rounded-lg overflow-hidden">
-            <LetterGlitch 
-              client:load
+            <LetterGlitch
               glitchSpeed={20}
               smooth={false}
             />
@@ -50,8 +48,7 @@ import LetterGlitch from '../components/LetterGlitch.tsx';
         <div class="space-y-4">
           <h2 class="text-white text-xl font-semibold">Center Vignette</h2>
           <div class="h-64 border border-gray-600 rounded-lg overflow-hidden">
-            <LetterGlitch 
-              client:load
+            <LetterGlitch
               centerVignette={true}
               outerVignette={false}
               glitchColors={['#00ffff', '#ff00ff', '#ffff00']}

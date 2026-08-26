@@ -82,7 +82,7 @@ import PageHero from '../components/PageHero.astro';
 
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
-| `LetterGlitch.tsx` | `src/components/LetterGlitch.tsx` | Full-screen in-place character-grid background (homepage hero, 404) | `glitchColors?`, `glitchSpeed?`, `centerVignette?`, `outerVignette?`, `smooth?` | React, Canvas API |
+| `LetterGlitch.astro` | `src/components/LetterGlitch.astro` | Full-screen in-place character-grid background (homepage hero, 404) | `glitchColors?`, `glitchSpeed?`, `centerVignette?`, `outerVignette?`, `smooth?` | Canvas API (`src/lib/letter-glitch.ts`) |
 | `HeroSection.tsx` | `src/components/hero/HeroSection.tsx` | GSAP-powered hero section with floating animations for illustrations and laptop graphics | — | React, GSAP, public folder images |
 | `HeroIntro.astro` | `src/components/hero/HeroIntro.astro` | Hero intro section with chat layout (uses HeroSection) | — | HeroSection |
 | `DecryptedText.tsx` | `src/components/DecryptedText.tsx` | Matrix-style text decryption effect | `text: string`, `speed?: number`, `className?: string` | React, CSS animations |
@@ -142,7 +142,7 @@ graph TD
 
   F[PageHero.astro] --> A
 
-  G[index.astro] --> LG[LetterGlitch.tsx]
+  G[index.astro] --> LG[LetterGlitch.astro]
   G --> AC[HeroIntro.astro]
   H[DecryptedText.tsx]
   J[TextType.tsx]

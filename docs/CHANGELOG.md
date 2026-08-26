@@ -7,6 +7,8 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 ### Matrix rain removal
 - Removed the live falling-column canvas (`public/scripts/matrix-rain.js`) and unused Tailwind `matrix-rain` keyframes
 - Homepage keeps **LetterGlitch** (in-place character field) and **DecryptedText** (heading scramble)
+- LetterGlitch is an Astro canvas (not a React island) so the hero background actually paints after load
+- Hero/404 glitch uses the darker production palette at 20% opacity, with forest green as the field and mint/cyan as sparse accents, so heading and accent text keep contrast
 - 404 uses LetterGlitch for background texture instead of the old rain script
 - Archived the original implementation in `docs/appendices/matrix-rain.md` for optional restore
 - FuzzyText on 404 now accepts a `text` prop so the error copy hydrates reliably as an Astro island

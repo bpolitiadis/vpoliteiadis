@@ -4,7 +4,7 @@ export const prerender = true;
 
 import MainLayout from '../layouts/MainLayout.astro';
 import FuzzyText from '../components/FuzzyText';
-import LetterGlitch from '../components/LetterGlitch.tsx';
+import LetterGlitch from '../components/LetterGlitch.astro';
 
 // 404 page structured data for SEO
 const errorStructuredData = {
@@ -31,7 +31,7 @@ const errorStructuredData = {
 >
   <!-- LetterGlitch background (same effect as homepage hero) -->
   <div class="fixed inset-0 z-0 pointer-events-none opacity-20" aria-hidden="true">
-    <LetterGlitch client:load />
+    <LetterGlitch />
   </div>
 
     <!-- Main 404 Content -->
