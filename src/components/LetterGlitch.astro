@@ -1,0 +1,46 @@
+---
+import { DEFAULT_GLITCH_COLORS } from '../lib/letter-glitch';
+
+interface Props {
+  glitchColors?: string[];
+  glitchSpeed?: number;
+  centerVignette?: boolean;
+  outerVignette?: boolean;
+  smooth?: boolean;
+}
+
+const {
+  glitchColors = [...DEFAULT_GLITCH_COLORS],
+  glitchSpeed = 50,
+  centerVignette = false,
+  outerVignette = true,
+  smooth = true,
+} = Astro.props;
+---
+
+<div class="relative h-full w-full overflow-hidden">
+  <canvas
+    class="letter-glitch-canvas block h-full w-full"
+    data-glitch-colors={JSON.stringify(glitchColors)}
+    data-glitch-speed={String(glitchSpeed)}
+    data-smooth={smooth ? 'true' : 'false'}
+  ></canvas>
+  {outerVignette && (
+    <div
+      class="absolute inset-0 pointer-events-none bg-[radial-gradient(circle,_rgba(0,0,0,0)_60%,_rgba(0,0,0,1)_100%)]"
+    />
+  )}
+  {centerVignette && (
+    <div
+      class="absolute inset-0 pointer-events-none bg-[radial-gradient(circle,_rgba(0,0,0,0.8)_0%,_rgba(0,0,0,0)_60%)]"
+    />
+  )}
+</div>
+
+<script>
+  import { initLetterGlitch } from '../lib/letter-glitch';
+
+  document
+    .querySelectorAll<HTMLCanvasElement>('canvas.letter-glitch-canvas')
+    .forEach((canvas) => initLetterGlitch(canvas));
+</script>

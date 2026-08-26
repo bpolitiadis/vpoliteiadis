@@ -13,7 +13,7 @@ This component leverages a powerful combination of modern web technologies:
 - **Tailwind CSS**: Utility-first styling with custom animations and responsive breakpoints
 - **Shadcn/ui**: Design system patterns for the CTA button (implemented as plain HTML with Tailwind classes matching Shadcn's `buttonVariants`)
 - **Astro Assets**: Automatic image optimization with WebP/AVIF formats and responsive srcsets
-- **LetterGlitch React Component**: Canvas-based glitch background effect (loaded with `client:visible` in parent page)
+- **LetterGlitch Astro Component**: Canvas-based glitch background effect (plain canvas in the parent page, no React island)
 
 ## Usage
 
@@ -29,9 +29,9 @@ The component is typically used within a full-viewport section wrapper (see `src
 
 ```astro
 <section class="relative min-h-[calc(100svh-48px-60px)]">
-  <!-- LetterGlitch background with lazy loading -->
+  <!-- LetterGlitch background -->
   <div class="absolute inset-0 pointer-events-none opacity-20 z-0">
-    <LetterGlitch client:visible />
+    <LetterGlitch />
   </div>
   
   <HeroSection />
@@ -308,9 +308,9 @@ The `LetterGlitch` component is **not part of HeroSection.astro** but is integra
 
 ```astro
 <section class="relative min-h-[calc(100svh-48px-60px)]">
-  <!-- Full-screen glitch background - lazy load when visible -->
+  <!-- Full-screen glitch background -->
   <div class="absolute inset-0 pointer-events-none opacity-20 z-0" aria-hidden="true">
-    <LetterGlitch client:visible />
+    <LetterGlitch />
   </div>
   
   <HeroSection />
@@ -321,13 +321,13 @@ The `LetterGlitch` component is **not part of HeroSection.astro** but is integra
 - **Position**: Absolute positioning with `inset-0` for full-screen coverage
 - **Z-index**: `z-0` (behind hero content which is `z-10`)
 - **Opacity**: `20%` for subtle background effect
-- **Lazy Loading**: `client:visible` directive loads only when element is visible
 - **Pointer Events**: `pointer-events-none` to allow interactions with hero content
 - **Accessibility**: `aria-hidden="true"` since it's decorative
 
-**LetterGlitch Component** (`src/components/LetterGlitch.tsx`):
-- **Technology**: React component with Canvas API
+**LetterGlitch Component** (`src/components/LetterGlitch.astro` + `src/lib/letter-glitch.ts`):
+- **Technology**: Astro canvas with the Canvas API (no React hydration)
 - **Effect**: Animated grid of random letters/symbols with color transitions
+- **Field mix**: 85% forest green, 15% mint/cyan accents so hero copy stays readable
 - **Performance**: Uses `requestAnimationFrame` and throttled updates (1% of letters per frame)
 - **Customization**: Configurable glitch colors, speed, and vignette effects
 - **Default Colors**: `['#2b4539', '#61dca3', '#61b3dc']` (dark green, emerald, cyan)

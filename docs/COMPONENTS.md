@@ -109,7 +109,7 @@ const githubProfile = {
 | `HeroSection.astro` | `src/components/hero/HeroSection.astro` | Static hero section with GSAP animations, optimized images, and floating illustrations | — | GSAP, Astro assets, text reveal animations |
 | `DecryptedText.tsx` | `src/components/DecryptedText.tsx` | Matrix-style text decryption effect with scroll-triggered animations | `text: string`, `speed?: number`, `sequential?: boolean`, `revealDirection?: 'start' \| 'end' \| 'center'`, `animateOn?: 'view' \| 'hover'`, `className?: string`, `encryptedClassName?: string`, `revealedStyle?: React.CSSProperties` | React, IntersectionObserver |
 | `TextType.tsx` | `src/components/TextType.tsx` | Typing/erasing text rotator with cursor | `text: string \| string[]`, `typingSpeed?`, `deletingSpeed?`, `pauseDuration?`, `showCursor?`, `cursorCharacter?`, `cursorClassName?`, `className?`, `startOnVisible?` | React, CSS animations |
-| `LetterGlitch.tsx` | `src/components/LetterGlitch.tsx` | Canvas-based letter glitch effect with customizable colors and speed | `glitchColors?`, `glitchSpeed?`, `centerVignette?`, `outerVignette?`, `smooth?` | React, Canvas API |
+| `LetterGlitch.astro` | `src/components/LetterGlitch.astro` | Full-screen in-place character-grid background (homepage hero, 404) | `glitchColors?`, `glitchSpeed?`, `centerVignette?`, `outerVignette?`, `smooth?` | Canvas API (`src/lib/letter-glitch.ts`) |
 
 #### DecryptedText.tsx
 **Purpose:** Matrix-style text decryption animation that reveals characters sequentially. Supports both scroll-triggered (view) and hover-triggered animations.
@@ -177,33 +177,23 @@ import DecryptedText from '../components/DecryptedText';
 - Prevents double-triggering with ref-based animation guard
 - Simplified implementation reduces complexity and improves reliability
 
-#### LetterGlitch.tsx
-**Purpose:** Canvas-based letter glitch effect component with customizable glitch colors and speed.
+#### LetterGlitch.astro
+**Purpose:** Canvas-based letter glitch background. First color is the dark field; remaining colors are sparse accents.
 
 **Props:**
-- `glitchColors` (optional): Array of hex color strings for glitch effects
+- `glitchColors` (optional): Array of hex color strings (default: `#2b4539`, `#61dca3`, `#61b3dc`)
 - `glitchSpeed` (optional): Speed of glitch animation (default: 50)
 - `centerVignette` (optional): Enable center vignette effect
 - `outerVignette` (optional): Enable outer vignette effect (default: true)
 - `smooth` (optional): Enable smooth animation (default: true)
 
 **Usage:**
-```tsx
-import LetterGlitch from '../components/LetterGlitch';
+```astro
+import LetterGlitch from '../components/LetterGlitch.astro';
 
-function MyComponent() {
-  return (
-    <LetterGlitch
-      glitchColors={['#2b4539', '#61dca3', '#61b3dc']}
-      glitchSpeed={75}
-      centerVignette={false}
-      outerVignette={true}
-      smooth={true}
-    >
-      <h1>GLITCHED TEXT</h1>
-    </LetterGlitch>
-  );
-}
+<div class="absolute inset-0 pointer-events-none opacity-20 z-0" aria-hidden="true">
+  <LetterGlitch />
+</div>
 ```
 
 ### Sections & Page Layouts
