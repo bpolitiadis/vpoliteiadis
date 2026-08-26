@@ -4,6 +4,14 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 
 ## [Unreleased]
 
+### Matrix rain removal
+- Removed the live falling-column canvas (`public/scripts/matrix-rain.js`) and unused Tailwind `matrix-rain` keyframes
+- Homepage keeps **LetterGlitch** (in-place character field) and **DecryptedText** (heading scramble)
+- 404 uses LetterGlitch for background texture instead of the old rain script
+- Archived the original implementation in `docs/appendices/matrix-rain.md` for optional restore
+- FuzzyText on 404 now accepts a `text` prop so the error copy hydrates reliably as an Astro island
+- Section reveal CSS now matches delayed `animate-reveal-up-*` classes so titles actually animate in
+
 ### Image Strategy Cleanup & Optimization
 - **Image Directory Cleanup**: Removed 242 redundant optimized image variants from `public/images/`
   - Deleted all manually optimized variants (`*-480w.webp`, `*-800w.webp`, etc.) as Astro 5 handles optimization automatically

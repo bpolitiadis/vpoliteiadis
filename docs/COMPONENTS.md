@@ -82,13 +82,12 @@ import PageHero from '../components/PageHero.astro';
 
 | Component | Path | Purpose | Key Props | Dependencies |
 |-----------|------|---------|-----------|--------------|
-| `Hero.astro` | `src/components/Hero.astro` | Home hero with matrix rain, ElectricBorder avatar, and dynamic subtitle | — | HeroAnimationController, ElectricBorder, `/public/scripts/matrix-rain.js` |
+| `LetterGlitch.tsx` | `src/components/LetterGlitch.tsx` | Full-screen in-place character-grid background (homepage hero, 404) | `glitchColors?`, `glitchSpeed?`, `centerVignette?`, `outerVignette?`, `smooth?` | React, Canvas API |
 | `HeroSection.tsx` | `src/components/hero/HeroSection.tsx` | GSAP-powered hero section with floating animations for illustrations and laptop graphics | — | React, GSAP, public folder images |
 | `HeroIntro.astro` | `src/components/hero/HeroIntro.astro` | Hero intro section with chat layout (uses HeroSection) | — | HeroSection |
-| `HeroAnimationController.tsx` | `src/components/HeroAnimationController.tsx` | React component managing hero animation sequence | `quotes: string[]` (14 professional quotes) | DecryptedText, TextType |
 | `DecryptedText.tsx` | `src/components/DecryptedText.tsx` | Matrix-style text decryption effect | `text: string`, `speed?: number`, `className?: string` | React, CSS animations |
 | `TextType.tsx` | `src/components/TextType.tsx` | Typing/erasing text rotator with cursor | `text: string \| string[]`, `typingSpeed?`, `deletingSpeed?`, `pauseDuration?`, `showCursor?`, `cursorCharacter?`, `cursorClassName?`, `className?`, `startOnVisible?` | React, CSS animations |
-| `FuzzyText.tsx` | `src/components/FuzzyText.tsx` | Canvas-based fuzzy text effect with hover interactions | `children`, `fontSize?`, `fontWeight?`, `fontFamily?`, `color?`, `enableHover?`, `baseIntensity?`, `hoverIntensity?` | React, Canvas API, requestAnimationFrame |
+| `FuzzyText.tsx` | `src/components/FuzzyText.tsx` | Canvas-based fuzzy text effect with hover interactions | `text?`, `children?`, `fontSize?`, `fontWeight?`, `fontFamily?`, `color?`, `enableHover?`, `baseIntensity?`, `hoverIntensity?` | React, Canvas API, requestAnimationFrame |
 
 ### Sections & Page Layouts
 
@@ -143,14 +142,14 @@ graph TD
 
   F[PageHero.astro] --> A
 
-  G[Hero.astro] --> H[HeroAnimationController.tsx]
-  H --> I[DecryptedText.tsx]
-  H --> J[TextType.tsx]
-  H --> V[FuzzyText.tsx]
-  G --> K[/public/scripts/matrix-rain.js]
+  G[index.astro] --> LG[LetterGlitch.tsx]
+  G --> AC[HeroIntro.astro]
+  H[DecryptedText.tsx]
+  J[TextType.tsx]
+  V[FuzzyText.tsx]
 
   AA[HeroSection.tsx] --> AB[GSAP]
-  AC[HeroIntro.astro] --> AA
+  AC --> AA
 
   AD[AboutSection.astro] --> AE[ProfileCard.tsx]
   AD --> AF[Structured Data]

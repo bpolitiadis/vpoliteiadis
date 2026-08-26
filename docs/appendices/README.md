@@ -14,6 +14,7 @@ This directory contains supplementary reference documentation that supports the 
 | **[HERO_ANIMATIONS_IMPROVEMENTS.md](./HERO_ANIMATIONS_IMPROVEMENTS.md)** | Animation improvements and best practices | When optimizing hero animations |
 | **[about-structured-data.md](./about-structured-data.md)** | Structured data concepts and implementation | When working on SEO structured data |
 | **[hero-quotes.md](./hero-quotes.md)** | Hero section quotes and rotation logic | When updating hero content |
+| **[matrix-rain.md](./matrix-rain.md)** | Archived falling-column canvas (removed from live pages) | Only if restoring the old Matrix rain effect |
 
 ## 🔍 Navigation
 

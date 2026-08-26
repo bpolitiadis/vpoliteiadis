@@ -404,12 +404,12 @@ function getTimelineColors(isCurrent: boolean) {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const animatedElements = entry.target.querySelectorAll(
-              '.animate-reveal-up, .animate-stagger-fade'
+              '[class*="animate-reveal-up"], [class*="animate-stagger-fade"]'
             );
             animatedElements.forEach((element, index) => {
               setTimeout(() => {
                 element.classList.add('animate');
-              }, index * 100);
+              }, index * 50);
             });
             observer.unobserve(entry.target);
           }

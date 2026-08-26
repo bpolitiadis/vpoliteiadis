@@ -266,7 +266,7 @@ box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
 ## 🎭 Visual Elements
 
 ### Background Patterns
-- **Matrix Rain:** Subtle animated code rain effect
+- **LetterGlitch:** Subtle in-place character-grid background (homepage hero, 404). Falling-column rain is archived in `docs/appendices/matrix-rain.md`
 - **Particle Grid:** Cyber-grid overlays for texture
 - **Gradient Overlays:** Radial and linear gradients for depth
 
@@ -333,7 +333,6 @@ box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
   .animate-spin-slow,
   .animate-bounce-slow,
   .animate-float,
-  .animate-matrix-rain,
   .animate-slide-up-delayed,
   .animate-fade-in-delayed {
     animation: none;

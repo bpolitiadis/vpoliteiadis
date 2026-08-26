@@ -54,7 +54,7 @@ graph TD
 - **`src/lib/**`**: Utility functions (analytics, social config, Spotify integration)
 
 ### Static Assets
-- **`public/**`**: Static images, client-side scripts (matrix rain, blog filters, navbar toggle, theme init)
+- **`public/**`**: Static images, client-side scripts (blog filters, navbar toggle, theme init)
 - **`scripts/optimize-images.mjs`**: Build-time responsive image generation with Sharp
 - **`vercel.json`**: Cache policies, security headers, CSP configuration
 - **`src/middleware.ts`**: CSP/headers fallback for non-Vercel deployments
@@ -77,8 +77,7 @@ graph TD
 ### Component Rendering Strategy
 ```typescript
 // Static Astro components (default)
-<Hero />
-<ProjectCard project={project} />
+<HeroIntro />
 <Footer />
 
 // React islands for interactivity
@@ -401,9 +400,9 @@ export function onRequest({ request, next }: APIContext) {
 ### Key Page Dependencies
 ```mermaid
 graph TD
-  A[Homepage] --> B[Hero Component]
+  A[Homepage] --> B[HeroIntro / HeroSection]
   A --> C[MainLayout]
-  B --> D[HeroAnimationController]
+  A --> LG[LetterGlitch]
   B --> E[DecryptedText]
   B --> F[TextType]
   

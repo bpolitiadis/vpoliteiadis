@@ -1,3 +1,40 @@
+# Archived: Matrix Rain (canvas)
+
+Removed from the live site on 2026-08-26. Homepage uses **LetterGlitch** (in-place character field) and headings use **DecryptedText**. This file is the restore recipe if we want falling columns again.
+
+**Do not re-enable on the homepage** without a product decision. The old script had an infinite 100ms retry when `#matrixCanvas` was missing, and it dispatched `matrixRainFilled` for a hero sequence that no longer exists.
+
+## Last live usage
+
+- Canvas: `#matrixCanvas` on `src/pages/404.astro`
+- Script: `/public/scripts/matrix-rain.js` loaded with `<script is:inline src="/scripts/matrix-rain.js">`
+
+Markup:
+
+```html
+<div class="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
+  <canvas id="matrixCanvas" class="w-full h-full opacity-20" style="filter: blur(0.5px);"></canvas>
+</div>
+<script is:inline src="/scripts/matrix-rain.js"></script>
+```
+
+Unused Tailwind leftovers (also removed):
+
+```js
+animation: {
+  'matrix-rain': 'matrixRain 20s linear infinite',
+},
+keyframes: {
+  matrixRain: {
+    '0%': { transform: 'translateY(-100%)' },
+    '100%': { transform: 'translateY(100vh)' },
+  },
+},
+```
+
+## Script (`public/scripts/matrix-rain.js`)
+
+```js
 function initMatrixRain() {
   try {
     // Respect reduced motion
@@ -17,7 +54,7 @@ function initMatrixRain() {
     setTimeout(initMatrixRain, 100);
     return;
   }
-  
+
   var canvas = el;
   var ctx = canvas.getContext('2d');
   if (!ctx) {
@@ -29,7 +66,7 @@ function initMatrixRain() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }
-  
+
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
 
@@ -43,7 +80,7 @@ function initMatrixRain() {
   var lastUpdateTimestamp;
   var rowsPerSecond = 14; // tuned for a classic Matrix-like pace
   var stepMs = 1000 / rowsPerSecond;
-  
+
   // Track if matrix has filled the screen to trigger hero sequence
   var hasFilledScreen = false;
   var screenFillThreshold = 0.7; // 70% of screen filled
@@ -77,25 +114,25 @@ function initMatrixRain() {
         drops[i] = 0;
       }
       drops[i] = drops[i] + 1;
-      
+
       // Count drops that are visible on screen
       if (drops[i] * fontSize > 0 && drops[i] * fontSize < canvas.height) {
         activeDrops++;
       }
     }
-    
+
     // Check if matrix has filled enough of the screen to trigger hero sequence
     var screenFillRatio = activeDrops / columns;
     if (!hasFilledScreen && screenFillRatio >= screenFillThreshold) {
       hasFilledScreen = true;
       console.log('🌊 Matrix rain has filled the screen, starting hero sequence');
-      
+
       // Trigger hero sequence by dispatching a custom event
       window.dispatchEvent(new CustomEvent('matrixRainFilled', {
         detail: { screenFillRatio, activeDrops, totalColumns: columns }
       }));
     }
-    
+
     rafId = window.requestAnimationFrame(draw);
   }
 
@@ -123,5 +160,12 @@ if (document.readyState !== 'loading') {
 } else {
   document.addEventListener('DOMContentLoaded', initMatrixRain);
 }
+```
 
+## If restoring
 
+1. Put the script back at `public/scripts/matrix-rain.js`.
+2. Add `#matrixCanvas` only on the page that should rain.
+3. Cap the missing-canvas retry (max attempts or stop). Do not retry forever.
+4. Drop `matrixRainFilled` unless a consumer listens for it.
+5. Keep `prefers-reduced-motion`.

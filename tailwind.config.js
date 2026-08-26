@@ -135,7 +135,6 @@ export default {
 			'spin-slow': 'spin 8s linear infinite',
 			'bounce-slow': 'bounce 2s infinite',
 			float: 'float 6s ease-in-out infinite',
-			'matrix-rain': 'matrixRain 20s linear infinite',
 			'scale-smooth': 'scaleSmooth 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
 			'star-movement-bottom': 'star-movement-bottom linear infinite alternate',
 			'star-movement-top': 'star-movement-top linear infinite alternate',
@@ -198,23 +197,15 @@ export default {
   					transform: 'translateY(0)'
   				}
   			},
-  			float: {
-  				'0%, 100%': {
-  					transform: 'translateY(0px)'
-  				},
-  				'50%': {
-  					transform: 'translateY(-10px)'
-  				}
-  			},
-  			matrixRain: {
-  				'0%': {
-  					transform: 'translateY(-100%)'
-  				},
-  				'100%': {
-  					transform: 'translateY(100vh)'
-  				}
-  			},
-  			scaleSmooth: {
+			float: {
+				'0%, 100%': {
+					transform: 'translateY(0px)'
+				},
+				'50%': {
+					transform: 'translateY(-10px)'
+				}
+			},
+			scaleSmooth: {
 				'0%': {
 					transform: 'scale(1)'
 				},

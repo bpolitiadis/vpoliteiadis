@@ -115,7 +115,12 @@ const creativeProjects = [
       '(prefers-reduced-motion: reduce)'
     ).matches;
 
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion) {
+      section.querySelectorAll('.animate-reveal-up').forEach((element) => {
+        element.classList.add('animate');
+      });
+      return;
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -127,7 +132,7 @@ const creativeProjects = [
             animatedElements.forEach((element, index) => {
               setTimeout(() => {
                 element.classList.add('animate');
-              }, index * 150);
+              }, index * 50);
             });
             observer.unobserve(entry.target);
           }

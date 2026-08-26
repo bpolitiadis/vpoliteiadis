@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
 
 interface FuzzyTextProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  text?: string;
   fontSize?: number | string;
   fontWeight?: string | number;
   fontFamily?: string;
@@ -13,6 +14,7 @@ interface FuzzyTextProps {
 
 const FuzzyText: React.FC<FuzzyTextProps> = ({
   children,
+  text,
   fontSize = "clamp(2rem, 8vw, 8rem)",
   fontWeight = 900,
   fontFamily = "inherit",
@@ -45,7 +47,12 @@ const FuzzyText: React.FC<FuzzyTextProps> = ({
 
     const init = async () => {
       if (document.fonts?.ready) {
-        await document.fonts.ready;
+        await Promise.race([
+          document.fonts.ready,
+          new Promise<void>((resolve) => {
+            window.setTimeout(resolve, 400)
+          }),
+        ])
       }
       if (isCancelled) return;
 
@@ -57,29 +64,34 @@ const FuzzyText: React.FC<FuzzyTextProps> = ({
           ? window.getComputedStyle(canvas).fontFamily || "sans-serif"
           : fontFamily;
 
-      const fontSizeStr =
-        typeof fontSize === "number" ? `${fontSize}px` : fontSize;
       let numericFontSize: number;
       if (typeof fontSize === "number") {
         numericFontSize = fontSize;
       } else {
         const temp = document.createElement("span");
         temp.style.fontSize = fontSize;
+        temp.style.visibility = "hidden";
+        temp.style.position = "absolute";
         document.body.appendChild(temp);
         const computedSize = window.getComputedStyle(temp).fontSize;
         numericFontSize = parseFloat(computedSize);
         document.body.removeChild(temp);
       }
+      if (!Number.isFinite(numericFontSize) || numericFontSize < 8) {
+        numericFontSize = 96;
+      }
 
-      const text = React.Children.toArray(children).join("");
+      const label = (text ?? React.Children.toArray(children).join("")).trim();
+      if (!label) return;
 
       const offscreen = document.createElement("canvas");
       const offCtx = offscreen.getContext("2d");
       if (!offCtx) return;
 
-      offCtx.font = `${fontWeight} ${fontSizeStr} ${computedFontFamily}`;
+      const canvasFont = `${fontWeight} ${numericFontSize}px ${computedFontFamily}`;
+      offCtx.font = canvasFont;
       offCtx.textBaseline = "alphabetic";
-      const metrics = offCtx.measureText(text);
+      const metrics = offCtx.measureText(label);
 
       const actualLeft = metrics.actualBoundingBoxLeft ?? 0;
       const actualRight = metrics.actualBoundingBoxRight ?? metrics.width;
@@ -87,8 +99,16 @@ const FuzzyText: React.FC<FuzzyTextProps> = ({
       const actualDescent =
         metrics.actualBoundingBoxDescent ?? numericFontSize * 0.2;
 
-      const textBoundingWidth = Math.ceil(actualLeft + actualRight);
-      const tightHeight = Math.ceil(actualAscent + actualDescent);
+      const textBoundingWidth = Math.max(
+        Math.ceil(actualLeft + actualRight),
+        Math.ceil(metrics.width),
+        1
+      );
+      const tightHeight = Math.max(
+        Math.ceil(actualAscent + actualDescent),
+        Math.ceil(numericFontSize),
+        1
+      );
 
       const extraWidthBuffer = 10;
       const offscreenWidth = textBoundingWidth + extraWidthBuffer;
@@ -97,10 +117,10 @@ const FuzzyText: React.FC<FuzzyTextProps> = ({
       offscreen.height = tightHeight;
 
       const xOffset = extraWidthBuffer / 2;
-      offCtx.font = `${fontWeight} ${fontSizeStr} ${computedFontFamily}`;
+      offCtx.font = canvasFont;
       offCtx.textBaseline = "alphabetic";
       offCtx.fillStyle = color;
-      offCtx.fillText(text, xOffset - actualLeft, actualAscent);
+      offCtx.fillText(label, xOffset - actualLeft, actualAscent);
 
       const horizontalMargin = 50;
       const verticalMargin = 0;
@@ -216,6 +236,7 @@ const FuzzyText: React.FC<FuzzyTextProps> = ({
     };
   }, [
     children,
+    text,
     fontSize,
     fontWeight,
     fontFamily,

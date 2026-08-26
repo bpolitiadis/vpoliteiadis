@@ -77,7 +77,7 @@ const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
       <Card
         ref={cardRef}
         className={cn(
-          "relative overflow-hidden border-2 border-digital-emerald/60 transition-all duration-300",
+          "relative overflow-hidden border-2 border-digital-emerald/60 transition-[border-color,box-shadow] duration-200",
           "hover:border-digital-emerald hover:shadow-[0_0_16px_rgba(0,184,107,0.4)]",
           "shadow-[0_0_8px_rgba(0,184,107,0.2)]",
           "w-full aspect-[4/5]",
@@ -174,7 +174,7 @@ const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
           {onContactClick && (
             <Button
               onClick={onContactClick}
-              className="w-full bg-transparent border border-digital-emerald/50 text-digital-emerald hover:bg-digital-emerald/10 hover:border-digital-emerald hover:text-digital-emerald transition-all duration-200 backdrop-blur-sm"
+              className="w-full bg-transparent border border-digital-emerald/50 text-digital-emerald hover:bg-digital-emerald/10 hover:border-digital-emerald hover:text-digital-emerald backdrop-blur-sm"
               variant="outline"
             >
               {contactText}

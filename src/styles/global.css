@@ -30,6 +30,12 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-reveal: cubic-bezier(0.16, 1, 0.3, 1);
+    --duration-press: 160ms;
+    --duration-ui: 200ms;
+    --duration-section: 450ms;
   }
 
   .dark {
@@ -193,11 +199,14 @@
     position: relative;
     overflow: hidden;
     border-radius: 0.375rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: color var(--duration-ui) var(--ease-out),
+      transform var(--duration-ui) var(--ease-out);
   }
 
-  .nav-link-desktop:hover {
-    transform: translateY(-1px);
+  @media (hover: hover) and (pointer: fine) {
+    .nav-link-desktop:hover {
+      transform: translateY(-1px);
+    }
   }
 
   .nav-link-desktop:focus-visible {
@@ -215,14 +224,15 @@
   /* Hover glow effect */
   .nav-hover-glow {
     background: radial-gradient(circle at center, rgba(57, 255, 20, 0.08) 0%, transparent 70%);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity var(--duration-ui) var(--ease-out);
   }
 
   /* Mobile menu button */
   .mobile-menu-btn {
     position: relative;
     overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: color var(--duration-ui) var(--ease-out),
+      background-color var(--duration-ui) var(--ease-out);
   }
 
   .mobile-menu-btn::before {
@@ -253,7 +263,9 @@
   .mobile-nav-link {
     position: relative;
     overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: color var(--duration-ui) var(--ease-out),
+      background-color var(--duration-ui) var(--ease-out),
+      border-color var(--duration-ui) var(--ease-out);
   }
 
   .mobile-nav-link::before {
@@ -280,7 +292,10 @@
     color: var(--primary);
     padding: 0.75rem 1.5rem;
     border-radius: 0.375rem;
-    transition: all 0.3s;
+    transition: color var(--duration-ui) var(--ease-out),
+      background-color var(--duration-ui) var(--ease-out),
+      box-shadow var(--duration-ui) var(--ease-out),
+      transform var(--duration-press) var(--ease-out);
     font-weight: 500;
   }
 
@@ -288,6 +303,10 @@
     background-color: var(--primary);
     color: var(--primary-foreground);
     box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
+  }
+
+  .btn-primary:active {
+    transform: scale(0.97);
   }
 
   .btn-primary:focus-visible {
@@ -301,7 +320,10 @@
     color: var(--secondary);
     padding: 0.75rem 1.5rem;
     border-radius: 0.375rem;
-    transition: all 0.3s;
+    transition: color var(--duration-ui) var(--ease-out),
+      background-color var(--duration-ui) var(--ease-out),
+      box-shadow var(--duration-ui) var(--ease-out),
+      transform var(--duration-press) var(--ease-out);
     font-weight: 500;
   }
 
@@ -311,6 +333,10 @@
     box-shadow: 0 0 20px rgba(0, 184, 107, 0.3);
   }
 
+  .btn-secondary:active {
+    transform: scale(0.97);
+  }
+
   .btn-secondary:focus-visible {
     outline: none;
     box-shadow: 0 0 0 2px var(--secondary), 0 0 0 4px var(--background);
@@ -318,12 +344,15 @@
 
   /* Modern compact link-CTA used for subtle actions (e.g. Read More) */
   .btn-link {
-    @apply inline-flex items-center gap-1.5 text-sm font-medium rounded-sm px-0.5 transition-all duration-200;
+    @apply inline-flex items-center gap-1.5 text-sm font-medium rounded-sm px-0.5;
     color: var(--primary);
     text-decoration: underline;
     text-underline-offset: 4px;
     text-decoration-thickness: 1px;
     text-decoration-color: rgba(57, 255, 20, 0.35);
+    transition: color var(--duration-ui) var(--ease-out),
+      transform var(--duration-ui) var(--ease-out),
+      text-decoration-color var(--duration-ui) var(--ease-out);
   }
 
   .btn-link:hover {
@@ -340,12 +369,15 @@
 
   /* Apply the compact CTA treatment to existing blog card links without changing markup */
   .card a.text-primary {
-    @apply inline-flex items-center gap-1.5 text-sm font-semibold px-0.5 transition-all duration-200;
+    @apply inline-flex items-center gap-1.5 text-sm font-semibold px-0.5;
     color: var(--primary);
     text-decoration: underline;
     text-underline-offset: 4px;
     text-decoration-thickness: 1px;
     text-decoration-color: rgba(57, 255, 20, 0.35);
+    transition: color var(--duration-ui) var(--ease-out),
+      transform var(--duration-ui) var(--ease-out),
+      text-decoration-color var(--duration-ui) var(--ease-out);
   }
   
   /* Color overrides removed - now using direct Tailwind colors */
@@ -369,7 +401,8 @@
     border: 1px solid var(--border);
     border-radius: 0.5rem;
     padding: 1.5rem;
-    transition: all 0.3s;
+    transition: border-color var(--duration-ui) var(--ease-out),
+      box-shadow var(--duration-ui) var(--ease-out);
     backdrop-filter: blur(4px);
   }
 
@@ -383,7 +416,11 @@
     border-radius: 9999px;
     font-size: 0.875rem;
     font-weight: 600;
-    transition: all 0.25s ease;
+    transition: color var(--duration-ui) var(--ease-out),
+      background-color var(--duration-ui) var(--ease-out),
+      border-color var(--duration-ui) var(--ease-out),
+      transform var(--duration-ui) var(--ease-out),
+      box-shadow var(--duration-ui) var(--ease-out);
     border: 1px solid var(--border);
     background: linear-gradient(180deg, rgba(57,255,20,0.06) 0%, rgba(57,255,20,0.02) 100%);
     color: var(--card-foreground);
@@ -410,7 +447,11 @@
     border-radius: 0.5rem;
     font-size: 0.75rem;
     font-weight: 500;
-    transition: all 0.2s ease;
+    transition: color var(--duration-ui) var(--ease-out),
+      background-color var(--duration-ui) var(--ease-out),
+      border-color var(--duration-ui) var(--ease-out),
+      transform var(--duration-ui) var(--ease-out),
+      box-shadow var(--duration-ui) var(--ease-out);
     border: 1px solid var(--border);
     background: linear-gradient(180deg, rgba(57,255,20,0.04) 0%, rgba(57,255,20,0.01) 100%);
     color: var(--card-foreground);
@@ -548,29 +589,35 @@
     will-change: transform, opacity;
   }
 
-  /* 2025 Modern UX Animations - Synchronized with TextType */
+  /* Section reveals — hero GSAP copy (.text-animation) is untouched */
   .animate-reveal-up,
   .animate-reveal-up-delayed-1,
   .animate-reveal-up-delayed-2,
   .animate-reveal-up-delayed-3,
   .animate-reveal-up-delayed-4,
   .animate-reveal-up-delayed-5 {
-    will-change: transform, opacity;
     backface-visibility: hidden;
-    transform: translateZ(0);
     opacity: 0;
-    transform: translateY(30px) scale(0.95);
+    transform: translateZ(0) translateY(20px) scale(0.97);
+    transition: opacity var(--duration-section) var(--ease-out),
+      transform var(--duration-section) var(--ease-out);
   }
 
-  /* Fallback: Show content after 2 seconds if animation doesn't trigger */
-  .animate-reveal-up:not(.animate) {
-    animation: fallbackReveal 0.5s ease-out 2s both;
+  @media (min-width: 769px) {
+    .animate-reveal-up:not(.animate),
+    .animate-reveal-up-delayed-1:not(.animate),
+    .animate-reveal-up-delayed-2:not(.animate),
+    .animate-reveal-up-delayed-3:not(.animate),
+    .animate-reveal-up-delayed-4:not(.animate),
+    .animate-reveal-up-delayed-5:not(.animate) {
+      animation: fallbackReveal 0.45s var(--ease-out) 1.5s both;
+    }
   }
 
   @keyframes fallbackReveal {
     0% {
       opacity: 0;
-      transform: translateY(30px) scale(0.95);
+      transform: translateY(20px) scale(0.97);
     }
     100% {
       opacity: 1;
@@ -582,28 +629,10 @@
   .animate-stagger-fade-delayed-1,
   .animate-stagger-fade-delayed-2,
   .animate-stagger-fade-delayed-3 {
-    will-change: transform, opacity;
     backface-visibility: hidden;
-    transform: translateZ(0);
     opacity: 0;
-    transform: translateY(20px);
-  }
-
-  /* Animation trigger classes */
-  .animate-reveal-up,
-  .animate-reveal-up-delayed-1,
-  .animate-reveal-up-delayed-2,
-  .animate-reveal-up-delayed-3,
-  .animate-reveal-up-delayed-4,
-  .animate-reveal-up-delayed-5 {
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .animate-stagger-fade,
-  .animate-stagger-fade-delayed-1,
-  .animate-stagger-fade-delayed-2,
-  .animate-stagger-fade-delayed-3 {
-    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateZ(0) translateY(20px);
+    transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-out);
   }
 
   .animate-reveal-up.animate,
@@ -622,6 +651,51 @@
   .animate-stagger-fade-delayed-3.animate {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  /* Mobile: show immediately so delayed fallbacks cannot leave copy hidden */
+  @media (max-width: 768px) {
+    .animate-reveal-up,
+    .animate-reveal-up:not(.animate),
+    .animate-reveal-up.animate,
+    .animate-reveal-up-delayed-1,
+    .animate-reveal-up-delayed-1:not(.animate),
+    .animate-reveal-up-delayed-2,
+    .animate-reveal-up-delayed-2:not(.animate),
+    .animate-reveal-up-delayed-3,
+    .animate-reveal-up-delayed-3:not(.animate),
+    .animate-reveal-up-delayed-4,
+    .animate-reveal-up-delayed-4:not(.animate),
+    .animate-reveal-up-delayed-5,
+    .animate-reveal-up-delayed-5:not(.animate),
+    .animate-stagger-fade,
+    .animate-stagger-fade:not(.animate),
+    .animate-stagger-fade-delayed-1,
+    .animate-stagger-fade-delayed-2,
+    .animate-stagger-fade-delayed-3 {
+      animation: none !important;
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  .card-hover-lift {
+    transition: transform var(--duration-ui) var(--ease-out);
+  }
+
+  .card-hover-image {
+    transition: transform var(--duration-ui) var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .card-hover-lift:hover {
+      transform: translateY(-4px);
+    }
+
+    .card-hover-lift:hover .card-hover-image {
+      transform: scale(1.05);
+    }
   }
 
 
@@ -910,11 +984,10 @@
 /* Desktop optimizations */
 @media (min-width: 1025px) {
   .project-card {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: box-shadow var(--duration-ui) var(--ease-out);
   }
 
   .project-card:hover {
-    transform: translateY(-4px);
     box-shadow: 0 25px 50px rgba(57, 255, 20, 0.2);
   }
 }
@@ -931,7 +1004,6 @@
   .animate-spin-slow,
   .animate-bounce-slow,
   .animate-float,
-  .animate-matrix-rain,
   .animate-slide-up-delayed,
   .animate-fade-in-delayed,
   .animate-reveal-up,
@@ -1098,7 +1170,6 @@
   }
 
   .project-card:hover {
-    transform: translateY(-2px);
     box-shadow: 0 20px 40px rgba(57, 255, 20, 0.15);
   }
 

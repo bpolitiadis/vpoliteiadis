@@ -21,7 +21,7 @@ const { project } = Astro.props;
 ---
 
 <div 
-  class="group relative flex flex-col h-full w-full"
+  class="group relative flex flex-col h-full w-full card-hover-lift"
   data-testid={`creative-card-${project.slug}`}
 >
   <!-- Project Cover Image -->
@@ -35,7 +35,7 @@ const { project } = Astro.props;
         src={project.hero}
         alt={project.title}
         preset="card"
-        class={`w-full h-full ${project.heroFit === 'contain' ? 'object-contain p-6' : 'object-cover'} rounded-lg transition-transform duration-700 group-hover:scale-110 will-change-transform`}
+        class={`w-full h-full ${project.heroFit === 'contain' ? 'object-contain p-6' : 'object-cover'} rounded-lg card-hover-image`}
         loading="lazy"
         decoding="async"
       />

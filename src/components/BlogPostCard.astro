@@ -27,24 +27,26 @@ const postUrl = post.url || `/blog/${post.slug}`;
 ---
 
 <article
-  class={`group rounded-xl border bg-card/80 text-card-foreground shadow transition-transform duration-300 hover:scale-[1.02] backdrop-blur-md ${className}`}
+  class={`group rounded-xl border bg-card/80 text-card-foreground shadow card-hover-lift backdrop-blur-md ${className}`}
   data-title={post.title}
   data-excerpt={post.excerpt || post.description}
   data-tags={post.tags.join(',')}
 >
   {post.coverImage && (
-    <div class="relative mb-4 overflow-hidden rounded-lg">
-      <AImage
-        src={post.coverImage}
-        alt={`Cover image for ${post.title}`}
-        preset="thumb"
-        class="h-44 w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-        loading="lazy"
-        decoding="async"
-        sizes="(max-width: 768px) 100vw, 400px"
-        usePicture={false}
-      />
-      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" aria-hidden="true"></div>
+    <div class="mb-4 overflow-hidden rounded-lg">
+      <a href={postUrl} class="relative block leading-none">
+        <AImage
+          src={post.coverImage}
+          alt={`Cover image for ${post.title}`}
+          preset="thumb"
+          class="block h-44 w-full object-cover card-hover-image"
+          loading="lazy"
+          decoding="async"
+          sizes="(max-width: 768px) 100vw, 400px"
+          usePicture={false}
+        />
+        <span class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" aria-hidden="true"></span>
+      </a>
     </div>
   )}
 

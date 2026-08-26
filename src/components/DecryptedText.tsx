@@ -38,6 +38,15 @@ export default function DecryptedText({
   const containerRef = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setDisplayText(text)
+      setIsAnimating(false)
+      setIsScrambling(false)
+      setHasAnimated(true)
+    }
+  }, [text])
+
+  useEffect(() => {
     let interval: number | undefined
     let currentIteration = 0
 
@@ -64,8 +73,11 @@ export default function DecryptedText({
           }
           return 0
         }
-        default:
+        default: {
+          const _exhaustive: never = revealDirection
+          void _exhaustive
           return revealedSet.size
+        }
       }
     }
 
@@ -112,6 +124,12 @@ export default function DecryptedText({
     }
 
     if (isAnimating) {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        setDisplayText(text)
+        setIsScrambling(false)
+        onComplete?.()
+        return
+      }
       setIsScrambling(true)
       interval = window.setInterval(() => {
         setRevealedIndices((prevRevealed) => {
