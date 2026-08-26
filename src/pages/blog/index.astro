@@ -3,25 +3,27 @@
 export const prerender = true;
 
 import { getCollection } from 'astro:content';
-import { getBlogPostUrl } from '../../lib/blog';
+import { getBlogPostUrl, getBlogUrlSlug } from '../../lib/blog';
 import MainLayout from '../../layouts/MainLayout.astro';
 import PageHero from '../../components/PageHero.astro';
 import BlogPostCard from '../../components/BlogPostCard.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import SchemaOrg from '../../components/SchemaOrg.astro';
+import BlogPagination from '../../components/BlogPagination.astro';
+import {
+  getPublishedBlogPosts,
+  getBlogTotalPages,
+  getBlogPageSlice,
+} from '../../lib/blog-pagination';
 
 // Default to English for /blog route
 const lang = 'en';
 
 // Get all published blog posts for the current language and sort by date
 const allPosts = await getCollection('blog');
-const posts = allPosts
-  .filter((post) => !post.data.draft && (post.data.lang || 'en') === lang)
-  .sort(
-    (a, b) =>
-      new Date(b.data.publishedAt).getTime() -
-      new Date(a.data.publishedAt).getTime()
-  );
+const posts = getPublishedBlogPosts(allPosts, lang);
+const totalPages = getBlogTotalPages(posts.length);
+const pagePosts = getBlogPageSlice(posts, 1);
 
 // SEO metadata
 const title = 'Blog - Vasileios Politeiadis';
@@ -95,12 +97,12 @@ const blogSchema = {
           📝 All Posts
         </h2>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="posts-grid" data-testid="blog-posts-grid">
-          {posts.map(post => {
+          {pagePosts.map(post => {
             const postUrl = getBlogPostUrl(post);
             return (
               <BlogPostCard
                 post={{
-                  slug: post.slug,
+                  slug: getBlogUrlSlug(post),
                   title: post.data.title,
                   excerpt: post.data.excerpt,
                   description: post.data.description,
@@ -116,8 +118,14 @@ const blogSchema = {
           })}
         </div>
 
+        <BlogPagination
+          currentPage={1}
+          totalPages={totalPages}
+          totalPosts={posts.length}
+        />
+
         <!-- No Results Message -->
-        <div id="no-results" class="hidden text-center py-12" aria-live="polite">
+        <div id="no-results" class="hidden text-center py-12" aria-live="polite" hidden>
           <div class="text-6xl mb-4">🔍</div>
           <h3 class="text-xl font-orbitron font-bold text-matrix-white/60 mb-2">
             No articles found

@@ -1,0 +1,89 @@
+---
+import { BLOG_POSTS_PER_PAGE } from '../lib/blog-pagination';
+
+interface Props {
+  currentPage: number;
+  totalPages: number;
+  totalPosts: number;
+}
+
+const { currentPage, totalPages, totalPosts } = Astro.props;
+
+const prevHref =
+  currentPage <= 2 ? '/blog' : `/blog/page/${currentPage - 1}`;
+const nextHref = `/blog/page/${currentPage + 1}`;
+
+const start = totalPosts === 0 ? 0 : (currentPage - 1) * BLOG_POSTS_PER_PAGE + 1;
+const end = Math.min(currentPage * BLOG_POSTS_PER_PAGE, totalPosts);
+---
+
+<div
+  class="mt-12 pt-8 border-t border-matrix-white/10 flex flex-col items-center gap-6"
+  data-testid="blog-pagination"
+>
+  <p class="text-sm text-matrix-white/60 font-inter text-center" aria-live="polite">
+    {totalPosts === 0 ? (
+      <span>No articles published yet.</span>
+    ) : (
+      <span>
+        Showing <span class="text-matrix-white/85">{start}</span>–
+        <span class="text-matrix-white/85">{end}</span> of{' '}
+        <span class="text-matrix-white/85">{totalPosts}</span> articles
+      </span>
+    )}
+  </p>
+
+  {totalPages > 1 && (
+    <nav
+      class="flex flex-wrap items-center justify-center gap-3 sm:gap-4"
+      aria-label="Blog pagination"
+    >
+      {currentPage > 1 ? (
+        <a
+          href={prevHref}
+          class="inline-flex items-center justify-center min-h-[44px] px-4 rounded-md text-sm font-orbitron font-medium border border-neon-lime/35 text-neon-lime hover:bg-primary/10 hover:border-neon-lime/55 hover:shadow-[0_0_12px_rgba(57,255,20,0.2)] transition-[color,background-color,border-color,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-lime/50"
+        >
+          Previous
+        </a>
+      ) : (
+        <span
+          class="inline-flex items-center justify-center min-h-[44px] px-4 rounded-md text-sm font-orbitron text-matrix-white/35 border border-matrix-white/10 cursor-not-allowed"
+          aria-disabled="true"
+        >
+          Previous
+        </span>
+      )}
+
+      <span class="text-sm text-matrix-white/70 font-inter tabular-nums px-2">
+        Page {currentPage} of {totalPages}
+      </span>
+
+      {currentPage < totalPages ? (
+        <a
+          href={nextHref}
+          class="inline-flex items-center justify-center min-h-[44px] px-4 rounded-md text-sm font-orbitron font-medium border border-neon-lime/35 text-neon-lime hover:bg-primary/10 hover:border-neon-lime/55 hover:shadow-[0_0_12px_rgba(57,255,20,0.2)] transition-[color,background-color,border-color,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-lime/50"
+        >
+          Next
+        </a>
+      ) : (
+        <span
+          class="inline-flex items-center justify-center min-h-[44px] px-4 rounded-md text-sm font-orbitron text-matrix-white/35 border border-matrix-white/10 cursor-not-allowed"
+          aria-disabled="true"
+        >
+          Next
+        </span>
+      )}
+    </nav>
+  )}
+
+  <p class="text-xs text-matrix-white/50 font-inter text-center max-w-md">
+    Subscribe to the{' '}
+    <a
+      href="/rss.xml"
+      class="text-neon-lime/90 hover:text-neon-lime underline underline-offset-4 decoration-neon-lime/30 hover:decoration-neon-lime/60 transition-colors"
+    >
+      RSS feed
+    </a>{' '}
+    for every post in one place.
+  </p>
+</div>

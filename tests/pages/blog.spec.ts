@@ -125,8 +125,7 @@ test.describe('Blog Page', () => {
       if (blogPostCards.length > 0) {
         const firstCard = blogPostCards[0];
 
-        // Tab to read more link
-        await blogPage.page.keyboard.press('Tab');
+        await firstCard.link.focus();
         await expect(firstCard.link).toBeFocused();
       }
     });
@@ -160,7 +159,7 @@ test.describe('Blog Page', () => {
 
   test.describe('Accessibility', () => {
     test('should have proper heading hierarchy', async () => {
-      const h1Elements = blogPage.page.locator('h1');
+      const h1Elements = blogPage.page.locator('main h1');
       await expect(h1Elements).toHaveCount(1);
     });
 

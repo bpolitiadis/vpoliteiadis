@@ -9,6 +9,7 @@ export interface Props {
 }
 
 const { currentPath = '/' } = Astro.props;
+const isBlogPath = currentPath === '/blog' || currentPath.startsWith('/blog/');
 
 // Navigation items are now rendered individually for proper ordering
 
@@ -92,18 +93,18 @@ const homeSections = [
           <a
             href="/blog"
             class={`nav-link-desktop px-3 py-2 text-sm font-medium relative group font-orbitron ${
-              currentPath === '/blog'
+              isBlogPath
                 ? 'text-neon-lime'
                 : 'text-foreground/70 hover:text-primary/90'
             }`}
             role="menuitem"
-            aria-current={currentPath === '/blog' ? 'page' : undefined}
-            aria-label={`Blog${currentPath === '/blog' ? ' (current page)' : ''}`}
+            aria-current={isBlogPath ? 'page' : undefined}
+            aria-label={`Blog${isBlogPath ? ' (current page)' : ''}`}
             data-testid="navbar-link-blog"
           >
             Blog
             {/* Active page neon underline */}
-            {currentPath === '/blog' && (
+            {isBlogPath && (
               <div class="nav-active-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-primary shadow-neon transition-all duration-200" aria-hidden="true"></div>
             )}
             {/* Magnetic hover underline */}
@@ -189,14 +190,14 @@ const homeSections = [
           <a
             href="/blog"
             class={`mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium font-orbitron ${
-              currentPath === '/blog'
+              isBlogPath
                 ? 'text-neon-lime bg-primary/5 border border-neon-lime/20'
                 : 'text-matrix-white/80 hover:text-primary hover:bg-primary/5'
             }`}
             role="menuitem"
-            aria-current={currentPath === '/blog' ? 'page' : undefined}
+            aria-current={isBlogPath ? 'page' : undefined}
             tabindex="0"
-            aria-label={`Blog${currentPath === '/blog' ? ' (current page)' : ''}`}
+            aria-label={`Blog${isBlogPath ? ' (current page)' : ''}`}
             data-testid="mobile-nav-link-blog"
           >
             Blog

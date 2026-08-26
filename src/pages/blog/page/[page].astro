@@ -1,0 +1,139 @@
+---
+export const prerender = true;
+
+import { getCollection } from 'astro:content';
+import { getBlogPostUrl, getBlogUrlSlug } from '../../../lib/blog';
+import MainLayout from '../../../layouts/MainLayout.astro';
+import PageHero from '../../../components/PageHero.astro';
+import BlogPostCard from '../../../components/BlogPostCard.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import SchemaOrg from '../../../components/SchemaOrg.astro';
+import BlogPagination from '../../../components/BlogPagination.astro';
+import {
+  getPublishedBlogPosts,
+  getBlogTotalPages,
+  getBlogPageSlice,
+} from '../../../lib/blog-pagination';
+
+const lang = 'en';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  const posts = getPublishedBlogPosts(allPosts, 'en');
+  const totalPages = getBlogTotalPages(posts.length);
+  if (totalPages <= 1) return [];
+
+  return Array.from({ length: totalPages - 1 }, (_, i) => ({
+    params: { page: String(i + 2) },
+  }));
+}
+
+const pageNum = Number.parseInt(Astro.params.page ?? '', 10);
+const allPosts = await getCollection('blog');
+const posts = getPublishedBlogPosts(allPosts, lang);
+const totalPages = getBlogTotalPages(posts.length);
+if (!Number.isInteger(pageNum) || pageNum < 2 || pageNum > totalPages) {
+  return Astro.redirect('/404');
+}
+const currentPage = pageNum;
+const pagePosts = getBlogPageSlice(posts, currentPage);
+
+const title = `Blog — page ${currentPage} of ${totalPages} | Vasileios Politeiadis`;
+const description =
+  'Insights on technology, creativity, and the intersection of human and artificial intelligence.';
+const currentPath = `/blog/page/${currentPage}`;
+
+const breadcrumbItems = [
+  { name: 'Home', href: '/' },
+  { name: 'Blog', href: '/blog' },
+  { name: `Page ${currentPage}`, href: currentPath },
+];
+
+const blogSchema = {
+  '@type': 'Blog',
+  'name': 'Vasileios Politeiadis Blog',
+  'description': description,
+  'url': new URL('/blog', Astro.site).toString(),
+  'inLanguage': lang,
+  'blogPost': pagePosts.map((post) => {
+    const postUrl = getBlogPostUrl(post);
+    return {
+      '@type': 'BlogPosting',
+      'headline': post.data.title,
+      'description': post.data.description,
+      'author': {
+        '@type': 'Person',
+        'name': post.data.author,
+      },
+      'datePublished': new Date(post.data.publishedAt).toISOString(),
+      'url': new URL(postUrl, Astro.site).toString(),
+      'inLanguage': post.data.lang || 'en',
+    };
+  }),
+};
+---
+
+<MainLayout
+  title={title}
+  description={description}
+  currentPath={currentPath}
+  bgSlug="blog-bg"
+  bgEager={true}
+  lang={lang}
+>
+  <SchemaOrg schema={blogSchema} />
+
+  <div class="relative content-visibility-auto" data-testid="page-blog">
+    <PageHero
+      title="Blog"
+      description={description}
+      metaText={`Page ${currentPage} of ${totalPages}`}
+      eager={true}
+    />
+
+    <Breadcrumb items={breadcrumbItems} class="sr-only" />
+
+    <section class="py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-16">
+          <h2 class="text-2xl font-orbitron font-bold text-secondary mb-8">
+            📝 All Posts
+          </h2>
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            id="posts-grid"
+            data-testid="blog-posts-grid"
+          >
+            {pagePosts.map((post) => {
+              const postUrl = getBlogPostUrl(post);
+              return (
+                <BlogPostCard
+                  post={{
+                    slug: getBlogUrlSlug(post),
+                    title: post.data.title,
+                    excerpt: post.data.excerpt,
+                    description: post.data.description,
+                    coverImage: post.data.coverImage,
+                    tags: post.data.tags,
+                    publishedAt: post.data.publishedAt,
+                    readingTime: post.data.readingTime,
+                    url: postUrl,
+                  }}
+                  class="card"
+                />
+              );
+            })}
+          </div>
+        </div>
+
+        <BlogPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalPosts={posts.length}
+        />
+      </div>
+    </section>
+  </div>
+</MainLayout>
+
+<script is:inline src="/scripts/blog-index.js" defer></script>

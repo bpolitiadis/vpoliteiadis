@@ -12,6 +12,11 @@ All notable changes to the vpoliteiadis portfolio website will be documented in 
 - FuzzyText on 404 now accepts a `text` prop so the error copy hydrates reliably as an Astro island
 - Section reveal CSS now matches delayed `animate-reveal-up-*` classes so titles actually animate in
 
+### Blog pagination
+- `/blog` shows the first page of published posts (3 per page) and extra pages at `/blog/page/n`
+- Pagination is hidden until there are more published posts than one page
+- Shared helpers live in `src/lib/blog-pagination.ts`
+
 ### Image Strategy Cleanup & Optimization
 - **Image Directory Cleanup**: Removed 242 redundant optimized image variants from `public/images/`
   - Deleted all manually optimized variants (`*-480w.webp`, `*-800w.webp`, etc.) as Astro 5 handles optimization automatically

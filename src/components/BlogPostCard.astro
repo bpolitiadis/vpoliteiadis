@@ -28,6 +28,7 @@ const postUrl = post.url || `/blog/${post.slug}`;
 
 <article
   class={`group rounded-xl border bg-card/80 text-card-foreground shadow card-hover-lift backdrop-blur-md ${className}`}
+  data-testid={`blog-post-${post.slug}`}
   data-title={post.title}
   data-excerpt={post.excerpt || post.description}
   data-tags={post.tags.join(',')}
@@ -87,6 +88,7 @@ const postUrl = post.url || `/blog/${post.slug}`;
       <a
         href={postUrl}
         class="btn-link"
+        data-testid={`blog-post-link-${post.slug}`}
         aria-label={`Read more: ${post.title}`}
       >
         Read More →

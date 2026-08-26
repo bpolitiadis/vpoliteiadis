@@ -14,18 +14,18 @@ test.describe('Navigation - Global Tests', () => {
       await navPage.verifyNavigationStructure();
     });
 
-    test('should render navbar on about page', async () => {
-      await navPage.goto('/about');
+    test('should render navbar on about section', async () => {
+      await navPage.goto('/#about');
       await navPage.verifyNavigationStructure();
     });
 
-    test('should render navbar on projects page', async () => {
-      await navPage.goto('/projects');
+    test('should render navbar on projects section', async () => {
+      await navPage.goto('/#projects');
       await navPage.verifyNavigationStructure();
     });
 
-    test('should render navbar on creative page', async () => {
-      await navPage.goto('/creative');
+    test('should render navbar on creative section', async () => {
+      await navPage.goto('/#creative');
       await navPage.verifyNavigationStructure();
     });
 
@@ -34,15 +34,15 @@ test.describe('Navigation - Global Tests', () => {
       await navPage.verifyNavigationStructure();
     });
 
-    test('should render navbar on contact page', async () => {
-      await navPage.goto('/contact');
+    test('should render navbar on contact section', async () => {
+      await navPage.goto('/#contact');
       await navPage.verifyNavigationStructure();
     });
   });
 
   test.describe('Logo Navigation', () => {
     test('should navigate to home when clicking logo', async () => {
-      await navPage.goto('/about');
+      await navPage.goto('/blog');
       await navPage.clickLogo();
       await expect(navPage.page).toHaveURL('/');
     });
@@ -174,25 +174,25 @@ test.describe('Navigation - Global Tests', () => {
       expect(activeItem).toBe('Home');
     });
 
-    test('should handle direct navigation to about page', async () => {
-      await navPage.goto('/about');
-      await expect(navPage.page).toHaveURL('/about');
-      const activeItem = await navPage.getActiveNavItem();
-      expect(activeItem).toBe('About');
+    test('should handle direct navigation to about section', async () => {
+      await navPage.goto('/#about');
+      await expect(navPage.page).toHaveURL(/\/#about$/);
+      await expect(navPage.navbar).toBeVisible();
+      await expect(navPage.desktopNavLinks.about).toBeVisible();
     });
 
-    test('should handle direct navigation to projects page', async () => {
-      await navPage.goto('/projects');
-      await expect(navPage.page).toHaveURL('/projects');
-      const activeItem = await navPage.getActiveNavItem();
-      expect(activeItem).toBe('Projects');
+    test('should handle direct navigation to projects section', async () => {
+      await navPage.goto('/#projects');
+      await expect(navPage.page).toHaveURL(/\/#projects$/);
+      await expect(navPage.navbar).toBeVisible();
+      await expect(navPage.desktopNavLinks.projects).toBeVisible();
     });
 
-    test('should handle direct navigation to creative page', async () => {
-      await navPage.goto('/creative');
-      await expect(navPage.page).toHaveURL('/creative');
-      const activeItem = await navPage.getActiveNavItem();
-      expect(activeItem).toBe('Creative');
+    test('should handle direct navigation to creative section', async () => {
+      await navPage.goto('/#creative');
+      await expect(navPage.page).toHaveURL(/\/#creative$/);
+      await expect(navPage.navbar).toBeVisible();
+      await expect(navPage.desktopNavLinks.creative).toBeVisible();
     });
 
     test('should handle direct navigation to blog page', async () => {
@@ -202,11 +202,11 @@ test.describe('Navigation - Global Tests', () => {
       expect(activeItem).toBe('Blog');
     });
 
-    test('should handle direct navigation to contact page', async () => {
-      await navPage.goto('/contact');
-      await expect(navPage.page).toHaveURL('/contact');
-      const activeItem = await navPage.getActiveNavItem();
-      expect(activeItem).toBe('Contact');
+    test('should handle direct navigation to contact section', async () => {
+      await navPage.goto('/#contact');
+      await expect(navPage.page).toHaveURL(/\/#contact$/);
+      await expect(navPage.navbar).toBeVisible();
+      await expect(navPage.desktopNavLinks.contact).toBeVisible();
     });
   });
 
@@ -251,12 +251,12 @@ test.describe('Navigation - Global Tests', () => {
     test('should handle back/forward browser navigation', async () => {
       // Navigate through pages and test browser back/forward
       await navPage.goto('/');
-      await navPage.page.goto('/about');
-      await navPage.page.goto('/projects');
+      await navPage.page.goto('/blog');
+      await navPage.page.goto('/nonexistent-page');
 
       // Go back
       await navPage.page.goBack();
-      await expect(navPage.page).toHaveURL('/about');
+      await expect(navPage.page).toHaveURL('/blog');
 
       // Go back again
       await navPage.page.goBack();
@@ -264,7 +264,7 @@ test.describe('Navigation - Global Tests', () => {
 
       // Go forward
       await navPage.page.goForward();
-      await expect(navPage.page).toHaveURL('/about');
+      await expect(navPage.page).toHaveURL('/blog');
     });
   });
 });

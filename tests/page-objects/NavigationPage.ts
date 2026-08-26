@@ -25,14 +25,26 @@ export class NavigationPage {
   readonly mobileNavLinks: Record<string, Locator>;
 
   // Navigation items configuration
-  private readonly navItems: NavItem[] = [
-    { href: '/', label: 'Home', testId: 'navbar-link-home' },
-    { href: '/about', label: 'About', testId: 'navbar-link-about' },
-    { href: '/projects', label: 'Projects', testId: 'navbar-link-projects' },
-    { href: '/creative', label: 'Creative', testId: 'navbar-link-creative' },
-    { href: '/blog', label: 'Blog', testId: 'navbar-link-blog' },
-    { href: '/contact', label: 'Contact', testId: 'navbar-link-contact' },
+  private readonly homeSectionItems: NavItem[] = [
+    { href: '/#about', label: 'About', testId: 'navbar-link-about' },
+    { href: '/#projects', label: 'Projects', testId: 'navbar-link-projects' },
+    { href: '/#creative', label: 'Creative', testId: 'navbar-link-creative' },
+    { href: '/#contact', label: 'Contact', testId: 'navbar-link-contact' },
   ];
+
+  private readonly globalNavItems: NavItem[] = [
+    { href: '/', label: 'Home', testId: 'navbar-link-home' },
+    { href: '/blog', label: 'Blog', testId: 'navbar-link-blog' },
+  ];
+
+  private get navItems(): NavItem[] {
+    return [...this.globalNavItems, ...this.homeSectionItems];
+  }
+
+  private navItemsForCurrentPage(): NavItem[] {
+    const path = new URL(this.page.url()).pathname;
+    return path === '/' ? this.navItems : this.globalNavItems;
+  }
 
   constructor(page: Page) {
     this.page = page;
@@ -169,23 +181,18 @@ export class NavigationPage {
    * Get current active navigation item
    */
   async getActiveNavItem(): Promise<string | null> {
-    for (const item of this.navItems) {
+    for (const item of this.navItemsForCurrentPage()) {
       const desktopLink = this.desktopNavLinks[item.label.toLowerCase()];
-      const mobileLink = this.mobileNavLinks[item.label.toLowerCase()];
-
-      try {
-        // Check desktop link first
-        if (await desktopLink.getAttribute('aria-current') === 'page') {
+      if ((await desktopLink.count()) > 0) {
+        if ((await desktopLink.getAttribute('aria-current')) === 'page') {
           return item.label;
         }
-      } catch {
-        // Desktop link not visible, check mobile
-        try {
-          if (await mobileLink.getAttribute('aria-current') === 'page') {
-            return item.label;
-          }
-        } catch {
-          // Neither visible, continue
+      }
+
+      const mobileLink = this.mobileNavLinks[item.label.toLowerCase()];
+      if ((await mobileLink.count()) > 0) {
+        if ((await mobileLink.getAttribute('aria-current')) === 'page') {
+          return item.label;
         }
       }
     }
@@ -209,8 +216,7 @@ export class NavigationPage {
     expect(isDesktop || isMobile).toBeTruthy();
 
     if (isDesktop) {
-      // Verify all desktop nav links are present
-      for (const item of this.navItems) {
+      for (const item of this.navItemsForCurrentPage()) {
         await expect(this.desktopNavLinks[item.label.toLowerCase()]).toBeVisible();
       }
     }
@@ -232,7 +238,7 @@ export class NavigationPage {
 
     // Test Tab navigation through desktop links (if visible)
     if (await this.isDesktopMenuVisible()) {
-      for (const item of this.navItems) {
+      for (const item of this.navItemsForCurrentPage()) {
         await this.page.keyboard.press('Tab');
         const link = this.desktopNavLinks[item.label.toLowerCase()];
         await expect(link).toBeFocused();
@@ -249,7 +255,7 @@ export class NavigationPage {
       await expect(this.mobileMenu).toBeVisible();
 
       // Navigate through mobile menu items
-      for (const item of this.navItems) {
+      for (const item of this.navItemsForCurrentPage()) {
         await this.page.keyboard.press('Tab');
         const link = this.mobileNavLinks[item.label.toLowerCase()];
         await expect(link).toBeFocused();
@@ -276,7 +282,7 @@ export class NavigationPage {
     if (await this.isDesktopMenuVisible()) {
       await expect(this.desktopMenu).toHaveAttribute('role', 'menubar');
 
-      for (const item of this.navItems) {
+      for (const item of this.navItemsForCurrentPage()) {
         const link = this.desktopNavLinks[item.label.toLowerCase()];
         await expect(link).toHaveAttribute('role', 'menuitem');
         await expect(link).toHaveAttribute('aria-label');

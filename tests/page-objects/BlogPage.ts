@@ -46,7 +46,7 @@ export class BlogPage {
    * Navigate to blog page
    */
   async goto() {
-    await this.page.goto('/blog');
+    await this.page.goto('/blog', { waitUntil: 'domcontentloaded' });
     await this.waitForPageToLoad();
   }
 
@@ -69,7 +69,7 @@ export class BlogPage {
     const cards: BlogPostCard[] = [];
 
     // Find all blog post card containers
-    const cardElements = this.page.locator('[data-testid^="blog-post-"]');
+    const cardElements = this.page.locator('article[data-testid^="blog-post-"]');
 
     for (let i = 0; i < await cardElements.count(); i++) {
       const cardElement = cardElements.nth(i);
@@ -172,12 +172,19 @@ export class BlogPage {
    * Test pagination (if implemented)
    */
   async testPagination() {
-    // Check for pagination controls
-    const paginationControls = this.page.locator('button[aria-label*="page"], nav[aria-label*="pagination"]');
-    const hasPagination = await paginationControls.count() > 0;
+    const pagination = this.page.getByTestId('blog-pagination');
+    const hasPagination = await pagination.count() > 0;
 
     if (hasPagination) {
-      await expect(paginationControls.first()).toBeVisible();
+      await expect(pagination).toBeVisible();
+    }
+
+    const next = this.page.getByRole('link', { name: 'Next' });
+    if ((await next.count()) > 0) {
+      await next.click();
+      await expect(this.page).toHaveURL(/\/blog\/page\/\d+/);
+      await this.page.getByRole('link', { name: 'Previous' }).click();
+      await expect(this.page).toHaveURL('/blog');
     }
   }
 
@@ -186,7 +193,7 @@ export class BlogPage {
    */
   async testResponsiveGrid(viewportSize: { width: number; height: number }) {
     await this.page.setViewportSize(viewportSize);
-    await this.page.reload();
+    await this.page.reload({ waitUntil: 'domcontentloaded' });
     await this.waitForPageToLoad();
 
     await expect(this.blogPostsGrid).toBeVisible();
@@ -203,7 +210,7 @@ export class BlogPage {
    */
   async checkAccessibility() {
     // Check for proper heading hierarchy
-    const h1Elements = this.page.locator('h1');
+    const h1Elements = this.page.locator('main h1');
     await expect(h1Elements).toHaveCount(1);
 
     // Check alt text on images

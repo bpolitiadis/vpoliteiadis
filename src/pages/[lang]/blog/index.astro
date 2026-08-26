@@ -3,7 +3,8 @@
 export const prerender = true;
 
 import { getCollection } from 'astro:content';
-import { getBlogPostUrl } from '../../../lib/blog';
+import { getBlogPostUrl, getBlogUrlSlug } from '../../../lib/blog';
+import { getPublishedBlogPosts } from '../../../lib/blog-pagination';
 import MainLayout from '../../../layouts/MainLayout.astro';
 import PageHero from '../../../components/PageHero.astro';
 import BlogPostCard from '../../../components/BlogPostCard.astro';
@@ -21,15 +22,8 @@ if (lang !== 'el') {
   return Astro.redirect('/404');
 }
 
-// Get all published blog posts for the current language and sort by date
 const allPosts = await getCollection('blog');
-const posts = allPosts
-  .filter((post) => !post.data.draft && (post.data.lang || 'en') === lang)
-  .sort(
-    (a, b) =>
-      new Date(b.data.publishedAt).getTime() -
-      new Date(a.data.publishedAt).getTime()
-  );
+const posts = getPublishedBlogPosts(allPosts, lang);
 
 // SEO metadata
 const title = 'Blog - Vasileios Politeiadis';
@@ -108,7 +102,7 @@ const blogSchema = {
             return (
               <BlogPostCard
                 post={{
-                  slug: post.slug,
+                  slug: getBlogUrlSlug(post),
                   title: post.data.title,
                   excerpt: post.data.excerpt,
                   description: post.data.description,

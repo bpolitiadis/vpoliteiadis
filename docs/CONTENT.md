@@ -89,6 +89,8 @@ impact: "40% reduction in administrative overhead"
 
 **Categories:** `technology`, `ai`, `development`, `automation`, `creative`, `career`, `tutorial`, `finance`
 
+**Listing:** English `/blog` is page 1 of published posts. Extra English pages render at `/blog/page/2`, `/blog/page/3`, and so on (`BLOG_POSTS_PER_PAGE` in `src/lib/blog-pagination.ts`). Greek listing is `/el/blog` (no extra page routes yet). Drafts are excluded.
+
 **Example Blog Post:**
 ```yaml
 ---
