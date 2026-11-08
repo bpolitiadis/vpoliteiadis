@@ -9,6 +9,7 @@ export interface Props {
 }
 
 const { currentPath = '/' } = Astro.props;
+const creativeLabEnabled = false;
 
 // Navigation items are now rendered individually for proper ordering
 
@@ -16,7 +17,7 @@ const { currentPath = '/' } = Astro.props;
 const homeSections = [
   { id: 'about', label: 'About', href: '/#about' },
   { id: 'projects', label: 'Projects', href: '/#projects' },
-  { id: 'creative', label: 'Creative', href: '/#creative' },
+  ...(creativeLabEnabled ? [{ id: 'creative', label: 'Creative', href: '/#creative' }] : []),
   { id: 'contact', label: 'Contact', href: '/#contact' },
 ];
 ---
@@ -215,7 +216,7 @@ const homeSections = [
     // Only run on homepage
     if (window.location.pathname !== '/') return;
 
-    const sections: string[] = ['about', 'projects', 'creative', 'contact'];
+    const sections: string[] = ['about', 'projects', 'contact'];
     const navLinks = document.querySelectorAll('[data-section-id]');
     const navbar = document.querySelector('.navbar-compact') as HTMLElement;
 

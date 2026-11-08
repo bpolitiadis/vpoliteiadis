@@ -12,6 +12,8 @@ import ContactSection from '../components/ContactSection.astro';
 import { getImage } from 'astro:assets';
 import vasileiosProfile from '../assets/images/vasileios-profile.webp';
 
+const creativeLabEnabled = false;
+
 // Get optimized profile image URL
 // Use AVIF format with quality 80 for illustrations
 const profileImage = await getImage({src: vasileiosProfile, width: 800, format: 'avif', quality: 80});
@@ -79,7 +81,7 @@ const homeStructuredData = {
   <ProjectsSection />
 
   <!-- Creative Lab Section -->
-  <CreativeLabSection />
+  {creativeLabEnabled && <CreativeLabSection />}
 
   <!-- Contact Section -->
   <ContactSection />
